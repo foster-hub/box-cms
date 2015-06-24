@@ -1,0 +1,361 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CMSUserGroup_Description" xml:space="preserve">
+    <value>Adiciona, remove e atualiza qualquer conteúdo.</value>
+  </data>
+  <data name="CMSUserGroup_Name" xml:space="preserve">
+    <value>Administrador CMS</value>
+  </data>
+  <data name="Content" xml:space="preserve">
+    <value>Conteúdo</value>
+  </data>
+  <data name="Content_name_or_description" xml:space="preserve">
+    <value>Pesquise por Nome do conteúdo, descrição ou cross-link</value>
+  </data>
+  <data name="drag_and_drop_files_here" xml:space="preserve">
+    <value>arraste arquivos aqui</value>
+  </data>
+  <data name="Images" xml:space="preserve">
+    <value>Imagens</value>
+  </data>
+  <data name="or_use_image_database" xml:space="preserve">
+    <value>ou use o banco de imagens</value>
+  </data>
+  <data name="Page" xml:space="preserve">
+    <value>Página</value>
+  </data>
+  <data name="Pages" xml:space="preserve">
+    <value>Páginas</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Título</value>
+  </data>
+  <data name="Select_an_image" xml:space="preserve">
+    <value>Selecione uma imagem</value>
+  </data>
+  <data name="File_or_image_name" xml:space="preserve">
+    <value>Nome do arquivo ou imagem</value>
+  </data>
+  <data name="Remove_file" xml:space="preserve">
+    <value>Apagar arquivo/imagem</value>
+  </data>
+  <data name="The_file_X" xml:space="preserve">
+    <value>O arquivo/imagem "</value>
+  </data>
+  <data name="Remove_content" xml:space="preserve">
+    <value>Apagar conteúdo</value>
+  </data>
+  <data name="The_content_X" xml:space="preserve">
+    <value>O conteúdo "</value>
+  </data>
+  <data name="from" xml:space="preserve">
+    <value>de</value>
+  </data>
+  <data name="Abstract" xml:space="preserve">
+    <value>Resumo</value>
+  </data>
+  <data name="Change_Abstract" xml:space="preserve">
+    <value>Editar Resumo</value>
+  </data>
+  <data name="Viewing_content_at" xml:space="preserve">
+    <value>Exibindo conteúdo de</value>
+  </data>
+  <data name="Caption" xml:space="preserve">
+    <value>Legenda</value>
+  </data>
+  <data name="Cross_Links_tooltip" xml:space="preserve">
+    <value>Esse conteúdo também irá aparecer nos seguintes cross-links</value>
+  </data>
+  <data name="Best_ranked" xml:space="preserve">
+    <value>Melhor avaliado</value>
+  </data>
+  <data name="Display" xml:space="preserve">
+    <value>Exibição</value>
+  </data>
+  <data name="Less_popular" xml:space="preserve">
+    <value>Menos popular</value>
+  </data>
+  <data name="Most_popular" xml:space="preserve">
+    <value>Mais popular</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="Newest" xml:space="preserve">
+    <value>Mais recente</value>
+  </data>
+  <data name="Oldest" xml:space="preserve">
+    <value>Mais antigo</value>
+  </data>
+  <data name="Worst_ranked" xml:space="preserve">
+    <value>Pior avaliado</value>
+  </data>
+  <data name="Content_date" xml:space="preserve">
+    <value>Data do conteúdo</value>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>Ordem</value>
+  </data>
+  <data name="Order_by_tooltip" xml:space="preserve">
+    <value>Defina a data do contéudo ou uma ordem arbitrária</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Marcas</value>
+  </data>
+  <data name="Tags_tooltip" xml:space="preserve">
+    <value>Marcas que serão utilizadas para ajudar pessoas localizarem esse conteúdo (separadas por vírgula)</value>
+  </data>
+  <data name="CMSFILEUserGroup_Description" xml:space="preserve">
+    <value>Adiciona, remove e atualzia qualquer arquivos repositório.</value>
+  </data>
+  <data name="CMSFILEUserGroup_Name" xml:space="preserve">
+    <value>Administrador de arquivos do repositório</value>
+  </data>
+  <data name="Sending_files" xml:space="preserve">
+    <value>Enviando arquivos...</value>
+  </data>
+  <data name="New_comment" xml:space="preserve">
+    <value>Comentar</value>
+  </data>
+  <data name="reading_comments" xml:space="preserve">
+    <value>carregando comentários...</value>
+  </data>
+  <data name="view_full_comment" xml:space="preserve">
+    <value>... mais</value>
+  </data>
+  <data name="at" xml:space="preserve">
+    <value>em</value>
+  </data>
+  <data name="hours_ago" xml:space="preserve">
+    <value>hora(s) atrás</value>
+  </data>
+  <data name="minutes_ago" xml:space="preserve">
+    <value>minuto(s) atrás</value>
+  </data>
+  <data name="more" xml:space="preserve">
+    <value>mais</value>
+  </data>
+  <data name="seconds_ago" xml:space="preserve">
+    <value>segundo(s) atrás</value>
+  </data>
+  <data name="live_update" xml:space="preserve">
+    <value>ao vivo</value>
+  </data>
+  <data name="stop_live_update" xml:space="preserve">
+    <value>parar atualização ao vivo</value>
+  </data>
+  <data name="File_upload" xml:space="preserve">
+    <value>Envio de arquivo</value>
+  </data>
+  <data name="Select_a_file" xml:space="preserve">
+    <value>Selecione um arquivo</value>
+  </data>
+  <data name="Upload_not_supported_tooltip_1" xml:space="preserve">
+    <value>Você está vendo essa mensagem porque o seu navegador não suporta envio de arquivos AJAX.</value>
+  </data>
+  <data name="Upload_not_supported_tooltip_2" xml:space="preserve">
+    <value>Considere utilizar outros navegadores como o Google Chrome, FireFox ou IE 10 para uma melhor experiência no envio de arquivos.</value>
+  </data>
+  <data name="was_uploaded" xml:space="preserve">
+    <value>eviado com sucesso</value>
+  </data>
+  <data name="Any_time" xml:space="preserve">
+    <value>Qualquer data</value>
+  </data>
+  <data name="Content_period" xml:space="preserve">
+    <value>Criado em</value>
+  </data>
+  <data name="Last_12_months" xml:space="preserve">
+    <value>Último 12 meses</value>
+  </data>
+  <data name="Last_6_months" xml:space="preserve">
+    <value>Último 6 meses</value>
+  </data>
+  <data name="Last_month" xml:space="preserve">
+    <value>Último mês</value>
+  </data>
+  <data name="Last_week" xml:space="preserve">
+    <value>Última semana</value>
+  </data>
+  <data name="created_at" xml:space="preserve">
+    <value>criado em</value>
+  </data>
+  <data name="Publication" xml:space="preserve">
+    <value>Publicação</value>
+  </data>
+  <data name="Publish_after" xml:space="preserve">
+    <value>Publicar depois de</value>
+  </data>
+  <data name="Publish_tooltip" xml:space="preserve">
+    <value>Publicação</value>
+  </data>
+  <data name="Publish_until" xml:space="preserve">
+    <value>Publicar até</value>
+  </data>
+  <data name="CONTENT_EXPIRED" xml:space="preserve">
+    <value>EXPIRADO</value>
+  </data>
+  <data name="CONTENT_NOT_PUBLISHED" xml:space="preserve">
+    <value>NÃO PUBLICADO</value>
+  </data>
+  <data name="CONTENT_SCHEDULED" xml:space="preserve">
+    <value>AGENDADO</value>
+  </data>
+  <data name="Apply_and_Publish" xml:space="preserve">
+    <value>Aplicar e Publicar</value>
+  </data>
+  <data name="Publish_alert" xml:space="preserve">
+    <value>Uma vez publicado, esse conteúdo vai estar disponível no site.
+Tem certeza que deseja publicar?</value>
+  </data>
+  <data name="Only_published" xml:space="preserve">
+    <value>publicados somente</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>Arquivo</value>
+  </data>
+  <data name="Less_Viewed" xml:space="preserve">
+    <value>Menos visualizado</value>
+  </data>
+  <data name="Most_Viewed" xml:space="preserve">
+    <value>Mais visualizado</value>
+  </data>
+  <data name="Quiz_Question" xml:space="preserve">
+    <value>Pergunta</value>
+  </data>
+  <data name="Quiz_Alternative" xml:space="preserve">
+    <value>Alternativa</value>
+  </data>
+  <data name="Quiz_Alternatives" xml:space="preserve">
+    <value>Alternativas</value>
+  </data>
+  <data name="Quiz_Vote" xml:space="preserve">
+    <value>Votar</value>
+  </data>
+  <data name="Vote" xml:space="preserve">
+    <value>Votos</value>
+  </data>
+  <data name="Quiz_Clear_Votes" xml:space="preserve">
+    <value>Zerar votos</value>
+  </data>
+  <data name="Unpublish" xml:space="preserve">
+    <value>Despublicar</value>
+  </data>
+</root>
