@@ -1,0 +1,101 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using System.ComponentModel.Composition;
+using System.Security.Principal;
+using System.Net;
+using System.Web.Http;
+
+namespace Box.Core.Controllers {
+
+
+    [Export]
+    [PartCreationPolicy(CreationPolicy.NonShared)]
+    public class Core_SigninController : Controller {
+
+        [Import]
+        private Box.Core.Services.SecurityService service { get; set; }
+
+        [Import]
+        private Box.Core.Oauth.WindowsLive windowLive { get; set; }
+
+        [Import]
+        private Box.Core.Oauth.Google google { get; set; }
+
+
+        public ActionResult Index() {
+
+            service.SignOutUser();
+            ViewData["WINDOWS_LIVE_LOGIN_URL"] = windowLive.LOGIN_URL;
+            ViewData["GOOGLE_LOGIN_URL"] = google.LOGIN_URL;
+
+            ViewData["WINDOWS_AUTH_ENABLE"] = service.IsWindowsAuthEnable;
+            ViewData["FORMS_AUTH_ENABLE"] = service.IsFormsAuthEnable;
+
+            ViewData["WINDOWS_AUTH_URL"] = service.WindowsAuthUrl;
+
+            return View();
+        }
+
+        public ActionResult NTcallback(string token) {
+            User user = service.GetUserByAuthToken(token);
+
+            if (user == null || String.IsNullOrEmpty(user.Email))
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden, SharedStrings.Unauthorized_UserNT);
+
+
+            return CallBack(user.Email);
+        }
+
+        public ActionResult WLcallback() {
+            string email = windowLive.GetUserEmail(Request.QueryString["code"]);
+            return CallBack(email);
+        }
+
+        public ActionResult Gcallback() {
+            string email = google.GetUserEmail(Request.QueryString["code"]);
+            return CallBack(email);
+        }
+
+        private ActionResult CallBack(string email) {
+            string callBackMessage = null;
+
+            if (email == null)
+                callBackMessage = SharedStrings.Error_sigin;
+
+            int signedin = service.SignInUser(email);
+            if (signedin != 1)
+                callBackMessage = SharedStrings.You_do_not_have_an_active_account_at_this_system;
+
+            ViewData["callBackMessage"] = callBackMessage;
+
+            if (signedin == 1) {
+                string url = Request["ReturnUrl"];
+                if (!String.IsNullOrEmpty(url))
+                    Response.Redirect(url);
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View("CallBack");
+        }
+
+
+        public ActionResult ResetPassword() {
+            return View();
+        }
+
+        public ActionResult ApplyNewPassword(string id) {
+
+            bool applied = service.ApplyResetPassword(id);
+            if (applied)
+                ViewData["RESULT"] = SharedStrings.Your_password_was_changed;
+            else
+                ViewData["RESULT"] = SharedStrings.Could_not_change_your_password;
+
+            return View();
+        }
+    }
+}
