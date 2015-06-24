@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = Resources.SharedStrings.Sign_in;
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    
+    @Styles.Render("~/Content/css")         
+    @Scripts.Render("~/bundles/jquery")
+
+</head>
+
+<body>
+
+    <h2>@Resources.SharedStrings.Sign_in</h2>
+    
+    <div style="margin: 10px;">
+        @ViewData["callBackMessage"]
+    </div>
+    
+    <div style="margin: 10px;">
+        @Html.ActionLink(@Resources.SharedStrings.Back, "Index")
+    </div>
+    
+
+</body>
+</html>

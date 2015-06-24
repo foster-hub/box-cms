@@ -1,0 +1,494 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'QA|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AutoParameterizationWebConfigConnectionStrings>False</AutoParameterizationWebConfigConnectionStrings>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Box.Adm.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Stage|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AutoParameterizationWebConfigConnectionStrings>False</AutoParameterizationWebConfigConnectionStrings>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Box.Adm.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{74330C7A-1998-426B-B6FC-3B739ABB2286}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Box.Adm</RootNamespace>
+    <AssemblyName>Box.Adm</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <AutoParameterizationWebConfigConnectionStrings>False</AutoParameterizationWebConfigConnectionStrings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AutoParameterizationWebConfigConnectionStrings>False</AutoParameterizationWebConfigConnectionStrings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
+    <AutoParameterizationWebConfigConnectionStrings>False</AutoParameterizationWebConfigConnectionStrings>
+    <InsertAdditionalWebCofigConnectionStrings>False</InsertAdditionalWebCofigConnectionStrings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\packages\WebGrease.1.1.0\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.30506.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.30506.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.30506.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.40804.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.0.0\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.30506.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WebGrease">
+      <HintPath>..\packages\WebGrease.1.1.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\MefConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SharedStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SharedStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SharedStrings.pt-br.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SharedStrings.pt-br.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Core_Images\Oauth\nt.png" />
+    <Content Include="where-is-my-db.htm" />
+    <Content Include="AppError.htm" />
+    <Content Include="App_Data\SampleData.sql" />
+    <Content Include="Content\CMS_Images\Buttons\Comment.png" />
+    <Content Include="Content\CMS_Images\Buttons\pageView.png" />
+    <Content Include="Content\CMS_Images\Buttons\share.png" />
+    <Content Include="Content\CMS_Images\FileIcons\avi.png" />
+    <Content Include="Content\CMS_Images\FileIcons\doc.png" />
+    <Content Include="Content\CMS_Images\FileIcons\document.png" />
+    <Content Include="Content\CMS_Images\FileIcons\mp3.png" />
+    <Content Include="Content\CMS_Images\FileIcons\pdf.png" />
+    <Content Include="Content\CMS_Images\FileIcons\ppt.png" />
+    <Content Include="Content\CMS_Images\FileIcons\xls.png" />
+    <Content Include="Content\Core_Images\Groups\LOG_VIEWER.png" />
+    <Content Include="Content\Core_Images\no-image.png" />
+    <Content Include="Content\custom.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\adm.css" />
+    <Content Include="Content\Core_Images\Groups\ADM_CMSFILE.png" />
+    <Content Include="Content\Core_Images\Groups\ADM_PEOPLE.png" />
+    <Content Include="Content\iconFont.css" />
+    <Content Include="Content\metro-bootstrap-responsive.css" />
+    <Content Include="Content\metro-bootstrap.css" />
+    <Content Include="Content\Core_Images\formFieldError.png" />
+    <Content Include="Content\Core_Images\Groups\ADM_CMS.png" />
+    <Content Include="Content\Core_Images\Groups\ADM_FORMS.png" />
+    <Content Include="Content\Core_Images\Groups\ADM_SEC.png" />
+    <Content Include="Content\CMS_Images\FileIcons\loading.gif" />
+    <Content Include="Content\Core_Images\Oauth\google.png" />
+    <Content Include="Content\Core_Images\Oauth\wl.png" />
+    <Content Include="Content\Jquery_Images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\Jquery_Images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\Jquery_Images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\Jquery_Images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\Jquery_Images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\Jquery_Images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\Jquery_Images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\Jquery_Images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\Jquery_Images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\Jquery_Images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\Jquery_Images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\Jquery_Images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\Jquery_Images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\jquery-ui-1.9.2.css" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\iconFont.dev.svg" />
+    <Content Include="fonts\iconFont.svg" />
+    <Content Include="fonts\metroSysIcons.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\CMS\UploadArea.js" />
+    <Content Include="Scripts\CMS\ContentCaptureVM.js" />
+    <Content Include="Scripts\CMS\FileDatabaseVM.js" />
+    <Content Include="Scripts\ContactForms\FormsVM.js" />
+    <Content Include="Scripts\Core\GroupsVM.js" />
+    <Content Include="Scripts\Core\FormVM.js" />
+    <Content Include="Scripts\Core\LogsVM.js" />
+    <Content Include="Scripts\Core\Validator.en-us.js" />
+    <Content Include="Scripts\Core\SigninVM.js" />
+    <Content Include="Scripts\Core\Validator.pt-br.js" />
+    <Content Include="Scripts\metro\metro-accordion.js" />
+    <Content Include="Scripts\metro\metro-button-set.js" />
+    <Content Include="Scripts\metro\metro-carousel.js" />
+    <Content Include="Scripts\metro\metro-core.js" />
+    <Content Include="Scripts\metro\metro-countdown.js" />
+    <Content Include="Scripts\metro\metro-drag-tile.js" />
+    <Content Include="Scripts\metro\metro-dropdown.js" />
+    <Content Include="Scripts\metro\metro-fluentmenu.js" />
+    <Content Include="Scripts\metro\metro-global.js" />
+    <Content Include="Scripts\metro\metro-hint.js" />
+    <Content Include="Scripts\metro\metro-initiator.js" />
+    <Content Include="Scripts\metro\metro-input-control.js" />
+    <Content Include="Scripts\metro\metro-listview.js" />
+    <Content Include="Scripts\metro\metro-live-tile.js" />
+    <Content Include="Scripts\metro\metro-locale.js" />
+    <Content Include="Scripts\metro\metro-notify.js" />
+    <Content Include="Scripts\metro\metro-panel.js" />
+    <Content Include="Scripts\metro\metro-plugin-template.js" />
+    <Content Include="Scripts\metro\metro-progressbar.js" />
+    <Content Include="Scripts\metro\metro-pull.js" />
+    <Content Include="Scripts\metro\metro-rating.js" />
+    <Content Include="Scripts\metro\metro-scroll.js" />
+    <Content Include="Scripts\metro\metro-slider.js" />
+    <Content Include="Scripts\metro\metro-stepper.js" />
+    <Content Include="Scripts\metro\metro-streamer.js" />
+    <Content Include="Scripts\metro\metro-tab-control.js" />
+    <Content Include="Scripts\metro\metro-table.js" />
+    <Content Include="Scripts\metro\metro-tile-transform.js" />
+    <Content Include="Scripts\metro\metro-times.js" />
+    <Content Include="Scripts\metro\metro-touch-handler.js" />
+    <Content Include="Scripts\metro\metro-treeview.js" />
+    <Content Include="Scripts\metro\metro-wizard.js" />
+    <Content Include="Scripts\People\GroupVM.js" />
+    <Content Include="Scripts\jquery-1.7.1.js" />
+    <Content Include="Scripts\jquery-ui-1.9.2.js" />
+    <Content Include="Scripts\jquery.parsejson.extension.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\knockout-2.2.0.js" />
+    <Content Include="Scripts\knockout.Extensions.js" />
+    <Content Include="Scripts\nicEdit\fontFormat.gif" />
+    <Content Include="Scripts\nicEdit\fontSize.gif" />
+    <Content Include="Scripts\nicEdit\image.gif" />
+    <Content Include="Scripts\nicEdit\nicEdit.ImageBoxExtension.js" />
+    <Content Include="Scripts\nicEdit\nicEdit.js" />
+    <Content Include="Scripts\nicEdit\nicEditorIcons.gif" />
+    <Content Include="Scripts\People\ExportVM.js" />
+    <Content Include="Scripts\People\PersonVM.js" />
+    <Content Include="Scripts\Utils\AjaxSetup.js" />
+    <Content Include="Scripts\Utils\DialogHelper.js" />
+    <Content Include="Scripts\Utils\Util.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Scripts\Core\CrudVM.js" />
+    <Content Include="Scripts\Core\UsersVM.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\CMS_Files\Upload.cshtml" />
+    <Content Include="Views\ContactForms_Forms\Index.cshtml" />
+    <Content Include="Views\ContactForms_Forms\FormDetail.cshtml" />
+    <Content Include="Views\Shared\CMS_Capture\DOC.cshtml" />
+    <Content Include="Views\Shared\CMS_Capture\QUIZ.cshtml" />
+    <Content Include="Views\People_Person\Index.cshtml" />
+    <Content Include="Views\People_Person\PeopleDetail.cshtml" />
+    <Content Include="Views\People_Group\Index.cshtml" />
+    <Content Include="Views\People_Export\Index.cshtml" />
+    <Content Include="Views\Shared\CMS_Capture\NEWS.cshtml" />
+    <Content Include="Views\Core_GroupsCollection\Index.cshtml" />
+    <Content Include="Views\Core_GroupsCollection\GroupDetail.cshtml" />
+    <Content Include="Views\Core_Logs\Index.cshtml" />
+    <Content Include="Views\Core_Logs\LogDetail.cshtml" />
+    <Content Include="App_Code\MetroUI.cshtml" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\iconFont.eot" />
+    <Content Include="fonts\iconFont.json" />
+    <Content Include="fonts\iconFont.ttf" />
+    <Content Include="fonts\iconFont.woff" />
+    <Content Include="fonts\metroSysIcons.ttf" />
+    <Content Include="fonts\metroSysIcons.woff" />
+    <Content Include="App_Code\Util.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Core_Users\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SharedStrings.pt-br.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SharedStrings.pt-br.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SharedStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SharedStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_SettingsLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\PageDefaults.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Core_Signin\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Core_Signin\Callback.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\TopMenu.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Core_Users\ChangePassword.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Core_Signin\ResetPassword.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Core_Signin\ResetPassword_Email.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Core_Signin\ApplyNewPassword.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\CMS_Contents\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\CMS\Kinds.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Shared\ListNavigation.cshtml" />
+    <Content Include="Views\Core_Users\UserDetail.cshtml" />
+    <Content Include="Views\Shared\CMS_Capture\PAGE.cshtml" />
+    <Content Include="Views\Shared\CMS\FileDatabase.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\CMS\UserGroups.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\CMS\CrossLinks.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\CMS\ContentTopMenu.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\CMS_Capture\ALBUM.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Code\Capture.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Box.CMS\Box.CMS.csproj">
+      <Project>{40cec902-fce6-431d-a569-5c4bb8146161}</Project>
+      <Name>Box.CMS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Box.Composition\Box.Composition.csproj">
+      <Project>{42eef46a-3cac-4dab-91c9-a5e323e4a999}</Project>
+      <Name>Box.Composition</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Box.ContactForms\Box.ContactForms.csproj">
+      <Project>{5d8b0090-e9a6-4cfd-9a85-00b73e4ab1f4}</Project>
+      <Name>Box.ContactForms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Box.Core\Box.Core.csproj">
+      <Project>{65b1e431-1d63-4e7c-9783-deb2bda35484}</Project>
+      <Name>Box.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Box.People\Box.People.csproj">
+      <Project>{f2c925ee-5090-4b54-88c3-59f9f657c178}</Project>
+      <Name>Box.People</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\foster.pubxml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <Target Name="GatherAllFilesToPublish">
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>64822</DevelopmentServerPort>
+          <DevelopmentServerVPath>/adm</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

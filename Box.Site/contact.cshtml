@@ -1,0 +1,130 @@
+﻿@using Box.ContactForms;
+@{
+    
+    var captcha = new Box.CMS.Services.CaptchaService("captchaText");
+
+    if (IsPost) { 
+        captcha.ValidateAntiForgery();
+    }
+    
+    Page.Title = "Contact";
+
+    var form = new Box.ContactForms.Services.EmailForm("email@email.com");
+    form.AddField("contactPhone"); // add extra fields
+
+    if (Request.Files.Count > 0) {
+        form.AddFile(Request.Files[0]); // add attach
+    }
+
+    form.Send(IsPost && captcha.IsValidCaptcha());
+    
+}
+
+@if (form.ShouldShowForm) {
+
+    <form method="post" id="formContact" enctype="multipart/form-data">
+
+        @captcha.AntiForgeryField()
+
+        @if (IsPost && !captcha.IsValidCaptcha()) {
+            <div class="alert alert-danger" role="alert">
+                Invalid captcha
+            </div>
+        }
+
+        @if (form.SendError != null) {
+            <div class="alert alert-danger" role="alert">
+                @form.SendError
+            </div>
+        }
+
+        <div class="form-group">
+            <label for="contactEmail">E-mail</label>
+            <input @form.MapToContactEmail type="email"  class="form-control" placeholder="Please provide your e-mail"  />
+        </div>
+
+        <div class="form-group">
+            <label for="contactName">Name</label>
+            <input @form.MapToContactName class="form-control" placeholder="Please provide your name"  />
+        </div>
+
+        <div class="form-group">
+            <label for="contactPersonalId">ID</label>
+            <input @form.MapToContactPersonalId class="form-control" placeholder="Please provide your id"  />
+        </div>
+
+        <div class="form-group">
+            <label for="contactCountry">Country</label>
+            <input @form.MapToContactCountry class="form-control" placeholder="Please provide your country"  />
+        </div>
+
+        <div class="form-group">
+            <label for="contactState">State</label>
+            <input @form.MapToContactState class="form-control" placeholder="Please provide your state"/>
+        </div>
+
+        <div class="form-group">
+            <label for="contactCity">City</label>
+            <input @form.MapToContactCity class="form-control" placeholder="Please provide your city" />
+        </div>
+
+        <div class="form-group">
+            <label for="contactPhone">Phone</label>
+            <input @form.MapTo("contactPhone")  class="form-control" placeholder="Please provide your phone" />
+        </div>
+
+        <div class="form-group">
+            <label for="message">Message</label>
+            <textarea @form.MapToMessage class="form-control" style="height:100px;" rows="3" cols="100">@Request["Message"]</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="file">Upload file</label>
+            <input type="file" id="file" name="file" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>Captcha</label>
+            <p>
+                @captcha.Image()
+                <button onclick="@captcha.RefreshCaptchaJS" class="btn btn-default">
+                    <span class="glyphicon glyphicon-refresh"></span>
+                </button>
+            </p>                        
+            <input id="captchaText" name="captchaText" class="form-control" placeholder="Please provide the captcha"  />
+        </div>
+
+        <input type="submit" class="btn btn-default" value="Send" />
+
+    </form>
+}
+@if (!form.ShouldShowForm) {
+    <h2>Thank you for your contact.</h2>
+}
+
+@section scripts {
+    <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+    <script>
+        $().ready(function () {
+
+            $("#formContact").validate({
+                rules: {
+                    contactName: "required",
+                    contactEmail: {
+                        required: true,
+                        email: true
+                    }
+                },
+                messages: {
+                    contactName: "Nome é obrigatório.",
+                    contactEmail: {
+                        required: "E-mail é obrigatório.",
+                        email: "Entre com um e-mail válido."
+                    }
+                }
+            });
+
+        });
+    </script>
+
+}

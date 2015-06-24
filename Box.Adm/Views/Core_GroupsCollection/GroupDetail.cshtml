@@ -1,0 +1,118 @@
+﻿@using Box.Core.Web
+
+    <div class="toolbar transparent boxToolBar">
+         <div class="grid fluid">
+            <div class="row">
+                <div class="span12">
+                    <button onclick="if (!$('#editForm').valid()) return; pageVM.applyItemChanges()">
+                        <i class="icon-checkmark on-left fg-green"></i>
+                        @Resources.SharedStrings.Apply
+                    </button>
+                    <button onclick="pageVM.cancelItemChanges()">
+                        <i class="icon-cancel on-left fg-red"></i>
+                        @Resources.SharedStrings.Cancel
+                    </button>
+                </div>
+            </div>
+        </div> 
+    </div>
+
+    <form id="editForm" >        
+
+        <h2 class="boxLeftMargin" data-bind="text: editingItem().Name"></h2>
+
+        <div class="grid mainGrid">
+            <div class="row no-margin">
+                <fieldset class="span12">
+
+                    <label>@Resources.SharedStrings.Name</label>
+                    @MetroUI.TextBox(databind: "value: editingItem().Name, valueUpdate:'afterkeydown'", others: "onkeyup='pageVM.editingItem.valueHasMutated();'", classes: "required")
+                                                            
+                    <label>@Resources.SharedStrings.Description</label>
+                    @MetroUI.TextBox(databind: "value: editingItem().Description, valueUpdate:'afterkeydown'", others: "onkeyup='pageVM.editingItem.valueHasMutated();'", classes: "required")
+                    
+                </fieldset>
+            </div>                
+            <div class="row">
+                <fieldset class="span12">
+                    <legend>@Resources.SharedStrings.Group_Permission</legend>
+                    <ul data-bind="foreach: groupCollectionInGroups" class="tileList">
+                        <li onmouseover="showContextMenu(this)" onmouseout="hideContextMenu(this)">
+                            <div class="tile double parts" data-bind="click: $parent.removeGroupFromUser" >
+                                <ul>
+                                    <li>
+                                        <div class="tile-content icon">
+                                            <div class="icon-imgX" data-bind="style: { backgroundImage: iconUrl }"></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="tile-content tile-status">
+                                            <span data-bind="text: Name" class="name fg-black"></span>
+                                            <span data-bind="text: Description" class="text fg-black"></span>
+                                        </div>
+                                    </li>
+                                </ul>
+                                
+                            </div>
+                        </li>
+                    </ul>
+                    <span data-bind="visible: groupCollectionInGroups().length==0" style="clear: both; margin-bottom: 10px; float: left;">@Resources.SharedStrings.Group_Without_Any_Permission</span>
+                </fieldset>
+            </div>
+            <div class="row">
+                <fieldset class="span12" id="userOutGroups" style="display: none; clear: both">
+                    <legend>@Resources.SharedStrings.Group_Has_No_Permission</legend>                    
+                        
+                        <ul data-bind="foreach: groupCollectionOutGroups" class="tileList" >
+                            <li>
+                                 <div class="tile double parts" data-bind="click: $parent.addGroupToUser" >
+                                <ul>
+                                    <li>
+                                        <div class="tile-content icon">
+                                            <div class="icon-imgX" data-bind="style: { backgroundImage: iconUrl }"></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="tile-content tile-status">
+                                            <span data-bind="text: Name" class="name fg-black"></span>
+                                            <span data-bind="text: Description" class="text fg-black"></span>
+                                        </div>
+                                    </li>
+                                </ul>
+                                
+                            </div>
+                            </li>
+                        </ul>
+                        <span data-bind="visible: groupCollectionOutGroups().length==0" style="clear: both; display: none;">@Resources.SharedStrings.No_groups_to_add</span>
+                                            
+                </fieldset>
+                <a  id="userOutGroupsLink" href="javascript: showAddGroups();" style="clear: both; float: left; margin-bottom: 10px">@Resources.SharedStrings.Add_more_permissions</a>            
+           </div>                       
+        </div>        
+    </form>
+
+@this.ScriptBlock(
+
+@<script type="text/javascript">
+
+     function onShowDetail() {
+         pageVM.onShowDetail();
+     }
+
+     function showAddGroups(hide) {
+
+         var groups = document.getElementById('userOutGroups');
+         var groupsLink = document.getElementById('userOutGroupsLink');
+
+         if (groups.style.display == 'block' || hide == true) {
+             groupsLink.innerHTML = '@Resources.SharedStrings.Add_more_permissions';
+             groups.style.display = 'none';
+             return;
+         }
+
+         groupsLink.innerHTML = '@Resources.SharedStrings.Hide_permissions';
+         groups.style.display = 'block';
+     }
+
+
+</script>)

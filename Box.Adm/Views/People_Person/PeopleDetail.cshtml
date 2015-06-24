@@ -1,0 +1,114 @@
+﻿@using Box.Core.Web
+     
+<div  class="toolbar transparent boxToolBar">
+
+        <div class="grid fluid">
+            <div class="row">
+                <div class="span12">
+                <button onclick="pageVM.cancelItemChanges()">
+                <i class="icon-arrow-left-3 on-left"></i>
+                @Resources.SharedStrings.Back
+            </button>
+                </div>
+            </div>
+        </div>  
+</div>
+
+<div class="grid mainGrid">
+    <div class="row no-margin">
+        <div class="span12">
+    
+            <fieldset>
+                <legend>@Box.People.SharedStrings.PersonalData</legend>
+            
+                <label>@Box.People.SharedStrings.Name</label>
+        
+                <!-- ko if: editingItem().Name.length > 0 -->
+                <span class="readOnlyField" data-bind="text: editingItem().Name"></span>
+                <!-- /ko -->
+
+                <!-- ko if: editingItem().Name.length == 0 -->
+                <span class="readOnlyField">(Sem nome)</span>
+                <!-- /ko -->
+        
+                <label data-bind="visible: editingItem().Surename">@Box.People.SharedStrings.Surname</label>
+                <span class="readOnlyField" data-bind="text: editingItem().Surename"></span>
+                <label data-bind="visible: editingItem().Title">@Box.People.SharedStrings.Title</label>
+                <span class="readOnlyField" data-bind="text: editingItem().Title"></span>
+                <label data-bind="visible: editingItem().PersonalId1">@Box.People.SharedStrings.PersonalId1</label>
+                <span class="readOnlyField" data-bind="text: editingItem().PersonalId1"></span>
+                <label data-bind="visible: editingItem().PersonalId2">@Box.People.SharedStrings.PersonalId2</label>
+                <span class="readOnlyField" data-bind="text: editingItem().PersonalId2"></span>
+                <label data-bind="visible: editingItem().Birthday">@Box.People.SharedStrings.Birthday</label>
+                <span class="readOnlyField" data-bind="date: editingItem().Birthday"></span>
+                <label data-bind="visible: editingItem().RegisterDate">@Box.People.SharedStrings.Register_Date</label>
+                <span class="readOnlyField" data-bind="date: editingItem().RegisterDate"></span>
+                <label data-bind="visible: editingItem().RegisterSource">@Box.People.SharedStrings.Register_Source</label>
+                <span class="readOnlyField" data-bind="text:  editingItem().RegisterSource"></span>
+                <label data-bind="visible: editingItem().GroupName">@Box.People.SharedStrings.User_Group</label>
+                <span class="readOnlyField" data-bind="text:  editingItem().GroupName"></span>
+            </fieldset>
+        
+            <fieldset>
+                <legend>@Box.People.SharedStrings.Address</legend>
+            
+                <label data-bind="visible: editingItem().Country">@Box.People.SharedStrings.Country</label>
+                <span class="readOnlyField" data-bind="text: editingItem().Country"></span>
+                <label data-bind="visible: editingItem().State">@Box.People.SharedStrings.State</label>
+                <span class="readOnlyField" data-bind="text: editingItem().State"></span>
+                <label data-bind="visible: editingItem().City">@Box.People.SharedStrings.City</label>
+                <span class="readOnlyField" data-bind="text: editingItem().City"></span>
+                <label data-bind="visible: editingItem().Address1">@Box.People.SharedStrings.Address1</label>
+                <span class="readOnlyField" data-bind="text: editingItem().Address1"></span>
+                <label data-bind="visible: editingItem().Address2">@Box.People.SharedStrings.Address2</label>
+                <span class="readOnlyField" data-bind="text: editingItem().Address2"></span>
+                <label data-bind="visible: editingItem().ZipCode">@Box.People.SharedStrings.ZipCode</label>
+                <span class="readOnlyField" data-bind="text: editingItem().ZipCode"></span>
+            </fieldset>
+
+            <fieldset>
+                <legend>@Box.People.SharedStrings.Profession</legend>
+           
+                <label data-bind="visible: editingItem().Job">@Box.People.SharedStrings.Job</label>
+                <span class="readOnlyField" data-bind="text: editingItem().Job"></span>
+                <label data-bind="visible: editingItem().Role">@Box.People.SharedStrings.Role</label>
+                <span class="readOnlyField" data-bind="text: editingItem().Role"></span>
+                <label data-bind="visible: editingItem().MarketField">@Box.People.SharedStrings.MarketField</label>
+                <span class="readOnlyField" data-bind="text: editingItem().MarketField"></span>
+            </fieldset>
+
+            <fieldset>
+                <legend>@Box.People.SharedStrings.Contact</legend>
+
+                <label c>@Box.People.SharedStrings.Phone1</label>
+                <span class="readOnlyField" data-bind="text: editingItem().Phone1"></span>
+                <label data-bind="visible: editingItem().Phone2">@Box.People.SharedStrings.Phone2</label>
+                <span class="readOnlyField" data-bind="text: editingItem().Phone2"></span>
+                <label data-bind="visible: editingItem().Phone3">@Box.People.SharedStrings.Phone3</label>
+                <span class="readOnlyField" data-bind="text: editingItem().Phone3"></span>
+                <label data-bind="visible: editingItem().Email">@Box.People.SharedStrings.Email</label>
+                <a style="clear:both; margin-top: 5px; margin-left:5px;" data-bind="text: editingItem().Email, attr: { href: 'mailto:' + editingItem().Email}" onclick="event.stopPropagation();"></a>
+            </fieldset>
+
+            <fieldset>
+                <legend>@Box.People.SharedStrings.NewsletterOptions</legend>
+
+                <label >@Box.People.SharedStrings.EmailOptIn</label>
+                <span class="readOnlyField" data-bind="text: editingItem().EmailOptIn ? '@Box.People.SharedStrings.YesOptIn' : '@Box.People.SharedStrings.NoOptIn'"></span>
+                <label>@Box.People.SharedStrings.SMSOptIn</label>
+                <span class="readOnlyField" data-bind="text: editingItem().SMSOptIn ? '@Box.People.SharedStrings.YesOptIn' : '@Box.People.SharedStrings.NoOptIn'"></span>
+                <label>@Box.People.SharedStrings.MailOptIn</label>
+                <span class="readOnlyField" data-bind="text: editingItem().MailOptIn ? '@Box.People.SharedStrings.YesOptIn' : '@Box.People.SharedStrings.NoOptIn'"></span>
+            </fieldset>
+
+        </div>        
+    </div>
+</div>
+@this.ScriptBlock(
+
+@<script type="text/javascript">
+    function showForm(item) {
+        pageVM.setEditingItem(item);
+        $(window).scrollTop(0);
+    }
+</script>)

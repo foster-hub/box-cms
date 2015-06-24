@@ -1,0 +1,150 @@
+﻿@using Box.CMS
+@using Box.CMS.Web
+@using Box.Core.Web
+@model ContentPageModel 
+
+@Html.Partial("CMS/ContentTopMenu")
+
+<style type="text/css">
+    .Results { width:659px; float:right!important; }
+    .boxLeftMargin { margin-right:10px!important; }
+    .SimpleQuiz input[type='text'] { width:653px!important; height:29px; margin:1px 0px 15px 9px; }
+</style>
+
+<form id="editForm" style="width:100%;">
+    <div class="boxLeftMargin">
+        <fieldset>
+
+            <label>@Box.CMS.SharedStrings.Title</label>
+
+            <div>   
+                         @MetroUI.TextBox(placeholder:@Box.CMS.SharedStrings.Title, databind: "value: editingItem().Name, valueUpdate:'afterkeydown'", others: "onkeyup='pageVM.filter()'")
+                    </div>
+
+            <label>@Box.CMS.SharedStrings.Quiz_Question</label>
+            <div class="input-control textarea" data-role="input-control">
+                            <textarea 
+                                @Capture.MapTo("Question") 
+                                >
+                            </textarea>
+                        </div>
+        </textarea>
+        </fieldset>
+        <fieldset class="SimpleQuiz">
+
+            <legend>@Box.CMS.SharedStrings.Quiz_Alternatives</legend>
+
+            <div style="width:751px;">
+                <input type="button" value="@Box.CMS.SharedStrings.Quiz_Clear_Votes" style="float:right; right: 55%;margin: -10px;"  data-bind="click: function() { totalVotesToZero(editingItem());  }" />
+            </div>
+
+            <label>@Box.CMS.SharedStrings.Quiz_Alternative 1</label>
+
+            <input type="text" @Capture.MapTo("Answer1") updatemodelevent="keyup" class="required" maxlength="100" required />
+
+            <div class="Results">
+                <div class="TextVotes">
+                    <span data-bind="text: editingItem().CONTENT.TotalVotes1"></span>
+                    <span>@Box.CMS.SharedStrings.Vote</span>
+                </div>
+
+                <div  class="BoxPercent">
+                    <div data-bind="style: {width: editingItem().CONTENT.Percent1  + 'px'}"></div>
+                </div>
+            </div>
+
+            <label>@Box.CMS.SharedStrings.Quiz_Alternative 2</label>
+
+            <input type="text" @Capture.MapTo("Answer2") updatemodelevent="keyup" class="required" maxlength="100" required />
+
+            <div class="Results">
+                <div class="TextVotes">
+                    <span data-bind="text: editingItem().CONTENT.TotalVotes2"></span>
+
+                    <span>@Box.CMS.SharedStrings.Vote</span>
+                </div>
+
+                <div class="BoxPercent">
+                    <div data-bind="style: {width: editingItem().CONTENT.Percent2 + 'px'}">
+                    </div>
+                </div>
+            </div>
+            <label>@Box.CMS.SharedStrings.Quiz_Alternative 3</label>
+
+            <input type="text" @Capture.MapTo("Answer3") updatemodelevent="keyup" class="required" maxlength="100" required />
+
+            <div class="Results">
+                <div class="TextVotes">
+                    <span data-bind="text: editingItem().CONTENT.TotalVotes3"></span>
+
+                    <span>@Box.CMS.SharedStrings.Vote</span>
+                </div>
+
+                <div class="BoxPercent">
+                    <div data-bind="style: {width: editingItem().CONTENT.Percent3 + 'px'}">
+                    </div>
+                </div>
+            </div>
+            <label>@Box.CMS.SharedStrings.Quiz_Alternative 4</label>
+
+            <input type="text" @Capture.MapTo("Answer4") updatemodelevent="keyup" class="required" maxlength="100" required />
+
+            <div class="Results">
+                <div class="TextVotes">
+                    <span data-bind="text: editingItem().CONTENT.TotalVotes4"></span>
+
+                    <span>@Box.CMS.SharedStrings.Vote</span>
+                </div>
+
+                <div class="BoxPercent">
+                    <div data-bind="style: {width: editingItem().CONTENT.Percent4 + 'px'}">
+                    </div>
+                </div>
+            </div>
+            <label>@Box.CMS.SharedStrings.Quiz_Alternative 5</label>
+
+            <input type="text" @Capture.MapTo("Answer5") updatemodelevent="keyup" class="required" maxlength="100" required />
+
+            <div class="Results">
+                <div class="TextVotes">
+                    <span data-bind="text: editingItem().CONTENT.TotalVotes5"></span>
+
+                    <span>@Box.CMS.SharedStrings.Vote</span>
+                </div>
+
+                <div class="BoxPercent">
+                    <div data-bind="style: {width: editingItem().CONTENT.Percent5 + 'px'}">
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</form>
+
+@this.ScriptBlock(
+@<script type="text/javascript">
+     
+    function NEW_CONTENT(contentHead) {
+        contentHead.CONTENT.HTMLContent = '';
+        totalVotesToZero(contentHead);
+        return contentHead;
+    }
+     
+    function totalVotesToZero(contentHead) {
+        //Reset total votes
+        contentHead.CONTENT.TotalVotes1 = 0;
+        contentHead.CONTENT.TotalVotes2 = 0;
+        contentHead.CONTENT.TotalVotes3 = 0;
+        contentHead.CONTENT.TotalVotes4 = 0;
+        contentHead.CONTENT.TotalVotes5 = 0;
+
+        //Reset percent from total votes
+        contentHead.CONTENT.Percent1 = 0;
+        contentHead.CONTENT.Percent2 = 0;
+        contentHead.CONTENT.Percent3 = 0;
+        contentHead.CONTENT.Percent4 = 0;
+        contentHead.CONTENT.Percent5 = 0;
+
+        pageVM.editingItem.valueHasMutated();
+     }
+</script>)

@@ -1,0 +1,18 @@
+﻿@model Box.Core.Web.PageNavigationModel
+@{
+    string vmodel = Model.ViewModel == null ? "pageVM" : Model.ViewModel;
+    string list = Model.ListName == null ? "items()" : Model.ListName + "()";
+    
+    
+}
+
+
+
+<div data-bind="visible: (@(list).length==0 && firstLoaded)" style="padding-left: 10px; display: none">
+    @Resources.SharedStrings.No_items_were_found
+</div>
+
+<nav class="listNavigation" >    
+    <button onclick="@(vmodel).loadPreviousData()" data-bind="visible: @(vmodel).hasPreviousPage()" style="display: none"><i class="icon-arrow-left on-left"></i>@Resources.SharedStrings.Previous</button>
+    <button onclick="@(vmodel).loadNextData()" data-bind="visible: @(vmodel).hasNextPage()"  style="display: none">@Resources.SharedStrings.Next_navigation<i class="icon-arrow-right on-right"></i></button>        
+</nav>

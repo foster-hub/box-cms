@@ -1,0 +1,266 @@
+﻿/* METRO CUSTOMIZATION */
+.metro ul.tileList { margin-left: 0px; }
+.metro ul.tileList li { list-style: none; position: relative; float: left; }
+.metro .bgred { background-color: #e51400 !important; }
+.metro .mainGrid { margin-left: 10px; margin-right: 10px; }
+.metro .toolbar button, .metro .toolbar .button { line-height: normal; padding-top: 5px; padding-bottom: 5px; }
+
+.metro button.danger:hover { background-color: rgba(154, 22, 22, 0.89) !important; }
+.metro button.large:hover { background-color: #eeeeee; outline: #999999 solid 3px; }
+
+.metro button:active { /*margin-top: 1px !important;*/ background-color: #BBBBBB !important; color: #ffffff !important; /*border-color: transparent;*/ }
+
+.metro input[type="button"]:active, .metro input[type="submit"]:active, .metro input[type="reset"]:active { background-color: #BBBBBB !important; color: #ffffff !important; }
+
+.metro .tile .brand .badge2 { position: absolute; bottom: 0; right: 44px; width: 29px; height: 29px; text-align: center; color: #ffffff; padding: 5px; margin: 0; vertical-align: middle !important; display: block; font-size: 10pt; }
+.metro .tile .brand .badge3 { position: absolute; bottom: 0; right: 78px; width: 29px; height: 29px; text-align: center; color: #ffffff; padding: 5px; margin: 0; vertical-align: middle !important; display: block; font-size: 10pt; }
+.metro .tile .brand .badge0 { position: absolute; bottom: 0; left: 0px; width: 29px; height: 29px; text-align: center; color: #ffffff; padding: 5px; margin: 0; vertical-align: middle !important; display: block; font-size: 10pt; }
+
+/* PARTS FOR DOUBLE TILES */
+.metro .tile.double.parts > ul > li:first-child { width: 80px; height: 120px; }
+.metro .tile.double.parts > ul > li { width: 170px; height: 120px; }
+
+/* PARTS FOR QUADRO TILES */
+.metro .tile.quadro.parts > ul > li:first-child { width: 120px; height: 120px; }
+.metro .tile.quadro.parts > ul > li { width: 390px; height: 120px; }
+
+.icon-imgX { background-repeat: no-repeat; background-position: center; }
+
+label { color: Gray; text-transform: uppercase; font-size: 75%; }
+
+
+
+/* TOOLBAR */
+.boxToolBar { background-color: #E5E5E5; padding: 10px; }
+.boxToolBar .grid { margin-bottom: 0px !important; margin-top: 0px !important; }
+.boxToolBar .row { margin-bottom: 0px !important; margin-top: 0px !important; }
+.boxToolBar .input-control.text, .boxToolBar .input-control.select { margin-bottom: 0px !important; }
+
+/* ELEMENTOS DO BOX */
+#darkScreen { width: 100%; height: 100%; background-color: #000000\9; /* IE HACK */ background-color: rgba(0, 0, 0, 0.9); position: fixed; z-index: 1001; display: none; top: 0px; left: 0px; }
+
+#loadingData { position: fixed; width:120px; height:40px; left: 50%; top: 50%; margin-left:-60px; margin-top: -20px; display: none; }
+#loadingData > div { border: none; text-align: center; background-color: transparent; color: gray; padding: 10px; }
+
+#operationMessage { display: none; }
+#operationMessage button { background-color:transparent!important;  float: right; margin-top: -3px; }
+#operationMessage button:active { background-color:transparent!important; }
+#operationMessage button:focus { background-color:transparent!important;}
+#operationMessage button:hover { background-color:transparent!important;}
+
+.boxDialog { padding: 20px; top: 50%; margin-top: -150px; z-index: 1002; }
+.boxDialog nav { margin-top: 18px; }
+
+/* MENU DE CONTEXTO */
+.contextMenu { position: absolute; right: 7px; top: -14px; display: none; }
+.contextMenu button { border: 1px solid gray; }
+.contextMenu button i { color: Gray; }
+
+
+
+.metro .shortPanel { height: 90px !important; }
+
+
+.field-validation-error { color: #e51400; background-image: url('./core_images/formFieldError.png'); background-position: 0px 3px; background-repeat: no-repeat; padding-left: 22px; padding-right: 4px; padding-top: 4px; height: 24px; text-transform: uppercase; font-size: 75%; margin-top: 5px; position: absolute; right: 0px; top: 0px; }
+
+
+
+
+.listNavigation { clear: both; text-align: center; margin-bottom: 20px; }
+
+.oauthSigin { display: block; float: left; width: 100%; min-height: 64px; background-position: center; background-repeat: no-repeat; border: 1px solid transparent; }
+
+.oauthSigin:hover { border: 1px solid rgba(240, 240, 240, 1); background-color: rgba(220, 220, 220, 0.1); }
+
+
+
+
+.hovered tr { cursor: hand; cursor: pointer; }
+
+.boxLeftMargin { margin-left: 10px !important; }
+
+
+
+.badge-commentCount { background-image: url(./CMS_Images/Buttons/comment.png); background-repeat: no-repeat; }
+.badge-pageCount { background-image: url(./CMS_Images/Buttons/pageView.png); background-repeat: no-repeat; }
+.badge-shareCount { background-image: url(./CMS_Images/Buttons/share.png); background-repeat: no-repeat; }
+
+
+/* HIDE/SHOW TOPMENU */
+#hideMenuButton  { cursor: pointer; cursor: hand; }
+@media only screen and (min-width: 800px)  {
+    #hideMenuButton { display: none !important; }    
+    #mainMenu { display: block; text-align:left; }    
+}
+@media only screen and (max-width: 800px) {
+    #mainMenu { display:none; text-align:center; }    
+    .element{ border-bottom:solid 1px rgba(243, 246, 248, 0.3); }        
+}
+
+
+.contentTopPanel
+{
+    display: none;
+}
+
+.contentTopPanel legend 
+{
+    font-size: 12pt;
+    margin: 8px 0px 3px 0px;
+}
+
+/* NICEDIT */
+.nicEdit-panel img
+{
+    vertical-align: top!important;
+}
+
+
+
+/* -- UPLOAD --- */
+.uploadDropArea > ul 
+{
+    padding-left: 0px;
+}
+.uploadDropArea > ul > li {
+    margin: 5px 5px 0px 0px;
+}
+.uploadDropArea > ul > li > input:focus 
+{
+   color: Yellow;
+}
+ 
+.uploadDropArea img
+{ 
+    float: left;    
+    width: 120px;    
+    height: auto;        
+}
+
+.uploadDropArea 
+{
+    float: left; 
+    background-color: rgba(250, 250, 250, 1);           
+    color: Gray; 
+    padding: 0px 5px 0px 5px;
+    margin-top: 10px;
+    min-width: 160px;    
+    min-height: 126px;
+    clear: both;
+    box-sizing: border-box;    
+    -moz-box-sizing: border-box;
+    
+    position: relative;
+    border: 4px dotted transparent; 
+}
+
+.uploadDropArea > ul 
+{
+    list-style:none;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    float: left;
+    width: 100%;
+    min-width: 160px;
+    min-height: 100px;
+    position: relative;
+    clear: both;        
+}
+.uploadDropArea.over
+{
+    border-color: Gray; 
+} 
+
+.uploadDropArea > ul > li 
+{ 
+    float: left;
+    position: relative;
+    margin: 2px;
+    max-height: 90px;
+    overflow-y: hidden;
+}
+
+.uploadDropArea > ul > li > input 
+{
+
+    font-size: 10px;
+    text-align: center;   
+    float: left;    
+    position:absolute;
+    bottom: 0px; left: 0px;    
+    background-color: #000000\9;  /* IE 8 HACK */
+    background-color: rgba(0, 0, 0, 0.5);
+    color: White;
+    border: none;
+    
+    width: 100%;
+    padding: 3px;
+    font-weight: normal;    
+}
+
+
+
+.loadingFileAlert 
+{
+    font-weight: bold;
+    display: none;
+}
+
+.loadingFileAlert img 
+{
+    width: 16px; height: 16px;
+    margin-right: 5px;
+}
+
+.uploadDropArea > ul > li .contextMenu { position: absolute; right: 7px; top: 0px; display: none; }
+
+#contentLocation ul 
+{
+    clear: both;    
+    list-style-type: none;
+    padding-left: 0px!important;
+}
+
+#contentLocation ul li
+{
+    list-style: none;
+    margin-right: 0px;
+    display: inline;        
+    list-style-type: none;
+}
+
+#contentLocation ul li a 
+{    
+    padding-right: 5px;
+    background-color: transparent;
+}
+
+/* -- CONTENT DETAIL --- */
+
+#tagSuggestions 
+{
+    clear: both;    
+}
+
+#tagSuggestions div
+{
+    border: 1px solid gray;
+    margin-right: 10px; margin-top: 5px;
+    padding: 3px;
+    cursor: hand;
+    cursor: pointer;
+    width: auto!important; float: left;
+    background-color: #FFFFCC;    
+}
+
+#tagSuggestions div:hover
+{    
+    background-color: #FFFF99;
+}
+
+#removeFileDialog { position:fixed!important; width: 100%!important; }
+
+.checked
+{
+    background-color: Orange!important;
+}

@@ -1,0 +1,9 @@
+﻿@{
+    string SYSTEM_NAME = System.Configuration.ConfigurationManager.AppSettings["SYSTEM_NAME"] as String;
+    string CONTACT_SENDER_EMAIL = System.Configuration.ConfigurationManager.AppSettings["CONTACT_SENDER_EMAIL"] as String;
+}
+
+<meta name="reply-to" @Html.Raw("content=\"" + CONTACT_SENDER_EMAIL + "\"") />
+<meta property="og:title" content="@Page.Title" />
+<meta property="og:site_name" content="@SYSTEM_NAME" />
+<meta property="og:type" content="website" />

@@ -1,0 +1,96 @@
+﻿@using Box.CMS.Web;
+@{
+    string menu = String.Empty;
+    if (IsSectionDefined("leftMenu")) { 
+        menu = RenderSection("leftMenu", false).ToHtmlString();
+    }
+}
+<!DOCTYPE html>
+<html lang="en" @Facebook.FbmlNamespaces()>
+    <head>
+
+        @RenderPage("~/parts/html-head.cshtml")
+
+        @RenderPage("~/parts/meta-head.cshtml")
+     
+        @RenderSection("head", false)
+ 
+    </head>
+
+    <body>
+        
+        @RenderPage("~/parts/top.cshtml")
+
+        <div class="container">
+            <div class="row">
+
+                
+                @if (IsSectionDefined("leftColumn")) {
+                    <!-- left column -->
+                    <div class="sidebar col-md-3 hidden-sm hidden-xs">
+                        @RenderSection("leftColumn", false)                
+                    </div>
+                }
+
+                @if (IsSectionDefined("leftMenu")) { 
+                    <!-- left column -->
+                    <div class="sidebar col-md-3 hidden-sm hidden-xs">
+                        <ul class="nav nav-sidebar">
+                            @Html.Raw(menu)
+                        </ul>
+                    </div>
+                }
+
+                <!-- body -->
+                <div class="col-md-9">
+                    <h1>@Page.Title</h1>
+                    
+                    <ol class="breadcrumb hidden-sm hidden-xs">
+                        <li><a href="@Href("~/")">Home</a></li>
+                        @RenderSection("breadcrumbs", false)
+                        <li><a href="#">@Page.Title</a></li>
+                    </ol>
+
+                    @RenderBody()
+
+                </div>
+
+                @if (IsSectionDefined("rightColumn")) {
+                    <!-- right column -->
+                    <div class="col-md-3 hidden-sm hidden-xs">
+                        @RenderSection("rightColumn", false)
+                    </div>
+                }
+                
+            </div>
+        </div>
+
+ 
+        @if (IsSectionDefined("leftMenu")) {
+            <!-- bottom menu -->
+            <div class="visible-sm visible-xs footerMenu">
+                <ul class="nav">
+                    @Html.Raw(menu)
+                </ul>        
+            </div>
+        }
+        
+        @if (IsSectionDefined("leftColumn")) {
+            <!-- bottom menu -->
+            <div class="visible-sm visible-xs footerMenu">
+                @RenderSection("leftColumn", false)
+            </div>
+        }
+       
+        @RenderPage("~/parts/footer.cshtml")
+        
+      
+        <!-- Bootstrap core JavaScript -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+        @RenderSection("scripts", false)
+        
+    </body>
+</html>

@@ -1,0 +1,67 @@
+﻿@using System.Web.Optimization
+@using Box.Core.Web;
+@using Box.ContactForms;
+@model Box.Core.Web.PageModel
+
+@{
+    ViewBag.Title = @Box.People.SharedStrings.People;
+}
+
+<!-- LIST PANEL -->
+<h2 class="boxLeftMargin">@Box.People.SharedStrings.People</h2>
+
+<ul class="tileList" style="display: none" data-bind="visible: true">
+    <li onclick="window.loadGroup('All')">
+        <div class="tile bg-cyan double parts">
+            <ul>
+                <li>
+                    <div class="tile-content icon">
+                        <i class="fa fa-users icon-fa"></i>
+                    </div>
+                </li>
+                <li>
+                    <div class="tile-content tile-status">
+                        <span  class="name">
+                            @Box.People.SharedStrings.Group_Everyone                    
+                        </span>
+                        <span class="text">                        
+                            @Box.People.SharedStrings.Group_Everyone_Detail                    
+                        </span>
+                        
+                    </div>                    
+                </li>
+            </ul>            
+        </div>
+    </li>  
+
+    <!-- ko foreach: group -->
+    <li  data-bind="click: window.loadGroup">
+         
+         <div class="tile double bg-cyan parts">
+
+           <ul>
+                <li>
+                    <div class="tile-content icon">
+                        <i class="fa fa-users icon-fa"></i>
+                    </div>
+                </li>
+                <li>
+                    <div class="tile-content tile-status">            
+                        <span data-bind="text: $data" class="name"></span>
+                    </div>
+                </li>
+            </div>
+
+    </li>    
+    <!-- /ko -->
+</ul>
+
+@section scripts {  
+    <script type="text/javascript" src="@Url.Content("~/Scripts/People/GroupVM.js")"></script>
+    
+    <script type="text/javascript">
+        function loadGroup(group) {
+            window.location.href = 'people_person/?group_name=' + group;
+        }   
+    </script> 
+}

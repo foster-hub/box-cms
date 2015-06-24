@@ -1,0 +1,23 @@
+﻿@using Box.CMS.Web;
+
+@{
+    HtmlString collapseClass = new HtmlString("class=\"dropdown-menu\"");
+    if (PageData[0] != null && PageData[0] == false) {
+        collapseClass = new HtmlString("");
+    }
+}
+
+@Site.MenuLink("~/", "home")
+                
+<li class="dropdown @(Site.IsRequestUrl("~/pages")?"active":"")">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">pages</a>
+    <ul @collapseClass role="menu">
+        @BoxSite.ContentsAtUrl("/pages", itemTemplate: Site.MenuLink)
+    </ul>
+</li>
+            
+@Site.MenuLink("~/news","news")
+@Site.MenuLink("~/albums","albums")
+@Site.MenuLink("~/documents","documents")
+@Site.MenuLink("~/contact","contact")
+@Site.MenuLink("~/register", "register")

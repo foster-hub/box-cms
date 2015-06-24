@@ -1,0 +1,233 @@
+﻿@using Box.Core.Web
+@{    
+    bool IsWindowsAuthEnable = (bool) ViewData["WindowsAuth"];
+}
+
+<div class="toolbar transparent boxToolBar">
+    <div class="grid fluid">
+        <div class="row">
+
+            <div class="span12">
+                <button onclick="if (!$('#editForm').valid()) return; pageVM.syncPassword(); pageVM.applyItemChanges();">
+                    <i class="icon-checkmark on-left fg-green"></i>
+                    @Resources.SharedStrings.Apply
+                </button>
+                <button onclick="pageVM.cancelItemChanges()">
+                    <i class="icon-cancel on-left fg-red"></i>@Resources.SharedStrings.Cancel
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<form id="editForm">
+
+    <h2 class="boxLeftMargin" data-bind="text: editingItem().Name"></h2>
+
+    <div class="grid mainGrid">
+        <div class="row no-margin">
+            <fieldset class="span10">
+
+                <label>@Resources.SharedStrings.Email</label>
+
+
+                <div class="input-control text" data-bind="visible: newItem()!=null">
+                    <input type="text"
+                           id="userEmail"
+                           data-bind="value: editingItem().Email"
+                           maxlength="255" class="required email"
+                           onblur="pageVM.suggestUserName(this.value)" />
+                </div>
+
+                <span data-bind="text: editingItem().Email, visible: newItem()==null" style="margin-bottom: 10px; display: block"></span>
+
+
+                <label>@Resources.SharedStrings.Name</label>
+                <div class="input-control text">
+                    <input type="text" data-bind="value: editingItem().Name, valueUpdate:'afterkeydown'" onkeyup="pageVM.editingItem.valueHasMutated();" class="required" />
+                </div>
+
+                @if (IsWindowsAuthEnable) {
+                    <div id="changeLoginNT" style="clear: both">
+                        <label>@Resources.SharedStrings.Network_Login</label>
+                        <div class="input-control text">
+                            <input id="loginNTTxt" type="text"
+                                   data-bind="value: editingItem().LoginNT"
+                                   maxlength="255" />
+                        </div>
+                    </div>
+                }
+
+                <label>@Resources.SharedStrings.Status</label>
+
+                <div class="input-control radio">
+
+                    <label>
+                        <input type="radio" name="blockeduser" value="false" data-bind="checked: editingItem().Blocked+''" onclick="pageVM.blockEditingUser(false)" />
+                        <span class="check"></span>
+                        @Resources.SharedStrings.Active
+                    </label>
+                    <label>
+                        <input type="radio" name="blockeduser" value="true" data-bind="checked: editingItem().Blocked+''" onclick="pageVM.blockEditingUser(true)" />
+                        <span class="check"></span>
+                        @Resources.SharedStrings.Blocked
+                    </label>
+                </div>
+
+                
+
+                
+
+
+
+
+                <div id="changePassword" style="display: none; clear: both">
+                    <label>@Resources.SharedStrings.Password</label>
+
+                    <div class="input-control password">
+                        <input type="password" data-bind="value: newPassword" maxlength="10" minlength="6" style="max-width: 200px" />
+                    </div>
+                    <span class="text-muted">@Resources.SharedStrings.Password_tooltip</span>
+                </div>
+
+                <a id="changePasswordLink"
+                   href="javascript: showPassword()"
+                   style="display: block; margin-top: 8px; clear:both">@Resources.SharedStrings.Change_password</a>
+
+            </fieldset>
+            <div class="span2" style="margin-left: 20px;">
+                <img data-bind="attr:{src: pageVM.getGravatarImage(editingItem().Email, 120, 'mm') }" style="text-align: center;" />
+                <div style="text-align: left; font-size: small">
+
+                    <a href="https://gravatar.com/" target="_blank" title="@Resources.SharedStrings.You_can_use_Gravatar_to_change_your_picture">
+                        @Resources.SharedStrings.You_can_use_Gravatar_to_change_your_picture
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <fieldset class="span12">
+                <legend>@Resources.SharedStrings.User_groups</legend>
+
+                <ul data-bind="foreach: userConcactGroupsIn" class="tileList">
+                    <li onmouseover="showContextMenu(this)" onmouseout="hideContextMenu(this)">
+                        <div class="tile double parts" data-bind="click: $parent.removeGroupFromUser">
+                            <ul>
+                                <li>
+                                    <div class="tile-content icon">
+                                        <div class="icon-imgX" data-bind="style: { backgroundImage: iconUrl }"></div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="tile-content tile-status">
+                                        <span data-bind="text: Name" class="name fg-black"></span>
+                                        <span data-bind="text: Description" class="text fg-black"></span>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </li>
+                </ul>
+
+
+                <span data-bind="visible: userConcactGroupsIn().length==0" style="clear: both; margin-bottom: 10px; float: left;">@Resources.SharedStrings.User_has_no_groups</span>
+            </fieldset>
+        </div>
+
+        <div class="row">
+            <fieldset class="span12" id="userOutGroups" style="display: none; clear: both">
+
+                <legend>@Resources.SharedStrings.Other_groups</legend>
+                <ul data-bind="foreach: userConcactGroupsOut" class="tileList">
+                    <li>
+                        <div class="tile double parts" data-bind="click: $parent.addGroupToUser">
+                            <ul>
+                                <li>
+                                    <div class="tile-content icon">
+                                        <div class="icon-imgX" data-bind="style: { backgroundImage: iconUrl }"></div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="tile-content tile-status">
+                                        <span data-bind="text: Name" class="name fg-black"></span>
+                                        <span data-bind="text: Description" class="text fg-black"></span>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </div>
+
+
+                    </li>
+                </ul>
+                <span data-bind="visible: userOutGroups().length==0" style="clear: both; display: none;">@Resources.SharedStrings.No_groups_to_add</span>
+
+            </fieldset>
+
+            <a id="userOutGroupsLink"
+               href="javascript: showAddGroups();"
+               style="clear: both; float: left; margin-bottom: 10px">@Resources.SharedStrings.Add_more_groups</a>
+        </div>
+    </div>
+</form>
+
+@this.ScriptBlock(
+    @<script type="text/javascript">
+        
+        function onShowDetail() {
+            pageVM.onShowDetail();
+            showAddGroups(true);
+            showPassword(true);
+            document.getElementById('userEmail').focus();            
+        }
+
+        function showAddGroups(hide) {
+
+            var groups = document.getElementById('userOutGroups');
+            var groupsLink = document.getElementById('userOutGroupsLink');
+
+            if (groups.style.display == 'block' || hide == true) {
+                groupsLink.innerHTML = '@Resources.SharedStrings.Add_more_groups';
+                groups.style.display = 'none';
+                return;
+            }
+
+            groupsLink.innerHTML = '@Resources.SharedStrings.Hide_other_groups';
+            groups.style.display = 'block';
+        }
+
+        function showAddGroupCollection(hide) {
+
+            var groups = document.getElementById('groupCollectionOutGroups');
+            var groupsLink = document.getElementById('groupCollectionOutGroupsLink');
+
+            if (groups.style.display == 'block' || hide == true) {
+                groupsLink.innerHTML = '@Resources.SharedStrings.Add_more_groups';
+                groups.style.display = 'none';
+                return;
+            }
+
+            groupsLink.innerHTML = '@Resources.SharedStrings.Hide_other_groups';
+            groups.style.display = 'block';
+        }
+
+        function showPassword(hide) {
+            var pass = document.getElementById('changePassword');
+            var passLink = document.getElementById('changePasswordLink');
+
+            if (pass.style.display == 'block' || hide) {
+                passLink.innerHTML = '@Resources.SharedStrings.Change_password';
+                pass.style.display = 'none';
+                pageVM.newPassword(null);
+                return;
+            }
+
+            passLink.innerHTML = '@Resources.SharedStrings.Cancel_password_change';
+            pass.style.display = 'block';
+        }
+        
+    </script>
+    )

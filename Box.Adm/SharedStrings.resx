@@ -1,0 +1,436 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Apply" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="Blocked" xml:space="preserve">
+    <value>Blocked</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="Loading_data" xml:space="preserve">
+    <value>wait...</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="New_user" xml:space="preserve">
+    <value>New user</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Não</value>
+  </data>
+  <data name="No_items_were_found" xml:space="preserve">
+    <value>No items were found.
+Try to change your filter.</value>
+  </data>
+  <data name="Remove_user" xml:space="preserve">
+    <value>Remove user</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="User_already_exists" xml:space="preserve">
+    <value>Could not create user. Another user with same e-mail or same network login already exists.</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="val_This_field_is_required" xml:space="preserve">
+    <value>This field is required</value>
+  </data>
+  <data name="val_Please_enter_a_valid_email_address" xml:space="preserve">
+    <value>Please enter a valid email address</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="User_groups" xml:space="preserve">
+    <value>Users' groups</value>
+  </data>
+  <data name="Add_more_groups" xml:space="preserve">
+    <value>Show other groups</value>
+  </data>
+  <data name="No_groups_to_add" xml:space="preserve">
+    <value>No more groups to add.</value>
+  </data>
+  <data name="User_has_no_groups" xml:space="preserve">
+    <value>User has no groups.</value>
+  </data>
+  <data name="Manage_users" xml:space="preserve">
+    <value>Manage users</value>
+  </data>
+  <data name="Name_email_or_group" xml:space="preserve">
+    <value>Search for name, email or user group</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="Error_sigin" xml:space="preserve">
+    <value>Error sign in</value>
+  </data>
+  <data name="Signing" xml:space="preserve">
+    <value>Signing...</value>
+  </data>
+  <data name="Sign_in" xml:space="preserve">
+    <value>Sign in</value>
+  </data>
+  <data name="You_do_not_have_an_active_account_at_this_system" xml:space="preserve">
+    <value>You do not have an active account at this system</value>
+  </data>
+  <data name="Or_using" xml:space="preserve">
+    <value>using</value>
+  </data>
+  <data name="Your_crendetials" xml:space="preserve">
+    <value>Your credentials</value>
+  </data>
+  <data name="Your_email" xml:space="preserve">
+    <value>Your email</value>
+  </data>
+  <data name="Your_password" xml:space="preserve">
+    <value>Your password</value>
+  </data>
+  <data name="Forgot_your_password" xml:space="preserve">
+    <value>Forgot your password?</value>
+  </data>
+  <data name="Sign_out" xml:space="preserve">
+    <value>Sign out</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Password_tooltip" xml:space="preserve">
+    <value>This is not required when using other authertication providers, such as Windows Live, Google...</value>
+  </data>
+  <data name="Change_password" xml:space="preserve">
+    <value>Change/Define password</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Invalid_user_or_password" xml:space="preserve">
+    <value>Invalid user or password</value>
+  </data>
+  <data name="Are_you_sure" xml:space="preserve">
+    <value>Are you sure?</value>
+  </data>
+  <data name="The_user_X" xml:space="preserve">
+    <value>The user "</value>
+  </data>
+  <data name="val_Please_enter_at_least_X_characters" xml:space="preserve">
+    <value>Please enter at least {0} characters.</value>
+  </data>
+  <data name="val_Please_enter_a_valid_URL" xml:space="preserve">
+    <value>Please enter a valid URL.</value>
+  </data>
+  <data name="will_be_removed" xml:space="preserve">
+    <value>" will be removed.</value>
+  </data>
+  <data name="Cancel_password_change" xml:space="preserve">
+    <value>Cancel password change</value>
+  </data>
+  <data name="Hide_other_groups" xml:space="preserve">
+    <value>Hide other groups</value>
+  </data>
+  <data name="Other_groups" xml:space="preserve">
+    <value>Other groups</value>
+  </data>
+  <data name="New_password" xml:space="preserve">
+    <value>New password</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Password_check" xml:space="preserve">
+    <value>Re-typed it</value>
+  </data>
+  <data name="Password_was_changed" xml:space="preserve">
+    <value>Your password was changed.</value>
+  </data>
+  <data name="User_blocked" xml:space="preserve">
+    <value>This user account is blocked.</value>
+  </data>
+  <data name="Reset_password" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
+  <data name="Reset_password_tooltip" xml:space="preserve">
+    <value>Please provide your e-mail account. A new password and an activate link will be send to your e-mail.</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="Please_go_to" xml:space="preserve">
+    <value>Please go to</value>
+  </data>
+  <data name="Reset_password_tooltip2" xml:space="preserve">
+    <value>You have requested a new password. A new password was generate to you, but it will only be activated once you click at the activate link bellow.</value>
+  </data>
+  <data name="Your_new_password_is" xml:space="preserve">
+    <value>Your new password is</value>
+  </data>
+  <data name="An_email_was_send_to_you_with_your_new_password" xml:space="preserve">
+    <value>An e-mail was send to you with your new password.</value>
+  </data>
+  <data name="Could_not_find_your_user_account" xml:space="preserve">
+    <value>Could not find your user account.</value>
+  </data>
+  <data name="Make_sure_you_are_using_one_of_the_following_browsers" xml:space="preserve">
+    <value>Make sure you are using one of the following browsers</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="At" xml:space="preserve">
+    <value>At</value>
+  </data>
+  <data name="Order_by" xml:space="preserve">
+    <value>Order by</value>
+  </data>
+  <data name="Move_to" xml:space="preserve">
+    <value>Move to</value>
+  </data>
+  <data name="Vote" xml:space="preserve">
+    <value>Votos</value>
+  </data>
+  <data name="Export_Data" xml:space="preserve">
+    <value>Export Data</value>
+  </data>
+  <data name="Group" xml:space="preserve">
+    <value>Group</value>
+  </data>
+  <data name="Group_Has_No_Permission" xml:space="preserve">
+    <value>Group unbound permission</value>
+  </data>
+  <data name="Group_Permission" xml:space="preserve">
+    <value>Group permission</value>
+  </data>
+  <data name="Group_Search_By_Name_Permission" xml:space="preserve">
+    <value>Search group  by name or permission</value>
+  </data>
+  <data name="Group_Without_Any_Permission" xml:space="preserve">
+    <value>Group has not any permission</value>
+  </data>
+  <data name="Add_more_permissions" xml:space="preserve">
+    <value>Add more permissions</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Groups" xml:space="preserve">
+    <value>Groups</value>
+  </data>
+  <data name="Hide_permissions" xml:space="preserve">
+    <value>Hide permissions</value>
+  </data>
+  <data name="New_group" xml:space="preserve">
+    <value>New group</value>
+  </data>
+  <data name="The_group_X" xml:space="preserve">
+    <value>The group "</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="Next_navigation" xml:space="preserve">
+    <value>Próximo</value>
+  </data>
+  <data name="from" xml:space="preserve">
+    <value>from</value>
+  </data>
+  <data name="Logs" xml:space="preserve">
+    <value>Logs</value>
+  </data>
+  <data name="Search_for_user_or_event" xml:space="preserve">
+    <value>Search for user or event</value>
+  </data>
+  <data name="to" xml:space="preserve">
+    <value>to</value>
+  </data>
+  <data name="Remove_group" xml:space="preserve">
+    <value>Remove group</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Event" xml:space="preserve">
+    <value>Event</value>
+  </data>
+  <data name="Parameters" xml:space="preserve">
+    <value>Parameters</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="Type_of_log" xml:space="preserve">
+    <value>Type of log</value>
+  </data>
+  <data name="LoginNT_already_exists" xml:space="preserve">
+    <value>Could not create user. Another user with same network Login already exists.</value>
+  </data>
+  <data name="Change_Network_Login" xml:space="preserve">
+    <value>Change/Define network login</value>
+  </data>
+  <data name="Network_Login" xml:space="preserve">
+    <value>Network Login (ex:dominio\usuario)</value>
+  </data>
+  <data name="Cancel_network_login_change" xml:space="preserve">
+    <value>Cancel network login change</value>
+  </data>
+  <data name="Sign_in_again" xml:space="preserve">
+    <value>Sign in again</value>
+  </data>
+  <data name="You_can_use_Gravatar_to_change_your_picture" xml:space="preserve">
+    <value>You can use Gravatar to change your profile picture</value>
+  </data>
+  <data name="Unauthorized_UserNT" xml:space="preserve">
+    <value>Unauthorized user. Contact the system administrator.</value>
+  </data>
+  <data name="Or_Login_with_windows_account" xml:space="preserve">
+    <value>Or login with windows account.</value>
+  </data>
+</root>

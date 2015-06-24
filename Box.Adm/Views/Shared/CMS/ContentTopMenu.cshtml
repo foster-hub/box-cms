@@ -1,0 +1,164 @@
+﻿@using Box.CMS
+@using Box.Core.Web
+@using Box.CMS.Web
+
+
+
+    <div class="toolbar transparent boxToolBar">
+
+    <div class="grid fluid">
+        <div class="row">
+            <div class="span5">        
+                <button  onclick="if (!$('#editForm').valid()) return; pageVM.applyContentChanges()" >
+                    <i class="icon-checkmark on-left fg-green"></i>
+                        @Resources.SharedStrings.Apply                    
+                </button>
+                <button onclick="if (!$('#editForm').valid()) return; pageVM.applyContentChanges(true)" >
+                    <i class="icon-upload-2 on-left fg-blue"></i>
+                        @Box.CMS.SharedStrings.Apply_and_Publish
+                    
+                </button>
+                <button onclick="pageVM.cancelItemChanges()" >
+                    <i class="icon-cancel on-left fg-red"></i>
+                        @Resources.SharedStrings.Cancel                    
+                </button>
+            </div>
+
+            <div class="span7">
+                <input type="button" value="@Box.CMS.SharedStrings.Publication" onclick="showPanel('publishPanel')"    class="secundary place-right"/> 
+                <input type="button" value="@Box.CMS.SharedStrings.Cross_Links" onclick="showPanel('crossLinksPanel')" class="secundary place-right" />        
+                <input type="button" value="@Box.CMS.SharedStrings.Tags"        onclick="showPanel('tagPanel')"        class="secundary place-right" />        
+                <input type="button" value="@Resources.SharedStrings.Order_by"  onclick="showPanel('orderPanel')"      class="secundary place-right"/> 
+                <input type="button" value="@Resources.SharedStrings.Move_to"   onclick="showPanel('movePanel')"       class="secundary place-right"/> 
+            </div>
+        </div>
+        
+    </div>
+
+    <fieldset id="crossLinksPanel" class="contentTopPanel">
+        <legend>@Box.CMS.SharedStrings.Cross_Links_tooltip</legend>        
+        @foreach (CrossLinkArea area in Model.CrossLinkAreas) {            
+            <input
+                class="checkboxButton"
+                data-bind="css: { checked: isCrossLinkAt('@area.Area')>=0 }" 
+                onclick="pageVM.addCrossLink('@area.Area')"
+                type="button" value="@area.Area"  />                
+        }        
+    </fieldset>
+
+    <fieldset id="orderPanel" class="contentTopPanel">
+        <legend>@Box.CMS.SharedStrings.Order_by_tooltip</legend>
+      
+            <label>@Box.CMS.SharedStrings.Content_date</label>               
+            @MetroUI.Datepicker(databind: "date: editingItem().ContentDate")
+            @MetroUI.TimePicker("editingItem().ContentDate")
+            
+
+            <label>@Box.CMS.SharedStrings.Order</label>  
+            @MetroUI.TextBox(databind: "value: editingItem().DisplayOrder", classes: "number", width: 80)
+      
+    </fieldset>
+
+    <fieldset id="tagPanel" class="contentTopPanel">
+        <legend>@Box.CMS.SharedStrings.Tags_tooltip</legend>
+        
+        <label>@Box.CMS.SharedStrings.Tags</label>   
+        @MetroUI.TextBox(id: "tagsTextArea", databind: "value: editingItem().TagsString")        
+        <div id="tagSuggestions">
+        @foreach (string tag in Model.ContentKind.Tags) {
+            <div onclick="addTag(this)">@tag</div>
+        }
+        </div>        
+    </fieldset>
+
+    <fieldset id="publishPanel" class="contentTopPanel">
+        <legend>@Box.CMS.SharedStrings.Publish_tooltip</legend>
+        
+        <label>@Box.CMS.SharedStrings.Publish_after</label>
+        @MetroUI.Datepicker(databind: "date: editingItem().PublishAfter")
+        @MetroUI.TimePicker("editingItem().PublishAfter")
+        
+        <label>@Box.CMS.SharedStrings.Publish_until</label>  
+        @MetroUI.Datepicker(databind: "date: editingItem().PublishUntil")
+        @MetroUI.TimePicker("editingItem().PublishUntil")
+            
+        <a href="javascript: pageVM.resetPublish()">@Box.CMS.SharedStrings.Unpublish</a>
+    </fieldset>
+
+    <fieldset id="movePanel" class="contentTopPanel">
+        <legend>@Resources.SharedStrings.Move_to</legend>
+              
+        <div class="input-control select">
+            <select data-bind="value: editingItem().Location">
+                @foreach (string location in Model.ContentKind.Locations)
+                {
+                    <option>@location</option>                    
+                }
+            </select>
+        </div>
+        
+    </fieldset>
+     
+
+    </div>
+    
+    
+<h2 data-bind="text: editingItem().Name" class="boxLeftMargin"></h2>
+  
+    <div class="boxLeftMargin" style="font-style: italic; font-weight: bold; font-size: 12px; clear: both">
+        <span  >@Resources.SharedStrings.At <span data-bind="text: contentLocation" style="margin-right: 10px"></span></span>            
+        <span 
+            class="publishLabel" style="position: relative; left: 0px; top: 0px;" 
+            data-bind="visible: pageVM.isContentNotPublished(editingItem())">@Box.CMS.SharedStrings.CONTENT_NOT_PUBLISHED</span>
+        <span 
+            class="publishLabel" style="position: relative; left: 0px; top: 0px;" 
+            data-bind="visible: pageVM.isContentScheduled(editingItem())">@Box.CMS.SharedStrings.CONTENT_SCHEDULED</span>
+        <span 
+            class="publishLabel" style="position: relative; left: 0px; top: 0px;"
+            data-bind="visible: pageVM.isContentExpired(editingItem())">@Box.CMS.SharedStrings.CONTENT_EXPIRED</span>
+    </div>
+
+@this.ScriptBlock(
+@<script type="text/javascript" >
+
+     pageVM.publishAlert = '@{<text>@Html.Raw(Box.CMS.SharedStrings.Publish_alert.ToString().Replace("\r", "").Replace("\n", ""))</text>}';
+
+     // CONTENT HEAD SCRIPT BLOCK ----------------------
+     var _panelOpened = null;
+     function showPanel(id) {
+         var panel;
+         if (id == null)
+             panel = _panelOpened;
+         else
+             panel = document.getElementById(id);
+
+         if (panel == null)
+             return;
+
+         if (panel == _panelOpened) {
+             panel.style.display = 'none';
+             _panelOpened = null;
+             return;
+         }
+
+         if (_panelOpened != null)
+             _panelOpened.style.display = 'none';
+         panel.style.display = 'block';
+         _panelOpened = panel;
+     }
+
+     function addTag(tagDiv) {
+         var tags = document.getElementById('tagsTextArea');
+         if (tags == null)
+             return;
+
+        if (tags.value.length > 0)
+            tags.value = tags.value + ', ';
+        tags.value = tags.value + tagDiv.innerHTML;
+         
+        $(tags).trigger("change");
+     }
+     
+</script>
+)
+

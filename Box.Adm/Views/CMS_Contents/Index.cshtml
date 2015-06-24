@@ -1,0 +1,296 @@
+﻿@using System.Web.Optimization
+@using Box.Core.Web
+@model Box.CMS.Web.ContentPageModel
+@{
+    ViewBag.Title = Model.ContentKind.FriendlyPluralName;
+    
+    string AnyTimeDefaultFilterSelected = "";
+    string SixMonthsFilterSelected = "selected";
+
+    if (Model.ContentKind.AnyTimeDefaultFilter) {
+        AnyTimeDefaultFilterSelected = "selected";
+        SixMonthsFilterSelected = "";
+    }
+
+    string NameDefaultFilterSelected = "";
+    string NewestFilterSelected = "selected";
+
+    if (Model.ContentKind.NameDefaultFilter) {
+        NameDefaultFilterSelected = "selected";
+        NewestFilterSelected = "";
+    }
+
+    bool ShowLocationsAsDropdown = Model.ContentKind.Locations.Sum(l=>l.Length) > 140;
+    
+    
+}
+
+@section css {
+
+<style type="text/css">
+    #previewContentIFrame {  
+        -moz-transform: scale(0.25, 0.25); 
+        -webkit-transform: scale(0.25, 0.25); 
+        -o-transform: scale(0.25, 0.25);
+        -ms-transform: scale(0.25, 0.25);
+        transform: scale(0.25, 0.25); 
+        -moz-transform-origin: top left;
+        -webkit-transform-origin: top left;
+        -o-transform-origin: top left;
+        -ms-transform-origin: top left;
+        transform-origin: top left;
+        overflow: hidden;
+        position: fixed; 
+        height:2000px; width: 1500px;
+        left:50%;        
+        top: 100px;
+        margin-left: -187px;
+        background-color: White;
+        border: 2px solid gray;
+        -webkit-user-select: none;
+        box-shadow: 3px 3px 3px rgba(0,0,0,0.3);          
+    }
+</style>
+}
+
+<!-- LIST PANEL -->
+<div data-bind="if: editingItem()==null">
+    <div class="toolbar transparent boxToolBar">
+        <div class="grid fluid">
+            <div class="row">
+                <div class="span1">
+                    <span>
+                        <button onclick="addContent()">
+                            <i class="icon-plus on-left fg-blue"></i>@Resources.SharedStrings.New</button></span>
+                </div>
+                <div class="span7">
+                    @MetroUI.SearchBox(placeholder: @Box.CMS.SharedStrings.Content_name_or_description, databind: "value: searchFilter, valueUpdate:'afterkeydown'", others: "onkeyup='pageVM.filter()'")
+                </div>
+                <div class="input-control select span2">
+                    <select data-bind="value: createdFromFilter">                        
+                        <option value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")">@Box.CMS.SharedStrings.Last_week</option>
+                        <option value="@DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd")">@Box.CMS.SharedStrings.Last_month</option>
+                        <option value="@DateTime.Now.AddMonths(-6).ToString("yyyy-MM-dd")" @SixMonthsFilterSelected>@Box.CMS.SharedStrings.Last_6_months</option>
+                        <option value="@DateTime.Now.AddMonths(-12).ToString("yyyy-MM-dd")">@Box.CMS.SharedStrings.Last_12_months</option>
+                        <option value="" @AnyTimeDefaultFilterSelected>@Box.CMS.SharedStrings.Any_time</option>
+                    </select>
+                </div>
+                <div class="input-control select span2">
+                    <select data-bind="value: order">
+                        <option value="Name" @NameDefaultFilterSelected>@Box.CMS.SharedStrings.Name</option>
+                        <option value="Date" @NewestFilterSelected>@Box.CMS.SharedStrings.Newest</option>
+                        <option value="Date ASC">@Box.CMS.SharedStrings.Oldest</option>
+                        <option value="DisplayOrder">@Box.CMS.SharedStrings.Display</option>
+                        <option value="Comments DESC">@Box.CMS.SharedStrings.Most_popular</option>
+                        <option value="Comments">@Box.CMS.SharedStrings.Less_popular</option>
+                        <option value="Share">@Box.CMS.SharedStrings.Best_ranked</option>
+                        <option value="Share DESC">@Box.CMS.SharedStrings.Worst_ranked</option>
+                        <option value="PageView DESC">@Box.CMS.SharedStrings.Most_Viewed</option>
+                        <option value="PageView">@Box.CMS.SharedStrings.Less_Viewed</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="input-control checkbox" style="float: right; margin-right: 10px">
+        <label>
+            <input id="publishedCheck" type="checkbox" data-bind="checked: filterOnlyPublished" />
+            <span class="check"></span>
+            @Box.CMS.SharedStrings.Only_published
+        </label>
+    </div>
+    <h2 class="boxLeftMargin">@ViewBag.Title</h2>
+    <div id="contentLocation" class="boxLeftMargin">
+
+        @if (ShowLocationsAsDropdown) {
+            <select onchange="pageVM.setContentLocation($(this).val(), true)">
+                @foreach (string location in Model.ContentKind.Locations)
+                {
+                    <option>@location</option>                    
+                }
+            </select>
+        } else { 
+            <ul>
+                @foreach (string location in Model.ContentKind.Locations)
+                {                
+                    <li data-bind="style: { fontWeight: contentLocation()=='@location'?'bold':'normal' }">
+                        <a href="javascript: pageVM.setContentLocation('@location', true)">@location</a>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+    <ul data-bind="foreach: contents, visible: true" class="tileList" style="display: none">
+        <li onmouseover="showContextMenu(this)" onmouseout="hideContextMenu(this)">
+            <div class="tile quadro bg-cyan parts" data-bind="click: window.editContent">
+                <ul>
+                    <li>
+                        <div class="tile-content image">
+                            <img                             
+                                data-bind="attr: { src: FileUrl.toView(ThumbFilePath, true) }" style="height: 100%; max-width: none"
+                                onerror="this.src='@Url.Content("~/Content/Core_Images/no-image.png")'" />
+                        </div>
+                    </li>
+                    <li>
+                        <div class="tile-content tile-status">
+                            <span data-bind="text: Name" class="name"></span><span class="text" data-bind="text: '@Box.CMS.SharedStrings.created_at ' + CreateDate.toLocaleString()">
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+                <div class="brand">
+                    <span class="badge badge-pageCount" data-bind="text: PageViewCount==null?0:PageViewCount.Count">
+                    </span>
+                    @if ((bool)Model.ContentKind.Browsable) {
+                        <span class="badge2 badge-commentCount" data-bind="text: CommentsCount==null?0:CommentsCount.Count, visible: CommentsCount>0">
+                        </span>
+                        <span class="badge3 badge-shareCount" data-bind="text: ShareCount==null?0:ShareCount.Count, visible: ShareCount>0">
+                        </span>
+                        }
+                    <div class="badge0 bg-red" data-bind="visible: pageVM.isContentNotPublished($data)" title="@Box.CMS.SharedStrings.CONTENT_NOT_PUBLISHED">
+                        <i class="icon-blocked"></i>
+                    </div>
+                    <div class="badge0 bg-orange" data-bind="visible: pageVM.isContentScheduled($data)" title="@Box.CMS.SharedStrings.CONTENT_SCHEDULED">
+                        <i class="icon-calendar"></i>
+                    </div>
+                    <div class="badge0 bg-red" data-bind="visible: pageVM.isContentExpired($data)" title="@Box.CMS.SharedStrings.CONTENT_EXPIRED">
+                        <i class="icon-calendar"></i>
+                    </div>
+                </div>
+            </div>
+            <nav class="contextMenu">
+                    @if ((bool)Model.ContentKind.Browsable) {                     
+                    <button data-bind="click: function(data) { pageVM.browseContent(data);}, clickBubble: false" onmouseout="pageVM.stopPreview();" >
+                        <i class="icon-new-tab"></i>                        
+                    </button>
+                    <button data-bind="click: function(data) { pageVM.setPreviewUrl(data);}, clickBubble: false" onmouseout="pageVM.stopPreview();" >
+                        <i class="icon-eye"></i>
+                    </button>
+                    
+                    <button data-bind="click: function(data) { dialogHelper.endark(); pageVM.removingItem(data); }, clickBubble: false">
+                        <i class="icon-remove"></i>
+                    </button>
+                    }
+                </nav>
+        </li>
+    </ul>
+    @Html.Partial("ListNavigation", new PageNavigationModel() { ListName = "contents" })
+    <iframe id="previewContentIFrame" scrolling="no" verticalscrolling="no" data-bind="attr: { src: previewUrl }, visible: previewUrl()!=null" style="display: none" ></iframe>
+</div>
+<!-- EDIT PANEL -->
+<div style="display: none;" data-bind="if: editingItem()!=null, visible: editingItem()!=null"
+    id="editPannel">
+    @Html.Partial("CMS_Capture/" + Model.ContentKind.CaptureDetailView)
+</div>
+@section dialogs {
+    @Html.Partial("CMS/FileDatabase")
+    <div id="removeDialog" class="window flat shadow boxDialog" data-bind="if: pageVM.removingItem()!=null, visible: pageVM.removingItem()!=null"
+        style="display: none">
+        <h1>@Box.CMS.SharedStrings.Remove_content</h1>
+        @Box.CMS.SharedStrings.The_content_X
+        <!-- melhorar -->
+        <span data-bind="text: removingItem().FileName"></span>
+        <span data-bind="text: removingItem().Name"></span>
+        @Resources.SharedStrings.will_be_removed
+        <br />
+        @Resources.SharedStrings.Are_you_sure
+        <nav>
+            <button class="large" onclick="pageVM.removingItem(null); dialogHelper.undark();">@Resources.SharedStrings.Cancel</button>
+            <button class="danger large" onclick="pageVM.removeItem();dialogHelper.undark();"><i class="icon-remove on-left"></i>@Resources.SharedStrings.Yes</button>
+        </nav>
+    </div>
+}
+@section scripts {
+    @Scripts.Render("~/bundles/boxCMS")
+    <script type="text/javascript">
+
+        // CONTENT INDEX SCRIPT BLOCK ----------------------
+
+        var htmlEditor = new nicEditor({
+            forceIFrame: !($.browser.msie), 
+            iconsPath: _webAppUrl + 'Scripts/nicedit/nicEditorIcons.gif',
+            buttonList: ['bold', 'italic', 'underline', 'fontSize', 'forecolor', 'bgcolor', 'ol', 'ul', 'indent', 'outdent', 'left', 'center', 'right', 'link', 'unlink', 'fontFormat', 'boxImage', 'boxHTML']
+        });
+        htmlEditor.options.externalCSS = 'http://' + window._siteHost + '/css/Site.css';
+
+        $(document).ready(function () {
+
+            pageVM.setContentLocation('@Model.ContentKind.Locations[0]');
+            pageVM.kind = '@Model.ContentKind.Kind';            
+            
+            ko.applyBindings(pageVM);
+
+            pageVM.init();
+
+            pageVM.customDataBeforePost = function () {
+
+                setTagsArray(pageVM.editingItem());
+
+                if (window.BEFORE_POST)
+                    window.BEFORE_POST(pageVM.editingItem());
+
+                if (window.SET_THUMB)
+                    SET_THUMB(pageVM.editingItem());
+            }
+
+        });
+
+        function setTagsArray(content) {
+            if (content.TagsString == null)
+                return new Array();
+            var arr = content.TagsString.split(',');
+            content.Tags = new Array();
+            for (var i = 0; i < arr.length; i++)
+                content.Tags[i] = { Tag: arr[i] };    
+        }
+
+        function addContent() {
+
+            var contentHead = new Object();
+            contentHead.Name = '@Html.Raw(Box.CMS.SharedStrings.Title)';
+            contentHead.Kind = '@Model.ContentKind.Kind';
+            contentHead.Abstract = '';
+            contentHead.CrossLinks = new Array();
+            contentHead.ContentDate = new Date();
+            contentHead.TagsString = '';
+            contentHead.Location = pageVM.contentLocation();
+            contentHead.DisplayOrder = 0;
+            contentHead.CONTENT = new Object();
+            
+            htmlEditor.removeAllIntances();
+
+            pageVM.setAddingItem(NEW_CONTENT(contentHead));
+
+            showPanel();
+       
+            $('.date', '#editPannel').removeClass('hasDatepicker').datepicker({ dateFormat: _dateFormat });
+            $('.number').spinner({ change: function (event, ui) { $(event.srcElement).trigger('change'); } });
+
+            UploadArea.init();
+        
+        }
+
+
+        function editContent(item) {
+            $(window).scrollTop(0);
+            item.CONTENT = new ko.observable(new Object());
+
+            htmlEditor.removeAllIntances();
+            item.Location = pageVM.contentLocation();
+            pageVM.setEditingItem(item);
+
+            showPanel();
+            pageVM.loadContent(function () {
+                if (window.AFTER_GET)
+                    window.AFTER_GET();                
+            });
+            
+            $('.date', '#editPannel').removeClass('hasDatepicker').datepicker({ dateFormat: _dateFormat });
+            $('.number').spinner({ change: function (event, ui) { $(event.srcElement).trigger('change');}});
+            
+            UploadArea.init();
+
+        }    
+   
+    </script>
+}

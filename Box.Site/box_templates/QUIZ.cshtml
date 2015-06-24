@@ -1,0 +1,42 @@
+﻿@{ 
+    string boxQuizJS = "boxQuiz_" + Model.ContentUId.ToString().Replace("-","");
+    string resultDisplay = (bool)@Model.CONTENT["alreadyVoted"] ? "block" : "none";
+}
+<script type="text/javascript">    
+    var @(boxQuizJS) = new Box.Quiz('@Model.ContentUId');
+</script>
+<div id="QUIZ_@Model.ContentUId">
+    <h3>@Model.CONTENT["Question"]</h3>
+
+    @if (!(bool)@Model.CONTENT["alreadyVoted"]) {
+    <div id="divQuestion">
+        @for (int i = 1; i <= 5; i++) {
+            if (@Model.CONTENT["Answer" + i] != null && @Model.CONTENT["Answer" + i] != "") {
+                <div class="radio">
+                    <label>
+                        <input type="radio" value="@i" name="@(@Model.ContentUId)_QUIZ" />
+                        @Model.CONTENT["Answer" + i]
+                    </label>
+                </div>                
+            }
+        }
+        <a class="btn btn-primary" role="button" href="javascript:@(boxQuizJS).vote()">Vote</a>
+    </div>
+}
+    <div  style="display:@resultDisplay;" id="divResult">
+        @for (int i = 1; i <= 5; i++) {
+            if (@Model.CONTENT["Answer" + i] != null && @Model.CONTENT["Answer" + i] != "") {
+                <div>
+                    <b>
+                        <span data-bind="text: Math.round(@(boxQuizJS).result().Percent@(@i))">@Math.Round((double)@Model.CONTENT["Percent" + i])</span>
+                        %
+                    </b>
+                    @Model.CONTENT["Answer" + i]
+                </div>                
+            }
+        }
+    </div>
+</div>
+
+
+

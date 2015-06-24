@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>Microsoft.Web.Infrastructure</name>
+  </assembly>
+  <members>
+    <member name="T:Microsoft.Web.Infrastructure.HttpContextHelper">
+      <summary>Contém métodos usados ​​para executar um delegado de ação em um contexto nulo.</summary>
+    </member>
+    <member name="M:Microsoft.Web.Infrastructure.HttpContextHelper.ExecuteInNullContext(System.Action)">
+      <summary>Define o contexto HTTP como nulo, executa o delegado de ação especificado e, em seguida, restaura o contexto HTTP anterior.</summary>
+      <param name="action">A ação delegada.</param>
+    </member>
+    <member name="T:Microsoft.Web.Infrastructure.InfrastructureHelper">
+      <summary>Fornece métodos auxiliares para chamadas de método de infraestrutura.</summary>
+    </member>
+    <member name="M:Microsoft.Web.Infrastructure.InfrastructureHelper.IsCodeDomDefinedExtension(System.String)">
+      <summary>Define um método auxiliar usado para chamar o método <see cref="M:System.CodeDom.Compiler.CodeDomProvider.IsDefinedExtension" /> de um aplicativo que não é totalmente confiável.</summary>
+      <returns>verdadeiro se uma implementação <see cref="T:System.CodeDom.Compiler.CodeDomProvider" /> estiver configurada para a extensão de nome de arquivo especificada; caso contrário, falso.</returns>
+      <param name="extension">Uma extensão de nome de arquivo.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="extension" /> é nulo.</exception>
+      <exception cref="T:System.Security.SecurityException">O chamador não tem a permissão necessária.</exception>
+    </member>
+    <member name="M:Microsoft.Web.Infrastructure.InfrastructureHelper.UnloadAppDomain">
+      <summary>Define um método auxiliar usado para chamar o método <see cref="M:System.Web.HttpRuntime.UnloadAppDomain" /> de um aplicativo que não é totalmente confiável.</summary>
+    </member>
+    <member name="T:Microsoft.Web.Infrastructure.DynamicModuleHelper.DynamicModuleUtility">
+      <summary>Define uma classe que fornece um método para o registro de módulos de forma dinâmica.</summary>
+    </member>
+    <member name="M:Microsoft.Web.Infrastructure.DynamicModuleHelper.DynamicModuleUtility.RegisterModule(System.Type)">
+      <summary>Registra de forma dinâmica um módulo <see cref="T:System.Web.IHttpModule" />.</summary>
+      <param name="moduleType">O tipo de módulo a ser registrado.</param>
+    </member>
+    <member name="T:Microsoft.Web.Infrastructure.DynamicValidationHelper.ValidationUtility">
+      <summary>Fornece métodos de utilidade para a validação dinâmica de solicitação.</summary>
+    </member>
+    <member name="M:Microsoft.Web.Infrastructure.DynamicValidationHelper.ValidationUtility.EnableDynamicValidation(System.Web.HttpContext)">
+      <summary>Permite a validação dinâmica de solicitação para o contexto HTTP especificado.</summary>
+      <param name="context">O contexto HTTP.</param>
+    </member>
+    <member name="M:Microsoft.Web.Infrastructure.DynamicValidationHelper.ValidationUtility.GetUnvalidatedCollections(System.Web.HttpContext,System.Func`1@,System.Void)">
+      <summary>Obtém delegados para recuperar coleções de formulários invalidadas e coleções de consultas invalidadas.</summary>
+      <param name="context">O contexto HTTP.</param>
+      <param name="formGetter">Quando esse método é retornado, ele contém um delegado que retorna coleções de nome/valor do formulário no contexto HTTP. Este parâmetro é passado não inicializado.</param>
+      <param name="queryStringGetter">Quando esse método é retornado, ele contém um delegado que retorna coleções de nome/valor da cadeia de consulta no contexto HTTP. Este parâmetro é passado não inicializado.</param>
+    </member>
+    <member name="M:Microsoft.Web.Infrastructure.DynamicValidationHelper.ValidationUtility.IsValidationEnabled(System.Web.HttpContext)">
+      <summary>Retorna um valor que indica se a validação dinâmica de solicitação está habilitada para este contexto HTTP.</summary>
+      <returns>verdadeiro se a validação dinâmica de solicitação estiver habilitada para este contexto HTTP; caso contrário, falso.</returns>
+      <param name="context">O contexto HTTP.</param>
+    </member>
+  </members>
+</doc>

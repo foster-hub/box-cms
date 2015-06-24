@@ -1,0 +1,47 @@
+﻿@{    
+    Page.Title = "Sign in";
+    Layout = "~/_PageLayout1C.cshtml";
+    
+    Box.Core.Services.SecurityService security = new Box.Core.Services.SecurityService();
+
+    int login_result = -2;
+    
+    if ("POST".Equals(Request.HttpMethod) && !string.IsNullOrEmpty(Request.Form["top-login"]) && !string.IsNullOrEmpty(Request.Form["top-password"])) {
+        login_result = security.SignInUser(Request.Form["top-login"], Request.Form["top-password"]);
+    }
+     
+}
+
+
+@if (login_result==-1) {
+    <div class="alert alert-danger" role="alert">
+        User is blocked.
+    </div>
+}
+
+@if (login_result==0) {
+    <div class="alert alert-danger" role="alert">
+        Invalid user or password.
+    </div>
+}
+
+@if (login_result==1) {
+    <h2>Signed in.</h2>        
+} else { 
+
+<form action="@Href("~/signin")" method="post">
+    <div class="form-group">
+        <input type="text" placeholder="Email" class="form-control" name="top-login">
+    </div>
+    <div class="form-group">
+        <input type="password" placeholder="Password" class="form-control" name="top-password">
+    </div>
+    <div class="form-group">
+        <a href="@Href("~/forgot-password")">forgot your password?</a>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">Sign in</button>
+    </div>
+</form>
+
+}

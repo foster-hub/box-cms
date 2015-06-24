@@ -1,0 +1,120 @@
+﻿@using Box.CMS
+@using Box.CMS.Web
+@using Box.Core.Web
+@model ContentPageModel 
+
+@Html.Partial("CMS/ContentTopMenu")
+    
+<form id="editForm">  
+    <div class="grid fluid" >  
+        <div class="row">
+            
+                <fieldset class="span8">
+                <div class="boxLeftMargin">
+                
+                    <label>@Box.CMS.SharedStrings.Title</label>                       
+                    @MetroUI.TextBox(placeholder: @Box.CMS.SharedStrings.Title, databind: "value: editingItem().Name, valueUpdate:'afterkeydown'", others: "onkeyup='pageVM.filter()'")
+                    
+                    <div id="changeAbstract" style="display: none">
+                        <label>@Box.CMS.SharedStrings.Abstract</label>               
+                        
+                        @MetroUI.TextArea(others: Capture.MapToAbstract().ToString())
+                        
+                    </div>
+                    <a  id="changeAbstractLink"
+                        href="javascript: showAbstract()" tabindex="-1"
+                        style="display: block; margin: 3px 0px 10px 0px; clear: both; font-size: 12px;">@Box.CMS.SharedStrings.Change_Abstract</a>           
+            
+                <label>@Box.CMS.SharedStrings.Content</label>
+                <textarea                                       
+                    @Capture.MapTo("HTMLContent", "nicEdit")
+                    class="htmlEditor"
+                    style="width: 100%; height: 300px;">
+                </textarea>
+                </div>
+
+            </fieldset>
+        
+        
+            <fieldset class="span4">        
+
+            <div style="margin-right: 10px">
+                <legend>@Box.CMS.SharedStrings.Images</legend>
+                @Capture.File("Images", singleFile: false, style: "width: 100%; min-height: 150px;")            
+            </div>
+                
+    
+            </fieldset>
+
+       
+
+</div>
+    </div>
+</form>
+
+
+@this.ScriptBlock(
+@<script type="text/javascript">
+    // PAGE DETAIL SCRIPT BLOCK ----------------------
+     function NEW_CONTENT(contentHead) {         
+         contentHead.CONTENT.HTMLContent = '';
+         contentHead.CONTENT.Images = new Array();
+         return contentHead;
+     }
+
+     function BEFORE_POST(contentHead) {     
+         setAbstract(contentHead);
+     }
+
+     function SET_THUMB(contentHead) {
+         if (contentHead.CONTENT.Images != null && contentHead.CONTENT.Images.length >= 1)
+             contentHead.ThumbFilePath = contentHead.CONTENT.Images[0].Folder + '/' + contentHead.CONTENT.Images[0].FileUId;
+         else
+             contentHead.ThumbFilePath = null;
+     }
+
+    function showAbstract(hide) {
+        var abs = document.getElementById('changeAbstract');
+        var absLink = document.getElementById('changeAbstractLink');
+
+        if (abs.style.display == 'block' || hide) {
+            absLink.innerHTML = '@Box.CMS.SharedStrings.Change_Abstract';
+            abs.style.display = 'none';
+            return;
+        }
+
+        absLink.innerHTML = '@Resources.SharedStrings.Done';
+        abs.style.display = 'block';
+
+
+    }
+
+    function setAbstract(contentHead) {
+
+        if (contentHead.Abstract != null && contentHead.Abstract != '')
+            return;
+
+        if (contentHead.ContentUId)
+            return;
+
+        var html = contentHead.CONTENT.HTMLContent;
+        var div = document.createElement("div");
+        div.innerHTML = html;
+        var text = div.innerText;
+
+        if (text == null)
+            text = div.textContent; // maybe it is FireFox
+
+        if (text == null)
+            text = '';
+
+        if (text.indexOf('.') > 0)
+            text = text.substring(0, text.indexOf('.') + 1);
+        if (text.length > 300)
+            text = text.substring(0, 300);
+        contentHead.Abstract = text;
+    }
+
+
+       
+</script>)

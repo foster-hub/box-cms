@@ -1,0 +1,120 @@
+﻿@functions {
+    private static HtmlString _attr(string attr, object value) {
+        return value == null ? new HtmlString("") : new HtmlString(attr + "=\"" + value.ToString() + "\"");
+    }
+}
+
+@helper Input(string id = null, string type = "text", string value = "", string placeholder = "", string databind = null, int? maxLength = null, string classes = null, string onblur = "", string onkeypress = null, string others = null) {        
+    HtmlString othersHTML = new HtmlString(others);
+    <input 
+        type="@type" 
+        value="@value"
+        @_attr("id", id)                
+        @_attr("data-bind", databind)           
+        @_attr("class", classes)                           
+        @_attr("maxlength", maxLength)          
+        @_attr("onkeypress", onkeypress)     
+        @_attr("onblur", onblur)     
+        placeholder="@placeholder"
+        @othersHTML />                    
+}
+
+@helper TextBox(string id = null, string value = "", string placeholder = "", string databind = null, int? maxLength = null, string classes = null, string onblur = "", string onkeypress = null, string others = null, Func<object, HelperResult> decoration = null, int? width = null) {        
+    HtmlString style = new HtmlString("");
+    if(width!=null) {
+        style = new HtmlString("style=\"width: " + width + "px\""); 
+    }
+<div class="input-control text" @style >
+    @Input(id, "text", value, placeholder, databind, maxLength, classes, onblur, onkeypress, others)    
+    @if (decoration != null) {
+        @decoration(null)       
+    } 
+</div>
+}
+
+@helper SearchBox(string id = null, string value = "", string placeholder = "", string databind = null, int? maxLength = null, string classes = null, string onblur = "", string onkeypress = null, string others = null) {        
+<div class="input-control text" >
+    @Input(id, "text", value, placeholder, databind, maxLength, classes, onblur, onkeypress, others)    
+    <button class='btn-search'></button>    
+</div>
+}
+
+@helper Password(string id = null, string value = "", string placeholder = "", string databind = null, int? maxLength = null, string classes = null, string onblur = "", string onkeypress = null, string others = null, Func<object, HelperResult> decoration = null) {        
+<div class="input-control password">
+    @Input(id, "password", value, placeholder, databind, maxLength, classes, onblur, onkeypress, others)    
+    @if (decoration != null) {
+        @decoration(null)       
+    }     
+</div>
+}
+
+@helper Datepicker(string id = null, string value = "", string placeholder = "", string databind = null, string classes = null, string onblur = "", string onkeypress = null, string others = null, Func<object, HelperResult> decoration = null) {        
+    string dateClass = "date " + (classes == null ? "" : classes);    
+<div class="input-control text" style="width: 150px">
+    @Input(id, "text", value, placeholder, databind, null, dateClass, onblur, onkeypress, others)    
+    <button  class="btn-date"  onclick="javascript:$(this).prev().focus(); return false;"></button>
+    @if (decoration != null) {
+        @decoration(null)       
+    }   
+</div>
+}
+
+@helper TextArea(string id = null, string value = "", string placeholder = "", string databind = null, int? maxLength = null, string classes = null, string onblur = "", string onkeypress = null, string others = null, Func<object, HelperResult> decoration = null, int? width = null) {        
+    HtmlString style = new HtmlString("");
+    if(width!=null) {
+        style = new HtmlString("style=\"width: " + width + "px\""); 
+    }
+    HtmlString othersHTML = new HtmlString(others);
+    <div class="input-control textarea" data-role="input-control" @style>
+    <textarea       
+        @_attr("id", id)                
+        @_attr("data-bind", databind)           
+        @_attr("class", classes)                           
+        @_attr("maxlength", maxLength)          
+        @_attr("onkeypress", onkeypress)     
+        @_attr("onblur", onblur)     
+        placeholder="@placeholder"
+        @othersHTML>@value</textarea>       
+    @if (decoration != null) {
+        @decoration(null)       
+    } 
+</div>
+}
+
+@helper TimePicker(string field) {
+    <div class="input-control select" style="width: 150px">   
+        <select data-bind="timeHour: @field" style="width: auto" >
+            <option value="0">00</option>
+            <option value="1">01</option>
+            <option value="2">02</option>
+            <option value="3">03</option>
+            <option value="4">04</option>
+            <option value="5">05</option>
+            <option value="6">06</option>
+            <option value="7">07</option>
+            <option value="8">08</option>
+            <option value="9">09</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>            
+        </select>
+        <span style="width: auto" >:</span>
+        <select data-bind="timeMinutes: @field" style="width: auto" >
+            <option value="0">00</option>
+            <option value="15">15</option>
+            <option value="30">30</option>
+            <option value="45">45</option>            
+        </select>    
+    </div>
+}

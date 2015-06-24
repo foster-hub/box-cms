@@ -1,0 +1,76 @@
+﻿@using System.Web.Optimization
+@using Box.Core.Web
+@{
+    ViewBag.Title = "Logs";
+    Layout = "~/Views/Shared/_SettingsLayout.cshtml";
+}
+
+<!-- LIST PANEL -->
+<div data-bind="if: editingItem()==null">    
+   
+    
+    <div class="toolbar transparent boxToolBar">
+
+
+        <div class="grid fluid">
+            <div class="row">
+
+                <!-- Data de -->
+                <div class="span2">
+                     @MetroUI.Datepicker(databind: "date: pageVM.dataDe", placeholder: @Resources.SharedStrings.from)
+                </div>
+
+                <!-- Data até -->
+                <div class="span2">
+                   @MetroUI.Datepicker(databind: "date: pageVM.dataAte", placeholder: @Resources.SharedStrings.to)
+                </div>
+
+                <!-- Pesquisa --> 
+                <div class="span8">
+                    @MetroUI.SearchBox(placeholder: @Resources.SharedStrings.Search_for_user_or_event, databind: "value: searchFilter, valueUpdate:'afterkeydown'", others: "onkeyup='pageVM.filter()'")
+                </div>
+
+            </div>
+        </div> 
+
+    </div>
+
+    <h2 class="boxLeftMargin">@Resources.SharedStrings.Logs</h2>
+    
+    <table class="table hovered" style="display: none" data-bind="visible:true">
+        <thead>
+            <tr>
+                <th class="text-left" style="width: 150px">@Resources.SharedStrings.Date</th>
+                <th class="text-left">@Resources.SharedStrings.User</th>
+                <th class="text-left">@Resources.SharedStrings.Event</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- ko foreach: logs -->
+                <tr data-bind="click: function(data,event) { pageVM.showDetailById(LogUId); }, css: { error: ErrorDescription!=null }" >
+                    <td class="right"><span data-bind="text: When.getDate() + '/' + (When.getMonth()+1) + '/' + When.getFullYear() + ' - ' + When.toLocaleTimeString()"></span></td>
+                    <td class="right"><span data-bind="text: SignedUser"></span></td>                
+                    <td class="right">
+                        <span data-bind="text: ErrorDescription"  style="overflow:hidden; float: left;"></span>
+                        <div data-bind="text: (ActionDescription.length > 100 ? ActionDescription.substring(0,100) + '...' : ActionDescription) " style="float:left; width:100%;"></div>
+                        <span data-bind="text: Url" style="font-size: 10px; float: left; width:100%;"></span>
+                    </td>
+                </tr>
+            <!-- /ko -->
+        </tbody>
+    </table>
+    
+    @Html.Partial("ListNavigation", new PageNavigationModel() { ListName = "logs" })
+    
+
+</div>
+
+<!-- EDIT PANEL -->
+<div style="display: none;" data-bind="if: editingItem()!=null, visible: editingItem()!=null">    
+    @Html.Partial("LogDetail")
+</div>
+
+@section scripts {    
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Core/LogsVM.js")"></script>        
+}
+    

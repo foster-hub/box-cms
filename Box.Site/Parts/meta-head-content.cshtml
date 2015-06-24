@@ -1,0 +1,20 @@
+﻿@using Box.CMS.Web;
+@using Box.CMS;
+
+@{
+    Box.CMS.ContentHead HEAD = PageData[0];
+    string FBImageUrl = Request.Url.Scheme + "://" + Request.Url.Authority + BoxLib.GetFileUrl(HEAD.ThumbFilePath, maxHeight: 265, width: 470);
+}
+
+@* 470x265 is the minimum  recommended facebook resolution for image posts *@
+@if (!String.IsNullOrEmpty(HEAD.ThumbFilePath)) {
+<meta property="og:image" @Html.Raw("content=\"" + FBImageUrl + "\"") />    
+}
+
+
+<meta name="description" content="@HEAD.Abstract" />
+<meta name="keywords" content="@BoxSite.ContentTags(HEAD)" />
+
+@if (!String.IsNullOrEmpty(HEAD.CONTENT.Author)) {
+<meta name="author" content="@HEAD.CONTENT.Author" />
+}

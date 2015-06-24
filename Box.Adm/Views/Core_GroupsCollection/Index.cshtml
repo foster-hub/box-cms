@@ -1,0 +1,79 @@
+﻿@using System.Web.Optimization
+@using Box.Core.Web
+@{
+    ViewBag.Title = Resources.SharedStrings.Groups;
+    Layout = "~/Views/Shared/_SettingsLayout.cshtml";
+    }
+
+
+<!-- LIST PANEL -->
+<div data-bind="if: editingItem()==null">
+        
+    <div class="toolbar transparent boxToolBar">    
+    
+        <div class="grid fluid">
+            <div class="row">
+
+                <div class="span1">
+                     <button onclick="pageVM.setAddingItem({ Name: '' }); onShowDetail();"><i class="icon-plus on-left"></i>@Resources.SharedStrings.New</button> 
+                </div>
+
+                <div class="span11">
+                    @MetroUI.TextBox(placeholder: @Resources.SharedStrings.Group_Search_By_Name_Permission, databind: "value: searchFilter, valueUpdate:'afterkeydown'", others: "onkeyup='pageVM.filter()'", decoration: @<button class='btn-search'></button>)
+                </div>
+
+            </div>
+        </div>    
+  
+    </div>
+
+    <h2 class="boxLeftMargin">@Resources.SharedStrings.Groups</h2>
+        
+    <ul data-bind="foreach: groupscollection, visible: true" class="tileList" style="display: none">
+        <li  onmouseover="showContextMenu(this)" onmouseout="hideContextMenu(this)">
+            <div class="tile bg-cyan" data-bind="click: function(data,event) { pageVM.setEditingItem(data); onShowDetail(); }">                
+                
+                <div class="tile-content icon">
+                    <i class="fa fa-users icon-fa"></i>
+                </div>
+                         
+                <div class="tile-status">                    
+                    <span data-bind="text: Name" class="name"></span>
+                </div>
+                
+            </div>
+            <div class="contextMenu">
+                <button data-bind="click: function(data) { dialogHelper.endark(); pageVM.removingItem(data); }, clickBubble: false">
+                    <i class="icon-remove"></i>
+                </button>
+            </div>
+        </li>
+    </ul> 
+    
+    @Html.Partial("ListNavigation", new PageNavigationModel() { ListName = "groupscollection" })
+    
+</div>
+
+<!-- EDIT PANEL -->
+<div style="display: none;" data-bind="if: editingItem()!=null, visible: editingItem()!=null">    
+    @Html.Partial("GroupDetail")
+</div>
+
+@section dialogs {
+    <div id="removeDialog" class="window flat shadow boxDialog" data-bind="if: pageVM.removingItem()!=null, visible: pageVM.removingItem()!=null" style="display: none">
+        <h2> @Resources.SharedStrings.Remove_group</h2>
+        @Resources.SharedStrings.The_group_X
+        <span data-bind="text: removingItem().Name"></span>
+        @Resources.SharedStrings.will_be_removed
+        <br />        
+        @Resources.SharedStrings.Are_you_sure
+        <nav>
+            <button class="large" onclick="pageVM.removingItem(null); dialogHelper.undark();">@Resources.SharedStrings.Cancel</button>
+            <button class="danger large" onclick="pageVM.removeItem();dialogHelper.undark();"><i class="icon-remove on-left"></i>@Resources.SharedStrings.Remove</button>
+        </nav>        
+    </div>   
+}
+
+@section scripts {    
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Core/GroupsVM.js")"></script>
+}

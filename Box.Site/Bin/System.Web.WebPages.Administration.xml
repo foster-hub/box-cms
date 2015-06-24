@@ -1,0 +1,430 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.Web.WebPages.Administration</name>
+  </assembly>
+  <members>
+    <member name="T:System.Web.WebPages.Administration.Default_cshtml">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.Default_cshtml.#ctor">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.Default_cshtml.ApplicationInstance">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.Default_cshtml.Execute">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.Default_cshtml.Href(System.String,System.Object[])">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="T:System.Web.WebPages.Administration.EnableInstructions_cshtml">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.EnableInstructions_cshtml.#ctor">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.EnableInstructions_cshtml.ApplicationInstance">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.EnableInstructions_cshtml.Execute">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.EnableInstructions_cshtml.Href(System.String,System.Object[])">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="T:System.Web.WebPages.Administration.Layout_cshtml">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.Layout_cshtml.#ctor">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.Layout_cshtml.ApplicationInstance">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.Layout_cshtml.Execute">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.Layout_cshtml.Href(System.String,System.Object[])">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="T:System.Web.WebPages.Administration.Login_cshtml">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.Login_cshtml.#ctor">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.Login_cshtml.ApplicationInstance">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.Login_cshtml.Execute">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.Login_cshtml.Href(System.String,System.Object[])">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="T:System.Web.WebPages.Administration.Logout_cshtml">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.Logout_cshtml.#ctor">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.Logout_cshtml.ApplicationInstance">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.Logout_cshtml.Execute">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.Logout_cshtml.Href(System.String,System.Object[])">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="T:System.Web.WebPages.Administration.pagestart_cshtml">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.pagestart_cshtml.#ctor">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.pagestart_cshtml.ApplicationInstance">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.pagestart_cshtml.Execute">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.pagestart_cshtml.Href(System.String,System.Object[])">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="T:System.Web.WebPages.Administration.PreApplicationStartCode">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PreApplicationStartCode.Start">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="T:System.Web.WebPages.Administration.Register_cshtml">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.Register_cshtml.#ctor">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.Register_cshtml.ApplicationInstance">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.Register_cshtml.Execute">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.Register_cshtml.Href(System.String,System.Object[])">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="T:System.Web.WebPages.Administration.SiteAdmin">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.SiteAdmin.AdminVirtualPath">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.SiteAdmin.Description">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.SiteAdmin.DisplayName">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.SiteAdmin.GetVirtualPath(System.String)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+      <returns>Retorna <see cref="T:System.String" />.</returns>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.SiteAdmin.Modules">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.SiteAdmin.Register(System.String,System.String,System.String)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.SiteAdmin.StartPageVirtualPath">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="T:System.Web.WebPages.Administration.PackageManager.IPackagesSourceFile">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.IPackagesSourceFile.Exists">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.IPackagesSourceFile.ReadSources">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.IPackagesSourceFile.WriteSources(System.Collections.Generic.IEnumerable{System.Web.WebPages.Administration.PackageManager.WebPackageSource})">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="T:System.Web.WebPages.Administration.PackageManager.IWebProjectManager">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.IWebProjectManager.GetInstalledPackages(System.String)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.IWebProjectManager.GetPackagesWithUpdates(System.String,System.Boolean)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.IWebProjectManager.GetRemotePackages(System.String,System.Boolean)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.IWebProjectManager.GetUpdate(NuGet.IPackage)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.IWebProjectManager.InstallPackage(NuGet.IPackage,System.AppDomain)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.IWebProjectManager.IsPackageInstalled(NuGet.IPackage)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.PackageManager.IWebProjectManager.LocalRepository">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.PackageManager.IWebProjectManager.SourceRepository">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.IWebProjectManager.UninstallPackage(NuGet.IPackage,System.Boolean)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.IWebProjectManager.UpdatePackage(NuGet.IPackage,System.AppDomain)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="T:System.Web.WebPages.Administration.PackageManager.packages__Layout_cshtml">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages__Layout_cshtml.#ctor">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.PackageManager.packages__Layout_cshtml.ApplicationInstance">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages__Layout_cshtml.Execute">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages__Layout_cshtml.Href(System.String,System.Object[])">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="T:System.Web.WebPages.Administration.PackageManager.packages__Package_cshtml">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages__Package_cshtml.#ctor">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.PackageManager.packages__Package_cshtml.ApplicationInstance">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages__Package_cshtml.Execute">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages__Package_cshtml.Href(System.String,System.Object[])">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="T:System.Web.WebPages.Administration.PackageManager.packages__PackageDetails_cshtml">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages__PackageDetails_cshtml.#ctor">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.PackageManager.packages__PackageDetails_cshtml.ApplicationInstance">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages__PackageDetails_cshtml.Execute">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages__PackageDetails_cshtml.Href(System.String,System.Object[])">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="T:System.Web.WebPages.Administration.PackageManager.packages__pagestart_cshtml"></member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages__pagestart_cshtml.#ctor">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.PackageManager.packages__pagestart_cshtml.ApplicationInstance">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages__pagestart_cshtml.Execute">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages__pagestart_cshtml.Href(System.String,System.Object[])">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="T:System.Web.WebPages.Administration.PackageManager.packages_Default_cshtml">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages_Default_cshtml.#ctor">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.PackageManager.packages_Default_cshtml.ApplicationInstance">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages_Default_cshtml.Execute">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages_Default_cshtml.Href(System.String,System.Object[])">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="T:System.Web.WebPages.Administration.PackageManager.packages_Install_cshtml">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages_Install_cshtml.#ctor">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.PackageManager.packages_Install_cshtml.ApplicationInstance">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages_Install_cshtml.Execute">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages_Install_cshtml.Href(System.String,System.Object[])">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="T:System.Web.WebPages.Administration.PackageManager.packages_PackageSources_cshtml">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages_PackageSources_cshtml.#ctor">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.PackageManager.packages_PackageSources_cshtml.ApplicationInstance">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages_PackageSources_cshtml.Execute">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages_PackageSources_cshtml.Href(System.String,System.Object[])">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="T:System.Web.WebPages.Administration.PackageManager.packages_SourceFileInstructions_cshtml">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages_SourceFileInstructions_cshtml.#ctor">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.PackageManager.packages_SourceFileInstructions_cshtml.ApplicationInstance">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages_SourceFileInstructions_cshtml.Execute">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages_SourceFileInstructions_cshtml.Href(System.String,System.Object[])">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="T:System.Web.WebPages.Administration.PackageManager.packages_Uninstall_cshtml">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages_Uninstall_cshtml.#ctor">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.PackageManager.packages_Uninstall_cshtml.ApplicationInstance">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages_Uninstall_cshtml.Execute">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages_Uninstall_cshtml.Href(System.String,System.Object[])">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="T:System.Web.WebPages.Administration.PackageManager.packages_Update_cshtml">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages_Update_cshtml.#ctor">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.PackageManager.packages_Update_cshtml.ApplicationInstance">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages_Update_cshtml.Execute">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.packages_Update_cshtml.Href(System.String,System.Object[])">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="T:System.Web.WebPages.Administration.PackageManager.WebPackageSource">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.WebPackageSource.#ctor(System.String,System.String)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.WebPackageSource.Equals(System.Object)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.PackageManager.WebPackageSource.FilterPreferredPackages">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.WebPackageSource.GetHashCode">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="T:System.Web.WebPages.Administration.PackageManager.WebProjectManager">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.WebProjectManager.#ctor(System.String,System.String)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.WebProjectManager.CollapseVersions(System.Linq.IQueryable{NuGet.IPackage})">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.WebProjectManager.GetInstalledPackages(System.String)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.WebProjectManager.GetPackagesWithUpdates(System.String,System.Boolean)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.WebProjectManager.GetRemotePackages(System.String,System.Boolean)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.WebProjectManager.GetUpdate(NuGet.IPackage)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.WebProjectManager.InstallPackage(NuGet.IPackage,System.AppDomain)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.WebProjectManager.IsPackageInstalled(NuGet.IPackage)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.PackageManager.WebProjectManager.LocalRepository">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.PackageManager.WebProjectManager.SourceRepository">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.WebProjectManager.UninstallPackage(NuGet.IPackage,System.Boolean)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.WebProjectManager.UpdatePackage(NuGet.IPackage,System.AppDomain)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="T:System.Web.WebPages.Administration.PackageManager.WebProjectSystem">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.WebProjectSystem.#ctor(System.String)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.WebProjectSystem.AddFrameworkReference(System.String)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.WebProjectSystem.AddReference(System.String,System.IO.Stream)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.WebProjectSystem.GetDirectories(System.String)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.WebProjectSystem.GetPropertyValue(System.String)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.WebProjectSystem.GetReferencePath(System.String)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.WebProjectSystem.IsSupportedFile(System.String)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.PackageManager.WebProjectSystem.ProjectName">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.WebProjectSystem.ReferenceExists(System.String)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.WebProjectSystem.RemoveReference(System.String)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="M:System.Web.WebPages.Administration.PackageManager.WebProjectSystem.ResolvePath(System.String)">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+    <member name="P:System.Web.WebPages.Administration.PackageManager.WebProjectSystem.TargetFramework">
+      <summary>Este tipo/membro é compatível com a infraestrutura .NET Framework e não se destina a ser usado diretamente de seu código.</summary>
+    </member>
+  </members>
+</doc>

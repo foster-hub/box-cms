@@ -1,0 +1,146 @@
+﻿@functions {
+
+    public static IHtmlString MapToName() {
+        return new HtmlString("data-bind=\"value: editingItem().Name\"");
+    }
+
+    public static IHtmlString MapToAbstract() {
+        return new HtmlString("data-bind=\"value: editingItem().Abstract\"");
+    }
+
+    public static IHtmlString MapToCustomInfoText(int n) {
+        return new HtmlString("data-bind=\"value: editingItem().CustomInfo.Text" + n + "\"");
+    }
+
+    public static IHtmlString MapToCustomInfoNumber(int n) {
+        return new HtmlString("data-bind=\"value: editingItem().CustomInfo.Number" + n + "\"");
+    }
+    
+    public static IHtmlString MapToCustomInfoDate(int n) {
+        return new HtmlString("data-bind=\"value: editingItem().CustomInfo.Date" + n + "\"");
+    }
+    
+
+
+    public static IHtmlString MapTo(string field, string converter = "value") {
+        return new HtmlString("data-bind=\"" + converter + ": editingItem().CONTENT." + field + "\"");
+    }
+
+
+}
+
+@helper TimeSelector(string field) {
+    <div class="timeSelector" >
+        <select data-bind="timeHour: editingItem().@field"  >
+            <option value="0">00</option>
+            <option value="1">01</option>
+            <option value="2">02</option>
+            <option value="3">03</option>
+            <option value="4">04</option>
+            <option value="5">05</option>
+            <option value="6">06</option>
+            <option value="7">07</option>
+            <option value="8">08</option>
+            <option value="9">09</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>            
+        </select>
+        <span>:</span>
+        <select data-bind="timeMinutes: editingItem().@field" >
+            <option value="0">00</option>
+            <option value="15">15</option>
+            <option value="30">30</option>
+            <option value="45">45</option>            
+        </select>
+
+    </div>
+  
+}
+
+@helper File(string id, string folder = "IMG_ROOT", bool singleFile = true, string style = null) {    
+    string dropAreaId = "_uploadArea_" + id;
+    string inputFileId = "_uploadAreaInput_" + id;
+    string multipleTag = singleFile == false ? "multiple" : "";
+    
+    
+    
+    
+    <input 
+        class="ajaxUploadField"
+        id="@inputFileId" 
+        type="file" 
+        onchange="UploadArea.sendFiles(this.files, '@id', '@folder', @singleFile.ToString().ToLowerInvariant() )" 
+        @multipleTag 
+        tabindex="-1" />                                    
+       
+    <a 
+        class="formUploadField"
+        href="javascript: UploadArea.showUploadForm('@folder')">@Box.CMS.SharedStrings.File_upload</a>
+    
+
+    <div 
+        class="uploadDropArea" 
+        style="@style"
+        ondrop="UploadArea.drop(this, event, '@id', '@folder', @singleFile.ToString().ToLowerInvariant())"
+        ondragover="UploadArea.dragover(this, event)"
+        ondragleave="UploadArea.dragout(this, event)">
+
+        <div >
+            <span >                                
+                @Box.CMS.SharedStrings.drag_and_drop_files_here
+            </span>
+            <a         
+                tabindex="-1"
+                href="javascript: showFileDatabase(function(file) { UploadArea.addFile(file, '@id'); }, '@folder')" >@Box.CMS.SharedStrings.or_use_image_database</a>            
+        </div>
+
+        <ul
+            id="@dropAreaId"            
+            onmousemove="UploadArea.movingMouse(this, event, '@id')"
+            data-bind="foreach: editingItem().CONTENT.@id">
+            <li     
+                data-bind="click: function(data, event) { UploadArea.stopMoveFile(data, '@id', event.target.parentNode.parentNode); }, clickBubble: false"            
+                onmouseover="if(UploadArea.movingFile==null) showContextMenu(this);" 
+                onmouseout="hideContextMenu(this)" >
+                <img data-bind="attr: { src: FileUrl.toView($data, true) }" />
+                <input                         
+                    data-bind="value: Caption"
+                    updatemodelevent="keyup"
+                    onkeypress="dialogHelper.blurOnEnter(this)"                
+                    tabindex="-1"
+                    type="text"  />
+
+                
+                <nav class="contextMenu">
+                    <button data-bind="click: function(data) { UploadArea.removeFile(data, '@id'); }, clickBubble: false">
+                        <i class="icon-remove"></i>
+                    </button>
+                    
+                    <button  data-bind="click: function(data) { window.open(FileUrl.toView(data), '_blank'); }, clickBubble: false">
+                        <i class="icon-eye"></i>
+                    </button>
+                    <button  data-bind="click: function(data, event) { UploadArea.startMoveFile(data, '@id', event.target.parentNode.parentNode); }, clickBubble: false" >
+                        <i class="icon-move-horizontal"></i>
+                    </button>
+                </nav>
+            </li>
+        </ul>
+        <div id="_uploadAreaAlert_@id" class="loadingFileAlert">
+            <img src="../Content/CMS_Images/FileIcons/loading.gif" /> @Box.CMS.SharedStrings.Sending_files
+        </div>
+        
+    </div>
+}
+}

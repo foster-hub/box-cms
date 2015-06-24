@@ -1,0 +1,55 @@
+﻿@using Box.CMS
+@using Box.CMS.Web
+@using Box.Core.Web
+@model ContentPageModel 
+
+@Html.Partial("CMS/ContentTopMenu")
+    
+<form style="margin-left:10px;" id="editForm">    
+
+     <fieldset>
+
+      <div style="margin-right: 10px">
+    
+    <label>@Box.CMS.SharedStrings.Title</label>                                               
+    <input                         
+        type="text" 
+        @Capture.MapToName()
+        updatemodelevent="keyup" class="required" 
+        style="width: 620px;" 
+        maxlength="250" />
+
+                    
+        <label>@Box.CMS.SharedStrings.File</label>                                               
+        @Capture.File("Files", folder: "DOC_ROOT", singleFile: true, style: "width: 100%")
+
+        </fieldset>
+
+        </div>
+
+</form>
+
+
+@this.ScriptBlock(
+@<script type="text/javascript">
+    // PAGE DETAIL SCRIPT BLOCK ----------------------
+     function NEW_CONTENT(contentHead) {                  
+         contentHead.CONTENT.Files = new Array();
+         return contentHead;
+     }
+
+     function BEFORE_POST(contentHead) {              
+     }
+
+     function SET_THUMB(contentHead) {
+         if (contentHead.CONTENT.Files != null && contentHead.CONTENT.Files.length >= 1)
+             contentHead.ThumbFilePath = contentHead.CONTENT.Files[0].Folder + '/' + contentHead.CONTENT.Files[0].FileUId;
+         else
+             contentHead.ThumbFilePath = null;
+     }
+
+  
+
+
+       
+</script>)

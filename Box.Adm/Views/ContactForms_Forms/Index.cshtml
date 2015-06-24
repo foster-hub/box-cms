@@ -1,0 +1,62 @@
+﻿@using System.Web.Optimization
+@using Box.Core.Web;
+@using Box.ContactForms;
+@model Box.Core.Web.PageModel
+
+@{
+    ViewBag.Title = Box.ContactForms.SharedStrings.Contact_Forms;
+}
+
+
+    <div data-bind="if: editingItem()==null">
+        <div class="toolbar transparent boxToolBar">
+            <div class="grid fluid">
+                <div class="row">
+                    <div class="span12">
+                        @MetroUI.TextBox(databind: "value: searchFilter, valueUpdate:'afterkeydown'", placeholder: "Pesquise por formulário", others: "onkeyup = pageVM.filter()", decoration: @<button class="btn-search"></button>)
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    <h2 class="boxLeftMargin">Formulários</h2>
+    
+    <ul data-bind="foreach: forms, visible: true" class="tileList" style="display: none">
+        <li data-bind="click: window.showForm"> 
+		    <div class="tile quadro bg-cyan" >
+                 <div class="tile-content tile-status">
+                    <span class="name" data-bind="text: Subject + ' #' + ContactFormNumber"></span>
+                    <span class="text" data-bind="text: ShortMessage"></span>
+                    <div>
+                        <div style="float:left; width:50%">
+                            <span class="name">@Box.ContactForms.SharedStrings.From</span>
+                            <span class="text" data-bind="text: ContactEmail, attr: { href: 'mailto:' + ContactEmail}" onclick="event.stopPropagation();"></span>
+                        </div>
+                        <div style="float:right; width:50%"">
+                           <span class="name">@Box.ContactForms.SharedStrings.To</span>
+                           <span class="text" data-bind="text: TargetEmail, attr: { href: 'mailto:' + TargetEmail}" onclick="event.stopPropagation();"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="brand bg-dark opacity">
+                    <div class="badge">
+                       <i class="icon-clock"></i>
+                    </div> 
+                    <span class="label fg-white" data-bind="text: '@Box.ContactForms.SharedStrings.created_at ' + CreateDate.toLocaleString()"></span>
+                </div>
+		    </div>
+	    </li>
+    </ul>
+ 
+    <div style="width: 700px">
+        @Html.Partial("ListNavigation", new PageNavigationModel() { ListName = "forms" })
+    </div>
+</div>
+<!-- EDIT PANEL -->
+<div style="display: none;" class="boxLeftMargin" data-bind="if: editingItem()!=null, visible: editingItem()!=null">    
+    @Html.Partial("FormDetail")
+</div>
+
+@section scripts {  
+<script type="text/javascript" src="@Url.Content("~/Scripts/ContactForms/FormsVM.js")"></script>
+}

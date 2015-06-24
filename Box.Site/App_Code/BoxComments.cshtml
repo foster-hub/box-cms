@@ -1,0 +1,39 @@
+﻿@helper Comments(string id = null, string mode = "LIVE") {
+    
+    Box.CMS.Web.ContentRenderView renderView = WebPageContext.Current.Page as Box.CMS.Web.ContentRenderView;
+    if (renderView != null && id == null) {
+        id = renderView.HEAD.ContentUId;
+    }
+    
+    <div id="pageComments">
+        <textarea data-bind="value: newComment"></textarea>
+        <input type="button" onclick="commentsVM.post()" value="@Box.CMS.SharedStrings.New_comment" />
+        <span data-bind="visible: isLoading" style="float: left">@Box.CMS.SharedStrings.reading_comments</span>
+
+        <a href="#" onclick="commentsVM.autoUpdate(true);" data-bind="visible: autoUpdate()==false">@Box.CMS.SharedStrings.live_update</a>
+        <a href="#" onclick="commentsVM.autoUpdate(false);"  data-bind="visible: autoUpdate()==true">@Box.CMS.SharedStrings.stop_live_update</a>
+    
+
+        <ul data-bind="foreach: comments">
+            <li data-bind="css: { newComment : isNewComment==true }">                
+                <div data-bind="html: Comment">
+                </div>
+                <input type="button" onclick="commentsVM.showFullComment(this.parentNode)" value="@Box.CMS.SharedStrings.view_full_comment" data-bind="visible: lines>4" />
+                <div class="commentInfo">
+                    <span data-bind="text: Author"></span>,
+                    <span data-bind="text: Box.DateTimeUtils.timeFromNow(CommentDate)"></span>
+                </div>
+            </li>
+        </ul>
+        <input type="button" onclick="commentsVM.getMore()" value="@Box.CMS.SharedStrings.more" />
+    </div>
+    
+    
+    <script type="text/javascript">
+        var commentsVM = new Box.CommentsVM('@id', '@mode');
+        $(document).ready(function () {
+            ko.applyBindings(commentsVM, document.getElementById('pageComments'));
+            commentsVM.getNewest();
+        });
+    </script>
+}

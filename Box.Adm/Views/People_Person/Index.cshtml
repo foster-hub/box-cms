@@ -1,0 +1,100 @@
+﻿@using System.Web.Optimization
+@using Box.Core.Web;
+@using Box.ContactForms;
+@model Box.Core.Web.PageModel
+
+@{
+    ViewBag.Title = @Box.People.SharedStrings.People;
+    string url = Request.QueryString["group_name"];
+    if (url == "All") 
+        url = "Todo mundo";
+    }
+
+
+<!-- LIST PANEL -->
+<div data-bind="if: editingItem()==null">
+
+    <div class="toolbar transparent boxToolBar">
+        <div class="grid fluid">
+            <div class="row">
+                <div class="span4">
+                    <button onclick="pageVM.cancelItemChanges()"> <i class="icon-arrow-left-3 on-left"></i>Voltar</button>
+                    <button id="btnExport" type="button" data-bind="click: loadExport" value="@Box.People.SharedStrings.Export_People"><i class="icon-download-2 on-left"></i>Exportar Pessoas</button>
+                    <div class="input-control select" style="width: 150px;">
+                        <select data-bind="value: optin">
+                            <option value="All">@Box.People.SharedStrings.OptinAll</option>
+                            <option value="Email">@Box.People.SharedStrings.OptinOnlyEmail</option>
+                            <option value="Sms">@Box.People.SharedStrings.OptinOnlySMS</option>
+                            <option value="Mail">@Box.People.SharedStrings.OptinOnlyMail</option>
+                        </select>
+                    </div>                     
+                 </div>
+                <div class="span8">
+                    @MetroUI.SearchBox(databind: "value: searchFilter, valueUpdate:'afterkeydown'", placeholder: @Box.People.SharedStrings.Search_Name_PersonalID_Email, others: "onkeyup=pageVM.filter()")
+                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIST PANEL -->
+    <h2 class="boxLeftMargin">@url</h2>
+
+    <ul data-bind="foreach: person, visible: true" class="tileList" style="display: none">
+            <li  data-bind="click: window.showForm">                
+                <div class="tile double bg-cyan parts">
+                    <ul>
+                        <li>
+                            <div class="tile-content icon">
+                                <img                             
+                                    data-bind="attr:{src: pageVM.getGravatarImage(Email) }" 
+                                    onerror="this.src='@Url.Content("~/Content/Core_Images/no-image.png")'" />
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tile-content tile-status">
+                                <span data-bind="text: Name" class="name"></span>
+                                <span class="text" data-bind="text: Email"></span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="brand">  
+                    
+                        <div class="badge" data-bind="visible: EmailOptIn" title="@Box.People.SharedStrings.EmailOptIn">
+                           <i class="icon-at"></i>
+                        </div>  
+
+                        <div class="badge2" data-bind="visible: SMSOptIn" title="@Box.People.SharedStrings.SMSOptIn">
+                            <i class="icon-mobile"></i>
+                        </div>  
+
+                        <div class="badge3" data-bind="visible: MailOptIn" title="@Box.People.SharedStrings.MailOptIn">
+                            <i class="icon-mail"></i>
+                        </div>  
+
+                    </div>
+                </div>
+        </li>
+    </ul>
+
+    <div style="width: 700px">
+        @Html.Partial("ListNavigation", new PageNavigationModel() { ListName = "person" })
+    </div>
+
+</div>
+
+<!-- EDIT PANEL -->
+<div style="display: none;" data-bind="if: editingItem()!=null, visible: editingItem()!=null">    
+    @Html.Partial("PeopleDetail") 
+</div>
+
+
+@section scripts {  
+    <script type="text/javascript" src="@Url.Content("~/Scripts/People/PersonVM.js")"></script>
+    <script type="text/javascript">
+        PersonVM.group = '@Html.Raw(Request.QueryString["group_name"])';
+
+        function loadExport(filter) {
+            window.location.href = '../people_export/?filter=' + filter.searchFilter() + '&optin=' + filter.optin() + '&group=' + PersonVM.group;
+        } 
+    </script>
+}

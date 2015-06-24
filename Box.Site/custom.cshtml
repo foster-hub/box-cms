@@ -1,0 +1,21 @@
+﻿@using Box.CMS.Web;
+@{
+    Page.Title = "Customs";
+    Layout = "~/_PageLayout.cshtml";
+
+
+}
+
+<div class="grid_12">
+    <h1>@Page.Title</h1>
+</div>
+
+<div class="grid_12">
+    <ul>
+        @BoxSite.ContentsAtUrl(queryFilter: c=> c.CustomInfo!=null && c.CustomInfo.Text1.StartsWith("bana"), itemTemplate:
+        @<li>
+            @item.Name            
+        </li>)
+    </ul>
+</div>
+

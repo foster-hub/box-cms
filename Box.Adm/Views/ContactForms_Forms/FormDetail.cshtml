@@ -1,0 +1,64 @@
+﻿@using Box.Core.Web
+
+    <style type="text/css">
+        .boxLeftMargin { margin-left:0px!important; } 
+        #editForm { margin-left:10px!important; }
+    </style>
+
+    <div  class="toolbar transparent boxToolBar">
+        <div class="grid fluid">
+            <div class="row">
+                <div class="span12">
+                    <button onclick="pageVM.cancelItemChanges()">
+                        <i class="icon-arrow-left-3 on-left"></i>@Resources.SharedStrings.Back
+                    </button>
+                </div>
+            </div>
+        </div>  
+    </div>
+    
+    <h2 style="margin-left:10px!important" data-bind="text: editingItem().Subject + ' #' + editingItem().ContactFormNumber"></h2>
+
+    <form id="editForm" >
+
+        <fieldset>
+        <legend>@Box.ContactForms.SharedStrings.To</legend>
+        <label>@Box.ContactForms.SharedStrings.To</label>            
+        <span class="readOnlyField" data-bind="text: editingItem().TargetEmail"></span>
+        </fieldset>
+ 
+ 
+        <fieldset>
+            <legend>@Box.ContactForms.SharedStrings.Contact</legend>
+            <label>@Box.ContactForms.SharedStrings.Name</label>            
+            <span class="readOnlyField" data-bind="text: editingItem().ContactName"></span>
+            <label>@Box.ContactForms.SharedStrings.E_mail</label>            
+            <span class="readOnlyField"  data-bind="text: editingItem().ContactEmail"></span>
+            <label>@Box.ContactForms.SharedStrings.Address</label>     
+            <span class="readOnlyField" data-bind="text: editingItem().ContactCountry"></span> <span class="readOnlyField"  style="clear: none" data-bind="text: editingItem().ContactState"></span> <span class="readOnlyField"  style="clear: none" data-bind="text: editingItem().ContactCity"></span>
+            <label>@Box.ContactForms.SharedStrings.Personal_id</label>     
+            <span class="readOnlyField" data-bind="text: editingItem().ContactPersonalId"></span><span class="readOnlyField" style="clear: none" data-bind="text: editingItem().ContactPersonalId2"></span>
+
+        </fieldset>
+
+        <fieldset>
+            <legend>@Box.ContactForms.SharedStrings.Email_message</legend>
+            <div style="width: 800px; border: 1px solid gray;" data-bind="html: editingItem().Data?editingItem().Data.Data:''" >
+                
+            </div>
+        </fieldset>    
+        
+    </form>
+
+
+@this.ScriptBlock(
+
+@<script type="text/javascript">
+
+     function showForm(item) {
+         pageVM.setEditingItem(item);
+         pageVM.loadMessage();
+         $(window).scrollTop(0);
+    }
+
+</script>)

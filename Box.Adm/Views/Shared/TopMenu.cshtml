@@ -1,0 +1,52 @@
+﻿@model Box.Composition.Web.IPageModel
+@using Box.Composition;
+
+<script type="text/javascript">
+    function exibeMenu() {
+        document.getElementById("mainMenu").style.display = "block";
+        document.getElementById("mainMenu").style.overflow = "visible";
+    }
+</script>
+
+<nav class="navigation-bar">
+    
+    <div id="hideMenuButton" class="navigation-bar-content">
+        <a class="element">
+            <i class="fa fa-bars icon-fa fg-white"></i>
+        </a>
+    </div>
+
+    <nav id="mainMenu" class="navigation-bar-content">
+        <a class="element" href="@Url.Content("~/")">@Resources.SharedStrings.Home</a>
+
+        @foreach (IMenuActionLink item in Model.TopMenuItems) {
+            <a class="element" href="@Url.Content(item.ActionLink)">@item.Name</a>
+        }
+        <div class="place-right">
+            <img src="@Util.GravatarUrl(Model.UserEmail, 45)" />
+        </div>
+        <div class="element place-right">
+            <a onclick="exibeMenu()" class="dropdown-toggle" href="#" title="@Resources.SharedStrings.Settings">
+                @Model.UserEmail                
+                <span class="icon-cog"></span>
+            </a>
+            <ul class="dropdown-menu place-right inverse" data-role="dropdown">
+                <li class="menu-title">@Resources.SharedStrings.Settings</li>
+                @foreach (IMenuActionLink item in Model.SettingsMenuItems) {
+                    <li>
+                        <a href="@Url.Content(item.ActionLink)">@item.Name</a>
+                    </li>
+                }
+                @if (System.Threading.Thread.CurrentPrincipal.Identity.IsAuthenticated) {
+                    <li>
+                        <a href="@Url.Content("~/core_users/changePassword")">@Resources.SharedStrings.Change_password</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Content("~/signin")">@Resources.SharedStrings.Sign_out</a>
+                    </li>
+                }
+            </ul>
+        </div>
+        
+    </nav>
+</nav>

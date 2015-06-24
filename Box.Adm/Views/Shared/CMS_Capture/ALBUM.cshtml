@@ -1,0 +1,43 @@
+﻿@using Box.CMS
+@using Box.CMS.Web
+@using Box.Core.Web
+@model ContentPageModel 
+
+@Html.Partial("CMS/ContentTopMenu")
+    
+<form id="editForm">
+    <div class="grid fluid">
+        <div class="row">
+            <fieldset class="span12">
+            <div class="boxLeftMargin" style="margin-right: 10px">
+                <label>Álbum</label>
+                <input type="text" @Capture.MapToName() updatemodelevent="keyup" class="required" style="width: 100%;" maxlength="250" />
+                        
+                <label>Descrição</label>               
+                <textarea @Capture.MapToAbstract() style="width: 100%; min-height: 30px; margin-bottom: 25px;"></textarea>
+
+                
+             @Capture.File("Images", singleFile: false, style: "width: 100%;")
+             </div>   
+            </fieldset>
+        </div>
+    </div>
+</form>
+
+@this.ScriptBlock(
+@<script type="text/javascript">
+    // ALBUM DETAIL SCRIPT BLOCK ----------------------
+
+     function NEW_CONTENT(contentHead) {         
+         contentHead.CONTENT.Images = new Array();
+         return contentHead;
+     }
+     
+    function SET_THUMB(contentHead) {
+        if (contentHead.CONTENT.Images != null && contentHead.CONTENT.Images.length >= 1)
+            contentHead.ThumbFilePath = contentHead.CONTENT.Images[0].Folder + '/' + contentHead.CONTENT.Images[0].FileUId;
+        else
+            contentHead.ThumbFileUId = null;
+    }
+    
+</script>)

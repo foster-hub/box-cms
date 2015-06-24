@@ -1,0 +1,106 @@
+﻿@using Box.CMS.Web;
+@using Box.CMS;
+
+@{
+    Layout = "~/_PageLayoutCover.cshtml";
+    Page.Title = "Home Page";
+
+    // used to avoid Forgery
+    var captcha = new Box.CMS.Services.CaptchaService();
+}
+
+@section head{
+    <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/knockout/knockout-3.0.0.js"></script>
+    <script type="text/javascript" src="@Href("~/Scripts/Box.quiz.js")"></script>
+    <script type="text/javascript">
+        window._antiForgeryToken = '@captcha.AntiForgeryToken()';
+    </script>    
+}
+
+<!-- Carousel ================================================== -->
+<div id="myCarousel" class="carousel slide hidden-sm hidden-xs" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+        @BoxSite.Contents(top: 2, location: "/news", period: Periods.AnyTime,
+            itemTemplate:
+            @<div class="item @(item.OrderIndex == 0 ? "active" : "")">
+                 <img class="featurette-image"
+                      src="@BoxLib.GetFileUrl(item.ThumbFilePath, width: 1000, maxHeight:350)" alt="@item.Name"
+                      @Site.OnErrorImg()>
+                <div class="container">
+                    <a href="@BoxLib.GetContentLink(item)">
+                        <div class="carousel-caption">
+                            <h1>@item.Name</h1>
+                            <p>@item.Abstract</p>
+                        </div>
+                    </a>
+                </div>
+            </div>)
+    </div>
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>any content</h2>            
+            nononononono
+        </div>
+       
+        <div class="col-md-4">
+            <h2>quiz</h2>
+            @BoxSite.Quiz("home")
+        </div>
+
+        <div class="col-md-4">
+            <h2>tags</h2>
+            @BoxSite.TagCloud("tagSearch")
+        </div>
+       
+    </div>
+    
+
+    @BoxSite.Contents(top: 3, order: "PageView DESC", kinds: new string[] { "NEWS" }, period: Periods.Last30Days,
+    itemTemplate:
+    @<div>
+        <hr class="featurette-divider">
+        <div class="row featurette">
+            <div class="col-md-4">
+                <img class="featurette-image img-responsive"
+                     src="@BoxLib.GetFileUrl(item.ThumbFilePath, width:300, maxHeight:200)" alt="@item.Name"
+                     style="width: 300px; max-height: 200px;" @Site.OnErrorImg()>
+            </div>
+            <div class="col-md-8">
+                <h2 class="featurette-heading">
+                    <a href="@BoxLib.GetContentLink(item)">@item.Name</a>                
+                </h2>
+                <p class="lead">@item.Abstract</p>
+                                
+            </div>            
+        </div>
+    </div>)
+    
+
+</div>
+
+@section scripts{    
+    <script type="text/javascript" src="@Href("~/Scripts/jquery.tagcloud.min.js")"></script>
+    <script type="text/javascript">
+        $('.tagCloud').tagcloud({ type: "list", sizemin: 12, sizemax: 20, colormin: "d88", colormax: "0a0" });
+    </script>    
+}
+
+
+
+

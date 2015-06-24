@@ -1,0 +1,65 @@
+﻿@using Box.CMS.Web;
+@using Box.CMS;
+
+@helper MenuLink(string url, string name, string style = null) {
+    string selectedClass = "";
+
+    if (IsRequestUrl(url)) {
+        selectedClass = "active";
+    }
+    
+    string styleAttr = "";
+    if (style != null) {
+        styleAttr = "style=\"" + style + "\"";
+    }
+   
+    <li class="@selectedClass" @styleAttr><a href="@Href(url)">@name</a></li>
+}
+
+@helper MenuLink(ContentHead head) {
+    @MenuLink(@BoxLib.GetContentLink(head), head.Name)
+}
+
+
+@functions  {
+
+    public static IHtmlString OnErrorImg() {
+        return new HtmlString("onerror=\"this.onerror=null;this.src='" + @Href("~/images/no-image.png") + "';\"");
+    }
+
+    public static bool IsRequestUrl(string url) {        
+        if (url == null) { url = "~"; }
+
+        string linkUrl = CleanURL(Href(url));
+        string myUrl = CleanURL(Request.RawUrl);
+
+        if (linkUrl != "/" && myUrl.StartsWith(linkUrl)) {
+            return true;
+        }
+
+        if (linkUrl == "/" && myUrl == linkUrl) {
+            return true;
+        }
+        return false;
+        
+    }
+
+    public static String CleanURL(String url, bool removeParameters = false) {
+        
+        if (removeParameters && url.Contains("?")) {
+            url = url.Substring(0, url.IndexOf("?"));
+        }
+        if (!url.EndsWith("/")) {
+            url = url + "/";
+        }
+        return url.ToLower();        
+    }
+
+    public static String BreadcrumbNiceName(string location) {
+        switch (location) {
+            case "/pages/":
+                return "Pages";
+        }
+        return location;
+    }
+}

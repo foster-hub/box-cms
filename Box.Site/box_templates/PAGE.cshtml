@@ -1,0 +1,53 @@
+﻿@inherits Box.CMS.Web.ContentRenderView
+@using Box.CMS.Web;
+@using Box.CMS;
+@{
+    Page.Title = HEAD.Name;    
+}
+
+@section head {
+    @RenderPage("~/parts/meta-head-content.cshtml", HEAD)
+}
+
+@section breadcrumbs {
+    <li><a href="@Href("~/" + HEAD.Location)">@Site.BreadcrumbNiceName(HEAD.Location)</a></li>
+}
+
+@section leftMenu {   
+    @BoxSite.ContentsAtUrl(HEAD.Location, itemTemplate: Site.MenuLink)
+}
+
+<h2>@HEAD.Abstract</h2>
+@HEAD.CreateDate.ToLocalTime()<br />
+@Html.Raw(CONTENT.HTMLContent)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+

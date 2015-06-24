@@ -1,0 +1,16 @@
+﻿<html>
+<body>
+
+    <h1>Contact Information</h1>
+    Contact: @Model.Form.ContactName (@Model.Form.ContactEmail) <br />
+
+    Phone: @Model.Fields["contactPhone"]
+
+    <h1>Message - @Model.Form.Subject </h1>
+    @Model.Form.Message
+
+    <br /><br />
+    @Model.Root
+   
+</body>
+</html>

@@ -1,0 +1,45 @@
+﻿@using Box.CMS.Services;
+@model Box.Composition.Web.IPageModel
+@{    
+    ViewBag.Title = Resources.SharedStrings.Home;
+    CMSService cms = new CMSService();    
+}
+
+@section css {
+    
+    <style type="text/css">
+    #previewContentIFrame {  
+        -moz-transform: scale(0.25, 0.25); 
+        -webkit-transform: scale(0.25, 0.25); 
+        -o-transform: scale(0.25, 0.25);
+        -ms-transform: scale(0.25, 0.25);
+        transform: scale(0.25, 0.25); 
+        -moz-transform-origin: top left;
+        -webkit-transform-origin: top left;
+        -o-transform-origin: top left;
+        -ms-transform-origin: top left;
+        transform-origin: top left;
+        overflow: hidden;        
+        width: 1000px;              
+        min-height: 480px; 
+        position: absolute; top: 0px; left: 0px;
+        -webkit-user-select: none;        
+}
+</style>
+}
+
+
+<h2 class="boxLeftMargin">@ViewBag.Title</h2>
+
+<div class="boxLeftMargin" style="margin-top: 20px">
+
+    <div class="tile double bg-cyan">
+        <iframe id="previewContentIFrame" src="http://@(cms.SiteHost)/"  scrolling="no" verticalscrolling="no"></iframe>
+         <div class="brand bg-dark opacity">
+            <span class="text fg-white">Click here to visit website</span>
+        </div>
+        <div style="background-color: transparent; width: 250px; height: 120px; position: absolute; top: 0px; left: 0px;" onclick="javascript: window.open('http://@(cms.SiteHost)/','_blank');">
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,50 @@
+﻿@using Box.CMS.Web;
+
+<!DOCTYPE html>
+<html lang="en" @Facebook.FbmlNamespaces()>
+
+    <head>
+
+        @RenderPage("~/parts/html-head.cshtml")
+
+        @RenderPage("~/parts/meta-head.cshtml") 
+     
+        @RenderSection("head", false)
+ 
+    </head>
+<body>
+
+    @RenderPage("~/parts/top.cshtml")
+
+    <div class="container">
+        <div class="row">
+
+            <!-- body -->
+            <div class="col-md-12">
+                <h1>@Page.Title</h1>
+
+                <ol class="breadcrumb hidden-sm hidden-xs">
+                    <li><a href="@Href("~/")">Home</a></li>
+                    @RenderSection("breadcrumbs", false)
+                    <li><a href="#">@Page.Title</a></li>
+                </ol>
+
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    
+    
+
+    @RenderPage("~/parts/footer.cshtml")
+
+
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+    @RenderSection("scripts", false)
+
+</body>
+</html>

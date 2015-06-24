@@ -1,0 +1,28 @@
+﻿@inherits Box.CMS.Web.ContentRenderView
+@using Box.CMS;
+@using Box.CMS.Web;
+@{
+    Page.Title = HEAD.Name;
+    Layout = "~/_PageLayout1C.cshtml";
+    
+    string host = Request.Url.Authority;
+}
+
+@section head {
+    @RenderPage("~/parts/meta-head-content.cshtml", HEAD)
+}
+
+@section breadcrumbs {    
+    <li><a href="@Href("~/albums")">Albums</a></li>    
+}
+
+<h4>@HEAD.Abstract</h4>
+
+
+@foreach (var img in CONTENT.Images) {                
+    
+    <div class="col-md-4" style="min-height: 300px">
+        @BoxSite.Image(file: img, cssClass: "img-responsive")
+    </div>        
+}
+

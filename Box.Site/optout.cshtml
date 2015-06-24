@@ -1,0 +1,66 @@
+﻿@using Box.People;
+@{
+    Page.Title = "Opt out";
+    Layout = "~/_PageLayout1C.cshtml";
+    
+    string personUId = Request.QueryString["personUId"];
+    bool updated = false;
+
+    if (String.IsNullOrEmpty(personUId)) {
+        Response.Write("Action not allowed");
+        Response.End();
+    }
+
+    Box.People.Services.PeopleService peopleService = new Box.People.Services.PeopleService();
+    Box.People.Person person = peopleService.GetPerson(personUId);
+
+    if (person == null) {
+        Response.Write("Action not allowed");
+        Response.End();
+    }
+
+    if (IsPost) {
+        Box.People.Services.PersonForm pForm = new Box.People.Services.PersonForm();
+        peopleService.SavePerson(pForm.PutOptinChoicesInPerson(person));
+        updated = true;
+    }
+}
+
+@if(!updated) {
+        
+
+
+<form method="post">
+
+    <div>Please select how do you want us to keep in touch with you.</div>
+
+    <div class="checkbox">
+        <label>
+            <input id="emailOptin" type="checkbox" name="emailOptIn" checked="@person.EmailOptIn" />
+            by e-mail
+        </label>
+    </div>
+
+    <div class="checkbox">
+        <label>
+            <input id="smsOptin" type="checkbox" name="smsOptin" checked="@person.SMSOptIn" />
+            by SMS
+        </label>
+    </div>
+
+    <div class="checkbox">
+        <label>
+            <input id="mailOptin" type="checkbox" name="mailOptin" checked="@person.MailOptIn" />
+            by mail
+        </label>
+    </div>
+
+    <input type="submit" class="btn btn-default" value="Confirm" />
+
+</form>
+
+}
+    
+@if(updated){    
+    <h2>Your contact options has been updated.</h2>    
+}

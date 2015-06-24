@@ -1,0 +1,119 @@
+﻿@{
+    ViewBag.Title = Resources.SharedStrings.Sign_in; ;
+    Layout = null;
+    string SYSTEM_NAME = System.Configuration.ConfigurationManager.AppSettings["SYSTEM_NAME"] as String;
+
+    Box.Core.Services.SecurityService securityService = new Box.Core.Services.SecurityService();
+
+    bool windowsAuth = (bool) ViewData["WINDOWS_AUTH_ENABLE"];
+    bool formsAuth = (bool) ViewData["FORMS_AUTH_ENABLE"];
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="google" value="notranslate">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/jquery")
+</head>
+
+<body class="metro">
+
+    <!-- OPERATION MESSAGE -->
+    <div id="operationMessage" class="notice bg-amber">
+        <div class="fg-white">
+            <span id="operationMessageText"></span>
+            <button onclick="dialogHelper.setOperationMessage('')">
+                <i class="icon-cancel"></i>
+            </button>
+        </div>
+    </div>
+
+    <nav class="navigation-bar">
+        <nav class="navigation-bar-content">
+            <div class="element">@SYSTEM_NAME</div>
+        </nav>
+    </nav>
+
+    
+    <div class="grid mainGrid">
+
+        <h1>@Resources.SharedStrings.Sign_in</h1>
+
+    <div class="row">
+    @if (formsAuth) {
+
+        <fieldset class="span6">
+
+            <legend>@Resources.SharedStrings.Your_crendetials</legend>
+
+            <label>@Resources.SharedStrings.Your_email</label>
+            @MetroUI.TextBox(id: "emailTextBox", databind: "value: signedUser().Email", maxLength: 50, decoration: @<span data-bind="visible: loginResult()=='BLOCKED'" class="field-validation-error">@Resources.SharedStrings.User_blocked</span>)
+
+            <label>@Resources.SharedStrings.Your_password</label>
+            @MetroUI.Password(databind: "value: signedUser().Password.Password, valueUpdate: 'afterkeydown'", maxLength: 10, onkeypress: "dialogHelper.ifEnter(pageVM.signin)", decoration: @<span data-bind="visible: loginResult()=='INVALID'" class="field-validation-error" style="position: absolute; right: 0px;top: 0px;">@Resources.SharedStrings.Invalid_user_or_password</span>)
+
+            <small style="float: right">@Html.ActionLink(Resources.SharedStrings.Forgot_your_password, "ResetPassword", "core_signin")</small>
+
+            <button onclick="pageVM.signin()" class="large">@Resources.SharedStrings.Sign_in</button>
+        </fieldset>
+    
+        <div class="span1">&nbsp;</div>
+
+        }
+        @if (!String.IsNullOrEmpty(@ViewData["GOOGLE_LOGIN_URL"] as String) || !String.IsNullOrEmpty(@ViewData["WINDOWS_LIVE_LOGIN_URL"] as String) || windowsAuth) {
+        <fieldset class="span5">
+
+           
+           <legend style="margin-bottom: 10px">@Resources.SharedStrings.Or_using</legend>
+            
+
+            @if (!String.IsNullOrEmpty(@ViewData["GOOGLE_LOGIN_URL"] as String)) {
+                <a class="oauthSigin"
+                   href="@ViewData["GOOGLE_LOGIN_URL"]" style="background-image: url(@Url.Content("~/Content/Core_Images/Oauth/google.png"))">
+                </a>
+            }
+            @if (!String.IsNullOrEmpty(@ViewData["WINDOWS_LIVE_LOGIN_URL"] as String)) {
+                <a class="oauthSigin"
+                   href="@ViewData["WINDOWS_LIVE_LOGIN_URL"]" style="background-image: url(@Url.Content("~/Content/Core_Images/Oauth/wl.png"))">
+                </a>
+            }
+            @if (windowsAuth) {
+                <a class="oauthSigin"
+                   href="@ViewData["WINDOWS_AUTH_URL"]" style="background-image: url(@Url.Content("~/Content/Core_Images/Oauth/nt.png"))">                    
+                </a>
+            }           
+        </fieldset>
+        }
+
+    </div>
+
+        <div class="row">
+            <small class="span6">
+                @Resources.SharedStrings.Make_sure_you_are_using_one_of_the_following_browsers:
+                Google Chrome, Fire Fox 4+, Microsoft Internet Explore 10+.
+            </small>
+        </div>
+
+    </div>
+ 
+    
+    @Html.Partial("PageDefaults")
+
+
+    @Scripts.Render("~/Scripts/Core/Validator." + System.Threading.Thread.CurrentThread.CurrentCulture.Name + ".js")
+    @Scripts.Render("~/bundles/box")
+
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Core/SigninVM.js")"></script>
+    <script type="text/javascript">
+        window._webAppUrl = '@Url.Content("~/")';
+        window._antiForgeryToken = '@Util.TokenHeaderValue()';
+    </script>
+
+</body>
+</html>

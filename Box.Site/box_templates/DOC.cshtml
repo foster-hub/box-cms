@@ -1,0 +1,11 @@
+﻿@inherits Box.CMS.Web.ContentRenderView
+@using Box.CMS.Web;
+@{
+    if (CONTENT != null && CONTENT.Files!=null && CONTENT.Files.Count>0) {
+        BoxLib.ResponseFile((string)CONTENT.Files[0].FileUId);    
+    }
+    else {
+        Response.Write("file not found");
+    }
+}
+

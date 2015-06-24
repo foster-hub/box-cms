@@ -1,0 +1,53 @@
+﻿@using Box.Core.Web
+
+ <div class="toolbar transparent boxToolBar">    
+
+         <div class="grid fluid">
+            <div class="row">
+
+                <!-- Data de -->
+                <div class="span12">
+                    <button onclick="pageVM.cancelItemChanges();" ><i class="icon-arrow-left-3 on-left"></i>@Resources.SharedStrings.Back</button>  
+                </div>
+
+            </div>
+        </div> 
+
+ </div>
+
+    <form id="editForm" >
+
+        <h2 class="boxLeftMargin" data-bind="text: editingItem().When.getDate() + '/' + (editingItem().When.getMonth()+1) + '/' + editingItem().When.getFullYear()+ ' - '  + editingItem().When.toLocaleTimeString()"></h2>
+
+        <div class="grid mainGrid">
+            <div class="row no-margin">
+
+                <fieldset class="span12">
+                  
+                    <div>
+                  
+                        <label>@Resources.SharedStrings.User</label>
+                        <span data-bind="text: editingItem().SignedUser"></span>
+
+                        <label>URL</label>
+                        <span data-bind="text: editingItem().Url"></span>
+
+                        <label>IP</label>
+                        <span data-bind="text: editingItem().UserIp"></span>
+
+                        <label>@Resources.SharedStrings.Type_of_log</label>
+                        <span data-bind="text: (editingItem().LogType == 1 ? 'Erro' : 'Ação')"></span>
+
+                        <label data-bind="style: { display: editingItem().ErrorDescription?'block':'none' }">@Resources.SharedStrings.Description</label>
+                        <span data-bind="text: editingItem().ErrorDescription"></span>
+
+                        <label data-bind="style: { display: editingItem().ActionDescription?'block':'none' }">@Resources.SharedStrings.Action</label>
+                        <span data-bind="text: editingItem().ActionDescription"></span>
+
+                        <label>@Resources.SharedStrings.Parameters</label>
+                        <span data-bind="text: editingItem().Parameters"></span>
+                    </div>            
+                </fieldset>
+            </div>
+        </div>
+    </form>

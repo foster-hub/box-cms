@@ -1,0 +1,75 @@
+﻿@using System.Web.Optimization
+@using Box.Core.Web;
+@model Box.Core.Web.PageModel
+@{
+    ViewBag.Title = Resources.SharedStrings.Export_Data;
+}
+
+
+
+@section css {    
+    <style type="text/css">
+        #loadingData > div { display:none!important; }
+    </style>
+}
+<div class="toolbar transparent boxToolBar">
+
+        <div class="grid fluid">
+            <div class="row">
+                <div class="span12">
+                      <button onclick="pageVM.cancelItemChanges()"><i class="icon-arrow-left-3 on-left"></i>@Resources.SharedStrings.Back</button>
+                      <button type="button" data-bind="click: startTask, visible: AsyncStatus() == 0 || AsyncStatus() == 2"  value="@Box.People.SharedStrings.Start"><i class="icon-play-2 fg-green on-left"></i>Iniciar</button>
+                      <button type="button" data-bind="click: cancelTask, visible: AsyncStatus() == 1" value="@Resources.SharedStrings.Cancel"><i class="icon-cancel fg-red on-left"></i>@Resources.SharedStrings.Cancel</button>                      
+                </div>
+            </div>
+        </div>  
+
+</div>    
+
+<h2 style="margin-left:17px;"data-bind="text: '@Box.People.SharedStrings.Export \'' + CurrentExportDescription() + '\''"></h2>
+
+<!-- id="progressBarBox" -->
+<div id="" style="text-align: center; margin-top:50px;">
+
+    <!-- NO EXPORT -->
+    <div data-bind="if : AsyncStatus() == 0">        
+        @Box.People.SharedStrings.No_Export_Message
+    </div>
+    
+    <!-- EXPORTING -->
+    <div data-bind="if: AsyncStatus() == 1">
+        @Box.People.SharedStrings.Exporting '<em data-bind="text: Description()"></em>' (@Box.People.SharedStrings.Started_at <em data-bind="text: StartDate().toLocaleString()"></em>).<br /><br />
+
+        <progress style="height:35px; width:800px;" max="800" data-bind="value: CurrentPercentage() * 8">
+            <!-- For browsers that doesn't suport progress -->
+            <div id="progressBar">
+                <div id="percentage" data-bind="style: {width: (CurrentPercentage() *8) + 'px'}">
+                </div>
+            </div>
+        </progress>  
+
+        <label data-bind="text: CurrentAtivity()"> </label>      
+    </div>
+
+    <!-- EXPORT DONE -->
+    <div data-bind="if: AsyncStatus() == 2">        
+        <h4>@Box.People.SharedStrings.Last_Export (<em data-bind="text: StartDate().toLocaleString()"></em>)</h4>
+        <label>@Box.People.SharedStrings.The_Export_From '<em data-bind="text: Description()"></em>' @Box.People.SharedStrings.Was_Finished_At <em data-bind="text: EndDate()==null?'':EndDate().toLocaleString()"></em>.</label>
+        <label data-bind="text:'@Box.People.SharedStrings.Download_File (' + bytesToSize(FileSize())+')'"></label>
+        <a data-bind=" attr: { href: '@Url.Content("~/core_taskresult/")' + AsyncTaskUId() } , text: FileName() + ResultContentType()" ></a>
+    </div>
+
+    <div data-bind="if: AsyncStatus() == 3">
+        @Box.People.SharedStrings.Already_Exporting
+    </div>
+    
+</div>
+
+@section scripts {  
+    <script type="text/javascript" src="@Url.Content("~/Scripts/People/ExportVM.js")"></script>
+    <script type="text/javascript">
+        ExportVM.filter = '@Request.QueryString["filter"]';
+        ExportVM.optin = '@Request.QueryString["optin"]';
+        ExportVM.group = '@Request.QueryString["group"]';
+    </script>
+}

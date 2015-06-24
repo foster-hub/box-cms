@@ -1,0 +1,103 @@
+﻿@using Box.Core.Web
+@{    
+    string siteHost = System.Configuration.ConfigurationManager.AppSettings["SITE_HOST"] as String;   
+    string dateFormat = "mm/dd/yy";
+    
+    if (System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLower() == "pt-br") {        
+        dateFormat = "dd/mm/yy";
+    }    
+} 
+@using Box.Composition
+@model Box.Composition.Web.IPageModel
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="google" value="notranslate">
+    <meta http-equiv="Content-Language" content="en_US" /> 
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+            
+    @Styles.Render("~/Content/css")  
+    @RenderSection("css", false)       
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/metro")
+
+    <script type="text/javascript">
+    window._webAppUrl = '@Url.Content("~/")';
+    window._siteHost = '@siteHost';
+    _dateFormat = '@dateFormat';
+    window._antiForgeryToken = '@Util.TokenHeaderValue()';        
+    </script>
+ 
+</head>
+
+<body class="metro">
+
+    <!-- OPERATION MESSAGE -->
+    <div id="operationMessage" class="notice bg-amber">
+        <div class="fg-white">
+            <span id="operationMessageText"></span>
+            <button onclick="dialogHelper.setOperationMessage('')">
+                <i class="icon-cancel"></i>
+            </button>
+        </div>
+    </div>
+
+    <nav class="navigation-bar dark">
+       
+       <div id="hideMenuButton" class="navigation-bar-content">
+            <a class="element">
+                <i class="fa fa-bars icon-fa fg-white"></i>
+            </a>
+        </div>
+
+        <nav id="mainMenu" class="navigation-bar-content">
+        @foreach (IMenuActionLink item in Model.SettingsMenuItems) {
+            <a class="element" href="@Url.Content(item.ActionLink)">@item.Name</a>
+        }
+            <a class="element" href="@Url.Content("~/")">@Resources.SharedStrings.Close</a>
+
+
+        <div class="place-right">
+            <img src="@Util.GravatarUrl(Model.UserEmail, 45)" />
+        </div>
+        <div class="element place-right">                
+                @Model.UserEmail                                    
+        </div>
+            
+
+</nav>
+    </nav>
+
+    
+    @RenderBody()
+
+    @Html.Partial("PageDefaults")
+
+    <!-- DIALOGS -->
+    <div id="darkScreen">@RenderSection("dialogs", false)</div>
+
+    
+    @Scripts.Render("~/bundles/box")    
+    @Scripts.Render("~/Scripts/Core/Validator." + System.Threading.Thread.CurrentThread.CurrentUICulture.Name + ".js")
+    
+    
+    @RenderSection("scripts", false)
+    @this.RenderScriptBlocks()
+
+    <script type="text/javascript">
+        $(function () {
+            $('.date').removeClass('hasDatepicker').datepicker({ dateFormat: _dateFormat });
+        });
+        $(function () {
+            $('#hideMenuButton').click(function () {
+                $('#mainMenu').slideToggle();
+            });
+        });
+    </script>
+    
+
+</body>
+</html>

@@ -1,0 +1,180 @@
+﻿@using Box.People;
+@{
+    Page.Title = "Register";
+    var personForm = new Box.People.Services.PersonForm();
+    if (IsPost) {
+        Box.People.Services.PeopleService peopleService = new Box.People.Services.PeopleService();
+        personForm.AddPerson("site", "Site Visitors");
+    }
+}
+
+@if (!personForm.RegistrationComplete) {
+    <form role="form" id="formRegister" method="post" >
+
+
+        @if (personForm.SendError != null) {
+
+            @personForm.SendError
+
+        }
+
+        <h3>Personal data</h3>
+
+        <div class="form-group">
+            <label for="Name">Name</label>
+            <input id="Name" name="Name" class="form-control" maxlength="200" value="@Request["Name"]" />
+        </div>
+
+
+        <div class="form-group">
+            <label for="Surename">Surname</label>
+            <input id="Surename" name="Surename" class="form-control" maxlength="200" value="@Request["Surename"]" />
+        </div>
+
+        <div class="form-group">
+            <label for="Title">Title</label>
+            <input id="Title" name="Title" class="form-control" maxlength="20" value="@Request["Title"]" />
+        </div>
+
+        <div class="form-group">
+            <label for="Gender">Gender</label>
+            <select id="Gender" name="Gender" class="form-control">
+                <option value="M">Man</option>
+                <option value="W">Woman</option>
+            </select>
+        </div>
+
+
+        <div class="form-group">
+            <label for="PersonalId1">ID</label>
+            <input id="PersonalId1" name="PersonalId1" class="form-control" maxlength="50" value="@Request["PersonalId1"]" />
+        </div>
+
+        <div class="form-group">
+            <label for="Birthday">Birthday</label>
+            <input id="Birthday" name="Birthday" class="form-control" maxlength="10" value="@Request["Birthday"]" />
+        </div>
+
+        <h3>Address</h3>
+
+        <div class="form-group">
+            <label for="Country">Country</label>
+            <input id="Country" name="Country" class="form-control" maxlength="50" value="@Request["Country"]" />
+        </div>
+
+        <div class="form-group">
+            <label for="State">State</label>
+            <input id="State" name="State" class="form-control" maxlength="50" value="@Request["State"]" />
+        </div>
+
+        <div class="form-group">
+            <label for="City">City</label>
+            <input id="City" name="City" class="form-control" maxlength="50" value="@Request["City"]" />
+        </div>
+
+        <div class="form-group">
+            <label for="Address1">Address 1</label>
+            <input id="Address1" name="Address1" class="form-control" maxlength="200" value="@Request["Address1"]" />
+        </div>
+
+        <div class="form-group">
+            <label for="Address2">Address2</label>
+            <input id="Address2" name="Address2" class="form-control" maxlength="200" value="@Request["Address2"]" />
+        </div>
+
+        <div class="form-group">
+            <label for="ZipCode">Zip code</label>
+            <input id="ZipCode" name="ZipCode" class="form-control" maxlength="10" value="@Request["ZipCode"]" />
+        </div>
+
+        <h3>Profession</h3>
+
+        <div class="form-group">
+            <label for="Job">Job</label>
+            <input id="Job" name="Job" class="form-control" maxlength="35" value="@Request["Job"]" />
+        </div>
+
+        <div class="form-group">
+            <label for="Role">Role</label>
+            <input id="Role" name="Role" class="form-control" maxlength="35" value="@Request["Role"]" />
+        </div>
+
+        <div class="form-group">
+            <label for="MarketField">MarketField</label>
+            <input id="MarketField" name="MarketField" class="form-control" maxlength="35" value="@Request["MarketField"]" />
+        </div>
+                   
+        <h3>Contact</h3>
+
+        <div class="form-group">
+            <label for="Phone1">Phone</label>
+            <input id="Phone1" name="Phone1" class="form-control" maxlength="15" value="@Request["Phone1"]" />
+        </div>
+
+        <div class="form-group">
+            <label for="Phone2">Mobile</label>
+            <input id="Phone2" name="Phone2" class="form-control" maxlength="15" value="@Request["Phone2"]" />
+        </div>
+        
+        <div class="form-group">
+            <label for="Email">E-mail</label>
+            <input id="Email" type="email" name="Email" class="form-control" maxlength="200" value="@Request["Email"]" />
+        </div>
+        
+        <h3>Contact options</h3>
+
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="newsletterEmail" value="true" />
+                by e-mail
+            </label>
+        </div>
+
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="newsletterSMS" value="true" />
+                by sms
+            </label>
+        </div>
+
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="newsletterMail" value="true" />
+                by mail
+            </label>
+        </div>
+       
+
+        <button type="submit" class="btn btn-default">Submit</button>
+
+</form>
+}
+@if (personForm.RegistrationComplete) {
+    <h2>Registration complete.</h2>        
+}
+
+@section scripts {
+<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js" ></script>
+ <script>
+     $().ready(function () {
+
+         $("#formRegister").validate({
+             rules: {
+                 Name  : "required",
+                 Email: {
+                     required : true,
+                     email    : true
+                 }
+             },
+             messages: {
+                 Name   : "Nome é obrigatório.",
+                 Email: {
+                     required : "E-mail é obrigatório.",
+                     email    : "Entre com um e-mail válido."
+                 }
+            }
+         });
+
+     });
+</script>
+}

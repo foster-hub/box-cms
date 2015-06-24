@@ -1,0 +1,61 @@
+﻿@using System.Web.Optimization
+@using Box.Core.Web
+@model Box.Composition.Web.IPageModel
+@{
+    ViewBag.Title = "Upload";
+    Layout = null;
+    
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="google" value="notranslate">
+    <meta http-equiv="Content-Language" content="en_US" /> 
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    
+    @Styles.Render("~/Content/css")         
+    @Scripts.Render("~/bundles/jquery")
+
+</head>
+
+<body>
+    <form method="post" enctype="multipart/form-data" style="width: 100%;">
+        
+        <h2>@Box.CMS.SharedStrings.File_upload</h2>
+
+        <nav style="margin: 0px 0px 0px 0px;">
+            <input type="submit" />
+        </nav>
+
+        <div style="padding: 10px 10px 10px 10px">
+            @Box.CMS.SharedStrings.Upload_not_supported_tooltip_1<br />
+            @Box.CMS.SharedStrings.Upload_not_supported_tooltip_2
+        </div>
+
+        
+        <div style="height: 20px; color: Green; padding-left: 10px;">
+        @if (ViewData["uploadedFile"] != null) {
+            @ViewData["uploadedFile"]
+            @(' ')
+            @Box.CMS.SharedStrings.was_uploaded
+        }
+        </div>
+        
+        
+
+        <label>@Box.CMS.SharedStrings.Select_a_file</label>
+        <input 
+            name="file" 
+            type="file" 
+            style="margin-left: 10px">                                    
+    
+        </form>
+    
+
+</body>
+
+
+</html>
