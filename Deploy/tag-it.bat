@@ -1,5 +1,5 @@
 set SVNBIN=\\foster\data\SVN_BIN\svn
-set SVNPATH=http://svn:8080/svn/Foster-Box/
+set SVNPATH=https://github.com/foster-hub/box-cms.git
 @ECHO Taging publish
 del .\pub\box-version.txt
 %SVNBIN% log %SVNPATH% >> .\pub\box-version.txt
