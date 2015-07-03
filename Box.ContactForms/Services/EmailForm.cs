@@ -247,9 +247,6 @@ namespace Box.ContactForms.Services {
         public System.Web.IHtmlString MapToContactState { get { return MapTo("ContactState"); } }
         public System.Web.IHtmlString MapToContactCity { get { return MapTo("ContactCity"); } }
         public System.Web.IHtmlString MapToMessage { get { return MapTo("Message"); } }
-        
-        //WE <3 GIT and GITHUB
-
     }
    
 }

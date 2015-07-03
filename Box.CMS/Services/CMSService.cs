@@ -109,7 +109,7 @@ namespace Box.CMS.Services {
 
                 contents = OnlyPublishedContents(contents);
 
-                if (location != null) {
+                if (!string.IsNullOrEmpty(location)) {
                     location = location.ToLower();
                     if (!location.EndsWith("/"))
                         location = location + "/";
