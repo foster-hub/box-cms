@@ -1,5 +1,11 @@
 ﻿@using Box.ContactForms;
 @{
+    // avoid any cache
+    //Response.Expires = -1; 
+    //Response.Cache.SetRevalidation(HttpCacheRevalidation.AllCaches);
+    //Response.Cache.SetNoStore();
+    //Response.Cache.SetNoServerCaching();
+    //Response.Cache.SetMaxAge(TimeSpan.FromSeconds(0));
     
     var captcha = new Box.CMS.Services.CaptchaService("captchaText");
 
@@ -16,7 +22,7 @@
         form.AddFile(Request.Files[0]); // add attach
     }
 
-    form.Send(IsPost && captcha.IsValidCaptcha());
+    form.Send(IsPost && captcha.IsValidCaptcha());    
     
 }
 
@@ -40,12 +46,12 @@
 
         <div class="form-group">
             <label for="contactEmail">E-mail</label>
-            <input @form.MapToContactEmail type="email"  class="form-control" placeholder="Please provide your e-mail"  />
+            <input @form.MapToContactEmail type="email"  class="form-control required email" placeholder="Please provide your e-mail"  />
         </div>
 
         <div class="form-group">
             <label for="contactName">Name</label>
-            <input @form.MapToContactName class="form-control" placeholder="Please provide your name"  />
+            <input @form.MapToContactName class="form-control required" placeholder="Please provide your name" />
         </div>
 
         <div class="form-group">
@@ -75,7 +81,7 @@
 
         <div class="form-group">
             <label for="message">Message</label>
-            <textarea @form.MapToMessage class="form-control" style="height:100px;" rows="3" cols="100">@Request["Message"]</textarea>
+            <textarea @form.MapToMessage class="form-control required" style="height:100px;" rows="3" cols="100">@Request["Message"]</textarea>
         </div>
 
         <div class="form-group">
@@ -106,24 +112,7 @@
     <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
     <script>
         $().ready(function () {
-
-            $("#formContact").validate({
-                rules: {
-                    contactName: "required",
-                    contactEmail: {
-                        required: true,
-                        email: true
-                    }
-                },
-                messages: {
-                    contactName: "Nome é obrigatório.",
-                    contactEmail: {
-                        required: "E-mail é obrigatório.",
-                        email: "Entre com um e-mail válido."
-                    }
-                }
-            });
-
+            $("#formContact").validate();
         });
     </script>
 

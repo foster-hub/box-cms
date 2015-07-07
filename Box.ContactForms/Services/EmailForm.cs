@@ -204,7 +204,7 @@ namespace Box.ContactForms.Services {
 
             System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient();
             ThreadPool.QueueUserWorkItem(t => {
-                smtp.Send(msg);
+                try { smtp.Send(msg); } catch (Exception ex) { }
             });
 
             return body;
@@ -222,7 +222,7 @@ namespace Box.ContactForms.Services {
             msg.Body = body;
             System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient();
             ThreadPool.QueueUserWorkItem(t => {
-                smtp.Send(msg);
+                try { smtp.Send(msg); } catch (Exception ex) { }
             });
         }
 
