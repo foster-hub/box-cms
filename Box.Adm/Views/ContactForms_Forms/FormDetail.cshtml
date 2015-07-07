@@ -42,10 +42,12 @@
         </fieldset>
 
         <fieldset>
-            <legend>@Box.ContactForms.SharedStrings.Email_message</legend>
-            <div style="width: 800px; border: 1px solid gray;" data-bind="html: editingItem().Data?editingItem().Data.Data:''" >
-                
-            </div>
+            <legend>@Box.ContactForms.SharedStrings.Email_message</legend>            
+            
+            @*<div style="width: 800px; border: 1px solid gray;" data-bind="html: editingItem().Data?editingItem().Data.Data:''">                
+            </div>*@
+            <iframe id="emailDetailFrame" src="~/Content/emailDetail.html" style="width:800px; height: 400px;border: 1px solid gray;" >
+            </iframe>
         </fieldset>    
         
     </form>
@@ -57,7 +59,10 @@
 
      function showForm(item) {
          pageVM.setEditingItem(item);
-         pageVM.loadMessage();
+         pageVM.loadMessage(function () {
+             var frame = document.getElementById('emailDetailFrame');
+             frame.contentDocument.body.innerHTML = pageVM.editingItem().Data.Data;
+         });
          $(window).scrollTop(0);
     }
 
