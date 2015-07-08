@@ -150,7 +150,9 @@ namespace Box.CMS.Services {
 
         public IHtmlString Image() {
             Random r = new Random();
-            string url = System.Web.HttpContext.Current.Request.ApplicationPath + "captcha?r=" + r.Next(1000);
+            string url = System.Web.HttpContext.Current.Request.ApplicationPath + "/captcha?r=" + r.Next(1000);
+            if (url.StartsWith("//"))
+                url = url.Substring(1);
             return new HtmlString("<img id=\"__captchaIMG\" src=\"" + url + "\"/>");
         }
 
