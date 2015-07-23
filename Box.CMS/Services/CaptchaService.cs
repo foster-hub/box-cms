@@ -150,15 +150,24 @@ namespace Box.CMS.Services {
 
         public IHtmlString Image() {
             Random r = new Random();
-            string url = System.Web.HttpContext.Current.Request.ApplicationPath + "/captcha?r=" + r.Next(1000);
+            string url = System.Web.HttpContext.Current.Request.ApplicationPath;
+            string parametroCaptcha = "captcha?r=" + r.Next(1000);
+            if (url.Substring(url.Length - 1) != "/")
+                url = url + "/";
             if (url.StartsWith("//"))
                 url = url.Substring(1);
+            url = url + parametroCaptcha;
             return new HtmlString("<img id=\"__captchaIMG\" src=\"" + url + "\"/>");
         }
 
         public string RefreshCaptchaJS {
-            get {             
-                string url = System.Web.HttpContext.Current.Request.ApplicationPath + "captcha?r=";
+            get {
+                string url = System.Web.HttpContext.Current.Request.ApplicationPath;
+                string parametroCaptcha = "captcha?r=";                
+                if (url.Substring(url.Length - 1) != "/")
+                    url = url + "/";
+                url = url + parametroCaptcha;
+               
                 return "document.getElementById('__captchaIMG').src='" + url + "' + Math.random();return false;";
             }
         }
