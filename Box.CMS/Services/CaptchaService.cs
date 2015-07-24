@@ -107,7 +107,23 @@ namespace Box.CMS.Services {
             }
         }
 
-        
+        private string GenerateImageURL(string randomImg = null) {
+
+            string url = System.Web.HttpContext.Current.Request.ApplicationPath;
+            string parametroCaptcha = "captcha?r=";
+
+            if (!string.IsNullOrEmpty(randomImg))
+                parametroCaptcha = parametroCaptcha + randomImg;
+
+            if (url.Substring(url.Length - 1) != "/")
+                url = url + "/";
+
+            if (url.StartsWith("//"))
+                url = url.Substring(1);
+
+            return url + parametroCaptcha;
+
+        }
 
         internal void GenerateNewText(int length) {
             int intZero = '1';
@@ -150,27 +166,16 @@ namespace Box.CMS.Services {
 
         public IHtmlString Image() {
             Random r = new Random();
-            string url = System.Web.HttpContext.Current.Request.ApplicationPath;
-            string parametroCaptcha = "captcha?r=" + r.Next(1000);
-            if (url.Substring(url.Length - 1) != "/")
-                url = url + "/";
-            if (url.StartsWith("//"))
-                url = url.Substring(1);
-            url = url + parametroCaptcha;
-            return new HtmlString("<img id=\"__captchaIMG\" src=\"" + url + "\"/>");
+            return new HtmlString("<img id=\"__captchaIMG\" src=\"" + GenerateImageURL(r.Next(1000).ToString()) + "\"/>");
         }
 
         public string RefreshCaptchaJS {
             get {
-                string url = System.Web.HttpContext.Current.Request.ApplicationPath;
-                string parametroCaptcha = "captcha?r=";                
-                if (url.Substring(url.Length - 1) != "/")
-                    url = url + "/";
-                url = url + parametroCaptcha;
-               
-                return "document.getElementById('__captchaIMG').src='" + url + "' + Math.random();return false;";
+                return "document.getElementById('__captchaIMG').src='" + GenerateImageURL() + "' + Math.random();return false;";
             }
         }
+
+       
 
         public void ValidateAntiForgery() {
             string cookieToken = "";
