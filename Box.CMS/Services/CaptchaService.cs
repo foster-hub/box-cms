@@ -107,22 +107,13 @@ namespace Box.CMS.Services {
             }
         }
 
-        private string GenerateImageURL(string randomImg = null) {
-
+        private string GenerateImageURL() {
             string url = System.Web.HttpContext.Current.Request.ApplicationPath;
             string parametroCaptcha = "captcha?r=";
 
-            if (!string.IsNullOrEmpty(randomImg))
-                parametroCaptcha = parametroCaptcha + randomImg;
-
             if (url.Substring(url.Length - 1) != "/")
                 url = url + "/";
-
-            if (url.StartsWith("//"))
-                url = url.Substring(1);
-
             return url + parametroCaptcha;
-
         }
 
         internal void GenerateNewText(int length) {
@@ -166,7 +157,7 @@ namespace Box.CMS.Services {
 
         public IHtmlString Image() {
             Random r = new Random();
-            return new HtmlString("<img id=\"__captchaIMG\" src=\"" + GenerateImageURL(r.Next(1000).ToString()) + "\"/>");
+            return new HtmlString("<img id=\"__captchaIMG\" src=\"" + GenerateImageURL() + r.Next(1000).ToString() + "\"/>");
         }
 
         public string RefreshCaptchaJS {
