@@ -156,6 +156,7 @@ namespace Box.CMS.Services {
 
             response.ContentType = file.Type;
             response.BinaryWrite(file.Data.StoredData);
+            response.End();
         }
 
         public void LogPageView(string contentUId) {
