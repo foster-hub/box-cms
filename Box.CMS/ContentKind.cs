@@ -15,7 +15,9 @@ namespace Box.CMS {
 
         public string CaptureController { get; set; }
 
-        public string CaptureDetailView { get; set; }
+        public string CaptureListView { get; set; }
+
+        public string CaptureDetailView { get; set; }              
 
         public bool AnyTimeDefaultFilter { get; set; }
 

@@ -33,6 +33,9 @@ namespace Box.CMS.Controllers {
             Web.ContentPageModel model = new Web.ContentPageModel(PageModel, ckind, cms.CrossLinkAreas);
 
             //model.PreviewToken = security.GetSignedUserToken();
+
+            if(!String.IsNullOrEmpty(ckind.CaptureListView))
+                return View(ckind.CaptureListView, model);
             
             return View(model);
         }
