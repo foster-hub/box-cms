@@ -5,36 +5,56 @@
 
 @Html.Partial("CMS/ContentTopMenu")
     
-<form style="margin-left:10px;" id="editForm">    
+<form  id="editForm">    
+    <div class="grid fluid">
+        <div class="row">
 
-     <fieldset>
+            <fieldset class="boxLeftMargin" style="margin-right: 10px">
 
-      <div style="margin-right: 10px">
-    
-    <label>@Box.CMS.SharedStrings.Title</label>                                               
-    <input                         
-        type="text" 
-        @Capture.MapToName()
-        updatemodelevent="keyup" class="required" 
-        style="width: 620px;" 
-        maxlength="250" />
 
-                    
-        <label>@Box.CMS.SharedStrings.File</label>                                               
-        @Capture.File("Files", folder: "DOC_ROOT", singleFile: true, style: "width: 100%")
+                <div data-bind="visible: editingItem().Name!=''">
+                    <label>@Box.CMS.SharedStrings.Title</label>
+                    <input type="text"
+                           @Capture.MapToName()
+                           updatemodelevent="keyup" class="required"
+                           style="width: 620px;"
+                           maxlength="250" />
 
-        </fieldset>
+                </div>
+
+                <label>@Box.CMS.SharedStrings.File</label>
+                @Capture.File("Files", folder: "DOC_ROOT", singleFile: true, style: "width: 100%")
+
+            </fieldset>
 
         </div>
+        
+
+    </div>
+    
+
+    
 
 </form>
 
 
 @this.ScriptBlock(
 @<script type="text/javascript">
+
+
+    UploadArea.afterSendCallBack = function (id, fileName) {
+        var idx = fileName.lastIndexOf(".");
+        if (idx > 0) {
+            fileName = fileName.substring(0, idx);
+        }
+        pageVM.editingItem().Name = fileName;        
+    }
+
+
     // PAGE DETAIL SCRIPT BLOCK ----------------------
      function NEW_CONTENT(contentHead) {                  
          contentHead.CONTENT.Files = new Array();
+         contentHead.Name = '';
          return contentHead;
      }
 

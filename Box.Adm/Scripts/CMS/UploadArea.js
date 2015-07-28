@@ -150,6 +150,8 @@ UploadArea.sendFiles = function (files, id, folder, singleFile) {
                 var newFile = { FileUId: res.FileUId, Folder: folder, Caption: '', Type: res.Type };
                 bindFiles.push(newFile);
 
+                if (UploadArea.afterSendCallBack != null)
+                    UploadArea.afterSendCallBack(id, res.FileName);
 
             }
 
