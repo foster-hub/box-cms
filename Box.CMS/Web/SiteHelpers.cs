@@ -194,38 +194,39 @@ namespace Box.CMS.Web {
             return new HtmlString(cloud);
         }
 
-        public static IHtmlString PageNextButton(string listId, string text="next") {
+        public static IHtmlString PageNextButton(string listId, string text = "next", string formId = null) {
 
             if(BoxLib.GetListIsOver(listId))
                 return new HtmlString("");
 
             string html = "<a href=\"{0}\" class=\"listNextButton\">{1}</a>";
-            html = String.Format(html, BoxLib.ListNavigatonNextLink(listId), text);
+            html = String.Format(html, BoxLib.ListNavigatonNextLink(listId, formId), text);
+
             return new HtmlString(html);
         }
 
-        public static IHtmlString PagePreviousButton(string listId, string text = "previous") {
+        public static IHtmlString PagePreviousButton(string listId, string text = "previous", string formId = null) {
 
             int page = BoxLib.GetPageSkipForList(listId);
             if (page == 0)
                 return new HtmlString("");
 
             string html = "<a href=\"{0}\" class=\"listPreviousButton\">{1}</a>";
-            html = String.Format(html, BoxLib.ListNavigatonPreviousLink(listId), text);
+            html = String.Format(html, BoxLib.ListNavigatonPreviousLink(listId, formId), text);
+
             return new HtmlString(html);
         }
 
-        public static IHtmlString PageFirstButton(string listId, string text = "first") {
+        public static IHtmlString PageFirstButton(string listId, string text = "first", string formId = null) {
 
             int page = BoxLib.GetPageSkipForList(listId);
             if (page == 0)
                 return new HtmlString("");
 
             string html = "<a href=\"{0}\" class=\"listFirstButton\">{1}</a>";
-            html = String.Format(html, BoxLib.ListNavigationLink(listId, 0), text);
+            html = String.Format(html, BoxLib.ListNavigationLink(listId, 0, formId), text);
             return new HtmlString(html);
-        }
-
+        }       
 
     }    
 
@@ -335,34 +336,35 @@ namespace Box.CMS.Web {
         }
 
 
-        public static string ListNavigatonNextLink(string listId) {
+        public static string ListNavigatonNextLink(string listId, string formId = null) {
             if (HttpContext.Current == null)
                 return null;
 
             int actualSkip = GetPageSkipForList(listId);
             actualSkip++;
-            return ListNavigationLink(listId, actualSkip);
+            return ListNavigationLink(listId, actualSkip, formId);
         }
 
-        public static string ListNavigatonPreviousLink(string listId) {
+        public static string ListNavigatonPreviousLink(string listId, string formId = null) {
             if (HttpContext.Current == null)
                 return null;
             int actualSkip = GetPageSkipForList(listId);
             actualSkip--;
             if (actualSkip < 0)
                 actualSkip = 0;
-            return ListNavigationLink(listId, actualSkip);
+            return ListNavigationLink(listId, actualSkip, formId);
         }
 
      
 
-        public static string ListNavigationLink(string listId, int skip) {
+        public static string ListNavigationLink(string listId, int skip, string formId = null) {
 
             if (HttpContext.Current == null)
                 return String.Empty;
 
             HttpRequest request = HttpContext.Current.Request;
 
+            string url = "";
             string query = "?";
             foreach (string key in request.QueryString.Keys) {
                 if (key!="_pageSkip_" + listId) {
@@ -371,9 +373,17 @@ namespace Box.CMS.Web {
             }
             query = query + "_pageSkip_" + listId + "="  + skip;
             if(request.Url.Query.Length>0)
-                return request.RawUrl.Replace(request.Url.Query, "") + query;
+                url = request.RawUrl.Replace(request.Url.Query, "") + query;
             else
-                return request.RawUrl + query;
+                url = request.RawUrl + query;
+            
+            // new version - uses POST
+            if (!String.IsNullOrEmpty(formId)) {                
+                url = String.Format("javascript:{0}.action='{1}';{0}.submit();", formId, url);
+            }
+
+            return url;
+
         }
 
         internal static void SetListIsOver(string listId, bool isOver) {

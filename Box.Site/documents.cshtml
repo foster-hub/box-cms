@@ -2,16 +2,30 @@
 @{
     Page.Title = "Documents";
     Layout = "~/_PageLayout1C.cshtml";
-    BoxLib.SetListPageSize("list", 8);   
+    BoxLib.SetListPageSize("list", 3);   
 }
 
-@BoxSite.ContentsAtUrl(navigationId: "list", noItemMessage: new HtmlString("<div>no documents</div>"), itemTemplate:
-    @<div class="row" style="margin-bottom: 10px;">
+<form id="filterForm" method="post">
+
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search" name="filterText" value="@Request["filterText"]">
+        <div class="input-group-btn">
+            <button class="btn btn-default" type="submit" onclick="@BoxLib.ListNavigationLink("list", 0, "filterForm")"><i class="glyphicon glyphicon-search"></i></button>
+        </div>
+    </div>
+
+</form>
+
+@BoxSite.Contents(
+    navigationId: "list", 
+    noItemMessage: new HtmlString("<div>no documents</div>"),
+    filter: Request["filterText"],
+    location: "$currenturl",
+    itemTemplate:
+    @<div class="row" style="margin-top: 10px;">
         <a href="@BoxLib.GetContentLink(item)">
-            <div class="col-md-2">
-                <img src="@BoxLib.GetFileUrl(filePath: item.ThumbFilePath, asThumb: true)" alt="@item.Abstract" />
-            </div>
-            <div class="col-md-10">
+            <div class="col-md-12">
+                <img src="@BoxLib.GetFileUrl(filePath: item.ThumbFilePath, asThumb: true)" alt="@item.Abstract" style="float: left; margin-right: 5px;" />            
                 <h4>
                     @item.Name
                 </h4>
@@ -21,9 +35,9 @@
     </div>)
 
 <ul class="pager">
-    <li>@BoxSite.PageFirstButton("list")</li>
-    <li>@BoxSite.PagePreviousButton("list")</li>
-    <li>@BoxSite.PageNextButton("list")</li>
+    <li>@BoxSite.PageFirstButton("list", formId: "filterForm")</li>
+    <li>@BoxSite.PagePreviousButton("list", formId: "filterForm")</li>
+    <li>@BoxSite.PageNextButton("list", formId: "filterForm")</li>
 </ul>
 
 
