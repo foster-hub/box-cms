@@ -264,3 +264,29 @@ label { color: Gray; text-transform: uppercase; font-size: 75%; }
 {
     background-color: Orange!important;
 }
+
+.tileTagList {
+    padding-left: 0px!important;
+}
+
+.tileTagList li {
+    background-color: tan;
+    margin-right: 5px;
+}
+
+.tileTagList li span {
+    color: white!important;
+}
+
+.tileCrossLinkList {
+    padding-left: 0px!important;
+}
+
+.tileCrossLinkList li {    
+    margin-right: 5px;
+}
+
+.tileCrossLinkList li span {
+    color: white!important;
+}
+

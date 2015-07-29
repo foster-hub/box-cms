@@ -133,10 +133,22 @@
                     </li>
                     <li>
                         <div class="tile-content tile-status">
-                            <span data-bind="text: Name" class="name"></span><span class="text" data-bind="text: '@Box.CMS.SharedStrings.created_at ' + CreateDate.toLocaleString()">
-                            </span>
+                            <span data-bind="text: Name" class="name"></span>
+                            <span class="text" data-bind="text: '@Box.CMS.SharedStrings.created_at ' + CreateDate.toLocaleString()"></span>
+                            <ul data-bind="foreach: CrossLinks" class="tileCrossLinkList">
+                                <li>
+                                    <span data-bind="text: '(' + PageArea +')', visible: PageArea!=''" class="text"></span>
+                                </li>
+                            </ul>
+                            <ul data-bind="foreach: Tags" class="tileTagList">
+                                <li>
+                                    <span data-bind="text: Tag, visible: Tag!=''" class="text"></span>
+                                </li>
+                            </ul>
+                            
                         </div>
                     </li>
+                                        
                 </ul>
                 <div class="brand">
                     <span class="badge badge-pageCount" data-bind="text: PageViewCount==null?0:PageViewCount.Count">
