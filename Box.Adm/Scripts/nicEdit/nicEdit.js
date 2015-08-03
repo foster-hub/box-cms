@@ -74,8 +74,11 @@ var bkElement = bkClass.extend({
 	parentTag : function(t) {
 		var elm = this;
 		 do {
-			if(elm && elm.nodeName && elm.nodeName.toUpperCase() == t) {
-				return elm;
+		     if (elm && elm.nodeName && elm.nodeName.toUpperCase() == t) {
+		         if (!elm.setAttributes)
+		             return $BK(elm);
+                 else
+				    return elm;
 			}
 			elm = elm.parentNode;
 		} while(elm);
