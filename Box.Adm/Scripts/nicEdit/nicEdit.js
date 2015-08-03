@@ -1282,16 +1282,21 @@ var nicLinkButton = nicEditorAdvancedButton.extend({
 		this.removePane();
 		
 		if(!this.ln) {
-			var tmp = 'javascript:nicTemp();';
-			this.ne.nicCommand("createlink",tmp);
-			this.ln = this.findElm('A','href',tmp);
+			//var tmp = 'javascript:nicTemp();';
+			this.ne.nicCommand("createlink", url);
+			this.ln = this.findElm('A','href', url);
 		}
 		if(this.ln) {
-			this.ln.setAttributes({
+		    this.ln.setAttributes({
 				href : this.inputs['href'].value,
 				title : this.inputs['title'].value,
 				target : this.inputs['target'].options[this.inputs['target'].selectedIndex].value
-			});
+		    });
+
+            // tells everyone that the content has changed
+		    if (this.ne.selectedInstance.onChange != null)
+		        this.ne.selectedInstance.onChange();
+
 		}
 	}
 });
