@@ -151,12 +151,14 @@
     <Compile Include="ContentCustomInfo.cs" />
     <Compile Include="ContentShareCount.cs" />
     <Compile Include="Controllers\CMS_CaptchaController.cs" />
+    <Compile Include="Controllers\CMS_CrossLinksCrontroller.cs" />
     <Compile Include="Controllers\CMS_FilesReadOnlyController.cs" />
     <Compile Include="CrossLink.cs" />
     <Compile Include="Data\CMSContextInitializer.cs" />
     <Compile Include="Extensions\PeriodExtension.cs" />
     <Compile Include="Groups\ADM_CMS.cs" />
     <Compile Include="Groups\ADM_CMSFILE.cs" />
+    <Compile Include="Menus\CrossLinksLink.cs" />
     <Compile Include="Services\CaptchaService.cs" />
     <Compile Include="Services\CMSService.CrossLinks.cs" />
     <Compile Include="Services\CMSService.File.cs" />
