@@ -26,6 +26,8 @@ namespace Box.CMS.Controllers {
         [Authorize(Roles="ADM_CMS")]
         public ActionResult Index() {
 
+            ViewBag.Areas = cms.CrossLinkAreas;
+
             return View(PageModel);
         }
 

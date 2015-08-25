@@ -178,6 +178,12 @@
     }
 
     this.browseContent = function (content) {
+
+        if (content.ExternalLinkUrl != null) {
+            var w = window.open(content.ExternalLinkUrl, content.ContentUId);
+            return;
+        }
+
         var w = window.open('Preview/' + content.ContentUId, content.ContentUId);
     }
 

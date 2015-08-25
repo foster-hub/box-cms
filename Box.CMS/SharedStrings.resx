@@ -361,4 +361,10 @@ Are you sure you want to publish it now?</value>
   <data name="Unpublish" xml:space="preserve">
     <value>Despublicar</value>
   </data>
+  <data name="Link" xml:space="preserve">
+    <value>Link</value>
+  </data>
+  <data name="Link_tooltip" xml:space="preserve">
+    <value>External link starting with http://</value>
+  </data>
 </root>

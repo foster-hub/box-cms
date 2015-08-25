@@ -20,6 +20,7 @@ namespace Box.CMS.Api {
         [Import]
         private LogService log { get; set; }
 
+        [Box.Core.Web.WebApiAntiForgery]
         [Authorize]
         public ContentHead Get(string id) {
             return cms.GetContent(id);
@@ -34,10 +35,15 @@ namespace Box.CMS.Api {
 
         [Box.Core.Web.WebApiAntiForgery]
         [Authorize]
-        public IEnumerable<ContentHead> Get(string filter = null, int skip = 0, int top = 0, string location = null, string kind = null, string order = "Date", DateTime? createdFrom = null, DateTime? createdTo = null, bool onlyPublished = false) {
-            return cms.GetContents(filter, skip, top, location, new string[] { kind }, order, createdFrom, createdTo, false, onlyPublished);
-        }
+        public IEnumerable<ContentHead> Get(string filter = null, int skip = 0, int top = 0, string location = null, string kind = null, string order = "Date", DateTime? createdFrom = null, DateTime? createdTo = null, bool onlyPublished = false, string area = null) {
 
+            if(!string.IsNullOrEmpty(area))
+                return cms.GetCrossLinksFrom(area, top: top);
+
+            return cms.GetContents(filter, skip, top, location, new string[] { kind }, order, createdFrom, createdTo, false, onlyPublished);
+
+        }
+                
         [Box.Core.Web.WebApiAntiForgery]
         [Authorize]
         public ContentHead Post(ContentHead content, [FromUri] int publishNow = 0) {

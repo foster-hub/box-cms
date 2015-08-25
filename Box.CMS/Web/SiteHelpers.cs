@@ -261,6 +261,10 @@ namespace Box.CMS.Web {
 
         public static string GetContentLink(ContentHead head) {
             SiteService site = new SiteService();
+
+            if (!String.IsNullOrEmpty(head.ExternalLinkUrl))
+                return head.ExternalLinkUrl;
+
             if(site.IgnoreVirtualAppPath)
                 return head.Location + head.CanonicalName;
             else

@@ -204,6 +204,7 @@
   <ItemGroup>
     <Content Include="Content\Core_Images\Oauth\nt.png" />
     <Content Include="Content\emailDetail.html" />
+    <Content Include="Scripts\CMS\CrossLinksVM.js" />
     <Content Include="where-is-my-db.htm" />
     <Content Include="AppError.htm" />
     <Content Include="App_Data\SampleData.sql" />
@@ -459,6 +460,7 @@
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\foster.pubxml" />
     <Content Include="Views\CMS_CrossLinks\Index.cshtml" />
+    <Content Include="Views\Shared\CMS_Capture\LINK.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

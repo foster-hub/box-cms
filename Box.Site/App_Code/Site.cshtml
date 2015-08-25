@@ -12,8 +12,12 @@
     if (style != null) {
         styleAttr = "style=\"" + style + "\"";
     }
-   
-    <li class="@selectedClass" @styleAttr><a href="@Href(url)">@name</a></li>
+    
+    if (!IsExternalUrl(url)) {
+        url = Href(url);
+    }
+    
+    <li class="@selectedClass" @styleAttr><a href="@url">@name</a></li>
 }
 
 @helper MenuLink(ContentHead head) {
@@ -27,7 +31,17 @@
         return new HtmlString("onerror=\"this.onerror=null;this.src='" + @Href("~/images/no-image.png") + "';\"");
     }
 
-    public static bool IsRequestUrl(string url) {        
+    public static bool IsExternalUrl(string url) {
+        if (url == null)
+            return false;
+        return url.ToLower().StartsWith("http");
+    }
+    
+    public static bool IsRequestUrl(string url) {
+
+        if (IsExternalUrl(url))
+            return false;
+                
         if (url == null) { url = "~"; }
 
         string linkUrl = CleanURL(Href(url));

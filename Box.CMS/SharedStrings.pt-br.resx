@@ -358,4 +358,10 @@ Tem certeza que deseja publicar?</value>
   <data name="Unpublish" xml:space="preserve">
     <value>Despublicar</value>
   </data>
+  <data name="Link" xml:space="preserve">
+    <value>Link</value>
+  </data>
+  <data name="Link_tooltip" xml:space="preserve">
+    <value>Link externo começando com http://</value>
+  </data>
 </root>

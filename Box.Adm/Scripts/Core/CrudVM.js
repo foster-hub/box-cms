@@ -66,6 +66,8 @@ function CrudVM(moduleName, name, uIdField) {
 
     var me = this;
 
+    me._actionData = '';
+
 
     me.searchFilter.subscribe(function (newValue) {
         if (newValue != me._lastFilter) me.filter();        
@@ -187,7 +189,7 @@ function CrudVM(moduleName, name, uIdField) {
     this._getData = function (skip) {
 
         $.ajax({
-            url: _webAppUrl + 'api/' + me._module + '_' + me._resourceName + '/?filter=' + encodeURIComponent(me.searchFilter()) + '&skip=' + skip + '&top=' + me.paging.itemsPerPage + '&order=' + me.order() + me.getCustomFilter(),
+            url: _webAppUrl + 'api/' + me._module + '_' + me._resourceName + me._actionData + '/?filter=' + encodeURIComponent(me.searchFilter()) + '&skip=' + skip + '&top=' + me.paging.itemsPerPage + '&order=' + me.order() + me.getCustomFilter(),
             type: 'GET',
             headers: { 'RequestVerificationToken': _antiForgeryToken },
             success: function (data) {

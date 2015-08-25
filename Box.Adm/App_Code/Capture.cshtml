@@ -20,10 +20,12 @@
         return new HtmlString("data-bind=\"value: editingItem().CustomInfo.Date" + n + "\"");
     }
     
-
-
     public static IHtmlString MapTo(string field, string converter = "value") {
         return new HtmlString("data-bind=\"" + converter + ": editingItem().CONTENT." + field + "\"");
+    }
+
+    public static IHtmlString MapToExternalLinkUrl() {
+        return new HtmlString("data-bind=\"value: editingItem().ExternalLinkUrl\"");
     }
 
 

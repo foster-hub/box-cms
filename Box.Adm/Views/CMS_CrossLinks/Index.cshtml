@@ -2,9 +2,50 @@
 @using Box.Core.Web
 
 @{
-    ViewBag.Title = Box.CMS.SharedStrings.Cross_Links;        
+    ViewBag.Title = Box.CMS.SharedStrings.Cross_Links;
+    Box.CMS.CrossLinkArea[] areas = ViewBag.Areas;
 }
+
+<div class="toolbar transparent boxToolBar">
+    <div class="grid fluid">
+        <div class="row">
+            <div class="span12">
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2 class="boxLeftMargin">@ViewBag.Title</h2>
+
+<ul>
+    @foreach (var area in areas) {
+        <li id="@(area.Area)_view">
+            <h4>@area.Area</h4>
+
+            <ul data-bind="foreach: contents, visible: true" class="tileList" style="display: none">
+             @MetroUI.ContentTile(false, "double")
+            </ul>
+
+        </li>        
+    }
+    
+</ul>
+
 
 @section scripts {
     @Scripts.Render("~/bundles/boxCMS")   
+    <script type="text/javascript" src="@Url.Content("~/Scripts/CMS/CrossLinksVM.js")"></script>
+    <script type="text/javascript">        
+        $(document).ready(function () {
+            @foreach (var area in areas) {
+                <text>
+                var vm = new CrossLinksVM('@area.Area');
+                var view = document.getElementById(vm.area + '_view');
+                ko.applyBindings(vm, view);
+                vm.init();
+                </text>
+            }            
+        });        
+    </script>
 }

@@ -376,6 +376,24 @@ namespace Box.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Link.
+        /// </summary>
+        public static string Link {
+            get {
+                return ResourceManager.GetString("Link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to External link starting with http://.
+        /// </summary>
+        public static string Link_tooltip {
+            get {
+                return ResourceManager.GetString("Link_tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to live update.
         /// </summary>
         public static string live_update {

@@ -72,6 +72,9 @@ namespace Box.CMS {
 
         public ContentCustomInfo CustomInfo { get; set; }
 
+        [MaxLength(500)]
+        public string ExternalLinkUrl { get; set; }
+
         [NotMapped]
         [Newtonsoft.Json.JsonIgnore]
         public dynamic CONTENT { get; set; }

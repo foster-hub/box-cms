@@ -118,3 +118,69 @@
         </select>    
     </div>
 }
+
+@helper ContentTile(bool browsable, string size = "quadro") {
+    <li onmouseover="showContextMenu(this)" onmouseout="hideContextMenu(this)">
+        <div class="tile @size bg-cyan parts" data-bind="click: window.editContent">
+            <ul>
+                <li>
+                    <div class="tile-content image">
+                        <img data-bind="attr: { src: FileUrl.toView(ThumbFilePath, true) }" style="height: 100%; max-width: none"
+                             onerror="this.src='@Href("~/Content/Core_Images/no-image.png")'" />
+                    </div>
+                </li>
+                <li>
+                    <div class="tile-content tile-status">
+                        <span data-bind="text: Name" class="name"></span>
+                        <span class="text" data-bind="text: '@Box.CMS.SharedStrings.created_at ' + CreateDate.toLocaleString()"></span>
+                        <ul data-bind="foreach: CrossLinks" class="tileCrossLinkList">
+                            <li>
+                                <span data-bind="text: '(' + PageArea +')', visible: PageArea!=''" class="text"></span>
+                            </li>
+                        </ul>
+                        <ul data-bind="foreach: Tags" class="tileTagList">
+                            <li>
+                                <span data-bind="text: Tag, visible: Tag!=''" class="text"></span>
+                            </li>
+                        </ul>
+
+                    </div>
+                </li>
+
+            </ul>
+            <div class="brand">
+                <span class="badge badge-pageCount" data-bind="text: PageViewCount==null?0:PageViewCount.Count">
+                </span>
+                @if (browsable) {
+                    <span class="badge2 badge-commentCount" data-bind="text: CommentsCount==null?0:CommentsCount.Count, visible: CommentsCount>0">
+                    </span>
+                    <span class="badge3 badge-shareCount" data-bind="text: ShareCount==null?0:ShareCount.Count, visible: ShareCount>0">
+                    </span>
+                }
+                <div class="badge0 bg-red" data-bind="visible: pageVM.isContentNotPublished($data)" title="@Box.CMS.SharedStrings.CONTENT_NOT_PUBLISHED">
+                    <i class="icon-blocked"></i>
+                </div>
+                <div class="badge0 bg-orange" data-bind="visible: pageVM.isContentScheduled($data)" title="@Box.CMS.SharedStrings.CONTENT_SCHEDULED">
+                    <i class="icon-calendar"></i>
+                </div>
+                <div class="badge0 bg-red" data-bind="visible: pageVM.isContentExpired($data)" title="@Box.CMS.SharedStrings.CONTENT_EXPIRED">
+                    <i class="icon-calendar"></i>
+                </div>
+            </div>
+        </div>
+        <nav class="contextMenu">
+            @if (browsable) {
+                <button data-bind="click: function(data) { pageVM.browseContent(data);}, clickBubble: false" onmouseout="pageVM.stopPreview();">
+                    <i class="icon-new-tab"></i>
+                </button>
+                <button data-bind="click: function(data) { pageVM.setPreviewUrl(data);}, clickBubble: false" onmouseout="pageVM.stopPreview();">
+                    <i class="icon-eye"></i>
+                </button>
+            }
+            <button data-bind="click: function(data) { dialogHelper.endark(); pageVM.removingItem(data); }, clickBubble: false">
+                <i class="icon-remove"></i>
+            </button>
+
+        </nav>
+    </li>
+}

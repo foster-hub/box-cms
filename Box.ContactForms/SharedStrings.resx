@@ -162,4 +162,7 @@
   <data name="Reply" xml:space="preserve">
     <value>Reply</value>
   </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
 </root>
