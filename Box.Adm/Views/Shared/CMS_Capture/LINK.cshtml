@@ -11,35 +11,28 @@
             
                 <fieldset class="span8">
                 <div class="boxLeftMargin">
+
+                    <label>@Box.CMS.SharedStrings.Link</label>
+                    @MetroUI.TextBox(placeholder: @Box.CMS.SharedStrings.Link_tooltip, classes: "required", onblur: "updateName()", others: Capture.MapToExternalLinkUrl().ToString())
                 
                     <label>@Box.CMS.SharedStrings.Title</label>                       
-                    @MetroUI.TextBox(placeholder: @Box.CMS.SharedStrings.Title, classes: "required", others: Capture.MapToName().ToString())
-                    
-                    <div id="changeAbstract" style="display: none">
-                        <label>@Box.CMS.SharedStrings.Abstract</label>                                       
-                        @MetroUI.TextArea(others: Capture.MapToAbstract().ToString())
-                        
-                    </div>
-                    <a  id="changeAbstractLink"
-                        href="javascript: showAbstract()" tabindex="-1"
-                        style="display: block; margin: 3px 0px 10px 0px; clear: both; font-size: 12px;">@Box.CMS.SharedStrings.Change_Abstract</a>           
-            
-                <label>@Box.CMS.SharedStrings.Content</label>
-                <textarea                                       
-                    @Capture.MapTo("HTMLContent", "nicEdit")
-                    class="htmlEditor"
-                    style="width: 100%; height: 300px;">
-                </textarea>
-                </div>
+                    @MetroUI.TextBox(placeholder: @Box.CMS.SharedStrings.Title, others: Capture.MapToName().ToString())
+                                        
+                    <label>@Box.CMS.SharedStrings.Abstract</label>                                       
+                    @MetroUI.TextArea(others: Capture.MapToAbstract().ToString())
 
+                    
+
+                </div>
+                        
             </fieldset>
         
         
             <fieldset class="span4">        
 
             <div style="margin-right: 10px">
-                <legend>@Box.CMS.SharedStrings.Images</legend>
-                @Capture.File("Images", singleFile: false, style: "width: 100%; min-height: 150px;")            
+                <legend>@Box.CMS.SharedStrings.Image</legend>
+                @Capture.File("Images", singleFile: true, style: "width: 100%; min-height: 150px;")            
             </div>
                 
     
@@ -54,15 +47,12 @@
 
 @this.ScriptBlock(
 @<script type="text/javascript">
+
     // PAGE DETAIL SCRIPT BLOCK ----------------------
      function NEW_CONTENT(contentHead) {         
          contentHead.CONTENT.HTMLContent = '';
          contentHead.CONTENT.Images = new Array();
          return contentHead;
-     }
-
-     function BEFORE_POST(contentHead) {     
-         setAbstract(contentHead);
      }
 
      function SET_THUMB(contentHead) {
@@ -72,21 +62,11 @@
              contentHead.ThumbFilePath = null;
      }
 
-    function showAbstract(hide) {
-        var abs = document.getElementById('changeAbstract');
-        var absLink = document.getElementById('changeAbstractLink');
-
-        if (abs.style.display == 'block' || hide) {
-            absLink.innerHTML = '@Box.CMS.SharedStrings.Change_Abstract';
-            abs.style.display = 'none';
-            return;
-        }
-
-        absLink.innerHTML = '@Resources.SharedStrings.Done';
-        abs.style.display = 'block';
-
-
-    }
+   
+     function updateName() {
+         if (pageVM.editingItem().Name == '')
+             pageVM.editingItem().Name = pageVM.editingItem().ExternalLinkUrl;
+     }
 
     function setAbstract(contentHead) {
 

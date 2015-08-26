@@ -10,21 +10,13 @@
         <div class="row">
                 <fieldset class="span8">
                 <div class="boxLeftMargin">
+                    
                     <label>@Box.CMS.SharedStrings.Title</label>   
-                                            
-                    <div>   
-                         @MetroUI.TextBox(placeholder:@Box.CMS.SharedStrings.Title, databind: "value: editingItem().Name, valueUpdate:'afterkeydown'", others: "onkeyup='pageVM.filter()'")
-                    </div>
-
-
+                    @MetroUI.TextBox(placeholder:@Box.CMS.SharedStrings.Title, classes: "required", others: Capture.MapToName().ToString())
+                    
                     <div id="changeAbstract" style="display: none">
                         <label>@Box.CMS.SharedStrings.Abstract</label>               
-                        <div class="input-control textarea" data-role="input-control">
-                            <textarea 
-                                @Capture.MapToAbstract()
-                                >
-                            </textarea>
-                        </div>
+                        @MetroUI.TextArea(others: Capture.MapToAbstract().ToString())
                     </div>
                     <a  id="changeAbstractLink"
                         href="javascript: showAbstract()" tabindex="-1"

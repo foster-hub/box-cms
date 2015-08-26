@@ -11,10 +11,11 @@
             <fieldset class="span12">
             <div class="boxLeftMargin" style="margin-right: 10px">
                 <label>Álbum</label>
-                <input type="text" @Capture.MapToName() updatemodelevent="keyup" class="required" style="width: 100%;" maxlength="250" />
+                @MetroUI.TextBox(placeholder: @Box.CMS.SharedStrings.Title, classes: "required", others: Capture.MapToName().ToString())
+                
                         
-                <label>Descrição</label>               
-                <textarea @Capture.MapToAbstract() style="width: 100%; min-height: 30px; margin-bottom: 25px;"></textarea>
+                <label>Descrição</label>                               
+                @MetroUI.TextArea(others: Capture.MapToAbstract().ToString())
 
                 
              @Capture.File("Images", singleFile: false, style: "width: 100%;")

@@ -16,10 +16,8 @@
         <fieldset>
 
             <label>@Box.CMS.SharedStrings.Title</label>
-
-            <div>   
-                         @MetroUI.TextBox(placeholder:@Box.CMS.SharedStrings.Title, databind: "value: editingItem().Name, valueUpdate:'afterkeydown'", others: "onkeyup='pageVM.filter()'")
-                    </div>
+            @MetroUI.TextBox(placeholder:@Box.CMS.SharedStrings.Title, classes: "required", others: Capture.MapToName().ToString())
+                    
 
             <label>@Box.CMS.SharedStrings.Quiz_Question</label>
             <div class="input-control textarea" data-role="input-control">

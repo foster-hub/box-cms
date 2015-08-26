@@ -132,6 +132,7 @@
                 <li>
                     <div class="tile-content tile-status">
                         <span data-bind="text: Name" class="name"></span>
+                        <span data-bind="text: ExternalLinkUrl, visible: ExternalLinkUrl!=''" class="text"></span>
                         <span class="text" data-bind="text: '@Box.CMS.SharedStrings.created_at ' + CreateDate.toLocaleString()"></span>
                         <ul data-bind="foreach: CrossLinks" class="tileCrossLinkList">
                             <li>

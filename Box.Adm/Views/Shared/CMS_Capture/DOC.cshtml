@@ -14,11 +14,7 @@
 
                 <div data-bind="visible: editingItem().Name!=''">
                     <label>@Box.CMS.SharedStrings.Title</label>
-                    <input type="text"
-                           @Capture.MapToName()
-                           updatemodelevent="keyup" class="required"
-                           style="width: 620px;"
-                           maxlength="250" />
+                    @MetroUI.TextBox(placeholder: @Box.CMS.SharedStrings.Title, classes: "required", others: "updatemodelevent=\"keyup\" " + Capture.MapToName().ToString())                    
 
                 </div>
 

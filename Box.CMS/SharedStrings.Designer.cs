@@ -313,6 +313,15 @@ namespace Box.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Image.
+        /// </summary>
+        public static string Image {
+            get {
+                return ResourceManager.GetString("Image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Images.
         /// </summary>
         public static string Images {
@@ -462,6 +471,15 @@ namespace Box.CMS {
         public static string Newest {
             get {
                 return ResourceManager.GetString("Newest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No contents were found for this cross link.
+        /// </summary>
+        public static string No_contents_were_found_for_this_crosslink {
+            get {
+                return ResourceManager.GetString("No_contents_were_found_for_this_crosslink", resourceCulture);
             }
         }
         

@@ -6,31 +6,20 @@
     Box.CMS.CrossLinkArea[] areas = ViewBag.Areas;
 }
 
-<div class="toolbar transparent boxToolBar">
-    <div class="grid fluid">
-        <div class="row">
-            <div class="span12">
-                
-            </div>
-        </div>
-    </div>
-</div>
-
 <h2 class="boxLeftMargin">@ViewBag.Title</h2>
 
-<ul>
-    @foreach (var area in areas) {
-        <li id="@(area.Area)_view">
-            <h4>@area.Area</h4>
+@foreach (var area in areas) {
+    <div id="@(area.Area)_view" style="clear:both;margin-bottom:20px;float:left">
+        <h4 class="boxLeftMargin">@area.Area</h4>
 
-            <ul data-bind="foreach: contents, visible: true" class="tileList" style="display: none">
-             @MetroUI.ContentTile(false, "double")
-            </ul>
-
-        </li>        
-    }
+        <ul data-bind="foreach: contents, visible: true" class="tileList" style="display: none">
+            @MetroUI.ContentTile(false, "double")
+        </ul>
+        <span data-bind="visible: contents!=null && contents().length==0" style="display: none" class="boxLeftMargin">@Box.CMS.SharedStrings.No_contents_were_found_for_this_crosslink</span>
+    </div>
     
-</ul>
+}
+    
 
 
 @section scripts {
