@@ -58,11 +58,13 @@
     }
 
     this.afterPost = function (data) {
-        data.contentUrl = me.getContentUrl(data.Location, data.CanonicalName);
+        
+        me.formatContent(data);
         
         if (me.editingItem != null) {
             me.editingItem.contentUrl = data.contentUrl;
-            me.editingItem.PublishAfter = data.PublishAfter;
+            me.editingItem().PublishAfter = data.PublishAfter;
+            me.editingItem().Tags = data.Tags;
         }
 
         me[me._resourceName].remove(
@@ -73,7 +75,37 @@
     }
 
     this.formatContent = function (data) {
-        data.contentUrl = me.getContentUrl(data.Location, data.CanonicalName);        
+        data.contentUrl = me.getContentUrl(data.Location, data.CanonicalName);
+        me.addTagsCss(data);
+    }
+
+    this.addTagsCss = function (data) {
+        if (data == null)
+            return;
+        for (var i = 0; i < data.Tags.length; i++) {
+            data.Tags[i].tagCss = '';
+            if (data.Tags[i].Tag != '') {
+                data.Tags[i].tagCss = 'tagStyle_' + _adjustTagName(data.Tags[i].Tag);
+            }
+        }
+    }
+
+    _adjustTagName = function (tag) {
+        var str = tag;
+        str = str.replace(/[áàâãª]/g, 'a');
+        str = str.replace(/[ÁÀÂÃ]/g, 'A');
+        str = str.replace(/[éèêë]/g, 'e');
+        str = str.replace(/[ÉÈÊË]/g, 'E');
+        str = str.replace(/[íìî]/g, 'i');
+        str = str.replace(/[ÍÌÎ]/g, 'I');
+        str = str.replace(/[óòôõº]/g, 'o');
+        str = str.replace(/[ÓÒÔÕ]/g, 'O');
+        str = str.replace(/[úùû]/g, 'u');
+        str = str.replace(/[ÚÙÛÜ]/g, 'U');
+        str = str.replace(/[ç]/g, 'c');
+        str = str.replace(/[Ç]/g, 'C');
+        str = str.replace(/[@&*]/g, '_');
+        return str;
     }
 
     this.getContentUrl = function (location, name) {

@@ -2,6 +2,28 @@
     private static HtmlString _attr(string attr, object value) {
         return value == null ? new HtmlString("") : new HtmlString(attr + "=\"" + value.ToString() + "\"");
     }
+
+    public static HtmlString TagStyle(string tag) {
+        return new HtmlString("tagStyle_" + _adjustTagname(tag));
+    }
+
+    private static string _adjustTagname(string tag) {
+        string str = tag;
+        str = System.Text.RegularExpressions.Regex.Replace(str, "[áàâãª]", "a");
+        str = System.Text.RegularExpressions.Regex.Replace(str, "[ÁÀÂÃ]", "A");
+        str = System.Text.RegularExpressions.Regex.Replace(str, "[éèêë]", "e");
+        str = System.Text.RegularExpressions.Regex.Replace(str, "[ÉÈÊË]", "E");
+        str = System.Text.RegularExpressions.Regex.Replace(str, "[íìî]", "i");
+        str = System.Text.RegularExpressions.Regex.Replace(str, "[ÍÌÎ]", "I");
+        str = System.Text.RegularExpressions.Regex.Replace(str, "[óòôõº]", "o");
+        str = System.Text.RegularExpressions.Regex.Replace(str, "[ÓÒÔÕ]", "O");
+        str = System.Text.RegularExpressions.Regex.Replace(str, "[úùû]", "u");
+        str = System.Text.RegularExpressions.Regex.Replace(str, "[ÚÙÛÜ]", "U");
+        str = System.Text.RegularExpressions.Regex.Replace(str, "[ç]", "c");
+        str = System.Text.RegularExpressions.Regex.Replace(str, "[Ç]", "C");
+        str = System.Text.RegularExpressions.Regex.Replace(str, "[@&*]", "_");
+        return str;
+    }
 }
 
 @helper Input(string id = null, string type = "text", string value = "", string placeholder = "", string databind = null, int? maxLength = null, string classes = null, string onblur = "", string onkeypress = null, string others = null) {        
@@ -119,7 +141,7 @@
     </div>
 }
 
-@helper ContentTile(bool browsable, string onClick = "function(){}", string onRemove = null, string onMinus = null, string onPreview = null, string onBrowse = null, string size = "quadro") {
+@helper ContentTile(bool browsable, string onClick = "function(){}", string onRemove = null, string onMinus = null, string onPreview = null, string onBrowse = null, string size = "quadro", bool showTags = true, bool showCross = true) {
     <li onmouseover="showContextMenu(this)" onmouseout="hideContextMenu(this)">
         <div class="tile @size bg-cyan parts" data-bind="click: @(onClick)">
             <ul>
@@ -134,16 +156,20 @@
                         <span data-bind="text: Name" class="name"></span>
                         <span data-bind="text: ExternalLinkUrl, visible: ExternalLinkUrl!=''" class="text"></span>
                         <span class="text" data-bind="text: '@Box.CMS.SharedStrings.created_at ' + CreateDate.toLocaleString()"></span>
+                        @if(showCross) {
                         <ul data-bind="foreach: CrossLinks" class="tileCrossLinkList">
                             <li>
                                 <span data-bind="text: '(' + PageArea +')', visible: PageArea!=''" class="text"></span>
                             </li>
                         </ul>
+                        }
+                        @if(showTags) {
                         <ul data-bind="foreach: Tags" class="tileTagList">
-                            <li>
+                            <li data-bind="css: tagCss">
                                 <span data-bind="text: Tag, visible: Tag!=''" class="text"></span>
                             </li>
                         </ul>
+                        }
 
                     </div>
                 </li>
