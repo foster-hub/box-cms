@@ -119,9 +119,9 @@
     </div>
 }
 
-@helper ContentTile(bool browsable, string size = "quadro") {
+@helper ContentTile(bool browsable, string onClick = "function(){}", string onRemove = null, string onMinus = null, string onPreview = null, string onBrowse = null, string size = "quadro") {
     <li onmouseover="showContextMenu(this)" onmouseout="hideContextMenu(this)">
-        <div class="tile @size bg-cyan parts" data-bind="click: window.editContent">
+        <div class="tile @size bg-cyan parts" data-bind="click: @(onClick)">
             <ul>
                 <li>
                     <div class="tile-content image">
@@ -170,17 +170,27 @@
             </div>
         </div>
         <nav class="contextMenu">
-            @if (browsable) {
-                <button data-bind="click: function(data) { pageVM.browseContent(data);}, clickBubble: false" onmouseout="pageVM.stopPreview();">
+            @if (!String.IsNullOrEmpty(onBrowse)) {
+                <button data-bind="click: @onBrowse, clickBubble: false" onmouseout="pageVM.stopPreview();">
                     <i class="icon-new-tab"></i>
-                </button>
-                <button data-bind="click: function(data) { pageVM.setPreviewUrl(data);}, clickBubble: false" onmouseout="pageVM.stopPreview();">
+                </button>                
+            }
+            @if (!String.IsNullOrEmpty(onPreview)) {                
+                <button data-bind="click: @onPreview, clickBubble: false" onmouseout="pageVM.stopPreview();">
                     <i class="icon-eye"></i>
                 </button>
             }
-            <button data-bind="click: function(data) { dialogHelper.endark(); pageVM.removingItem(data); }, clickBubble: false">
-                <i class="icon-remove"></i>
-            </button>
+            @if (!String.IsNullOrEmpty(onRemove)) {
+                <button data-bind="click: @onRemove, clickBubble: false">
+                    <i class="icon-remove"></i>
+                </button>
+            }
+            @if (!String.IsNullOrEmpty(onMinus)) {
+                <button data-bind="click: @onMinus, clickBubble: false">
+                    <i class="icon-minus"></i>
+                </button>
+            }
+            
 
         </nav>
     </li>

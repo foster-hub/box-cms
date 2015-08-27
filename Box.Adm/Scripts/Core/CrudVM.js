@@ -80,8 +80,7 @@ function CrudVM(moduleName, name, uIdField) {
 
     this.init = function () {
         me.setEditingItem();
-        me.loadData();
-        showDetailByUrl();
+        me.loadData();        
     }
 
     this.setAddingItem = function (item) {
@@ -300,7 +299,7 @@ function CrudVM(moduleName, name, uIdField) {
         });
     }
 
-    showDetailByUrl = function () {
+    this.showDetailByUrl = function () {
         var id = Box.Util.GetHashValue(me._resourceUIdField);
         if (!id)
             return;

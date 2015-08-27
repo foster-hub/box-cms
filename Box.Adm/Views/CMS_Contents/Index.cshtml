@@ -121,7 +121,12 @@
         }
     </div>
     <ul data-bind="foreach: contents, visible: true" class="tileList" style="display: none">
-        @MetroUI.ContentTile((bool)Model.ContentKind.Browsable)
+        @MetroUI.ContentTile(
+        (bool)Model.ContentKind.Browsable,
+        onClick: "window.editContent",
+        onBrowse: "function(data) { pageVM.browseContent(data);}",
+        onPreview: "function(data) { pageVM.setPreviewUrl(data);}",
+        onRemove: "function(data) { dialogHelper.endark(); pageVM.removingItem(data); }")
     </ul>
     @Html.Partial("ListNavigation", new PageNavigationModel() { ListName = "contents" })
     <iframe id="previewContentIFrame" scrolling="no" verticalscrolling="no" data-bind="attr: { src: previewUrl }, visible: previewUrl()!=null" style="display: none" ></iframe>
@@ -165,7 +170,7 @@
         $(document).ready(function () {
 
             pageVM.setContentLocation('@Model.ContentKind.Locations[0]');
-            pageVM.kind = '@Model.ContentKind.Kind';            
+            pageVM.kind = '@Model.ContentKind.Kind';         
             
             ko.applyBindings(pageVM);
 
@@ -182,7 +187,22 @@
                     SET_THUMB(pageVM.editingItem());
             }
 
+            showDetailByUrl();
+
+
         });
+
+        function showDetailByUrl() {
+            var id = Box.Util.GetHashValue('ContentUId');
+            if (!id)
+                return;
+            pageVM._getItemData(id, function (data) {
+                if (!data)
+                    return;
+                editContent(data);
+            });
+
+        }
 
         function setTagsArray(content) {
             if (content.TagsString == null)

@@ -20,11 +20,7 @@ namespace Box.CMS.Api {
         [Import]
         private LogService log { get; set; }
 
-        [Box.Core.Web.WebApiAntiForgery]
-        [Authorize]
-        public ContentHead Get(string id) {
-            return cms.GetContent(id);
-        }
+        
 
         [Box.Core.Web.WebApiAntiForgery]
         [Authorize, HttpGet]        

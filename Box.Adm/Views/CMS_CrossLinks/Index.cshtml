@@ -12,8 +12,11 @@
     <div id="@(area.Area)_view" style="clear:both;margin-bottom:20px;float:left">
         <h4 class="boxLeftMargin">@area.Area</h4>
 
-        <ul data-bind="foreach: contents, visible: true" class="tileList" style="display: none">
-            @MetroUI.ContentTile(false, "double")
+        <ul data-bind="foreach: contents, visible: true" class="tileList" style="display: none">            
+            @MetroUI.ContentTile(false,                
+                onBrowse: "$parent.browseContent",
+                onMinus: "$parent.browseContent",
+                size: "double")
         </ul>
         <span data-bind="visible: contents!=null && contents().length==0" style="display: none" class="boxLeftMargin">@Box.CMS.SharedStrings.No_contents_were_found_for_this_crosslink</span>
     </div>
@@ -35,6 +38,6 @@
                 vm.init();
                 </text>
             }            
-        });        
+        });
     </script>
 }

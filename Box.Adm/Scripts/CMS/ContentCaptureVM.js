@@ -187,6 +187,8 @@
         var w = window.open('Preview/' + content.ContentUId, content.ContentUId);
     }
 
+    
+
 }
 ContentCaptureVM.prototype = new CrudVM();
 var pageVM = new ContentCaptureVM();
