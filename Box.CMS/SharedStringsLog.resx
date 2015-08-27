@@ -126,6 +126,9 @@
   <data name="CONTENT_0_UPDATE_1" xml:space="preserve">
     <value>{0} '{1}' was updated</value>
   </data>
+  <data name="CROSSLINK_0_REMOVE_1" xml:space="preserve">
+    <value>Cross-link {0} '{1}' was removed</value>
+  </data>
   <data name="FILE_REMOVE_0_1" xml:space="preserve">
     <value>File '{0}' was removed from folder '{1}'</value>
   </data>

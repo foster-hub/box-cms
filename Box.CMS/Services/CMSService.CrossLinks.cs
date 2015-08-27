@@ -35,6 +35,22 @@ namespace Box.CMS.Services {
                 return crossLinkAreaCache;
             }
         }
+
+        public CrossLink GetCrossLink(string contentUId, string area) {
+            using (var context = new Data.CMSContext()) {
+                return context.CrossLinks.SingleOrDefault(c => c.ContentUId == contentUId && c.PageArea == area);
+            }
+        }
+
+        public void RemoveCrossLink(string contentUId, string area) {
+            using (var context = new Data.CMSContext()) {
+                CrossLink link = context.CrossLinks.SingleOrDefault(c => c.ContentUId == contentUId && c.PageArea == area);
+                if (link == null)
+                    return;
+                context.CrossLinks.Remove(link);
+                context.SaveChanges();
+            }
+        }
     }
 
 }

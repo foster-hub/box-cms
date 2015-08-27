@@ -88,6 +88,15 @@ namespace Box.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cross-link {0} &apos;{1}&apos; was removed.
+        /// </summary>
+        public static string CROSSLINK_0_REMOVE_1 {
+            get {
+                return ResourceManager.GetString("CROSSLINK_0_REMOVE_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File &apos;{0}&apos; was removed from folder &apos;{1}&apos;.
         /// </summary>
         public static string FILE_REMOVE_0_1 {

@@ -24,6 +24,32 @@
         var w = window.open(_webAppUrl + 'cms_contents/Preview/' + content.ContentUId, content.ContentUId);
     }
 
+    this.unLink = function (link) {
+        me.removingItem(link);
+        me.removeItem();
+    }
+
+    this._deleteData = function (id) {
+        var verb = 'DELETE';
+        var url = _webAppUrl + 'api/cms_crosslinks/' + id + '?area=' + me.area;
+
+        if (!CrudOptions.AllowHttpDELETE) {
+            verb = 'POST';
+            url = _webAppUrl + 'api/cms_crosslinks/REMOVE/' + id + '?area=' + me.area;
+        }
+
+        $.ajax({
+            url: url,
+            type: verb,
+            headers: { 'RequestVerificationToken': _antiForgeryToken },
+            success: function () {
+                me[me._resourceName].remove(me.removingItem());
+                me.removingItem(null);
+            }
+        });
+
+    }
+
 }
 
 CrossLinksVM.prototype = new CrudVM();

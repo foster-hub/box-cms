@@ -15,7 +15,7 @@
         <ul data-bind="foreach: contents, visible: true" class="tileList" style="display: none">            
             @MetroUI.ContentTile(false,                
                 onBrowse: "$parent.browseContent",
-                onMinus: "$parent.browseContent",
+                onMinus: "$parent.unLink",             
                 size: "double")
         </ul>
         <span data-bind="visible: contents!=null && contents().length==0" style="display: none" class="boxLeftMargin">@Box.CMS.SharedStrings.No_contents_were_found_for_this_crosslink</span>

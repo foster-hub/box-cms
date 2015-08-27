@@ -139,6 +139,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\CMS_CrossLinksController.cs" />
     <Compile Include="Api\CMS_ContentsController.cs" />
     <Compile Include="Api\CMS_FilesController.cs" />
     <Compile Include="Api\CMS_CommentsController.cs" />
