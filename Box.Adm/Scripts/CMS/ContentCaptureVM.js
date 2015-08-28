@@ -104,7 +104,7 @@
         str = str.replace(/[ÚÙÛÜ]/g, 'U');
         str = str.replace(/[ç]/g, 'c');
         str = str.replace(/[Ç]/g, 'C');
-        str = str.replace(/[@&*]/g, '_');
+        str = str.replace(/[@#&*\s\.]/g, '_');
         return str;
     }
 

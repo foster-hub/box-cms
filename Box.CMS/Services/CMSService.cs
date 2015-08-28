@@ -178,6 +178,22 @@ namespace Box.CMS.Services {
             }
         }
 
+        public ContentHead[] OnlyContentsUserCanEdit(IEnumerable<ContentHead> contents) {
+            
+            List<ContentHead> allowedContents = new List<ContentHead>();
+
+            ContentKind kind = null;
+            foreach (var c in contents) {
+            
+                if(kind==null || kind.Kind!=c.Kind)
+                    kind = GetContentKind(c.Kind);
+
+                if(kind==null || CanEditContent(kind))
+                    allowedContents.Add(c);
+            }
+            return allowedContents.ToArray();
+        }
+
         public IEnumerable<ContentHead> GetRelatedContent(string id, int top, string location, string[] kinds, bool includeData = false) {
             var content = GetContent(id);
             if (content == null)
@@ -419,7 +435,7 @@ namespace Box.CMS.Services {
 
         public void VerifyAuthorizationToEditContent(string kind) {
             if (!CanEditContent(GetContentKind(kind)))
-                throw new System.Security.SecurityException("Not autorized to edit content");
+                throw new System.Security.SecurityException("Not authorized to edit content");
         }
 
         public bool CanEditContent(ContentKind kind) {

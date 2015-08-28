@@ -26,6 +26,7 @@ namespace Box.CMS.Api {
         [Authorize, HttpGet]        
         public ContentHead WithData(string id) {
             ContentHead head = cms.GetContent(id);
+            cms.VerifyAuthorizationToEditContent(head.Kind);
             return head;
         }
 
@@ -33,10 +34,14 @@ namespace Box.CMS.Api {
         [Authorize]
         public IEnumerable<ContentHead> Get(string filter = null, int skip = 0, int top = 0, string location = null, string kind = null, string order = "Date", DateTime? createdFrom = null, DateTime? createdTo = null, bool onlyPublished = false, string area = null) {
 
-            if(!string.IsNullOrEmpty(area))
-                return cms.GetCrossLinksFrom(area, top: top);
+            IEnumerable<ContentHead> contents = null;
 
-            return cms.GetContents(filter, skip, top, location, new string[] { kind }, order, createdFrom, createdTo, false, onlyPublished);
+            if(!string.IsNullOrEmpty(area))
+                contents = cms.GetCrossLinksFrom(area, top: top);
+            else
+                contents = cms.GetContents(filter, skip, top, location, new string[] { kind }, order, createdFrom, createdTo, false, onlyPublished);
+            
+            return cms.OnlyContentsUserCanEdit(contents);
 
         }
                 
