@@ -27,9 +27,10 @@ namespace Box.Core.Data {
                     string email = System.DirectoryServices.AccountManagement.UserPrincipal.Current.EmailAddress;
                     string name = System.DirectoryServices.AccountManagement.UserPrincipal.Current.Name;
 
-                    User userNT = new User() { LoginNT = principal.Name, Email = email, Blocked = false, Name = name };
-
-                    CreateADM(userNT, context);
+                    if (!String.IsNullOrEmpty(email) && !String.IsNullOrEmpty(name)) {
+                        User userNT = new User() { LoginNT = principal.Name, Email = email, Blocked = false, Name = name };
+                        CreateADM(userNT, context);
+                    }
             
                 } catch (Exception) {}
             } 
