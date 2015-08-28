@@ -1,7 +1,6 @@
 ﻿@{ 
     if (Model == null) {
-        Response.SetStatus(HttpStatusCode.NotFound);
-        Response.End();
+        return;
     }   
     string boxQuizJS = "boxQuiz_" + Model.ContentUId.ToString().Replace("-","");
     string resultDisplay = (bool)@Model.CONTENT["alreadyVoted"] ? "block" : "none";
