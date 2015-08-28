@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Configuration;
+using System.Security.Policy;
 using Box.CMS;
 using Box.CMS.Services;
 using System.Web;
@@ -10,43 +11,51 @@ using System.Web.WebPages;
 using Box.CMS.Extensions;
 
 
-namespace Box.CMS.Web {
+namespace Box.CMS.Web
+{
 
-    public class BoxSite {
+    public class BoxSite
+    {
 
-        public static IHtmlString Image(dynamic file, int width = 0, int height = 0, int maxWidth = 0, int maxHeight = 0, string cssClass = "") {   
-            return new HtmlString("<img src=\"" + BoxLib.GetFileUrl((string) file.Folder, (string) file.FileUId, width, height, maxWidth, maxHeight) + "\" alt=\"" + file.Caption + "\" title=\"" + file.Caption + "\" class=\"" + cssClass + "\" />");    
+        public static IHtmlString Image(dynamic file, int width = 0, int height = 0, int maxWidth = 0, int maxHeight = 0, string cssClass = "")
+        {
+            return new HtmlString("<img src=\"" + BoxLib.GetFileUrl((string)file.Folder, (string)file.FileUId, width, height, maxWidth, maxHeight) + "\" alt=\"" + file.Caption + "\" title=\"" + file.Caption + "\" class=\"" + cssClass + "\" />");
         }
 
-        public static IHtmlString Figure(dynamic file, int width = 0, int height = 0, int maxWidth = 0, int maxHeight = 0, string cssClass = "") {
+        public static IHtmlString Figure(dynamic file, int width = 0, int height = 0, int maxWidth = 0, int maxHeight = 0, string cssClass = "")
+        {
             string str = "<figure>{0}{1}</figure>";
             string caption = "";
-            if (file.Caption != null && ((string)file.Caption) != "") {
+            if (file.Caption != null && ((string)file.Caption) != "")
+            {
                 caption = "<figcaption>" + file.Caption + "</figcaption>";
-            }            
+            }
             return new HtmlString(String.Format(str, Image(file, width, height, maxWidth, maxHeight, cssClass), caption));
         }
 
-        public static IHtmlString ContentLink(ContentHead content) {
+        public static IHtmlString ContentLink(ContentHead content)
+        {
             return new HtmlString("<a href=\"" + BoxLib.GetContentLink(content) + "\" title=\"" + content.Name + "\">" + content.Name + "</a>");
         }
 
-        public static IHtmlString ContentsRelated(string id = null, Func<ContentHead, HelperResult> itemTemplate = null, string headerText = null, string location =null, string[] kinds = null, bool parseContent = false, int top = 0) {
+        public static IHtmlString ContentsRelated(string id = null, Func<ContentHead, HelperResult> itemTemplate = null, string headerText = null, string location = null, string[] kinds = null, bool parseContent = false, int top = 0)
+        {
             if (itemTemplate == null)
                 itemTemplate = (head) => { return new HelperResult(w => w.Write("<li>" + ContentLink(head) + "</li>")); };
 
-            string str = "";            
+            string str = "";
             foreach (ContentHead head in BoxLib.GetRelatedContents(id, location, kinds, parseContent, top))
                 str = str + itemTemplate(head).ToString();
 
             if (headerText != null && !String.IsNullOrEmpty(str))
                 str = headerText + str;
 
-            HtmlString html = new HtmlString(str);            
+            HtmlString html = new HtmlString(str);
             return html;
         }
 
-        public static IHtmlString ContentsRelated(string[] tags, Func<ContentHead, HelperResult> itemTemplate = null, string headerText = null, string location = null, string[] kinds = null, bool parseContent = false, int top = 0) {
+        public static IHtmlString ContentsRelated(string[] tags, Func<ContentHead, HelperResult> itemTemplate = null, string headerText = null, string location = null, string[] kinds = null, bool parseContent = false, int top = 0)
+        {
             if (itemTemplate == null)
                 itemTemplate = (head) => { return new HelperResult(w => w.Write("<li>" + ContentLink(head) + "</li>")); };
 
@@ -60,11 +69,12 @@ namespace Box.CMS.Web {
             return html;
         }
 
-        public static IHtmlString ContentsRelatedWithHotestThread(Func<ContentHead, HelperResult> itemTemplate = null, string location = null, string[] kinds = null, ContentRanks rankBy = ContentRanks.PageViews, Periods period = Periods.LastDay, int top = 5) {
+        public static IHtmlString ContentsRelatedWithHotestThread(Func<ContentHead, HelperResult> itemTemplate = null, string location = null, string[] kinds = null, ContentRanks rankBy = ContentRanks.PageViews, Periods period = Periods.LastDay, int top = 5)
+        {
             SiteService site = new SiteService();
 
             DateTime? lastPublished = DateTime.Now;
-            if(period!=Periods.AnyTime)
+            if (period != Periods.AnyTime)
                 lastPublished = site.GetLastPublishDate(location, kinds);
 
             ContentHead hotContent = site.GetHotestContent(kinds, location, rankBy, period.StartDate(lastPublished), null);
@@ -78,10 +88,12 @@ namespace Box.CMS.Web {
         /// </summary>
         /// <param name="pageArea"></param>
         /// <returns></returns>
-        public static IHtmlString Quiz(string pageArea){
+        public static IHtmlString Quiz(string pageArea)
+        {
 
-            Func<ContentHead, HelperResult> template = (quiz) => {
-               
+            Func<ContentHead, HelperResult> template = (quiz) =>
+            {
+
                 string templatePath = System.Web.HttpContext.Current.Request.MapPath("~/box_templates/QUIZ.cshtml");
                 string schemaTemplate = System.IO.File.ReadAllText(templatePath, Encoding.Default);
 
@@ -94,7 +106,7 @@ namespace Box.CMS.Web {
 
                 string outputQuiz = RazorEngine.Razor.Parse(schemaTemplate, quiz);
 
-                return new HelperResult(w => w.Write(outputQuiz)); 
+                return new HelperResult(w => w.Write(outputQuiz));
             };
 
             string str = "";
@@ -108,13 +120,15 @@ namespace Box.CMS.Web {
         }
 
 
-        public static IHtmlString Contents(string[] kinds = null, Func<ContentHead, HelperResult> itemTemplate = null, string order = "Date", Periods period = Periods.AnyTime, DateTime? createdFrom = null, DateTime? createdTo = null, bool parseContent = false, int top = 0, string navigationId = null, string location = null, string filter = null, IHtmlString noItemMessage = null, System.Linq.Expressions.Expression<Func<ContentHead, bool>> queryFilter = null) {
+        public static IHtmlString Contents(string[] kinds = null, Func<ContentHead, HelperResult> itemTemplate = null, string order = "Date", Periods period = Periods.AnyTime, DateTime? createdFrom = null, DateTime? createdTo = null, bool parseContent = false, int top = 0, string navigationId = null, string location = null, string filter = null, IHtmlString noItemMessage = null, System.Linq.Expressions.Expression<Func<ContentHead, bool>> queryFilter = null)
+        {
             if (itemTemplate == null)
                 itemTemplate = (head) => { return new HelperResult(w => w.Write("<li>" + ContentLink(head) + "</li>")); };
             string str = "";
-            
-            int skip = 0;            
-            if (navigationId != null) {                
+
+            int skip = 0;
+            if (navigationId != null)
+            {
                 top = BoxLib.GetListPageSize(navigationId);
                 skip = BoxLib.GetPageSkipForList(navigationId) * top;
             }
@@ -122,16 +136,18 @@ namespace Box.CMS.Web {
             SiteService site = new SiteService();
 
             DateTime? startDate = createdFrom;
-            if (period != Periods.AnyTime) {
+            if (period != Periods.AnyTime)
+            {
                 DateTime? lastPublished = DateTime.Now;
                 lastPublished = site.GetLastPublishDate(location, kinds);
                 startDate = period.StartDate(lastPublished);
             }
-                        
+
 
             var contents = BoxLib.GetContents(location, order, kinds, startDate, createdTo, parseContent, skip, top, filter, queryFilter);
             int i = 0;
-            foreach (ContentHead head in contents) {
+            foreach (ContentHead head in contents)
+            {
                 head.OrderIndex = i;
                 str = str + itemTemplate(head).ToString();
                 i++;
@@ -140,7 +156,8 @@ namespace Box.CMS.Web {
             if (navigationId != null)
                 BoxLib.SetListIsOver(navigationId, contents.Count() < top);
 
-            if (contents.Count() == 0) {
+            if (contents.Count() == 0)
+            {
                 if (noItemMessage != null)
                     return noItemMessage;
                 else
@@ -150,21 +167,24 @@ namespace Box.CMS.Web {
             return new HtmlString(str);
         }
 
-        public static IHtmlString ContentsAtUrl(string url = "$currentUrl", Func<ContentHead, HelperResult> itemTemplate = null, string order = "Date", bool parseContent = false, int top = 0, string navigationId = null, IHtmlString noItemMessage = null, System.Linq.Expressions.Expression<Func<ContentHead, bool>> queryFilter = null) {
+        public static IHtmlString ContentsAtUrl(string url = "$currentUrl", Func<ContentHead, HelperResult> itemTemplate = null, string order = "Date", bool parseContent = false, int top = 0, string navigationId = null, IHtmlString noItemMessage = null, System.Linq.Expressions.Expression<Func<ContentHead, bool>> queryFilter = null)
+        {
             return Contents(null, itemTemplate, order, Periods.AnyTime, null, null, parseContent, top, navigationId, url, null, noItemMessage, queryFilter);
         }
 
-        public static IHtmlString CrossLinksFrom(string pageArea, Func<ContentHead, HelperResult> itemTemplate = null, string order = "DisplayOrder", int top = 0, string[] kinds = null, IHtmlString noItemMessage = null) {  
+        public static IHtmlString CrossLinksFrom(string pageArea, Func<ContentHead, HelperResult> itemTemplate = null, string order = "DisplayOrder", int top = 0, string[] kinds = null, IHtmlString noItemMessage = null)
+        {
             if (itemTemplate == null)
-                itemTemplate = (head) => { return new HelperResult(w => w.Write("<div style=\"background-image: url(" + BoxLib.GetFileUrl(head.ThumbFilePath, asThumb: true) +")\">" + ContentLink(head) + "</div>")); };
-            
-            
+                itemTemplate = (head) => { return new HelperResult(w => w.Write("<div style=\"background-image: url(" + BoxLib.GetFileUrl(head.ThumbFilePath, asThumb: true) + ")\">" + ContentLink(head) + "</div>")); };
+
+
             var heads = BoxLib.GetCrossLinksForm(pageArea, order, top, kinds);
             string str = "";
             foreach (ContentHead head in heads)
                 str = str + itemTemplate(head);
 
-            if (heads.Count() == 0) {
+            if (heads.Count() == 0)
+            {
                 if (noItemMessage != null)
                     return noItemMessage;
                 else
@@ -174,29 +194,68 @@ namespace Box.CMS.Web {
             return new HtmlString(str);
         }
 
-        public static string ContentTags(ContentHead content) {
-           string str = String.Empty;
-           foreach(ContentTag tag in content.Tags) {
-               str = str + ", " + tag.Tag;
+        public static string ContentTags(ContentHead content)
+        {
+            string str = String.Empty;
+            foreach (ContentTag tag in content.Tags)
+            {
+                str = str + ", " + tag.Tag;
             }
-           if (str.Length<=2)
-               return str;
-           return str.Substring(2);
+            if (str.Length <= 2)
+                return str;
+            return str.Substring(2);
         }
 
-        public static IHtmlString TagCloud(string tagLink,string location = null, string[] kinds = null) {
+        public static IHtmlString TagCloud(string tagLink, string location = null, string[] kinds = null)
+        {
             string cloud = "<ul class=\"tagCloud\">";
             ContentTagRank[] tags = BoxLib.GetTagCloud(location, kinds);
-            foreach (ContentTagRank t in tags.OrderBy(t => t.Tag)) {
-                cloud = cloud + "<li value=\"" + t.Rank + "\"><a href=\"" + tagLink + "\\" + t.Tag + "\">" + t.Tag + "</a></li>"; 
+            foreach (ContentTagRank t in tags.OrderBy(t => t.Tag))
+            {
+                cloud = cloud + "<li value=\"" + t.Rank + "\"><a href=\"" + tagLink + "\\" + EncodeTag(t.Tag) + "\">" + t.Tag + "</a></li>";
             }
             cloud = cloud + "</ul>";
             return new HtmlString(cloud);
         }
 
-        public static IHtmlString PageNextButton(string listId, string text = "next", string formId = null) {
+        public static String EncodeTag(string tag)
+        {
+            if (string.IsNullOrEmpty(tag))
+                return tag;
 
-            if(BoxLib.GetListIsOver(listId))
+            tag = tag.Replace("&", "-e-");
+            tag = tag.Replace("@", "-at-");
+            tag = tag.Replace(".", "-dot-");
+            tag = tag.Replace("%", "-oo-");
+            tag = tag.Replace("#", "%23");
+            tag = tag.Replace("*", "-x-");
+            tag = tag.Replace("+", "-plus-");
+            tag = tag.Replace("$", "%24");
+
+            return tag;
+        }
+
+        public static String DecodeTag(string tag)
+        {
+            if (string.IsNullOrEmpty(tag))
+                return tag;
+
+            tag = tag.Replace("-e-", "&");
+            tag = tag.Replace("-at-", "@");
+            tag = tag.Replace("-dot-", ".");
+            tag = tag.Replace("-oo-", "%");
+            tag = tag.Replace("-x-", "*");
+            tag = tag.Replace("-plus-", "+");
+            tag = tag.Replace("%24", "$");
+            tag = tag.Replace("%23", "#");
+
+            return tag;
+        }
+
+        public static IHtmlString PageNextButton(string listId, string text = "next", string formId = null)
+        {
+
+            if (BoxLib.GetListIsOver(listId))
                 return new HtmlString("");
 
             string html = "<a href=\"{0}\" class=\"listNextButton\">{1}</a>";
@@ -205,7 +264,8 @@ namespace Box.CMS.Web {
             return new HtmlString(html);
         }
 
-        public static IHtmlString PagePreviousButton(string listId, string text = "previous", string formId = null) {
+        public static IHtmlString PagePreviousButton(string listId, string text = "previous", string formId = null)
+        {
 
             int page = BoxLib.GetPageSkipForList(listId);
             if (page == 0)
@@ -217,7 +277,8 @@ namespace Box.CMS.Web {
             return new HtmlString(html);
         }
 
-        public static IHtmlString PageFirstButton(string listId, string text = "first", string formId = null) {
+        public static IHtmlString PageFirstButton(string listId, string text = "first", string formId = null)
+        {
 
             int page = BoxLib.GetPageSkipForList(listId);
             if (page == 0)
@@ -226,31 +287,37 @@ namespace Box.CMS.Web {
             string html = "<a href=\"{0}\" class=\"listFirstButton\">{1}</a>";
             html = String.Format(html, BoxLib.ListNavigationLink(listId, 0, formId), text);
             return new HtmlString(html);
-        }       
+        }
 
-    }    
+    }
 
-    public class BoxLib {
+    public class BoxLib
+    {
 
-        public static void ResponseFile(string fileUId) {
+        public static void ResponseFile(string fileUId)
+        {
             SiteService site = new SiteService();
             site.ResponseFile(HttpContext.Current.Response, fileUId);
         }
 
-        public static string GetFileName(string fileUId) {
+        public static string GetFileName(string fileUId)
+        {
             SiteService site = new SiteService();
             return site.GetFileName(fileUId);
         }
 
-        public static string GetFileUrl(dynamic file) {
-            return GetFileUrl((string) file["Folder"], (string) file["FileUId"]);
+        public static string GetFileUrl(dynamic file)
+        {
+            return GetFileUrl((string)file["Folder"], (string)file["FileUId"]);
         }
 
-        public static string GetFileUrl(string folder, string fileUId, int width = 0, int height = 0, int maxWidth = 0, int maxHeight = 0, bool asThumb = false) {
+        public static string GetFileUrl(string folder, string fileUId, int width = 0, int height = 0, int maxWidth = 0, int maxHeight = 0, bool asThumb = false)
+        {
             return GetFileUrl(folder + "/" + fileUId, width, height, maxWidth, maxHeight, asThumb);
         }
 
-        public static string GetFileUrl(string filePath, int width = 0, int height = 0, int maxWidth = 0, int maxHeight = 0, bool asThumb = false) {
+        public static string GetFileUrl(string filePath, int width = 0, int height = 0, int maxWidth = 0, int maxHeight = 0, bool asThumb = false)
+        {
             SiteService site = new SiteService();
             if (site.IgnoreVirtualAppPath)
                 return AppName + "/files/" + filePath + "/?height=" + height + "&maxHeight=" + maxHeight + "&asThumb=" + asThumb.ToString().ToLower() + "&width=" + width + "&maxWidth=" + maxWidth;
@@ -259,24 +326,27 @@ namespace Box.CMS.Web {
 
         }
 
-        public static string GetContentLink(ContentHead head) {
+        public static string GetContentLink(ContentHead head)
+        {
             SiteService site = new SiteService();
 
             if (!String.IsNullOrEmpty(head.ExternalLinkUrl))
                 return head.ExternalLinkUrl;
 
-            if(site.IgnoreVirtualAppPath)
+            if (site.IgnoreVirtualAppPath)
                 return head.Location + head.CanonicalName;
             else
                 return AppName + head.Location + head.CanonicalName;
         }
 
-        public static IEnumerable<ContentHead> GetContents(string url, string order = "Date", string[] kinds = null, DateTime? createdFrom = null, DateTime? createdTo = null, bool parseContent = false, int skip = 0, int top = 0, string filter = null, System.Linq.Expressions.Expression<Func<ContentHead, bool>> queryFilter = null) {
+        public static IEnumerable<ContentHead> GetContents(string url, string order = "Date", string[] kinds = null, DateTime? createdFrom = null, DateTime? createdTo = null, bool parseContent = false, int skip = 0, int top = 0, string filter = null, System.Linq.Expressions.Expression<Func<ContentHead, bool>> queryFilter = null)
+        {
 
-            if (url!=null && url.ToLower() == "$currenturl") {
+            if (url != null && url.ToLower() == "$currenturl")
+            {
                 if (HttpContext.Current == null)
                     return null;
-                
+
                 int qIndex = HttpContext.Current.Request.RawUrl.IndexOf("?", 0);
                 if (qIndex > 0)
                     url = HttpContext.Current.Request.RawUrl.Substring(0, qIndex);
@@ -286,28 +356,32 @@ namespace Box.CMS.Web {
                 url = RemoveAppNameFromUrl(url);
 
                 int slashIndex = url.LastIndexOf("/", 1);
-                if(slashIndex>0)
+                if (slashIndex > 0)
                     url = url.Substring(0, url.Length - slashIndex);
 
-                
-                
+
+
             }
             SiteService site = new SiteService();
             return site.GetContents(url, order, kinds, createdFrom, createdTo, parseContent, skip, top, filter, queryFilter);
         }
 
-        public static string RemoveAppNameFromUrl(string url) {
+        public static string RemoveAppNameFromUrl(string url)
+        {
             SiteService site = new SiteService();
             if (site.IgnoreVirtualAppPath)
                 return url;
-            if (AppName != "" && url.StartsWith(AppName)) {
+            if (AppName != "" && url.StartsWith(AppName))
+            {
                 url = url.Substring(AppName.Length);
             }
             return url;
         }
 
-        public static IEnumerable<ContentHead> GetRelatedContents(string id = null, string location = null, string[] kinds = null, bool parseContent = false, int top = 0) {
-            if (id == null) {
+        public static IEnumerable<ContentHead> GetRelatedContents(string id = null, string location = null, string[] kinds = null, bool parseContent = false, int top = 0)
+        {
+            if (id == null)
+            {
                 Box.CMS.Web.ContentRenderView renderView = WebPageContext.Current.Page as Box.CMS.Web.ContentRenderView;
                 if (renderView == null)
                     return new List<ContentHead>();
@@ -317,18 +391,21 @@ namespace Box.CMS.Web {
             return site.GetRelatedContent(id, top, location, kinds, parseContent);
         }
 
-        public static IEnumerable<ContentHead> GetRelatedContents(string[] tags, string location = null, string[] kinds = null, bool parseContent = false, int top = 0) {
+        public static IEnumerable<ContentHead> GetRelatedContents(string[] tags, string location = null, string[] kinds = null, bool parseContent = false, int top = 0)
+        {
             SiteService site = new SiteService();
             return site.GetRelatedContent(tags, top, location, kinds, parseContent);
         }
 
 
-        public static IEnumerable<ContentHead> GetCrossLinksForm(string pageArea, string order = "DisplayOrder", int top = 0, string[] kinds = null) {
+        public static IEnumerable<ContentHead> GetCrossLinksForm(string pageArea, string order = "DisplayOrder", int top = 0, string[] kinds = null)
+        {
             SiteService site = new SiteService();
             return site.GetCrossLinksFrom(pageArea, order, top, kinds);
         }
 
-        internal static int GetPageSkipForList(string listId) {
+        internal static int GetPageSkipForList(string listId)
+        {
             int skip = 0;
             if (HttpContext.Current == null)
                 return 0;
@@ -340,7 +417,8 @@ namespace Box.CMS.Web {
         }
 
 
-        public static string ListNavigatonNextLink(string listId, string formId = null) {
+        public static string ListNavigatonNextLink(string listId, string formId = null)
+        {
             if (HttpContext.Current == null)
                 return null;
 
@@ -349,7 +427,8 @@ namespace Box.CMS.Web {
             return ListNavigationLink(listId, actualSkip, formId);
         }
 
-        public static string ListNavigatonPreviousLink(string listId, string formId = null) {
+        public static string ListNavigatonPreviousLink(string listId, string formId = null)
+        {
             if (HttpContext.Current == null)
                 return null;
             int actualSkip = GetPageSkipForList(listId);
@@ -359,9 +438,10 @@ namespace Box.CMS.Web {
             return ListNavigationLink(listId, actualSkip, formId);
         }
 
-     
 
-        public static string ListNavigationLink(string listId, int skip, string formId = null) {
+
+        public static string ListNavigationLink(string listId, int skip, string formId = null)
+        {
 
             if (HttpContext.Current == null)
                 return String.Empty;
@@ -370,19 +450,22 @@ namespace Box.CMS.Web {
 
             string url = "";
             string query = "?";
-            foreach (string key in request.QueryString.Keys) {
-                if (key!="_pageSkip_" + listId) {
+            foreach (string key in request.QueryString.Keys)
+            {
+                if (key != "_pageSkip_" + listId)
+                {
                     query = query + key + "=" + request.QueryString[key] + "&";
                 }
             }
-            query = query + "_pageSkip_" + listId + "="  + skip;
-            if(request.Url.Query.Length>0)
+            query = query + "_pageSkip_" + listId + "=" + skip;
+            if (request.Url.Query.Length > 0)
                 url = request.RawUrl.Replace(request.Url.Query, "") + query;
             else
                 url = request.RawUrl + query;
-            
+
             // new version - uses POST
-            if (!String.IsNullOrEmpty(formId)) {                
+            if (!String.IsNullOrEmpty(formId))
+            {
                 url = String.Format("javascript:{0}.action='{1}';{0}.submit();", formId, url);
             }
 
@@ -390,14 +473,16 @@ namespace Box.CMS.Web {
 
         }
 
-        internal static void SetListIsOver(string listId, bool isOver) {
+        internal static void SetListIsOver(string listId, bool isOver)
+        {
             var page = WebPageContext.Current.Page;
             if (page == null)
                 return;
-            page.PageData["__" + listId + "isListOver"] = isOver;            
+            page.PageData["__" + listId + "isListOver"] = isOver;
         }
 
-        public static bool GetListIsOver(string listId) {
+        public static bool GetListIsOver(string listId)
+        {
             var page = WebPageContext.Current.Page;
             if (page == null)
                 return false;
@@ -407,7 +492,8 @@ namespace Box.CMS.Web {
             return isOver.Value;
         }
 
-        public static void LogPageShare() {
+        public static void LogPageShare()
+        {
 
             Box.CMS.Web.ContentRenderView renderView = WebPageContext.Current.Page as Box.CMS.Web.ContentRenderView;
             if (renderView == null)
@@ -419,32 +505,37 @@ namespace Box.CMS.Web {
             site.LogPageShare(renderView.HEAD, serverHost);
         }
 
-        public static int GetListPageSize(string listId) {
+        public static int GetListPageSize(string listId)
+        {
             var page = WebPageContext.Current.Page;
             if (page == null)
                 return 0;
-            int? size =page.PageData["__" + listId + "pageSize"] as int?;
+            int? size = page.PageData["__" + listId + "pageSize"] as int?;
             if (!size.HasValue)
                 size = 20;
             return size.Value;
         }
 
-        public static void SetListPageSize(string listId, int size) {
+        public static void SetListPageSize(string listId, int size)
+        {
             var page = WebPageContext.Current.Page;
             if (page == null)
                 return;
-            page.PageData["__" + listId + "pageSize"] = size;            
+            page.PageData["__" + listId + "pageSize"] = size;
         }
 
 
-        public static ContentTagRank[] GetTagCloud(string location, string[] kinds) {
+        public static ContentTagRank[] GetTagCloud(string location, string[] kinds)
+        {
             SiteService site = new SiteService();
             return site.GetTagCloud(location, kinds);
         }
 
-        public static string AppName {
-            get {
-                if(HttpContext.Current==null)
+        public static string AppName
+        {
+            get
+            {
+                if (HttpContext.Current == null)
                     return "";
                 string appName = HttpContext.Current.Request.ApplicationPath;
                 if (appName == "/")
@@ -458,5 +549,5 @@ namespace Box.CMS.Web {
 
 
 
-    
+
 }

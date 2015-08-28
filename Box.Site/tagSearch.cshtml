@@ -4,7 +4,7 @@
     Layout = "~/_PageLayout1C.cshtml";
     string[] tags = new string[1];
     
-    string query = UrlData[0];
+    string query = BoxSite.DecodeTag(UrlData[0]);
     Page.Title = "Search results for '" + query + "'";
 }
 
