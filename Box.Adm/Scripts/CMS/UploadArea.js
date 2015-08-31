@@ -147,7 +147,7 @@ UploadArea.sendFiles = function (files, id, folder, singleFile) {
                     UploadArea.removeFile(oldFile, id);
                 }
 
-                var newFile = { FileUId: res.FileUId, Folder: folder, Caption: '', Type: res.Type };
+                var newFile = { FileUId: res.FileUId, FileName: res.FileName, Size: res.Size, Folder: folder, Caption: '', Type: res.Type };
                 bindFiles.push(newFile);
 
                 if (UploadArea.afterSendCallBack != null)
