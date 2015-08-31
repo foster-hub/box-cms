@@ -1,0 +1,69 @@
+﻿@using Box.Core.Web
+@{
+    Box.CMS.ContentKind[] kinds = ViewBag.Kinds;
+}
+
+<div id="contentBrowseDialogContainer" data-bind="stopBindings: true" style="display:none; float:left; width: 100%; height: 100%;">
+    <div id="contentBrowseDialog" style="margin: 90px 150px 90px 150px; height: 100%">
+        <h2 style="color:white;">@Box.CMS.SharedStrings.Select_a_content</h2>
+        <nav style="background: transparent; width: 100px; position: absolute; right: 20px;
+            top: 20px;">
+            <button onclick="contentBrowseVM.onSelect = null;  dialogHelper.closeDialog('contentBrowseDialogContainer');">@Resources.SharedStrings.Close</button>
+        </nav>
+        <div class="grid">
+            <div class="row" style="margin-bottom:30px;">
+                @*<label style="color: white;">
+                @Resources.SharedStrings.Search
+            </label>*@
+
+                <div class="input-control select span3">
+                    <select data-bind="value: kind">
+                        <option value="">@Box.CMS.SharedStrings.Any_kind</option>
+                        @foreach (var k in kinds) {
+                            <option value="@k.Kind">@k.FriendlyPluralName</option>
+                        }
+                    </select>
+                </div>
+                <div class="span9">
+                    @MetroUI.TextBox(placeholder: @Box.CMS.SharedStrings.Content_name_or_description, databind: "value: searchFilter, valueUpdate:'afterkeydown'")
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+    <ul data-bind="foreach: contents, visible: true" class="tileList" style="display: none">
+        @MetroUI.ContentTile(false,
+            onClick: "$parent.selectContent",
+            onBrowse: "$parent.browseContent",            
+            size: "double",
+            showSocial: false,
+            showCross: false,
+            showTags: false)
+    </ul>
+
+    @Html.Partial("ListNavigation", new PageNavigationModel() { ListName = "contents", ViewModel = "contentBrowseVM" })
+</div>
+</div>
+@this.ScriptBlock(
+@<script type="text/javascript">
+     function showContentBrowse(onSelect) {
+         
+         contentBrowseVM.onSelect = onSelect;
+
+         dialogHelper.showDialog('contentBrowseDialogContainer');
+
+         var dialog = document.getElementById('contentBrowseDialog');
+         if (dialog != null)
+             contentBrowseVM.setItemsPerPage(dialog.clientWidth - 30, dialog.clientHeight - 150);
+
+         if (contentBrowseVM.contents == null || contentBrowseVM.contents().length == 0)
+             contentBrowseVM.loadData();
+     }
+  
+     ko.applyBindings(contentBrowseVM, document.getElementById('contentBrowseDialog'));
+
+</script>
+)

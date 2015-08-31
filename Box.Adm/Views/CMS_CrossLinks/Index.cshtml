@@ -3,7 +3,7 @@
 
 @{
     ViewBag.Title = Box.CMS.SharedStrings.Cross_Links;
-    Box.CMS.CrossLinkArea[] areas = ViewBag.Areas;
+    Box.CMS.CrossLinkArea[] areas = ViewBag.Areas;    
 }
 
 <h2 class="boxLeftMargin">@ViewBag.Title</h2>
@@ -13,7 +13,7 @@
         <h4 class="boxLeftMargin">@area.Area</h4>
 
         <ul data-bind="foreach: contents, visible: true" class="tileList" style="display: none">            
-            @MetroUI.ContentTile(false,                
+            @MetroUI.ContentTile(true,                
                 onBrowse: "$parent.browseContent",
                 onMinus: "$parent.unLink",             
                 size: "double",
@@ -21,25 +21,39 @@
                 showTags: false)
         </ul>
         <span data-bind="visible: contents!=null && contents().length==0" style="display: none" class="boxLeftMargin">@Box.CMS.SharedStrings.No_contents_were_found_for_this_crosslink</span>
+
+
+        <div class="boxLeftMargin" style="clear: both">
+            <a tabindex="-1"
+               href="javascript: showContentBrowse(function(c) { crossLinksVMs['@area.Area'].addContent(c); dialogHelper.closeDialog('contentBrowseDialogContainer'); })">
+                @Box.CMS.SharedStrings.add_content
+            </a>
+        </div>
+        
     </div>
     
 }
     
-
+@section dialogs {
+    @Html.Partial("CMS/ContentBrowse")
+}
 
 @section scripts {
     @Scripts.Render("~/bundles/boxCMS")   
     <script type="text/javascript" src="@Url.Content("~/Scripts/CMS/CrossLinksVM.js")"></script>
-    <script type="text/javascript">        
-        $(document).ready(function () {
-            @foreach (var area in areas) {
-                <text>
-                var vm = new CrossLinksVM('@area.Area');
-                var view = document.getElementById(vm.area + '_view');
-                ko.applyBindings(vm, view);
-                vm.init();
-                </text>
-            }            
-        });
+    <script type="text/javascript" src="@Url.Content("~/Scripts/CMS/ContentBrowseVM.js")"></script>
+    <script type="text/javascript">
+    var crossLinksVMs = new Object();
+    $(document).ready(function () {
+        @foreach (var area in areas) {
+            <text>
+            var vm = new CrossLinksVM('@area.Area');
+            var view = document.getElementById(vm.area + '_view');
+            ko.applyBindings(vm, view);
+            vm.init();
+            crossLinksVMs['@area.Area'] = vm;
+            </text>
+            }
+    });
     </script>
 }

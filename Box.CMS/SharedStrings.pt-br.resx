@@ -370,4 +370,13 @@ Tem certeza que deseja publicar?</value>
   <data name="No_contents_were_found_for_this_crosslink" xml:space="preserve">
     <value>Nenhum conteúdo foi encontrado para esse cross-link</value>
   </data>
+  <data name="Any_kind" xml:space="preserve">
+    <value>Qualquer tipo</value>
+  </data>
+  <data name="Select_a_content" xml:space="preserve">
+    <value>Selecione um conteúdo</value>
+  </data>
+  <data name="add_content" xml:space="preserve">
+    <value>adicionar conteúdo</value>
+  </data>
 </root>

@@ -51,6 +51,18 @@ namespace Box.CMS.Services {
                 context.SaveChanges();
             }
         }
+        public bool AddCrossLink(string contentUId, string area) {
+            using (var context = new Data.CMSContext()) {
+                CrossLink link = context.CrossLinks.SingleOrDefault(c => c.ContentUId == contentUId && c.PageArea == area);
+                if (link != null)
+                    return false;
+                link = new CrossLink() { ContentUId = contentUId, PageArea = area, DisplayOrder = 0 };
+                context.CrossLinks.Add(link);
+                context.SaveChanges();
+                return true;
+            }
+        }
+
     }
 
 }

@@ -27,6 +27,7 @@ namespace Box.CMS.Controllers {
         public ActionResult Index() {
 
             ViewBag.Areas = cms.CrossLinkAreas;
+            ViewBag.Kinds = cms.ContentKinds;
 
             return View(PageModel);
         }

@@ -373,4 +373,13 @@ Are you sure you want to publish it now?</value>
   <data name="No_contents_were_found_for_this_crosslink" xml:space="preserve">
     <value>No contents were found for this cross link</value>
   </data>
+  <data name="Any_kind" xml:space="preserve">
+    <value>Any kind</value>
+  </data>
+  <data name="Select_a_content" xml:space="preserve">
+    <value>Select a content</value>
+  </data>
+  <data name="add_content" xml:space="preserve">
+    <value>add content</value>
+  </data>
 </root>

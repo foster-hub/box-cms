@@ -34,7 +34,6 @@ namespace Box.CMS.Api {
         public void Delete(string id, string area) {
 
             ContentHead head = cms.GetContentHead(id);
-
             cms.VerifyAuthorizationToEditContent(head.Kind);
 
             cms.RemoveCrossLink(id, area);
@@ -42,7 +41,27 @@ namespace Box.CMS.Api {
             log.Log(String.Format(SharedStringsLog.CROSSLINK_0_REMOVE_1, head.Kind, head.Name));
         }
 
-        
+        [Box.Core.Web.WebApiAntiForgery]
+        [Authorize]
+        public bool Put(string id, [FromBody] string area) {
+
+            ContentHead head = cms.GetContentHead(id);
+            cms.VerifyAuthorizationToEditContent(head.Kind);
+            
+            cms.VerifyAuthorizationToEditContent(head.Kind);
+
+            return cms.AddCrossLink(id, area);
+            
+        }
+
+        [Box.Core.Web.WebApiAntiForgery]
+        [Authorize, HttpPost]
+        /* Some enviroments does not supports HTTP VERB PUT 
+         * Use this workaround */
+        public bool UPDATE(string id, [FromBody] string area) {
+            return Put(id, area);
+        }
+
 
     }
 }

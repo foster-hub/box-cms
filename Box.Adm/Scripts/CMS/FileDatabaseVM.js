@@ -49,7 +49,7 @@
     this.setItemsPerPage = function (width, height) {
 
         var itemsPerLine = Math.floor(width / 130);
-        var linesPerPage = Math.floor(height / 130);
+        var linesPerPage = Math.floor(height / 150);
         var itensPerPage = itemsPerLine * linesPerPage;
 
         me.paging.itemsPerPage = itensPerPage;

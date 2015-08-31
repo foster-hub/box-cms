@@ -141,7 +141,7 @@
     </div>
 }
 
-@helper ContentTile(bool browsable, string onClick = "function(){}", string onRemove = null, string onMinus = null, string onPreview = null, string onBrowse = null, string size = "quadro", bool showTags = true, bool showCross = true) {
+@helper ContentTile(bool browsable, string onClick = "function(){}", string onRemove = null, string onMinus = null, string onPreview = null, string onBrowse = null, string size = "quadro", bool showTags = true, bool showCross = true, bool showSocial = true) {
     <li onmouseover="showContextMenu(this)" onmouseout="hideContextMenu(this)">
         <div class="tile @size bg-cyan parts" data-bind="click: @(onClick)">
             <ul>
@@ -176,14 +176,11 @@
 
             </ul>
             <div class="brand">
-                <span class="badge badge-pageCount" data-bind="text: PageViewCount==null?0:PageViewCount.Count">
-                </span>
-                @if (browsable) {
-                    <span class="badge2 badge-commentCount" data-bind="text: CommentsCount==null?0:CommentsCount.Count, visible: CommentsCount>0">
-                    </span>
-                    <span class="badge3 badge-shareCount" data-bind="text: ShareCount==null?0:ShareCount.Count, visible: ShareCount>0">
-                    </span>
-                }
+                @if (showSocial && browsable) {
+                    <span class="badge badge-pageCount" data-bind="text: PageViewCount==null?0:PageViewCount.Count"></span>                
+                    <span class="badge2 badge-commentCount" data-bind="text: CommentsCount==null?0:CommentsCount.Count, visible: CommentsCount>0"></span>
+                    <span class="badge3 badge-shareCount" data-bind="text: ShareCount==null?0:ShareCount.Count, visible: ShareCount>0"></span>
+                }                
                 <div class="badge0 bg-red" data-bind="visible: pageVM.isContentNotPublished($data)" title="@Box.CMS.SharedStrings.CONTENT_NOT_PUBLISHED">
                     <i class="icon-blocked"></i>
                 </div>
@@ -192,7 +189,7 @@
                 </div>
                 <div class="badge0 bg-red" data-bind="visible: pageVM.isContentExpired($data)" title="@Box.CMS.SharedStrings.CONTENT_EXPIRED">
                     <i class="icon-calendar"></i>
-                </div>
+                </div>                
             </div>
         </div>
         <nav class="contextMenu">
@@ -213,7 +210,7 @@
             }
             @if (!String.IsNullOrEmpty(onMinus)) {
                 <button data-bind="click: @onMinus, clickBubble: false">
-                    <i class="icon-minus"></i>
+                    <i class="icon-minus-2"></i>
                 </button>
             }
             

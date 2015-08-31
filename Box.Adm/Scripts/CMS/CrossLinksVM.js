@@ -50,6 +50,39 @@
 
     }
 
+    this.addContent = function (content) {
+        me._putData(content.ContentUId,
+            function () { me['contents'].splice(0, 0, content); });
+    }
+
+    this._putData = function (id, onSuccess) {
+
+        var verb = 'PUT';
+        var url = _webAppUrl + 'api/cms_crosslinks/' + id;
+
+        if (!CrudOptions.AllowHttpPUT) {
+            verb = 'POST';
+            url = _webAppUrl + 'api/cms_crosslinks/UPDATE/' + id;
+        }
+
+        $.ajax({
+            url: url,
+            type: verb,
+            data: JSON.stringify(me.area),
+            headers: { 'RequestVerificationToken': _antiForgeryToken },
+            success: function(data) {
+                if (data == true) { onSuccess(); }
+            },
+            error: function (request) {
+                if (request.status == 409) {
+                    dialogHelper.setOperationMessage(me.errorMsgItemAlreadyExists);
+                    return;
+                }
+                dialogHelper.setOperationMessage('Unknow error');
+            }
+        });
+    }
+
 }
 
 CrossLinksVM.prototype = new CrudVM();

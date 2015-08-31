@@ -70,6 +70,24 @@ namespace Box.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to add content.
+        /// </summary>
+        public static string add_content {
+            get {
+                return ResourceManager.GetString("add_content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any kind.
+        /// </summary>
+        public static string Any_kind {
+            get {
+                return ResourceManager.GetString("Any_kind", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Any time.
         /// </summary>
         public static string Any_time {
@@ -670,6 +688,15 @@ namespace Box.CMS {
         public static string seconds_ago {
             get {
                 return ResourceManager.GetString("seconds_ago", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a content.
+        /// </summary>
+        public static string Select_a_content {
+            get {
+                return ResourceManager.GetString("Select_a_content", resourceCulture);
             }
         }
         

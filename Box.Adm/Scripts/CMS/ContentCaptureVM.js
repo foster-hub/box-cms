@@ -63,8 +63,10 @@
         
         if (me.editingItem != null) {
             me.editingItem.contentUrl = data.contentUrl;
-            me.editingItem().PublishAfter = data.PublishAfter;
-            me.editingItem().Tags = data.Tags;
+            if (me.editingItem() != null) {
+                me.editingItem().PublishAfter = data.PublishAfter;
+                me.editingItem().Tags = data.Tags;
+            }
         }
 
         me[me._resourceName].remove(

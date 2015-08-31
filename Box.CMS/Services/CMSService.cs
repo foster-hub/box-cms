@@ -165,7 +165,7 @@ namespace Box.CMS.Services {
                     contents = contents.Where(c => c.Location == location);
                 }
 
-                if (kinds != null)
+                if (kinds != null && kinds.Any(k => k!=null))
                     contents = contents.Where(c => kinds.Contains(c.Kind.ToLower()));
 
                 if (skip != 0)
@@ -382,6 +382,14 @@ namespace Box.CMS.Services {
                 if (k.Tags == null)
                     k.Tags = new string[0];
 
+            }
+        }
+
+        public ContentKind[] ContentKinds {
+            get {
+                if (kindsCache == null)
+                    GetContentKinds();
+                return kindsCache;
             }
         }
 
