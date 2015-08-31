@@ -249,6 +249,31 @@ FileUrlConverter = function () {
         return filePathToModel(url, thumb);
     }
 
+    this.isAudio = function (type) {
+        if (type == null)
+            return false;
+                
+        if (type.indexOf("audio") < 0)
+            return false;
+        return true;
+    }
+
+    this.isVideo = function (type) {
+        if (type == null)
+            return false;
+
+        if (type.indexOf("video") < 0)
+            return false;
+        return true;
+    }
+    
+    this.getFileName = function (name) {
+        if(!name)
+            return "";
+        return name;
+
+    }
+
     this.toView = function (fileOrPath, thumb) {
         if (fileOrPath == null)
             return '';
