@@ -22,7 +22,7 @@ namespace Box.CMS.Api {
 
         
         [Box.Core.Web.WebApiAntiForgery]
-        [Authorize, HttpPost]
+        [Authorize(Roles="ADM_CMS"), HttpPost]
         /* Some enviroments does not supports HTTP VERB DELETE 
          * Use this workaround */
         public void Remove(string id, string area) {
@@ -30,7 +30,7 @@ namespace Box.CMS.Api {
         }
 
         [Box.Core.Web.WebApiAntiForgery]
-        [Authorize]
+        [Authorize(Roles = "ADM_CMS")]
         public void Delete(string id, string area) {
 
             ContentHead head = cms.GetContentHead(id);
@@ -42,7 +42,7 @@ namespace Box.CMS.Api {
         }
 
         [Box.Core.Web.WebApiAntiForgery]
-        [Authorize]
+        [Authorize(Roles = "ADM_CMS")]
         public bool Put(string id, [FromBody] string area) {
 
             ContentHead head = cms.GetContentHead(id);
@@ -55,7 +55,7 @@ namespace Box.CMS.Api {
         }
 
         [Box.Core.Web.WebApiAntiForgery]
-        [Authorize, HttpPost]
+        [Authorize(Roles = "ADM_CMS"), HttpPost]
         /* Some enviroments does not supports HTTP VERB PUT 
          * Use this workaround */
         public bool UPDATE(string id, [FromBody] string area) {
