@@ -1,6 +1,7 @@
 ﻿/* METRO CUSTOMIZATION */
 .metro ul.tileList { margin-left: 0px; }
 .metro ul.tileList li { list-style: none; position: relative; float: left; }
+.metro ul.tileList li video, .metro ul.tileList li audio{ height:90px; max-width:120px; background-color:black;}
 .metro .bgred { background-color: #e51400 !important; }
 .metro .mainGrid { margin-left: 10px; margin-right: 10px; }
 .metro .toolbar button, .metro .toolbar .button { line-height: normal; padding-top: 5px; padding-bottom: 5px; }

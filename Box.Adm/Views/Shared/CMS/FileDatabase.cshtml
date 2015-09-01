@@ -22,8 +22,22 @@
             <li data-bind="click: window.selectFile" onmouseover="showContextMenu(this)" onmouseout="hideContextMenu(this)" >
 
                 <div class="tile">
-                    <div class="tile-content image">
+                    <div class="tile-content image">                        
+                        <!--ko if: FileUrl.isImage(Type)  -->
                         <img style="height: 100%; max-width: none" data-bind="attr: { src: FileUrl.toView($data, true) }" />
+                        <!--/ko-->
+
+                        <!--ko if: FileUrl.isAudio(Type) -->                        
+                        <audio controls>
+                            <source data-bind="attr: { src: FileUrl.toView($data, false) }">
+                        </audio>                        
+                        <!--/ko-->
+
+                        <!--ko if: FileUrl.isVideo(Type) -->
+                        <video controls>
+                            <source data-bind="attr: { src: FileUrl.toView($data, false) }">
+                        </video>
+                        <!--/ko-->
                     </div>
                     <div class="brand bg-dark opacity">
                         <span class="text fg-white" data-bind="text: FileName"></span>
