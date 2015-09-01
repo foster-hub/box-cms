@@ -202,7 +202,7 @@ audio {
     position:absolute;
     bottom: 0px; left: 0px;    
     background-color: #000000\9;  /* IE 8 HACK */
-    background-color: gray;
+    background-color: rgba(0, 0, 0, 0.5);
     color: White;
     border: none;
     width:100%;    
