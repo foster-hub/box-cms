@@ -136,7 +136,7 @@
     <value>Images</value>
   </data>
   <data name="or_use_image_database" xml:space="preserve">
-    <value>or use image database</value>
+    <value>or use media database</value>
   </data>
   <data name="Page" xml:space="preserve">
     <value>Page</value>
@@ -381,5 +381,8 @@ Are you sure you want to publish it now?</value>
   </data>
   <data name="add_content" xml:space="preserve">
     <value>add content</value>
+  </data>
+  <data name="Audios" xml:space="preserve">
+    <value>Audios</value>
   </data>
 </root>

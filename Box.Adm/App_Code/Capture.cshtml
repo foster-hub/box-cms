@@ -71,7 +71,7 @@
   
 }
 
-@helper File(string id, string folder = "IMG_ROOT", bool singleFile = true, string style = null) {    
+@helper File(string id, string folder = "IMG_ROOT", bool singleFile = false, string style = null) {    
     string dropAreaId = "_uploadArea_" + id;
     string inputFileId = "_uploadAreaInput_" + id;
     string multipleTag = singleFile == false ? "multiple" : "";
@@ -131,11 +131,10 @@
                     </audio>                
                 <!--/ko-->
 
-                <!--ko if: FileUrl.isVideo(Type) -->                
-                    <span data-bind="text: FileUrl.getFileName($data)"></span>
-                    <video controls="controls">
-                        <source data-bind="attr: { src: FileUrl.toView($data, false) }">
-                    </video>                
+                <!--ko if: FileUrl.isVideo(Type) -->                                    
+                <video controls="controls">
+                    <source data-bind="attr: { src: FileUrl.toView($data, false) }">
+                </video>                
                 <!--/ko-->
                 
                 <input data-bind="value: Caption"
@@ -165,6 +164,68 @@
             <img src="../Content/CMS_Images/FileIcons/loading.gif" /> @Box.CMS.SharedStrings.Sending_files
         </div>
         
+    </div>
+}
+}
+
+@helper SingleFile(string id, string folder = "IMG_ROOT", string style = null) {
+    string dropAreaId = "_uploadArea_" + id;
+    string inputFileId = "_uploadAreaInput_" + id;
+    
+
+    <input class="ajaxUploadField"
+           id="@inputFileId"
+           type="file"
+           onchange="UploadArea.sendFiles(this.files, '@id', '@folder', true)"           
+           tabindex="-1" />
+
+    <a class="formUploadField"
+       href="javascript: UploadArea.showUploadForm('@folder')">@Box.CMS.SharedStrings.File_upload</a>
+
+
+    <div class="uploadDropArea"
+         style="@style"
+         ondrop="UploadArea.drop(this, event, '@id', '@folder', true)"
+         ondragover="UploadArea.dragover(this, event)"
+         ondragleave="UploadArea.dragout(this, event)">
+
+        <div>
+            <span>
+                @Box.CMS.SharedStrings.drag_and_drop_files_here
+            </span>
+            <a tabindex="-1"
+               href="javascript: showFileDatabase(function(file) { UploadArea.addFile(file, '@id', true); }, '@folder')">@Box.CMS.SharedStrings.or_use_image_database</a>
+        </div>
+
+        <div id="@dropAreaId">
+            <!--ko if: editingItem().CONTENT.@(id) != null -->
+            <div 
+                onmouseover="showContextMenu(this)"
+                onmouseout="hideContextMenu(this)">
+
+                <img data-bind="attr: { src: FileUrl.toView(editingItem().CONTENT.@id, true) }" />                
+                <input data-bind="value: editingItem().CONTENT.@(id).Caption"
+                       updatemodelevent="keyup"
+                       onkeypress="dialogHelper.blurOnEnter(this)"
+                       tabindex="-1"
+                       type="text" />
+
+                <nav class="contextMenu">
+                    <button data-bind="click: function(data) { UploadArea.removeFile(data, '@id'); }, clickBubble: false">
+                        <i class="icon-remove"></i>
+                    </button>
+
+                    <button data-bind="click: function(data) { window.open(FileUrl.toView(data), '_blank'); }, clickBubble: false">
+                        <i class="icon-eye"></i>
+                    </button>                    
+                </nav>
+            </div>
+            <!--/ko-->
+        </div>
+        <div id="_uploadAreaAlert_@id" class="loadingFileAlert">
+            <img src="../Content/CMS_Images/FileIcons/loading.gif" /> @Box.CMS.SharedStrings.Sending_files
+        </div>
+
     </div>
 }
 }

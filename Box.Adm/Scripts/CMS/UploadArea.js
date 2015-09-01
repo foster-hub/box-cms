@@ -9,9 +9,19 @@ UploadArea.findFile = function (file, bindFiles) {
     }
 }
 
-UploadArea.addFile = function (newFile, id) {
-    var bindFiles = pageVM.editingItem().CONTENT[id];    
-    bindFiles.push(newFile);
+UploadArea.addFile = function (newFile, id, singlefile) {
+
+    if (singlefile) {
+        pageVM.editingItem().CONTENT[id] = newFile;
+    }
+    else {
+        if (pageVM.editingItem().CONTENT[id] == null) {
+            pageVM.editingItem().CONTENT[id] = new Array();
+        }
+        var bindFiles = pageVM.editingItem().CONTENT[id];        
+        bindFiles.push(newFile);
+    }
+
     pageVM.editingItem.valueHasMutated();
 }
 
@@ -110,8 +120,6 @@ UploadArea.showUploadForm = function (folder) {
 
 UploadArea.sendFiles = function (files, id, folder, singleFile) {
 
-    var bindFiles = pageVM.editingItem().CONTENT[id];
-
     if (files == null || files.length <= 0)
         return;
 
@@ -142,14 +150,18 @@ UploadArea.sendFiles = function (files, id, folder, singleFile) {
             for (var r = 0; r < resFiles.length; r++) {
                 var res = resFiles[r];
 
-                if (singleFile && bindFiles.length > 0) {
-                    oldFile = bindFiles.pop();
-                    UploadArea.removeFile(oldFile, id);
-                }
-
                 var newFile = { FileUId: res.FileUId, FileName: res.FileName, Size: res.Size, Folder: folder, Caption: '', Type: res.Type };
-                bindFiles.push(newFile);
-
+                if (singleFile) {
+                    pageVM.editingItem().CONTENT[id] = newFile;
+                }
+                else {
+                    if (pageVM.editingItem().CONTENT[id] == null) {
+                        pageVM.editingItem().CONTENT[id] = new Array();
+                    }
+                    var bindFiles = pageVM.editingItem().CONTENT[id];
+                    bindFiles.push(newFile);
+                }
+                
                 if (UploadArea.afterSendCallBack != null)
                     UploadArea.afterSendCallBack(id, res.FileName);
 
