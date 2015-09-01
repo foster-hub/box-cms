@@ -229,6 +229,7 @@ var pageVM = new ContentCaptureVM();
 
 FileUrlConverter = function () {
 
+    var me = this;
     filePathToModel = function (url, thumb) {
         url = url.replace(_webAppUrl + 'files/', '');
         if (thumb)
@@ -247,6 +248,15 @@ FileUrlConverter = function () {
 
     this.toModel = function (url, thumb) {
         return filePathToModel(url, thumb);
+    }
+
+    this.isImage = function (type) {
+        if (type == null)
+            return true;
+
+        if (me.isAudio(type) || me.isVideo(type))
+            return false;
+        return true;
     }
 
     this.isAudio = function (type) {

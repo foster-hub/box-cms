@@ -119,12 +119,9 @@
                 data-bind="click: function(data, event) { UploadArea.stopMoveFile(data, '@id', event.target.parentNode.parentNode); }, clickBubble: false"            
                 onmouseover="if(UploadArea.movingFile==null) showContextMenu(this);" 
                 onmouseout="hideContextMenu(this)" >
-                
-               
-                <!--ko ifnot: FileUrl.isAudio(Type)  -->
-                    <!--ko ifnot: FileUrl.isVideo(Type) -->
-                        <img data-bind="attr: { src: FileUrl.toView($data, true) }" />                                       
-                    <!--/ko-->
+                               
+                <!--ko if: FileUrl.isImage(Type)  -->                    
+                    <img data-bind="attr: { src: FileUrl.toView($data, true) }" />                                                           
                 <!--/ko-->
                
                 <!--ko if: FileUrl.isAudio(Type) -->                
@@ -135,7 +132,7 @@
                 <!--/ko-->
 
                 <!--ko if: FileUrl.isVideo(Type) -->                
-                <span data-bind="text: FileUrl.getFileName($data)"></span>
+                    <span data-bind="text: FileUrl.getFileName($data)"></span>
                     <video controls="controls">
                         <source data-bind="attr: { src: FileUrl.toView($data, false) }">
                     </video>                
