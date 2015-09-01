@@ -38,6 +38,7 @@
         $.ajax({
             url: url,
             type: verb,
+            headers: { 'RequestVerificationToken': _antiForgeryToken },
             success: function () {
                 me[me._resourceName].remove(me.removingItem());
                 me.removingItem(null);
