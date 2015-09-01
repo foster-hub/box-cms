@@ -267,11 +267,12 @@ FileUrlConverter = function () {
         return true;
     }
     
-    this.getFileName = function (name) {
-        if(!name)
+    this.getFileName = function (data) {
+        if (data == null)
             return "";
-        return name;
-
+        if (!data.FileName)
+            return "";
+        return data.FileName;
     }
 
     this.toView = function (fileOrPath, thumb) {

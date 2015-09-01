@@ -112,25 +112,33 @@
             id="@dropAreaId"            
             onmousemove="UploadArea.movingMouse(this, event, '@id')"
             data-bind="foreach: editingItem().CONTENT.@id">
+
+            
+
             <li     
                 data-bind="click: function(data, event) { UploadArea.stopMoveFile(data, '@id', event.target.parentNode.parentNode); }, clickBubble: false"            
                 onmouseover="if(UploadArea.movingFile==null) showContextMenu(this);" 
                 onmouseout="hideContextMenu(this)" >
                 
                
-                <!--ko ifnot: FileUrl.isAudio(Type) -->
+                <!--ko ifnot: FileUrl.isAudio(Type)  -->
                     <!--ko ifnot: FileUrl.isVideo(Type) -->
                         <img data-bind="attr: { src: FileUrl.toView($data, true) }" />                                       
                     <!--/ko-->
                 <!--/ko-->
                
-                <!--ko if: FileUrl.isAudio(Type) -->
-                <div>
-                    <span data-bind="text: FileUrl.getFileName(FileName)"></span>
+                <!--ko if: FileUrl.isAudio(Type) -->                
+                <span data-bind="text: FileUrl.getFileName($data)"></span>
                     <audio controls>
-                        <source data-bind="attr: { src: FileUrl.toView($data, false) }" type="audio/mp3">
-                    </audio>
-                </div>
+                        <source data-bind="attr: { src: FileUrl.toView($data, false) }">
+                    </audio>                
+                <!--/ko-->
+
+                <!--ko if: FileUrl.isVideo(Type) -->                
+                <span data-bind="text: FileUrl.getFileName($data)"></span>
+                    <video controls="controls">
+                        <source data-bind="attr: { src: FileUrl.toView($data, false) }">
+                    </video>                
                 <!--/ko-->
                 
                 <input data-bind="value: Caption"
@@ -154,6 +162,8 @@
                 </nav>
             </li>
         </ul>
+
+        
         <div id="_uploadAreaAlert_@id" class="loadingFileAlert">
             <img src="../Content/CMS_Images/FileIcons/loading.gif" /> @Box.CMS.SharedStrings.Sending_files
         </div>

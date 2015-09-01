@@ -134,7 +134,7 @@ audio {
     background-color:black;
 }
 
-.uploadDropArea > ul > li > div > span {
+.uploadDropArea > ul > li > span {
     display:block;
     color:#fff;
     margin:0 0 0 5px;
@@ -193,9 +193,13 @@ audio {
     float: left;
     position: relative;
     margin: 2px;
-    height: 80px;
-    overflow-y: hidden;
+    min-height: 80px;
+    overflow-y: hidden;   
     
+}
+
+.uploadDropArea > ul > li > video {
+    width:300px;
 }
 
 .uploadDropArea > ul > li > input 
