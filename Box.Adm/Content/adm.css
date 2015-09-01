@@ -137,6 +137,8 @@ audio {
 .uploadDropArea > ul > li > div > span {
     display:block;
     color:#fff;
+    margin:0 0 0 5px;
+    font-size:10px;
 }
 .uploadDropArea > ul > li > input:focus 
 {
@@ -182,7 +184,9 @@ audio {
 .uploadDropArea.over
 {
     border-color: Gray; 
-} 
+}
+
+    
 
 .uploadDropArea > ul > li 
 { 
