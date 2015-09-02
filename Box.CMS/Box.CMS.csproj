@@ -141,6 +141,7 @@
   <ItemGroup>
     <Compile Include="Api\CMS_CrossLinksController.cs" />
     <Compile Include="Api\CMS_ContentsController.cs" />
+    <Compile Include="Api\CMS_ImageTransformController.cs" />
     <Compile Include="Api\CMS_FilesController.cs" />
     <Compile Include="Api\CMS_CommentsController.cs" />
     <Compile Include="Api\CMS_QuizController.cs" />

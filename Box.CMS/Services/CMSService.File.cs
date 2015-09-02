@@ -65,14 +65,20 @@ namespace Box.CMS.Services {
 
         public void SaveFile(File file, FileStorages storage) {
             using (var context = new Data.CMSContext()) {
-                context.Files.Add(file);
+                var oldfile = context.Files.SingleOrDefault(f => f.FileUId == file.FileUId);
+                if (oldfile == null) {
+                    context.Files.Add(file);
+                } else {
+                    context.Files.Remove(oldfile);
+                    context.Files.Add(file);
+                }
                 context.SaveChanges();
             }
         }
 
-        public byte[] GetScaledImageFile(byte[] bytes, double scale = 1) {
+        public byte[] GetScaledImageFile(byte[] bytes, double scale = 1, int xdes = 0, int ydes = 0, int finalW = 0, int finalH = 0) {
 
-            if (scale == 1)
+            if (scale == 1 && xdes==0 && ydes==0)
                 return bytes;
 
             System.IO.MemoryStream stream = new System.IO.MemoryStream(bytes);
@@ -80,10 +86,16 @@ namespace Box.CMS.Services {
 
             int height = (int)(image.Height * scale);
             int width = (int)(image.Width * scale);
+
+            if (finalW == 0)
+                finalW = width;
+
+            if (finalH == 0)
+                finalH = height;
         
-            System.Drawing.Bitmap newImg = new System.Drawing.Bitmap(width, height);
+            System.Drawing.Bitmap newImg = new System.Drawing.Bitmap(finalW, finalH);
             System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(newImg);
-            g.DrawImage(image, new System.Drawing.Rectangle(0, 0, width, height));
+            g.DrawImage(image, new System.Drawing.Rectangle(-xdes, -ydes, width, height));
 
             g.Dispose();
 

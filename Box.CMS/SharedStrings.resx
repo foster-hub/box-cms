@@ -385,4 +385,7 @@ Are you sure you want to publish it now?</value>
   <data name="Audios" xml:space="preserve">
     <value>Audios</value>
   </data>
+  <data name="Crop_tooltip" xml:space="preserve">
+    <value>Move and scale the image to crop</value>
+  </data>
 </root>

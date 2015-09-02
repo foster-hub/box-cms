@@ -259,6 +259,15 @@ namespace Box.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Move and scale the image to crop.
+        /// </summary>
+        public static string Crop_tooltip {
+            get {
+                return ResourceManager.GetString("Crop_tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cross Links.
         /// </summary>
         public static string Cross_Links {

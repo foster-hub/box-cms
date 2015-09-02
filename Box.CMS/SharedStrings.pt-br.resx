@@ -382,4 +382,7 @@ Tem certeza que deseja publicar?</value>
   <data name="Audios" xml:space="preserve">
     <value>Audios</value>
   </data>
+  <data name="Crop_tooltip" xml:space="preserve">
+    <value>Mova e dimensione a imagem para cortar</value>
+  </data>
 </root>

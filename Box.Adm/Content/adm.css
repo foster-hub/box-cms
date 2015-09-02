@@ -151,9 +151,15 @@ label { color: Gray; text-transform: uppercase; font-size: 75%; }
     position: relative;
     clear: both;    
 }
-.uploadDropArea > ul > li {
-    margin: 5px 5px 0px 0px;
+.uploadDropArea > ul > li {    
     background-color:black;
+    float: left;
+    position: relative;
+    margin-bottom: 2px;
+    margin-right: 2px;
+    margin-left: 0px;
+    margin-top: 0px;
+    height: 100px;
 }
 
 .uploadDropArea > ul > li > span {
@@ -191,16 +197,6 @@ label { color: Gray; text-transform: uppercase; font-size: 75%; }
 }
 
     
-
-.uploadDropArea > ul > li 
-{ 
-    float: left;
-    position: relative;
-    margin: 2px;    
-    height: 100px;
-    
-    
-}
 
 
 

@@ -224,23 +224,76 @@ UploadArea.hideSendAlert = function (id) {
 }
 
 UploadArea.cropImage = function (image, id, width, height) {
+
     var picture = $('#_uploadArea_' + id + '_cropImage');
+
+    if (picture == null || picture.length == 0)
+        return;
+
+    if (picture[0].isCroping) {
+        UploadArea.cancelCropImage(id);
+        return;
+    }
+
     picture.guillotine({ width: width, height: height });
+    picture[0].isCroping = true;
 
     var controls = $('#_uploadArea_' + id + '_cropControls')
     controls.show();
 }
 
 UploadArea.cancelCropImage = function (id) {
+
     var picture = $('#_uploadArea_' + id + '_cropImage');
+
+    if (picture == null || picture.length == 0)
+        return;
+
     picture.guillotine('remove');
+    picture[0].isCroping = false;
+
     var controls = $('#_uploadArea_' + id + '_cropControls')
     controls.hide();
 }
 
-UploadArea.commitCropImage = function (id) {
+UploadArea.commitCropImage = function (id, width, height) {
     var picture = $('#_uploadArea_' + id + '_cropImage');
+
+    if (picture == null || picture.length == 0)
+        return;
+
+    var fileUId = picture.attr('fileUIdTag');
+    var scale = parseFloat(picture.attr('scaleTag'));
+
+    data = picture.guillotine('getData');
+    
+    data.x = data.x / scale;
+    data.y = data.y / scale;
+    data.w = width;
+    data.h = height;
+
+    // Sent to server        
+    $.ajax({
+        url: _webAppUrl + 'api/cms_imagetransform/' + fileUId,
+        type: 'POST',
+        data: JSON.stringify(data),
+        headers: { 'RequestVerificationToken': window._antiForgeryToken },
+        success: function (data) {            
+            picture[0].src = picture[0].src + '&r2=2';
+        },
+        error: function (request) {
+            if (request.status == 409) {
+                dialogHelper.setOperationMessage(me.errorMsgItemAlreadyExists);
+                return;
+            }
+            dialogHelper.setOperationMessage('Unknow error');
+        }
+    });
+
     picture.guillotine('remove');
+    picture[0].isCroping = false;
+
     var controls = $('#_uploadArea_' + id + '_cropControls')
     controls.hide();
 }
+
