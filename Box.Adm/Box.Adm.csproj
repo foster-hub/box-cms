@@ -204,8 +204,10 @@
   <ItemGroup>
     <Content Include="Content\Core_Images\Oauth\nt.png" />
     <Content Include="Content\emailDetail.html" />
+    <Content Include="Content\jquery.guillotine.css" />
     <Content Include="Scripts\CMS\ContentBrowseVM.js" />
     <Content Include="Scripts\CMS\CrossLinksVM.js" />
+    <Content Include="Scripts\guillotine\jquery.guillotine.js" />
     <Content Include="where-is-my-db.htm" />
     <Content Include="AppError.htm" />
     <Content Include="App_Data\SampleData.sql" />

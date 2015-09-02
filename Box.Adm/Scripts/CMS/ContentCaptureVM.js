@@ -233,16 +233,20 @@ FileUrlConverter = function () {
     filePathToModel = function (url, thumb) {
         url = url.replace(_webAppUrl + 'files/', '');
         if (thumb)
-            url = url.replace('/?asThumb=true', '');
+            url = url.replace('/?asThumb=true', '');        
         return url;
     }
 
-    filePathToView = function (filePath, thumb) {
+    filePathToView = function (filePath, thumb, scale) {
         if (filePath == null)
             return '';
         filePath = _webAppUrl + 'files/' + filePath
         if (thumb)
             filePath = filePath + '/?asThumb=true';
+
+        if (scale)
+            filePath = filePath + '/?scale=' + scale + '&r=' + Math.floor(Math.random() * 1000);
+
         return filePath;
     }
 
@@ -285,14 +289,14 @@ FileUrlConverter = function () {
         return data.FileName;
     }
 
-    this.toView = function (fileOrPath, thumb) {
+    this.toView = function (fileOrPath, thumb, scale) {
         if (fileOrPath == null)
             return '';
 
         if (typeof fileOrPath == 'string')
-            return filePathToView(fileOrPath, thumb);
+            return filePathToView(fileOrPath, thumb, scale);
 
-        return filePathToView(fileOrPath.Folder + '/' + fileOrPath.FileUId, thumb);
+        return filePathToView(fileOrPath.Folder + '/' + fileOrPath.FileUId, thumb, scale);
     }
 }
 

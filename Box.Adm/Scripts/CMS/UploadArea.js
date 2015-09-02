@@ -222,3 +222,25 @@ UploadArea.hideSendAlert = function (id) {
         return;
     a.style.display = 'none';
 }
+
+UploadArea.cropImage = function (image, id, width, height) {
+    var picture = $('#_uploadArea_' + id + '_cropImage');
+    picture.guillotine({ width: width, height: height });
+
+    var controls = $('#_uploadArea_' + id + '_cropControls')
+    controls.show();
+}
+
+UploadArea.cancelCropImage = function (id) {
+    var picture = $('#_uploadArea_' + id + '_cropImage');
+    picture.guillotine('remove');
+    var controls = $('#_uploadArea_' + id + '_cropControls')
+    controls.hide();
+}
+
+UploadArea.commitCropImage = function (id) {
+    var picture = $('#_uploadArea_' + id + '_cropImage');
+    picture.guillotine('remove');
+    var controls = $('#_uploadArea_' + id + '_cropControls')
+    controls.hide();
+}

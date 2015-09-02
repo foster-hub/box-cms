@@ -79,11 +79,15 @@
     HtmlString dataBindList = new HtmlString("");
     HtmlString dataBindMove = new HtmlString(""); ;
     HtmlString dataBindItem = new HtmlString("editingItem().CONTENT." + id);
+    HtmlString dataBindBrowse = new HtmlString("data-bind=\"click: function(data) { window.open(FileUrl.toView(editingItem().CONTENT." + id + "), '_blank'); }, clickBubble: false\"");
+    
+    
 
     if (!singleFile) {
         dataBindList = new HtmlString("data-bind=\"foreach: editingItem().CONTENT." + id + "\"");
         dataBindMove = new HtmlString("data-bind=\"click: function(data, event) { UploadArea.stopMoveFile(data, '" + id + "', event.target.parentNode.parentNode); }, clickBubble: false\"");
         dataBindItem = new HtmlString("$data");
+        dataBindBrowse = new HtmlString("data-bind=\"click: function(data) { window.open(FileUrl.toView(data), '_blank'); }, clickBubble: false\"");
     }
     
     <input 
@@ -123,7 +127,7 @@
                 onmouseout="hideContextMenu(this)">
 
                 <!--ko if: FileUrl.isImage(@(dataBindItem).Type)  -->
-                <div style="height: 100px; overflow: hidden;">
+                <div class="imageFile">
                     <img data-bind="attr: { src: FileUrl.toView(@dataBindItem, true) }" />
                 </div>
                 
@@ -151,7 +155,7 @@
                         <i class="icon-minus-2"></i>
                     </button>
 
-                    <button data-bind="click: function(data) { window.open(FileUrl.toView(data), '_blank'); }, clickBubble: false">
+                    <button @dataBindBrowse>
                         <i class="icon-eye"></i>
                     </button>
                     @if (!singleFile) {
@@ -171,4 +175,91 @@
         
     </div>
 }
+}
+
+@helper CropImage(string id, int originalWidth, int originalHeight, double scale = 1, string folder = "IMG_ROOT", string style = null) {
+    string dropAreaId = "_uploadArea_" + id;
+    string inputFileId = "_uploadAreaInput_" + id;
+    HtmlString dataBindItem = new HtmlString("editingItem().CONTENT." + id);
+    HtmlString dataBindBrowse = new HtmlString("data-bind=\"click: function(data) { window.open(FileUrl.toView(editingItem().CONTENT." + id + "), '_blank'); }, clickBubble: false\"");
+
+    int width = (int) (originalWidth * scale);
+    int height = (int) (originalHeight * scale);
+
+    <input class="ajaxUploadField"
+           id="@inputFileId"
+           type="file"
+           onchange="UploadArea.sendFiles(this.files, '@id', '@folder', true)"           
+           tabindex="-1" />
+
+    <a class="formUploadField"
+       href="javascript: UploadArea.showUploadForm('@folder')">@Box.CMS.SharedStrings.File_upload</a>
+        
+    <div class="uploadDropArea"
+                style="@style"
+                ondrop="UploadArea.drop(this, event, '@id', '@folder', true)"
+                ondragover="UploadArea.dragover(this, event)"
+                ondragleave="UploadArea.dragout(this, event)">
+
+            <div>
+                <spa>
+                    @Box.CMS.SharedStrings.drag_and_drop_files_here
+                </spa>
+                <a tabindex="-1"
+                    href="javascript: showFileDatabase(function(file) { UploadArea.addFile(file, '@id', true); }, '@folder')">@Box.CMS.SharedStrings.or_use_image_database</a>
+            </div>
+
+            <ul id="@dropAreaId">
+
+                <!--ko if: pageVM.editingItem().CONTENT.@(id) != null -->
+                <li style="width: @(width)px; height: @(height)px"
+                    onmouseover="showContextMenu(this);"
+                    onmouseout="hideContextMenu(this)">
+
+                    <div style="width: @(width)px; height: @(height)px; overflow: hidden;">
+                        <img data-bind="attr: { src: FileUrl.toView(@dataBindItem, false, @scale.ToString(System.Globalization.CultureInfo.InvariantCulture)) }" id="@(dropAreaId)_cropImage" style="max-width: none;" />
+                    </div>
+
+                    <input data-bind="value: @(dataBindItem).Caption"
+                            updatemodelevent="keyup"
+                            onkeypress="dialogHelper.blurOnEnter(this)"
+                            tabindex="-1"
+                            type="text" />
+
+                    <div class="contextMenu">
+                        <button data-bind="click: function(data) { UploadArea.removeFile(data, '@id', true); }, clickBubble: false">
+                            <i class="icon-minus-2"></i>
+                        </button>
+
+                        <button @dataBindBrowse>
+                            <i class="icon-eye"></i>
+                        </button>
+
+                        <button data-bind="click: function(data) { UploadArea.cropImage(data, '@id', @width, @height); }, clickBubble: false">
+                            <i class="icon-resize"></i>
+                        </button>
+
+                    </div>
+                </li>
+                <!--/ko-->
+
+            </ul>
+
+            <div id="@(dropAreaId)_cropControls" style="display: none;">
+                <button class="bg-grayDark" onclick="javascript: UploadArea.cancelCropImage('@id'); return false;">
+                    <i class="icon-checkmark fg-white"></i>
+                </button>
+                <button class="bg-grayDark" onclick="javascript: UploadArea.cancelCropImage('@id'); return false;">
+                    <i class="icon-cancel fg-white"></i>
+                </button>
+            </div>
+
+            <div id="_uploadAreaAlert_@id" class="loadingFileAlert">
+                <img src="../Content/CMS_Images/FileIcons/loading.gif" />@Box.CMS.SharedStrings.Sending_files
+            </div>
+
+        </div>        
+}
+
+
 }

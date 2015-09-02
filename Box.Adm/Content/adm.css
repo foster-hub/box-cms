@@ -125,11 +125,11 @@ label { color: Gray; text-transform: uppercase; font-size: 75%; }
     height: 30px;    
 }
 
-.uploadDropArea img
+.uploadDropArea .imageFile
 { 
     float: left;    
-    width: 150px;    
-    height: auto;        
+    width: 150px;            
+    height: 100px; overflow: hidden;    
 }
 
 .uploadDropArea video {

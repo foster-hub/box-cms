@@ -20,6 +20,7 @@ namespace Box.Adm {
                 .Include("~/Scripts/CMS/ContentCaptureVM.js")
                 .Include("~/Scripts/CMS/FileDatabaseVM.js")
                 .Include("~/Scripts/CMS/UploadArea.js")
+                .Include("~/Scripts/guillotine/jquery.guillotine.js")
                 .Include("~/Scripts/nicEdit/nicEdit.js")
                 .Include("~/Scripts/nicEdit/nicEdit.ImageBoxExtension.js"));
 
@@ -40,6 +41,7 @@ namespace Box.Adm {
                 .Include("~/content/font-awesome.css")
                 .Include("~/Content/adm.css")
                 .Include("~/Content/jquery-ui-1.9.2.css")
+                .Include("~/Content/jquery.guillotine.css")
                 .Include("~/Content/custom.css"));
 
             

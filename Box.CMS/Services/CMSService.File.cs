@@ -70,6 +70,27 @@ namespace Box.CMS.Services {
             }
         }
 
+        public byte[] GetScaledImageFile(byte[] bytes, double scale = 1) {
+
+            if (scale == 1)
+                return bytes;
+
+            System.IO.MemoryStream stream = new System.IO.MemoryStream(bytes);
+            System.Drawing.Image image = System.Drawing.Image.FromStream(stream);
+
+            int height = (int)(image.Height * scale);
+            int width = (int)(image.Width * scale);
+        
+            System.Drawing.Bitmap newImg = new System.Drawing.Bitmap(width, height);
+            System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(newImg);
+            g.DrawImage(image, new System.Drawing.Rectangle(0, 0, width, height));
+
+            g.Dispose();
+
+            System.Drawing.ImageConverter conv = new System.Drawing.ImageConverter();
+            return conv.ConvertTo(newImg, typeof(byte[])) as byte[];
+        }
+
         public byte[] GetImageFileThumb(byte[] bytes, int width, int height, int maxWidth, int maxHeight) {
             System.IO.MemoryStream stream = new System.IO.MemoryStream(bytes);
             System.Drawing.Image image = System.Drawing.Image.FromStream(stream);
