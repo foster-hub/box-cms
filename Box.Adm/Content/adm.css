@@ -121,14 +121,14 @@ label { color: Gray; text-transform: uppercase; font-size: 75%; }
 /* -- UPLOAD --- */
 
 .uploadDropArea audio {    
-    width: 200px;
+    width: 150px;
     height: 30px;    
 }
 
 .uploadDropArea img
 { 
     float: left;    
-    width: 200px;    
+    width: 150px;    
     height: auto;        
 }
 
@@ -139,6 +139,17 @@ label { color: Gray; text-transform: uppercase; font-size: 75%; }
 .uploadDropArea > ul 
 {
     padding-left: 0px;
+    margin-left: 0px;
+    margin-top: 4px;
+
+    list-style:none;
+    margin-bottom: 0px;
+    float: left;
+    width: 100%;
+    min-width: 160px;
+    min-height: 100px;
+    position: relative;
+    clear: both;    
 }
 .uploadDropArea > ul > li {
     margin: 5px 5px 0px 0px;
@@ -174,18 +185,6 @@ label { color: Gray; text-transform: uppercase; font-size: 75%; }
     border: 4px dotted transparent; 
 }
 
-.uploadDropArea > ul 
-{
-    list-style:none;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    float: left;
-    width: 100%;
-    min-width: 160px;
-    min-height: 100px;
-    position: relative;
-    clear: both;        
-}
 .uploadDropArea.over
 {
     border-color: Gray; 
@@ -198,8 +197,8 @@ label { color: Gray; text-transform: uppercase; font-size: 75%; }
     float: left;
     position: relative;
     margin: 2px;    
-    height: 110px;
-    overflow-y: hidden;   
+    height: 100px;
+    
     
 }
 
@@ -235,7 +234,8 @@ label { color: Gray; text-transform: uppercase; font-size: 75%; }
     margin-right: 5px;
 }
 
-.uploadDropArea > ul > li .contextMenu { position: absolute; right: 7px; top: 0px; display: none; }
+.uploadDropArea > ul > li .contextMenu { position: absolute; right: 0px; display: none; }
+
 
 #contentLocation ul 
 {
@@ -312,3 +312,6 @@ label { color: Gray; text-transform: uppercase; font-size: 75%; }
     color: white!important;
 }
 
+
+.contextMenu button { background-color: #4e4e4e; border-color: #4e4e4e; }
+.contextMenu button i { color: #FFFFFF; }  

@@ -11,6 +11,8 @@ UploadArea.findFile = function (file, bindFiles) {
 
 UploadArea.addFile = function (newFile, id, singlefile) {
 
+    newFile.Caption = newFile.FileName;
+
     if (singlefile) {
         pageVM.editingItem().CONTENT[id] = newFile;
     }
@@ -25,10 +27,15 @@ UploadArea.addFile = function (newFile, id, singlefile) {
     pageVM.editingItem.valueHasMutated();
 }
 
-UploadArea.removeFile = function (file, id) {
-    var bindFiles = pageVM.editingItem().CONTENT[id];    
-    var idx = UploadArea.findFile(file, bindFiles);
-    bindFiles.splice(idx, 1);
+UploadArea.removeFile = function (file, id, singlefile) {
+    if (singlefile) {
+        pageVM.editingItem().CONTENT[id] = null;
+    }
+    else {
+        var bindFiles = pageVM.editingItem().CONTENT[id];
+        var idx = UploadArea.findFile(file, bindFiles);
+        bindFiles.splice(idx, 1);
+    }
     pageVM.editingItem.valueHasMutated();
 }
 
@@ -150,7 +157,7 @@ UploadArea.sendFiles = function (files, id, folder, singleFile) {
             for (var r = 0; r < resFiles.length; r++) {
                 var res = resFiles[r];
 
-                var newFile = { FileUId: res.FileUId, FileName: res.FileName, Size: res.Size, Folder: folder, Caption: '', Type: res.Type };
+                var newFile = { FileUId: res.FileUId, FileName: res.FileName, Size: res.Size, Folder: folder, Caption: res.FileName, Type: res.Type };
                 if (singleFile) {
                     pageVM.editingItem().CONTENT[id] = newFile;
                 }
