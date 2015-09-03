@@ -169,7 +169,9 @@ namespace Box.CMS.Services {
             if (dotIndex >= 0) {
                 string ext = fileName.Substring(dotIndex);
                 switch (ext) {
-                    case ".xls": case ".xlsx":
+                    case ".xls":
+                    case ".xlsx":
+                    case ".csv":
                         iconFile = "xls";
                     break;
                     case ".doc": case ".docx":

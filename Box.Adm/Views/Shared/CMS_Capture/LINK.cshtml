@@ -57,8 +57,8 @@
      }
 
      function SET_THUMB(contentHead) {
-         if (contentHead.CONTENT.Images != null && contentHead.CONTENT.Images.length >= 1)
-             contentHead.ThumbFilePath = contentHead.CONTENT.Images[0].Folder + '/' + contentHead.CONTENT.Images[0].FileUId;
+         if (contentHead.CONTENT.Image != null)
+             contentHead.ThumbFilePath = contentHead.CONTENT.Image.Folder + '/' + contentHead.CONTENT.Image.FileUId;
          else
              contentHead.ThumbFilePath = null;
      }
@@ -70,9 +70,14 @@
              return;
 
          var name = pageVM.editingItem().ExternalLinkUrl;
+         name = name.replace('www.', '');
          name = name.replace('http://', '');
          name = name.replace('https://', '');
          name = name.replace('/', '-');
+         var idx = name.indexOf('.');
+         if (idx > 1) {
+             name = name.substring(0, idx);
+         }
          pageVM.editingItem().Name = name;
          pageVM.editingItem.valueHasMutated();
      }
