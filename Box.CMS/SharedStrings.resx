@@ -388,4 +388,13 @@ Are you sure you want to publish it now?</value>
   <data name="Crop_tooltip" xml:space="preserve">
     <value>Move and scale the image to crop</value>
   </data>
+  <data name="Crop_image" xml:space="preserve">
+    <value>Crop image</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
 </root>

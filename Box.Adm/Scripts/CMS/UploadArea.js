@@ -238,8 +238,19 @@ UploadArea.cropImage = function (image, id, width, height) {
     picture.guillotine({ width: width, height: height });
     picture[0].isCroping = true;
 
-    var controls = $('#_uploadArea_' + id + '_cropControls')
-    controls.show();
+    UploadArea.showHideCropControls(id);
+}
+
+UploadArea.showHideCropControls = function (id) {
+    var controls = $('#_uploadArea_' + id + '_cropControls');
+    var zoom = $('#_uploadArea_' + id + '_cropZoom');
+
+    if (!controls.is(':visible')) {
+        controls.show(); zoom.show();
+    }
+    else {
+        controls.hide(); zoom.hide();
+    }
 }
 
 UploadArea.cancelCropImage = function (id) {
@@ -252,8 +263,7 @@ UploadArea.cancelCropImage = function (id) {
     picture.guillotine('remove');
     picture[0].isCroping = false;
 
-    var controls = $('#_uploadArea_' + id + '_cropControls')
-    controls.hide();
+    UploadArea.showHideCropControls(id);
 }
 
 UploadArea.commitCropImage = function (id, width, height) {
@@ -278,10 +288,20 @@ UploadArea.commitCropImage = function (id, width, height) {
         type: 'POST',
         data: JSON.stringify(data),
         headers: { 'RequestVerificationToken': window._antiForgeryToken },
-        success: function (data) {            
+        success: function (data) {                        
+
+            picture.guillotine('remove');
+            picture[0].isCroping = false;
+            UploadArea.showHideCropControls(id);
+
             picture[0].src = picture[0].src + '&r2=2';
         },
         error: function (request) {
+
+            picture.guillotine('remove');
+            picture[0].isCroping = false;
+            UploadArea.showHideCropControls(id);
+
             if (request.status == 409) {
                 dialogHelper.setOperationMessage(me.errorMsgItemAlreadyExists);
                 return;
@@ -290,10 +310,17 @@ UploadArea.commitCropImage = function (id, width, height) {
         }
     });
 
-    picture.guillotine('remove');
-    picture[0].isCroping = false;
-
-    var controls = $('#_uploadArea_' + id + '_cropControls')
-    controls.hide();
+    
 }
 
+UploadArea.zoomCropImage = function (id, direction) {
+    var picture = $('#_uploadArea_' + id + '_cropImage');
+
+    if (picture == null || picture.length == 0)
+        return;
+
+    if (!picture[0].isCroping) {
+        return;
+    }
+    picture.guillotine('zoom' + direction);
+}

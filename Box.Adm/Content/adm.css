@@ -216,7 +216,12 @@ label { color: Gray; text-transform: uppercase; font-size: 75%; }
     font-weight: normal;    
 }
     
-
+.uploadDropArea .zoomControls {
+    position: absolute; 
+    bottom: 20px;
+    opacity: 0.5;
+    display: none;
+}
 
 .loadingFileAlert 
 {

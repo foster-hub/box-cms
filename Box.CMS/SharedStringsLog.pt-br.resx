@@ -132,4 +132,7 @@
   <data name="FILE_UPLOAD" xml:space="preserve">
     <value>Arquivo(s) foram enviados para pasta '{0}'</value>
   </data>
+  <data name="IMAGE_0_CROP" xml:space="preserve">
+    <value>Imagem '{0}' foi recortada</value>
+  </data>
 </root>

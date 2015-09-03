@@ -151,17 +151,17 @@
                        type="text" />
 
                 <div class="contextMenu">
-                    <button data-bind="click: function(data) { UploadArea.removeFile(data, '@id', @singleFile.ToString().ToLowerInvariant()); }, clickBubble: false">
+                    <button title="@Box.CMS.SharedStrings.Remove" data-bind="click: function(data) { UploadArea.removeFile(data, '@id', @singleFile.ToString().ToLowerInvariant()); }, clickBubble: false">
                         <i class="icon-minus-2"></i>
                     </button>
 
-                    <button @dataBindBrowse>
+                    <button title="@Box.CMS.SharedStrings.Preview" @dataBindBrowse>
                         <i class="icon-eye"></i>
                     </button>
                     @if (!singleFile) {
-                        <button data-bind="click: function(data, event) { UploadArea.startMoveFile(data, '@id', event.target.parentNode.parentNode); }, clickBubble: false">
-                            <i class="icon-move-horizontal"></i>
-                        </button>
+                    <button data-bind="click: function(data, event) { UploadArea.startMoveFile(data, '@id', event.target.parentNode.parentNode); }, clickBubble: false">
+                        <i class="icon-move-horizontal"></i>
+                    </button>
                     }
                 </div>
             </li>
@@ -211,8 +211,7 @@
                     href="javascript: showFileDatabase(function(file) { UploadArea.addFile(file, '@id', true); }, '@folder')">@Box.CMS.SharedStrings.or_use_image_database</a>
             </div>
 
-        <div id="@(dropAreaId)_cropControls" style="display: none; margin: 0px; width: @(width)px;" class="bg-grayDark">            
-            
+            <div id="@(dropAreaId)_cropControls" style="display: none; margin: 0px; width: @(width)px;" class="bg-grayDark">                        
                 <div>
                     <label style="margin: 3px;" class="fg-white">@Box.CMS.SharedStrings.Crop_tooltip</label>
                 </div>
@@ -221,8 +220,7 @@
                 </button>
                 <button class="bg-grayDark" onclick="javascript: UploadArea.cancelCropImage('@id'); return false;">
                     <i class="icon-cancel fg-white"></i>
-                </button>
-                
+                </button>                
             </div>
 
             <ul id="@dropAreaId" style="margin-top:0px;">
@@ -243,16 +241,25 @@
                             tabindex="-1"
                             type="text" />
 
+                    <div id="@(dropAreaId)_cropZoom" class="zoomControls">
+                        <button class="bg-grayDark" onclick="javascript: UploadArea.zoomCropImage('@id', 'In'); return false;">
+                            <i class="icon-zoom-in fg-white"></i>
+                        </button>
+                        <button class="bg-grayDark" onclick="javascript: UploadArea.zoomCropImage('@id', 'Out'); return false;">
+                            <i class="icon-zoom-out fg-white"></i>
+                        </button>
+                    </div>
+
                     <div class="contextMenu">
-                        <button data-bind="click: function(data) { UploadArea.removeFile(data, '@id', true); }, clickBubble: false">
+                        <button title="@Box.CMS.SharedStrings.Remove" data-bind="click: function(data) { UploadArea.removeFile(data, '@id', true); }, clickBubble: false">
                             <i class="icon-minus-2"></i>
                         </button>
 
-                        <button @dataBindBrowse>
+                        <button title="@Box.CMS.SharedStrings.Preview" @dataBindBrowse>
                             <i class="icon-eye"></i>
                         </button>
 
-                        <button data-bind="click: function(data) { UploadArea.cropImage(data, '@id', @width, @height); }, clickBubble: false">
+                        <button title="@Box.CMS.SharedStrings.Crop_image" data-bind="click: function(data) { UploadArea.cropImage(data, '@id', @width, @height); }, clickBubble: false">
                             <i class="icon-resize"></i>
                         </button>
 

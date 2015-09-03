@@ -113,5 +113,14 @@ namespace Box.CMS {
                 return ResourceManager.GetString("FILE_UPLOAD", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image &apos;{0}&apos; was croped.
+        /// </summary>
+        public static string IMAGE_0_CROP {
+            get {
+                return ResourceManager.GetString("IMAGE_0_CROP", resourceCulture);
+            }
+        }
     }
 }

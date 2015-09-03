@@ -39,8 +39,9 @@ namespace Box.CMS.Api {
             int y = data.y;
             int width = data.w;
             int height = data.h;
+            double scale = data.scale;
 
-            byte[] bytes = cms.GetScaledImageFile(file.Data.StoredData, 1, x, y, width, height);
+            byte[] bytes = cms.GetScaledImageFile(file.Data.StoredData, scale, x, y, width, height);
                         
             file.Size = bytes.Length;
             file.Data = new FileData() { FileUId = file.FileUId, StoredData = bytes };
@@ -48,6 +49,8 @@ namespace Box.CMS.Api {
             cms.SetFileThumb(file);
 
             cms.SaveFile(file, FileStorages.Database);
+
+            log.Log(String.Format(SharedStringsLog.IMAGE_0_CROP, file.FileUId)); 
         }
 
     }

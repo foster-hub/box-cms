@@ -385,4 +385,13 @@ Tem certeza que deseja publicar?</value>
   <data name="Crop_tooltip" xml:space="preserve">
     <value>Mova e dimensione a imagem para cortar</value>
   </data>
+  <data name="Crop_image" xml:space="preserve">
+    <value>Recortar imagem</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remover</value>
+  </data>
 </root>

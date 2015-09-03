@@ -259,6 +259,15 @@ namespace Box.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Crop image.
+        /// </summary>
+        public static string Crop_image {
+            get {
+                return ResourceManager.GetString("Crop_image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Move and scale the image to crop.
         /// </summary>
         public static string Crop_tooltip {
@@ -583,6 +592,15 @@ namespace Box.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Preview.
+        /// </summary>
+        public static string Preview {
+            get {
+                return ResourceManager.GetString("Preview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Publication.
         /// </summary>
         public static string Publication {
@@ -679,6 +697,15 @@ namespace Box.CMS {
         public static string reading_comments {
             get {
                 return ResourceManager.GetString("reading_comments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string Remove {
+            get {
+                return ResourceManager.GetString("Remove", resourceCulture);
             }
         }
         

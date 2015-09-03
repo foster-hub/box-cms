@@ -135,4 +135,7 @@
   <data name="FILE_UPLOAD" xml:space="preserve">
     <value>File(s) were uploaded to folder '{0}'</value>
   </data>
+  <data name="IMAGE_0_CROP" xml:space="preserve">
+    <value>Image '{0}' was croped</value>
+  </data>
 </root>
