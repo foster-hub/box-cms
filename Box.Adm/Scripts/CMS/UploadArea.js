@@ -13,6 +13,9 @@ UploadArea.addFile = function (newFile, id, singlefile) {
 
     newFile.Caption = newFile.FileName;
 
+    // it is not an upload
+    $('#_uploadArea_' + id).attr('justUploaded', false);
+
     if (singlefile) {
         pageVM.editingItem().CONTENT[id] = newFile;
     }
@@ -133,6 +136,9 @@ UploadArea.sendFiles = function (files, id, folder, singleFile) {
     if (window.FormData == null)
         return;
 
+    // marks as a upload
+    $('#_uploadArea_' + id).attr('justUploaded', true);
+
     UploadArea.showSendAlert(id);
 
     var data = new FormData();
@@ -246,10 +252,14 @@ UploadArea.showHideCropControls = function (id) {
     var zoom = $('#_uploadArea_' + id + '_cropZoom');
 
     if (!controls.is(':visible')) {
-        controls.show(); zoom.show();
+        $('#_uploadArea_' + id + ' li').each(function () { this._contextMenuDisabled = true; });
+        controls.show();
+        zoom.show();
     }
     else {
-        controls.hide(); zoom.hide();
+        $('#_uploadArea_' + id + ' li').each(function () { this._contextMenuDisabled = false; });
+        controls.hide();
+        zoom.hide();
     }
 }
 
@@ -267,6 +277,10 @@ UploadArea.cancelCropImage = function (id) {
 }
 
 UploadArea.commitCropImage = function (id, width, height) {
+
+
+    var justUploaded = $('#_uploadArea_' + id).attr('justUploaded') === 'true';
+
     var picture = $('#_uploadArea_' + id + '_cropImage');
 
     if (picture == null || picture.length == 0)
@@ -284,7 +298,7 @@ UploadArea.commitCropImage = function (id, width, height) {
 
     // Sent to server        
     $.ajax({
-        url: _webAppUrl + 'api/cms_imagetransform/' + fileUId,
+        url: _webAppUrl + 'api/cms_imagetransform/' + fileUId + '/?createCopy=' + !justUploaded,
         type: 'POST',
         data: JSON.stringify(data),
         headers: { 'RequestVerificationToken': window._antiForgeryToken },

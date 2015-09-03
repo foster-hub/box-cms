@@ -27,7 +27,7 @@ namespace Box.CMS.Api {
 
         [Box.Core.Web.WebApiAntiForgery]
         [Authorize]
-        public void Post([FromUri] string id, [FromBody] dynamic data) {
+        public void Post([FromUri] string id, [FromBody] dynamic data, [FromUri] bool createCopy) {
 
             cms.VerifyAuthorizationToEditFiles();
 
@@ -42,9 +42,16 @@ namespace Box.CMS.Api {
             double scale = data.scale;
 
             byte[] bytes = cms.GetScaledImageFile(file.Data.StoredData, scale, x, y, width, height);
-                        
+            
+            if (createCopy) {
+                file.FileUId = System.Guid.NewGuid().ToString();
+                file.FileName = "x" + file.FileName;
+            }
+            
             file.Size = bytes.Length;
             file.Data = new FileData() { FileUId = file.FileUId, StoredData = bytes };
+
+            
 
             cms.SetFileThumb(file);
 

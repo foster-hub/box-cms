@@ -70,6 +70,8 @@ Box.Dialog.Helper = function () {
 var dialogHelper = new Box.Dialog.Helper();
 
 function showContextMenu(item) {
+    if (item._contextMenuDisabled) 
+        return;
     $('.contextMenu', item).css('display','block');    
 }
 

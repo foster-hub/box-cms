@@ -83,10 +83,12 @@
          if (dialog != null)
              filesVM.setItemsPerPage(dialog.clientWidth - 30, dialog.clientHeight - 150);
 
-         if (filesVM.files == null || filesVM.files().length == 0 || filesVM.lastFolder!=folder) {
-             filesVM.loadData();
-             filesVM.lastFolder = folder;
-         }
+         // better refresh always
+         //if (filesVM.files == null || filesVM.files().length == 0 || filesVM.lastFolder!=folder) {
+         //    filesVM.loadData();
+         //    filesVM.lastFolder = folder;
+         //}
+         filesVM.loadData();
      }
 
      function selectFile(file) {
