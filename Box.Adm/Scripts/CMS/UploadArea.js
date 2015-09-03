@@ -271,6 +271,7 @@ UploadArea.cancelCropImage = function (id) {
         return;
 
     picture.guillotine('remove');
+    picture.css('max-width', 'none');
     picture[0].isCroping = false;
 
     UploadArea.showHideCropControls(id);
@@ -308,7 +309,11 @@ UploadArea.commitCropImage = function (id, width, height) {
             picture[0].isCroping = false;
             UploadArea.showHideCropControls(id);
 
-            picture[0].src = picture[0].src + '&r2=2';
+            // the fileuid my have changed, if createCopy was true
+            pageVM.editingItem().CONTENT[id].FileUId = data;
+            pageVM.editingItem.valueHasMutated();
+
+            //picture[0].src = picture[0].src + '&r2=2';
         },
         error: function (request) {
 

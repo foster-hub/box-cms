@@ -394,4 +394,10 @@ Tem certeza que deseja publicar?</value>
   <data name="Remove" xml:space="preserve">
     <value>Remover</value>
   </data>
+  <data name="Apply" xml:space="preserve">
+    <value>Aplicar</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
 </root>

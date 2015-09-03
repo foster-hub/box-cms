@@ -27,13 +27,13 @@ namespace Box.CMS.Api {
 
         [Box.Core.Web.WebApiAntiForgery]
         [Authorize]
-        public void Post([FromUri] string id, [FromBody] dynamic data, [FromUri] bool createCopy) {
+        public string Post([FromUri] string id, [FromBody] dynamic data, [FromUri] bool createCopy) {
 
             cms.VerifyAuthorizationToEditFiles();
 
             File file = cms.GetFile(id);
             if (file == null)
-                return;
+                return null;
 
             int x = data.x;
             int y = data.y;
@@ -57,7 +57,9 @@ namespace Box.CMS.Api {
 
             cms.SaveFile(file, FileStorages.Database);
 
-            log.Log(String.Format(SharedStringsLog.IMAGE_0_CROP, file.FileUId)); 
+            log.Log(String.Format(SharedStringsLog.IMAGE_0_CROP, file.FileUId));
+
+            return file.FileUId;
         }
 
     }

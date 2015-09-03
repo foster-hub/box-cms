@@ -214,13 +214,14 @@
 
         <div id="@(dropAreaId)_cropControls" style="display: none; margin: 0px; width: @(width)px;" class="bg-grayDark">
             <div>
-                <label style="margin: 3px;" class="fg-white">@Box.CMS.SharedStrings.Crop_tooltip</label>
+                <label style="padding: 4px;" class="fg-white">@Box.CMS.SharedStrings.Crop_tooltip</label>
             </div>
-            <button 
+            <button title="@Box.CMS.SharedStrings.Apply"
                     class="bg-grayDark" onclick="javascript: UploadArea.commitCropImage('@id', @originalWidth, @originalHeight); return false;">
                 <i class="icon-checkmark fg-white"></i>
             </button>
-            <button class="bg-grayDark" onclick="javascript: UploadArea.cancelCropImage('@id'); return false;">
+            <button title="@Box.CMS.SharedStrings.Cancel"
+                    class="bg-grayDark" onclick="javascript: UploadArea.cancelCropImage('@id'); return false;">
                 <i class="icon-cancel fg-white"></i>
             </button>
         </div>
@@ -234,7 +235,8 @@
 
                 <div style="width: @(width)px; height: @(height)px; overflow: hidden;">
                     <img id="@(dropAreaId)_cropImage"
-                         data-bind="attr: { fileUIdTag: @(dataBindItem).FileUId, scaleTag: @(scaleStr), src: FileUrl.toView(@dataBindItem, false, @scaleStr) }" style="max-width: none;" />
+                         data-bind="attr: { fileUIdTag: @(dataBindItem).FileUId, scaleTag: @(scaleStr), src: FileUrl.toView(@dataBindItem, false, @scaleStr) }"
+                         style="max-width: none;" />
                 </div>
 
                 <input data-bind="value: @(dataBindItem).Caption"
