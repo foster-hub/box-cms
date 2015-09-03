@@ -21,7 +21,8 @@
                     <a  id="changeAbstractLink"
                         href="javascript: showAbstract()" tabindex="-1"
                         style="display: block; margin: 3px 0px 10px 0px; clear:both; font-size: 12px;">@Box.CMS.SharedStrings.Change_Abstract</a>           
-            
+
+
                 <label>@Box.CMS.SharedStrings.Content</label>
                 <textarea                                       
                     @Capture.MapTo("HTMLContent", "nicEdit")
@@ -33,9 +34,14 @@
         
             <fieldset  class="span4">        
 
-                <div style="margin-right: 10px">
-                <legend>@Box.CMS.SharedStrings.Images</legend>
-                @Capture.File("Images", singleFile: false, style: "width: 100%")
+                <div class="boxRightMargin" style="float: left">
+                    <label>@Box.CMS.SharedStrings.Images</label>
+                    @Capture.File("Images", singleFile: false, style: "width: 100%")
+                </div>
+
+                <div class="boxRightMargin" style="margin-top: 10px; float: left">
+                    <label>@Box.CMS.SharedStrings.Audios</label>
+                    @Capture.File("Audios", singleFile: false, style: "width: 100%", folder: "AUDIO_ROOT")
                 </div>
 
                 

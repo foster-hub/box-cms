@@ -79,6 +79,8 @@ label { color: Gray; text-transform: uppercase; font-size: 75%; }
 .hovered tr { cursor: hand; cursor: pointer; }
 
 .boxLeftMargin { margin-left: 10px !important; }
+.boxRightMargin { margin-right: 10px !important; }
+.boxBothMargin { margin-left: 10px !important; margin-right: 10px !important;}
 
 
 

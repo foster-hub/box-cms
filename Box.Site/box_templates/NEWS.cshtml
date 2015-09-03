@@ -18,7 +18,7 @@
 }
 
 @if (CONTENT.Images != null && CONTENT.Images.Count >= 1) {    
-    <img class="img-responsive" src="@BoxLib.GetFileUrl(HEAD.ThumbFilePath, maxHeight:300, width: 840)" alt="@HEAD.Name">    
+    <img class="img-responsive" src="@BoxLib.GetFileUrl(CONTENT.Images[0], maxHeight: 300, width: 840)" alt="@HEAD.Name">    
 }
 <h2>@HEAD.Abstract</h2>
 @HEAD.CreateDate.ToLocalTime()<br />

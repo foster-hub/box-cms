@@ -403,4 +403,7 @@ Are you sure you want to publish it now?</value>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="Top_banner" xml:space="preserve">
+    <value>Top banner</value>
+  </data>
 </root>

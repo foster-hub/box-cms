@@ -6,54 +6,46 @@
 @Html.Partial("CMS/ContentTopMenu")
     
 <form id="editForm">  
-    <div class="grid fluid" >  
+    <div class="grid fluid">
+
         <div class="row">
-            
-                <fieldset class="span8">
-                <div class="boxLeftMargin">
-                
-                    <label>@Box.CMS.SharedStrings.Title</label>                       
+            <fieldset class="span12">
+                <div class="boxBothMargin">
+                    <label>@Box.CMS.SharedStrings.Title</label>
                     @MetroUI.TextBox(placeholder: @Box.CMS.SharedStrings.Title, classes: "required", others: Capture.MapToName().ToString())
-                    
+
                     <div id="changeAbstract" style="display: none">
-                        <label>@Box.CMS.SharedStrings.Abstract</label>                                       
+                        <label>@Box.CMS.SharedStrings.Abstract</label>
                         @MetroUI.TextArea(others: Capture.MapToAbstract().ToString())
-                        
                     </div>
-                    <a  id="changeAbstractLink"
-                        href="javascript: showAbstract()" tabindex="-1"
-                        style="display: block; margin: 3px 0px 10px 0px; clear: both; font-size: 12px;">@Box.CMS.SharedStrings.Change_Abstract</a>           
-            
-                <label>@Box.CMS.SharedStrings.Content</label>
-                <textarea                                       
-                    @Capture.MapTo("HTMLContent", "nicEdit")
-                    class="htmlEditor"
-                    style="width: 100%; height: 300px;">
-                </textarea>
-
-                    <label>Crop</label>
-                    @Capture.CropImage("Banner", 200, 200, 1)
-                    
-
-
+                    <a id="changeAbstractLink"
+                       href="javascript: showAbstract()" tabindex="-1"
+                       style="display: block; margin: 3px 0px 0px 0px; clear: both; font-size: 12px;">@Box.CMS.SharedStrings.Change_Abstract</a>
                 </div>
 
             </fieldset>
-        
-        
-            <fieldset class="span4">        
+        </div>
 
-            <div style="margin-right: 10px">
-                <legend>@Box.CMS.SharedStrings.Images</legend>
-                @Capture.File("ImageTest", style: "width: 100%; min-height: 150px;", singleFile: false)                
-            </div>
-
-    
+        <div class="row">
+            <fieldset class="span12">
+                <div class="boxBothMargin">
+                    <label>@Box.CMS.SharedStrings.Top_banner</label>
+                    @Capture.CropImage("TopBanner", 840, 300, 0.5)
+                </div>
             </fieldset>
+        </div>
 
-       
+        <div class="row">
+            <fieldset class="span12">
+                <div class="boxBothMargin">
+                    <label>@Box.CMS.SharedStrings.Content</label>
+                    <textarea @Capture.MapTo("HTMLContent", "nicEdit")
+                              class="htmlEditor"
+                              style="width: 100%; height: 300px;"></textarea>
+                </div>
+            </fieldset>            
+        </div>
 
-</div>
     </div>
 </form>
 

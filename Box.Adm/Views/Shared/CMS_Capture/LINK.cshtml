@@ -30,9 +30,9 @@
         
             <fieldset class="span4">        
 
-            <div style="margin-right: 10px">
-                <legend>@Box.CMS.SharedStrings.Image</legend>
-                @Capture.File("Images", singleFile: true, style: "width: 100%; min-height: 150px;")            
+            <div class="boxLeftMargin">
+                <label>@Box.CMS.SharedStrings.Image</label>
+                @Capture.File("Image", singleFile: true)            
             </div>
                 
     
@@ -49,7 +49,8 @@
 @<script type="text/javascript">
 
     // PAGE DETAIL SCRIPT BLOCK ----------------------
-     function NEW_CONTENT(contentHead) {         
+    function NEW_CONTENT(contentHead) {
+        contentHead.Name = '';
          contentHead.CONTENT.HTMLContent = '';
          contentHead.CONTENT.Images = new Array();
          return contentHead;
@@ -64,8 +65,16 @@
 
    
      function updateName() {
-         if (pageVM.editingItem().Name == '')
-             pageVM.editingItem().Name = pageVM.editingItem().ExternalLinkUrl;
+         
+         if (pageVM.editingItem().Name != '')
+             return;
+
+         var name = pageVM.editingItem().ExternalLinkUrl;
+         name = name.replace('http://', '');
+         name = name.replace('https://', '');
+         name = name.replace('/', '-');
+         pageVM.editingItem().Name = name;
+         pageVM.editingItem.valueHasMutated();
      }
 
     function setAbstract(contentHead) {

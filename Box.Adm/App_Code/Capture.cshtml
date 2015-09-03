@@ -199,7 +199,7 @@
        href="javascript: UploadArea.showUploadForm('@folder')">@Box.CMS.SharedStrings.File_upload</a>
 
     <div class="uploadDropArea"
-         style="@style width: @(width+15)px"
+         style="@style width: @(width+15)px; min-height: @(height)px;"
          ondrop="UploadArea.drop(this, event, '@id', '@folder', true)"
          ondragover="UploadArea.dragover(this, event)"
          ondragleave="UploadArea.dragout(this, event)">

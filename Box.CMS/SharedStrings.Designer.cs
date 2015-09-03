@@ -845,6 +845,15 @@ namespace Box.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Top banner.
+        /// </summary>
+        public static string Top_banner {
+            get {
+                return ResourceManager.GetString("Top_banner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Despublicar.
         /// </summary>
         public static string Unpublish {

@@ -326,6 +326,10 @@ namespace Box.CMS.Web
 
         }
 
+        public static string GetFileUrl(dynamic file, int width = 0, int height = 0, int maxWidth = 0, int maxHeight = 0, bool asThumb = false) {            
+            return GetFileUrl((string)file["Folder"] + "/" + (string)file["FileUId"], width, height, maxWidth, maxHeight, asThumb);
+        }
+
         public static string GetContentLink(ContentHead head)
         {
             SiteService site = new SiteService();

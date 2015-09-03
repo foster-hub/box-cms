@@ -194,22 +194,26 @@
         </div>
         <nav class="contextMenu">
             @if (!String.IsNullOrEmpty(onBrowse)) {
-                <button data-bind="click: @onBrowse, clickBubble: false" onmouseout="pageVM.stopPreview();">
+                <button title="@Box.CMS.SharedStrings.Preview"
+                        data-bind="click: @onBrowse, clickBubble: false" onmouseout="pageVM.stopPreview();">
                     <i class="icon-new-tab"></i>
-                </button>                
+                </button>
             }
-            @if (!String.IsNullOrEmpty(onPreview)) {                
-                <button data-bind="click: @onPreview, clickBubble: false" onmouseout="pageVM.stopPreview();">
+            @if (!String.IsNullOrEmpty(onPreview)) {
+                <button title="@Box.CMS.SharedStrings.Preview"
+                        data-bind="click: @onPreview, clickBubble: false" onmouseout="pageVM.stopPreview();">
                     <i class="icon-eye"></i>
                 </button>
             }
             @if (!String.IsNullOrEmpty(onRemove)) {
-                <button data-bind="click: @onRemove, clickBubble: false">
+                <button title="@Box.CMS.SharedStrings.Remove"
+                        data-bind="click: @onRemove, clickBubble: false">
                     <i class="icon-remove"></i>
                 </button>
             }
             @if (!String.IsNullOrEmpty(onMinus)) {
-                <button data-bind="click: @onMinus, clickBubble: false">
+                <button title="@Box.CMS.SharedStrings.Remove"
+                        data-bind="click: @onMinus, clickBubble: false">
                     <i class="icon-minus-2"></i>
                 </button>
             }

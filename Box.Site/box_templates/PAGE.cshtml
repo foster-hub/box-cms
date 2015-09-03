@@ -19,6 +19,11 @@
 
 <h2>@HEAD.Abstract</h2>
 @HEAD.CreateDate.ToLocalTime()<br />
+
+@if (CONTENT.TopBanner != null) {
+    <img class="img-responsive" src="@BoxLib.GetFileUrl(CONTENT.TopBanner, maxHeight: 300, width: 840)" alt="@HEAD.Name">
+}
+
 @Html.Raw(CONTENT.HTMLContent)
 
 
