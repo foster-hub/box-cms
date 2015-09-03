@@ -3,7 +3,7 @@
 @using Box.CMS;
 @{
     Page.Title = HEAD.Name;
-    
+
     // uncomment to track of Facebook comments and likes
     BoxLib.LogPageShare();
 
@@ -17,8 +17,9 @@
     <li><a href="@Href("~/news")">News</a></li>
 }
 
-@if (CONTENT.Images != null && CONTENT.Images.Count >= 1) {    
-    <img class="img-responsive" src="@BoxLib.GetFileUrl(CONTENT.Images[0], maxHeight: 300, width: 840)" alt="@HEAD.Name">    
+@if (CONTENT.Images != null && CONTENT.Images.Count >= 1)
+{
+    <img class="img-responsive" src="@BoxLib.GetFileUrl(CONTENT.Images[0], maxHeight: 300, width: 840)" alt="@HEAD.Name">
 }
 <h2>@HEAD.Abstract</h2>
 @HEAD.CreateDate.ToLocalTime()<br />
@@ -27,18 +28,37 @@
 
 @Html.Raw(CONTENT.HTMLContent)
 
+<div class="col-md-6">
+    <h2>podcasts</h2>
+    @if (CONTENT.Audios != null && CONTENT.Audios.Count >= 1)
+    {
+        foreach (var audio in CONTENT.Audios)
+        {
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">@audio.FileName</h3>
+                </div>
+                <div class="panel-body">
+                    <audio controls>
+                        <source src="@BoxLib.GetFileUrl(audio)" />
+                    </audio>
+                </div>
+            </div>
+        }
+    }
+</div>
 <div>
     @BoxSite.ContentsRelated(headerText: "<h2>releated content</h2>", itemTemplate: @<div>@BoxSite.ContentLink(item)</div>)
 </div>
 
 
 @section rightColumn {
-<h2>cross links</h2>
-<ul>
-    @BoxSite.CrossLinksFrom("News", kinds: new string[] { "NEWS" }, itemTemplate:
-    @<li>        
+    <h2>cross links</h2>
+    <ul>
+        @BoxSite.CrossLinksFrom("News", kinds: new string[] { "NEWS" }, itemTemplate:
+    @<li>
         <a href="@BoxLib.GetContentLink(item)">@item.Name</a><br />
         @item.Abstract
     </li>)
-</ul>
+    </ul>
 }
