@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Web.Http;
 using System.Net;
+using System.Configuration;
 
 namespace Box.CMS.Services {
 
@@ -153,7 +154,7 @@ namespace Box.CMS.Services {
 
         public void SetFileThumb(File file) {
             if (file.Type.StartsWith("image"))
-                file.Data.StoredThumbData = GetImageFileThumb(file.Data.StoredData, 150, 0, 0, 0);
+                file.Data.StoredThumbData = GetImageFileThumb(file.Data.StoredData, CMSThumbWidth, CMSThumbHeight, 0, 0);
             else {
                 string path = System.Web.Hosting.HostingEnvironment.MapPath("~");
                 file.Data.StoredThumbData = GetDocumentThumb(path, file.FileName);
@@ -169,7 +170,9 @@ namespace Box.CMS.Services {
             if (dotIndex >= 0) {
                 string ext = fileName.Substring(dotIndex);
                 switch (ext) {
-                    case ".xls": case ".xlsx":
+                    case ".xls":
+                    case ".xlsx":
+                    case ".csv":
                         iconFile = "xls";
                     break;
                     case ".doc": case ".docx":
@@ -197,6 +200,32 @@ namespace Box.CMS.Services {
             if (idxSlash > 0)
                 cleanName = cleanName.Substring(idxSlash + 1);
             return cleanName;
+        }
+
+        private int CMSThumbWidth {
+            get {
+                object i = ConfigurationManager.AppSettings["CMS_THUMB_WIDTH"];
+                if (i == null)
+                    return 150;
+
+                int value = 150;
+                Int32.TryParse(i.ToString(), out value);
+
+                return value;
+            }
+        }
+
+        private int CMSThumbHeight {
+            get {
+                object i = ConfigurationManager.AppSettings["CMS_THUMB_HEIGHT"];
+                if (i == null)
+                    return 0;
+
+                int value = 0;
+                Int32.TryParse(i.ToString(), out value);
+
+                return value;
+            }
         }
 
     }

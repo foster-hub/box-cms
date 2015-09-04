@@ -19,7 +19,7 @@
                 </div>
 
                 <label>@Box.CMS.SharedStrings.File</label>
-                @Capture.File("Files", folder: "DOC_ROOT", singleFile: true, style: "width: 100%")
+                @Capture.File("File", folder: "DOC_ROOT", singleFile: true, style: "width: 100%")
 
             </fieldset>
 
@@ -58,8 +58,8 @@
      }
 
      function SET_THUMB(contentHead) {
-         if (contentHead.CONTENT.Files != null && contentHead.CONTENT.Files.length >= 1)
-             contentHead.ThumbFilePath = contentHead.CONTENT.Files[0].Folder + '/' + contentHead.CONTENT.Files[0].FileUId;
+         if (contentHead.CONTENT.File)
+             contentHead.ThumbFilePath = contentHead.CONTENT.File.Folder + '/' + contentHead.CONTENT.File.FileUId;
          else
              contentHead.ThumbFilePath = null;
      }
