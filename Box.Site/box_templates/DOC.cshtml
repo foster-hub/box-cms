@@ -1,6 +1,6 @@
 ﻿@inherits Box.CMS.Web.ContentRenderView
 @using Box.CMS.Web;
-@{
+@{    
     if (CONTENT != null && CONTENT.File!=null) {
         BoxLib.ResponseFile((string)CONTENT.File.FileUId);    
     }
