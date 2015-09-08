@@ -132,6 +132,7 @@ label { color: Gray; text-transform: uppercase; font-size: 75%; }
     float: left;    
     width: 150px;            
     height: 100px; overflow: hidden;    
+    background-color: RGB(250,250,250);
 }
 
 .uploadDropArea video {

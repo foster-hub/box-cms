@@ -103,13 +103,14 @@
     <div id="contentLocation" class="boxLeftMargin">
 
         @if (ShowLocationsAsDropdown) {
-            <select onchange="pageVM.setContentLocation($(this).val(), true)">
-                @foreach (string location in Model.ContentKind.Locations)
-                {
-                    <option>@location</option>                    
-                }
-            </select>
-        } else { 
+            <div class="input-control select span12">
+                <select onchange="pageVM.setContentLocation($(this).val(), true)">
+                    @foreach (string location in Model.ContentKind.Locations) {
+                        <option>@location</option>
+                    }
+                </select>
+            </div>
+        } else {
             <ul>
                 @foreach (string location in Model.ContentKind.Locations)
                 {                
