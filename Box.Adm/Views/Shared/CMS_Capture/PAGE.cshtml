@@ -65,8 +65,8 @@
      }
 
      function SET_THUMB(contentHead) {
-         if (contentHead.CONTENT.Images != null && contentHead.CONTENT.Images.length >= 1)
-             contentHead.ThumbFilePath = contentHead.CONTENT.Images[0].Folder + '/' + contentHead.CONTENT.Images[0].FileUId;
+         if (contentHead.CONTENT.TopBanner != null)
+             contentHead.ThumbFilePath = contentHead.CONTENT.TopBanner.Folder + '/' + contentHead.CONTENT.TopBanner.FileUId;
          else
              contentHead.ThumbFilePath = null;
      }
