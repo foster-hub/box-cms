@@ -118,8 +118,7 @@ namespace Box.CMS.Web
 
             return new HtmlString(str);
         }
-
-
+        
         public static IHtmlString Contents(string[] kinds = null, Func<ContentHead, HelperResult> itemTemplate = null, string order = "Date", Periods period = Periods.AnyTime, DateTime? createdFrom = null, DateTime? createdTo = null, bool parseContent = false, int top = 0, string navigationId = null, string location = null, string filter = null, IHtmlString noItemMessage = null, System.Linq.Expressions.Expression<Func<ContentHead, bool>> queryFilter = null)
         {
             if (itemTemplate == null)
@@ -166,12 +165,12 @@ namespace Box.CMS.Web
 
             return new HtmlString(str);
         }
-
+        
         public static IHtmlString ContentsAtUrl(string url = "$currentUrl", Func<ContentHead, HelperResult> itemTemplate = null, string order = "Date", bool parseContent = false, int top = 0, string navigationId = null, IHtmlString noItemMessage = null, System.Linq.Expressions.Expression<Func<ContentHead, bool>> queryFilter = null)
         {
             return Contents(null, itemTemplate, order, Periods.AnyTime, null, null, parseContent, top, navigationId, url, null, noItemMessage, queryFilter);
         }
-
+                
         public static IHtmlString CrossLinksFrom(string pageArea, Func<ContentHead, HelperResult> itemTemplate = null, string order = "DisplayOrder", int top = 0, string[] kinds = null, IHtmlString noItemMessage = null)
         {
             if (itemTemplate == null)
@@ -252,6 +251,7 @@ namespace Box.CMS.Web
             return tag;
         }
 
+
         public static IHtmlString PageNextButton(string listId, string text = "next", string formId = null)
         {
 
@@ -289,7 +289,15 @@ namespace Box.CMS.Web
             return new HtmlString(html);
         }
 
+        public static IHtmlString PageMoreContentButton(string text = "More content...") {
+            string html = "<a src=\"#\" data-bind=\"click: function(d,e) { d._getData(); }, visible: nextContentButtonVisible()\" class=\"listNextButton\">" + text + "</a>";            
+            return new HtmlString(html);
+        }
+
     }
+
+
+    
 
     public class BoxLib
     {

@@ -2,32 +2,58 @@
 @{
     Page.Title = "News";
     Layout = "~/_PageLayout1C.cshtml";
-    BoxLib.SetListPageSize("list", 8);
+    BoxLib.SetListPageSize("list", 5);
+    var captcha = new Box.CMS.Services.CaptchaService();
+    var antiToken = captcha.AntiForgeryToken();
 }
 
-    
-@BoxSite.ContentsAtUrl(navigationId: "list", itemTemplate:
-@<div class="row" style="margin-bottom: 10px;">
-    <a href="@BoxLib.GetContentLink(item)">
+
+@BoxSite.ContentsAtUrl(navigationId: "list", itemTemplate: NewsItemTemplate)
+<div id="listAsync">
+    <div data-bind="foreach: contents">
+        @NewsItemTemplateAsync()
+    </div>    
+    @BoxSite.PageMoreContentButton()
+</div>
+
+
+@helper NewsItemTemplateAsync()
+{
+<div class="row" style="margin-bottom: 10px;">
+    <a data-bind="attr: { href: Location + CanonicalName }">
         <div class="col-md-2">
-            <img src="@BoxLib.GetFileUrl(filePath: item.ThumbFilePath, asThumb: true)" alt="@item.Abstract"
-                 style="width: 150px; max-height: 150px;" @Site.OnErrorImg() />
+            <img data-bind="attr: { src: 'files/' + ThumbFilePath, alt: Name }" style="width:150px; height:150px;" @Site.OnErrorImg()>
         </div>
         <div class="col-md-10">
-            <h4>
-                @item.Name
-            </h4>
+            <h4 data-bind="text: Name"></h4>
+            <p data-bind="text: Abstract"></p>
+        </div>
+    </a>
+</div>
+}
+
+@helper NewsItemTemplate(Box.CMS.ContentHead item)
+{
+<div class="row" style="margin-bottom: 10px;">
+    <a href="@BoxLib.GetContentLink(item)">
+        <div class="col-md-2">
+            <img src="@BoxLib.GetFileUrl(filePath: item.ThumbFilePath, asThumb: true)" alt="@item.Name" style="width:150px; height:150px;" @Site.OnErrorImg()>
+        </div>
+        <div class="col-md-10">
+            <h4>@item.Name</h4>
             <p>@item.Abstract</p>
         </div>
     </a>
-</div>)
+</div>
+}
 
-<ul class="pager">
-    <li>@BoxSite.PageFirstButton("list")</li>
-    <li>@BoxSite.PagePreviousButton("list")</li>
-    <li>@BoxSite.PageNextButton("list")</li>
-</ul>
-
-
-
-
+    @section scripts {
+        <script type="text/javascript" src="@Href("~/Scripts/Box.ContentAsyncVM.js")"></script>
+        <script>
+            $().ready(function () {
+                Box.webAppUrl = '@Href("~")';
+                Box.antiForgeryToken = '@antiToken';
+                new Box.ContentAsyncVM('listAsync', 5, 5, "", "", "", "", "", "");                
+            });
+        </script>
+    }
