@@ -22,7 +22,7 @@
         str = System.Text.RegularExpressions.Regex.Replace(str, "[ç]", "c");
         str = System.Text.RegularExpressions.Regex.Replace(str, "[Ç]", "C");
         str = System.Text.RegularExpressions.Regex.Replace(str, "[@#&*\\s\\.]", "_");
-        return str;
+        return str.ToLower();
     }
 }
 
