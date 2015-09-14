@@ -213,9 +213,9 @@ namespace Box.CMS.Services {
                 IQueryable<ContentHead> contents = null;
 
                 if (!includeData)
-                    contents = context.ContentHeads.Include("CrossLinks").Include("CommentsCount").Include("ShareCount").Include("PageViewCount").Include("CustomInfo");
+                    contents = context.ContentHeads.Include("CrossLinks").Include("CommentsCount").Include("ShareCount").Include("Tags").Include("PageViewCount").Include("CustomInfo");
                 else
-                    contents = context.ContentHeads.Include("CrossLinks").Include("CommentsCount").Include("ShareCount").Include("PageViewCount").Include("CustomInfo").Include("Data");
+                    contents = context.ContentHeads.Include("CrossLinks").Include("CommentsCount").Include("ShareCount").Include("Tags").Include("PageViewCount").Include("CustomInfo").Include("Data");
 
                 // only published
                 contents = OnlyPublishedContents(contents);
