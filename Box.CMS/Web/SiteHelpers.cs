@@ -289,8 +289,8 @@ namespace Box.CMS.Web
             return new HtmlString(html);
         }
 
-        public static IHtmlString PageMoreContentButton(string text = "More content...") {
-            string html = "<a src=\"#\" data-bind=\"click: function(d,e) { d._getData(); }, visible: nextContentButtonVisible()\" class=\"listNextButton\">" + text + "</a>";            
+        public static IHtmlString PageMoreContentButton(string text = "More content...", string cssClass = null) {
+            string html = "<a " + (cssClass == null?"":"class=\"" + cssClass +"\"") + " src=\"#\" data-bind=\"click: function(d,e) { d._getData(); }, visible: nextContentButtonVisible()\" class=\"listNextButton\">" + text + "</a>";            
             return new HtmlString(html);
         }
 
