@@ -93,6 +93,26 @@ namespace Box.CMS.Services {
             if (order == "PageView DESC")
                 return contents.OrderByDescending(c => c.PageViewCount.Count);
 
+            if (order == "Random") {
+                var rand = new Random();
+                int r = rand.Next();                
+                return contents.OrderByDescending(c =>
+                    (~(((c.CreateDate.Second + c.CreateDate.Minute + c.CreateDate.Hour + c.CreateDate.Millisecond + c.ContentDate.Day) & r))
+                    & ((c.CreateDate.Second + c.CreateDate.Minute + c.CreateDate.Hour + c.CreateDate.Millisecond + c.ContentDate.Day) | r)));
+                    
+            }
+
+            if (order == "RandomOnDay") {
+                
+                int dw = (int)System.DateTime.Today.DayOfWeek * 100;
+                int dd = System.DateTime.Today.Day * 50;
+                int r = (System.DateTime.Today.DayOfYear*15) + dw + dd;
+                return contents.OrderByDescending(c =>
+                    (~(((c.CreateDate.Second + c.CreateDate.Minute + c.CreateDate.Hour + c.CreateDate.Millisecond + c.ContentDate.Day) & r))
+                    & ((c.CreateDate.Second + c.CreateDate.Minute + c.CreateDate.Hour + c.CreateDate.Millisecond + c.ContentDate.Day) | r)));
+
+            }
+
             return contents.OrderByDescending(c => c.ContentDate);
         }
 
