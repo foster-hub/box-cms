@@ -9,7 +9,7 @@ using Box.CMS.Services;
 using System.Web;
 using System.Web.WebPages;
 using Box.CMS.Extensions;
-
+using System.Text.RegularExpressions;
 
 namespace Box.CMS.Web
 {
@@ -251,6 +251,29 @@ namespace Box.CMS.Web
             return tag;
         }
 
+        public static HtmlString TagStyle(string tag)
+        {
+            return new HtmlString("tagStyle_" + _adjustTagname(tag));
+        }
+
+        private static string _adjustTagname(string tag)
+        {
+            string str = tag;
+            str = Regex.Replace(str, "[áàâãª]", "a");
+            str = Regex.Replace(str, "[ÁÀÂÃ]", "A");
+            str = Regex.Replace(str, "[éèêë]", "e");
+            str = Regex.Replace(str, "[ÉÈÊË]", "E");
+            str = Regex.Replace(str, "[íìî]", "i");
+            str = Regex.Replace(str, "[ÍÌÎ]", "I");
+            str = Regex.Replace(str, "[óòôõº]", "o");
+            str = Regex.Replace(str, "[ÓÒÔÕ]", "O");
+            str = Regex.Replace(str, "[úùû]", "u");
+            str = Regex.Replace(str, "[ÚÙÛÜ]", "U");
+            str = Regex.Replace(str, "[ç]", "c");
+            str = Regex.Replace(str, "[Ç]", "C");
+            str = Regex.Replace(str, "[@#&*\\s\\.]", "_");
+            return str.ToLower();
+        }
 
         public static IHtmlString PageNextButton(string listId, string text = "next", string formId = null)
         {

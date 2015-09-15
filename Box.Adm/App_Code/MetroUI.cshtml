@@ -2,28 +2,6 @@
     private static HtmlString _attr(string attr, object value) {
         return value == null ? new HtmlString("") : new HtmlString(attr + "=\"" + value.ToString() + "\"");
     }
-
-    public static HtmlString TagStyle(string tag) {
-        return new HtmlString("tagStyle_" + _adjustTagname(tag));
-    }
-
-    private static string _adjustTagname(string tag) {
-        string str = tag;
-        str = System.Text.RegularExpressions.Regex.Replace(str, "[áàâãª]", "a");
-        str = System.Text.RegularExpressions.Regex.Replace(str, "[ÁÀÂÃ]", "A");
-        str = System.Text.RegularExpressions.Regex.Replace(str, "[éèêë]", "e");
-        str = System.Text.RegularExpressions.Regex.Replace(str, "[ÉÈÊË]", "E");
-        str = System.Text.RegularExpressions.Regex.Replace(str, "[íìî]", "i");
-        str = System.Text.RegularExpressions.Regex.Replace(str, "[ÍÌÎ]", "I");
-        str = System.Text.RegularExpressions.Regex.Replace(str, "[óòôõº]", "o");
-        str = System.Text.RegularExpressions.Regex.Replace(str, "[ÓÒÔÕ]", "O");
-        str = System.Text.RegularExpressions.Regex.Replace(str, "[úùû]", "u");
-        str = System.Text.RegularExpressions.Regex.Replace(str, "[ÚÙÛÜ]", "U");
-        str = System.Text.RegularExpressions.Regex.Replace(str, "[ç]", "c");
-        str = System.Text.RegularExpressions.Regex.Replace(str, "[Ç]", "C");
-        str = System.Text.RegularExpressions.Regex.Replace(str, "[@#&*\\s\\.]", "_");
-        return str.ToLower();
-    }
 }
 
 @helper Input(string id = null, string type = "text", string value = "", string placeholder = "", string databind = null, int? maxLength = null, string classes = null, string onblur = "", string onkeypress = null, string others = null) {        

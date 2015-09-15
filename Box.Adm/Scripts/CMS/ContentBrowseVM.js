@@ -64,7 +64,7 @@
         str = str.replace(/[ç]/g, 'c');
         str = str.replace(/[Ç]/g, 'C');
         str = str.replace(/[@#&*\s\.]/g, '_');
-        return str;
+        return str.toLowerCase();
     }
 
     this.getContentUrl = function (location, name) {
