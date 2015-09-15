@@ -18,14 +18,14 @@ namespace Box.CMS.Api {
         private CMSService cms { get; set; }
         
         [Box.Core.Web.WebApiAntiForgery]        
-        public IEnumerable<ContentHead> Get(string filter = null, int skip = 0, int top = 0, string location = null, string kind = null, string order = "Date", DateTime? createdFrom = null, DateTime? createdTo = null, string area = null) {
+        public IEnumerable<ContentHead> Get(string filter = null, int skip = 0, int top = 0, string location = null, [FromUri] string[] kinds = null, string order = "Date", DateTime? createdFrom = null, DateTime? createdTo = null, string area = null) {
 
             IEnumerable<ContentHead> contents = null;
 
             if(!string.IsNullOrEmpty(area))
                 contents = cms.GetCrossLinksFrom(area, top: top);
             else
-                contents = cms.GetContents(filter, skip, top, location, new string[] { kind }, order, createdFrom, createdTo, false, true);
+                contents = cms.GetContents(filter, skip, top, location, kinds, order, createdFrom, createdTo, false, true);
 
             return contents;
         }
