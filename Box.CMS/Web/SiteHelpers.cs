@@ -258,21 +258,18 @@ namespace Box.CMS.Web
 
         private static string _adjustTagname(string tag)
         {
-            string str = tag;
-            str = Regex.Replace(str, "[áàâãª]", "a");
-            str = Regex.Replace(str, "[ÁÀÂÃ]", "A");
-            str = Regex.Replace(str, "[éèêë]", "e");
-            str = Regex.Replace(str, "[ÉÈÊË]", "E");
-            str = Regex.Replace(str, "[íìî]", "i");
-            str = Regex.Replace(str, "[ÍÌÎ]", "I");
-            str = Regex.Replace(str, "[óòôõº]", "o");
-            str = Regex.Replace(str, "[ÓÒÔÕ]", "O");
-            str = Regex.Replace(str, "[úùû]", "u");
-            str = Regex.Replace(str, "[ÚÙÛÜ]", "U");
-            str = Regex.Replace(str, "[ç]", "c");
-            str = Regex.Replace(str, "[Ç]", "C");
+            if (string.IsNullOrEmpty(tag))
+                return null;
+
+            string str = tag.ToLower();
+            str = Regex.Replace(str, "[áàâãª]", "a");            
+            str = Regex.Replace(str, "[éèêë]", "e");            
+            str = Regex.Replace(str, "[íìî]", "i");            
+            str = Regex.Replace(str, "[óòôõº]", "o");            
+            str = Regex.Replace(str, "[úùû]", "u");            
+            str = Regex.Replace(str, "[ç]", "c");            
             str = Regex.Replace(str, "[@#&*\\s\\.]", "_");
-            return str.ToLower();
+            return str;
         }
 
         public static IHtmlString PageNextButton(string listId, string text = "next", string formId = null)
