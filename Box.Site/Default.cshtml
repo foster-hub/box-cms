@@ -30,15 +30,13 @@
             @<div class="item @(item.OrderIndex == 0 ? "active" : "")">
                  <img class="featurette-image"
                       src="@BoxLib.GetFileUrl(item.ThumbFilePath, width: 1360, maxHeight:350)" alt="@item.Name"
-                      @Site.OnErrorImg()>
-                
+                      @Site.OnErrorImg()>                
                     <a href="@BoxLib.GetContentLink(item)">
                         <div class="carousel-caption">
                             <h1>@item.Name</h1>
                             <p>@item.Abstract</p>
                         </div>
-                    </a>
-                
+                    </a>                
             </div>)        
     </div>
 
