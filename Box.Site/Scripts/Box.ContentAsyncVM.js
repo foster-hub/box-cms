@@ -1,6 +1,6 @@
 ﻿var Box = Box || {};
 
-Box.ContentAsyncVM = function (id, skip, top, kind, location, order, createdFrom, createdTo, area) {
+Box.ContentAsyncVM = function (id, skip, top, kind, location, order, createdFrom, createdTo, area, tags) {
     
     var me = this;
     me.contents = ko.observableArray();
@@ -13,17 +13,27 @@ Box.ContentAsyncVM = function (id, skip, top, kind, location, order, createdFrom
     this._createdFrom = createdFrom;
     this._createdTo = createdTo;
     this._area = area;
+    this._tags = tags;
         
     this.nextContentButtonVisible = ko.observable(true);
+
+    this._tagsGetFormat = function () {
+
+        var tagss = me._tags.split(",");
+        var parametersGet = "";
+        for (tag in tagss) {
+            parametersGet = parametersGet + "&tags=" + encodeURIComponent(tagss[tag]);
+        };
+        return parametersGet;
+    }
 
     this._getData = function () {
 
         if (!Box.antiForgeryToken)
             return;
-                
         
         $.ajax({
-            url: Box.webAppUrl + 'api/cms_publishedContents/?filter=' + '&skip=' + me._skip + '&top=' + me._top + '&kind=' + me._kind + '&location=' + me._location + '&order=' + me._order + '&createdFrom=' + me._createdFrom + "&createdTo=" + me._createdTo + "&area=" + me._area,
+            url: Box.webAppUrl + 'api/cms_publishedContents/?filter=' + '&skip=' + me._skip + '&top=' + me._top + '&kind=' + me._kind + '&location=' + me._location + '&order=' + me._order + '&createdFrom=' + me._createdFrom + "&createdTo=" + me._createdTo + "&area=" + me._area + me._tagsGetFormat(),
             type: 'GET',
             headers: { 'RequestVerificationToken': Box.antiForgeryToken },
             success: function (data) {
