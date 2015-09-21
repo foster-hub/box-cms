@@ -104,7 +104,7 @@ namespace Box.CMS.Services {
             return conv.ConvertTo(newImg, typeof(byte[])) as byte[];
         }
 
-        public byte[] GetImageFileThumb(byte[] bytes, int width, int height, int maxWidth, int maxHeight) {
+        public byte[] GetImageFileThumb(byte[] bytes, int width, int height, int maxWidth, int maxHeight, string vAlign = "center", string hAlign = "center") {
             System.IO.MemoryStream stream = new System.IO.MemoryStream(bytes);
             System.Drawing.Image image = System.Drawing.Image.FromStream(stream);
             if (height == 0) {
@@ -128,9 +128,21 @@ namespace Box.CMS.Services {
             if (width < maxWidth)
                 maxWidth = width;
 
+            int top = 0;
+            if (vAlign == "bottom")
+                top = (maxHeight - height);
+            if (vAlign == "center")
+                top = (maxHeight - height) / 2;
+
+            int left = 0;
+            if (hAlign == "right")
+                left = (maxWidth - width);
+            if (hAlign == "center")
+                left = (maxWidth - width) / 2;
+
             System.Drawing.Bitmap newImg = new System.Drawing.Bitmap(maxWidth, maxHeight);
             System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(newImg);
-            g.DrawImage(image, new System.Drawing.Rectangle(0, 0, width, height));
+            g.DrawImage(image, new System.Drawing.Rectangle(left, top, width, height));
 
 
 

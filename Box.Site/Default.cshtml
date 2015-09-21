@@ -25,30 +25,32 @@
         <li data-target="#myCarousel" data-slide-to="1"></li>
     </ol>
     <div class="carousel-inner" role="listbox">
-        @BoxSite.Contents(top: 2, location: "/news", period: Periods.AnyTime,
+        @BoxSite.Contents(top: 2, location: "/news", period: Periods.AnyTime, 
             itemTemplate:
             @<div class="item @(item.OrderIndex == 0 ? "active" : "")">
                  <img class="featurette-image"
-                      src="@BoxLib.GetFileUrl(item.ThumbFilePath, width: 1000, maxHeight:350)" alt="@item.Name"
-                      @Site.OnErrorImg()>
-                <div class="container">
+                      src="@BoxLib.GetFileUrl(item.ThumbFilePath, width: 1360, maxHeight:350)" alt="@item.Name"
+                      @Site.OnErrorImg()>                
                     <a href="@BoxLib.GetContentLink(item)">
                         <div class="carousel-caption">
                             <h1>@item.Name</h1>
                             <p>@item.Abstract</p>
                         </div>
-                    </a>
-                </div>
-            </div>)
+                    </a>                
+            </div>)        
     </div>
-    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
+
+    <div class="carousel-control-container">
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+    
 </div>
 
 <div class="container">
