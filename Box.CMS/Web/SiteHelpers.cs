@@ -38,38 +38,50 @@ namespace Box.CMS.Web
             return new HtmlString("<a href=\"" + BoxLib.GetContentLink(content) + "\" title=\"" + content.Name + "\">" + content.Name + "</a>");
         }
 
-        public static IHtmlString ContentsRelated(string id = null, Func<ContentHead, HelperResult> itemTemplate = null, string headerText = null, string location = null, string[] kinds = null, bool parseContent = false, int top = 0)
+        public static IHtmlString ContentsRelated(string id = null, Func<ContentHead, HelperResult> itemTemplate = null, string headerText = null, string location = null, string[] kinds = null, bool parseContent = false, int top = 0, string navigationId = null)
         {
             if (itemTemplate == null)
                 itemTemplate = (head) => { return new HelperResult(w => w.Write("<li>" + ContentLink(head) + "</li>")); };
 
             string str = "";
-            foreach (ContentHead head in BoxLib.GetRelatedContents(id, location, kinds, parseContent, top))
+            var heads = BoxLib.GetRelatedContents(id, location, kinds, parseContent, top);
+            foreach (ContentHead head in heads)
                 str = str + itemTemplate(head).ToString();
 
             if (headerText != null && !String.IsNullOrEmpty(str))
                 str = headerText + str;
 
+            if (navigationId != null) {
+                BoxLib.SetListIsOver(navigationId, heads.Count() < top);
+                BoxLib.SetListCount(navigationId, heads.Count());
+            }
+
             HtmlString html = new HtmlString(str);
             return html;
         }
 
-        public static IHtmlString ContentsRelated(string[] tags, Func<ContentHead, HelperResult> itemTemplate = null, string headerText = null, string location = null, string[] kinds = null, bool parseContent = false, int top = 0)
+        public static IHtmlString ContentsRelated(string[] tags, Func<ContentHead, HelperResult> itemTemplate = null, string headerText = null, string location = null, string[] kinds = null, bool parseContent = false, int top = 0, string navigationId = null)
         {
             if (itemTemplate == null)
                 itemTemplate = (head) => { return new HelperResult(w => w.Write("<li>" + ContentLink(head) + "</li>")); };
 
             string str = "";
-            foreach (ContentHead head in BoxLib.GetRelatedContents(tags, location, kinds, parseContent, top))
+            var heads = BoxLib.GetRelatedContents(tags, location, kinds, parseContent, top);
+            foreach (ContentHead head in heads)
                 str = str + itemTemplate(head).ToString();
             if (headerText != null && !String.IsNullOrEmpty(str))
                 str = headerText + str;
+
+            if (navigationId != null) {
+                BoxLib.SetListIsOver(navigationId, heads.Count() < top);
+                BoxLib.SetListCount(navigationId, heads.Count());
+            }
 
             HtmlString html = new HtmlString(str);
             return html;
         }
 
-        public static IHtmlString ContentsRelatedWithHotestThread(Func<ContentHead, HelperResult> itemTemplate = null, string location = null, string[] kinds = null, ContentRanks rankBy = ContentRanks.PageViews, Periods period = Periods.LastDay, int top = 5)
+        public static IHtmlString ContentsRelatedWithHotestThread(Func<ContentHead, HelperResult> itemTemplate = null, string location = null, string[] kinds = null, ContentRanks rankBy = ContentRanks.PageViews, Periods period = Periods.LastDay, int top = 5, string navigationId = null)
         {
             SiteService site = new SiteService();
 
@@ -80,7 +92,7 @@ namespace Box.CMS.Web
             ContentHead hotContent = site.GetHotestContent(kinds, location, rankBy, period.StartDate(lastPublished), null);
             if (hotContent == null)
                 return new HtmlString("");
-            return ContentsRelated(hotContent.TagsToArray(), itemTemplate, null, null, null, false, top);
+            return ContentsRelated(hotContent.TagsToArray(), itemTemplate, null, null, null, false, top, navigationId);
         }
 
         /// <summary>
@@ -152,8 +164,10 @@ namespace Box.CMS.Web
                 i++;
             }
 
-            if (navigationId != null)
+            if (navigationId != null) {
                 BoxLib.SetListIsOver(navigationId, contents.Count() < top);
+                BoxLib.SetListCount(navigationId, contents.Count());
+            }
 
             if (contents.Count() == 0)
             {
@@ -171,13 +185,13 @@ namespace Box.CMS.Web
             return Contents(null, itemTemplate, order, Periods.AnyTime, null, null, parseContent, top, navigationId, url, null, noItemMessage, queryFilter);
         }
                 
-        public static IHtmlString CrossLinksFrom(string pageArea, Func<ContentHead, HelperResult> itemTemplate = null, string order = "DisplayOrder", int top = 0, string[] kinds = null, IHtmlString noItemMessage = null)
+        public static IHtmlString CrossLinksFrom(string pageArea, Func<ContentHead, HelperResult> itemTemplate = null, string order = "DisplayOrder", int top = 0, string[] kinds = null, IHtmlString noItemMessage = null, bool parseContent = false, string navigationId = null)
         {
             if (itemTemplate == null)
                 itemTemplate = (head) => { return new HelperResult(w => w.Write("<div style=\"background-image: url(" + BoxLib.GetFileUrl(head.ThumbFilePath, asThumb: true) + ")\">" + ContentLink(head) + "</div>")); };
 
 
-            var heads = BoxLib.GetCrossLinksForm(pageArea, order, top, kinds);
+            var heads = BoxLib.GetCrossLinksFrom(pageArea, order, top, kinds, parseContent);
             string str = "";
             foreach (ContentHead head in heads)
                 str = str + itemTemplate(head);
@@ -188,6 +202,11 @@ namespace Box.CMS.Web
                     return noItemMessage;
                 else
                     return new HtmlString("<div>No items.</div>");
+            }
+
+            if (navigationId != null) {
+                BoxLib.SetListIsOver(navigationId, heads.Count() < top);
+                BoxLib.SetListCount(navigationId, heads.Count());
             }
 
             return new HtmlString(str);
@@ -314,6 +333,25 @@ namespace Box.CMS.Web
             return new HtmlString(html);
         }
 
+        public static IHtmlString BoxHtmlContent(dynamic content, string html) {
+            if (html != null && content != null && content.Images !=null) {
+                
+                var gallery = IMAGE_GALLERY_TEMPLATE((Newtonsoft.Json.Linq.JArray)content.Images).ToString();
+                html = html.Replace("#ImageGallery-Images#", gallery);
+            }
+            return new HtmlString(html);
+        }
+
+        public static string ImageGallery(Newtonsoft.Json.Linq.JArray images) {
+            string html = "";
+            foreach(var image in images) {
+                html = html + BoxSite.Image(file: image);
+            }
+            return html;
+        }
+
+
+        public static Func<Newtonsoft.Json.Linq.JArray, HelperResult> IMAGE_GALLERY_TEMPLATE;
     }
 
 
@@ -430,10 +468,10 @@ namespace Box.CMS.Web
         }
 
 
-        public static IEnumerable<ContentHead> GetCrossLinksForm(string pageArea, string order = "DisplayOrder", int top = 0, string[] kinds = null)
+        public static IEnumerable<ContentHead> GetCrossLinksFrom(string pageArea, string order = "DisplayOrder", int top = 0, string[] kinds = null, bool parseContent = false)
         {
             SiteService site = new SiteService();
-            return site.GetCrossLinksFrom(pageArea, order, top, kinds);
+            return site.GetCrossLinksFrom(pageArea, order, top, kinds, parseContent);
         }
 
         internal static int GetPageSkipForList(string listId)
@@ -510,7 +548,14 @@ namespace Box.CMS.Web
             var page = WebPageContext.Current.Page;
             if (page == null)
                 return;
-            page.PageData["__" + listId + "isListOver"] = isOver;
+            page.PageData["__" + listId + "isListOver"] = isOver;            
+        }
+
+        internal static void SetListCount(string listId, int count) {
+            var page = WebPageContext.Current.Page;
+            if (page == null)
+                return;
+            page.PageData["__" + listId + "Count"] = count;
         }
 
         public static bool GetListIsOver(string listId)
@@ -522,6 +567,16 @@ namespace Box.CMS.Web
             if (!isOver.HasValue)
                 isOver = false;
             return isOver.Value;
+        }
+
+        public static int GetListCount(string listId) {
+            var page = WebPageContext.Current.Page;
+            if (page == null)
+                return 0;
+            int? count = page.PageData["__" + listId + "Count"] as int?;
+            if (!count.HasValue)
+                count = 0;
+            return count.Value;
         }
 
         public static void LogPageShare()

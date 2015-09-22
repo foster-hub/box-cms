@@ -10,7 +10,7 @@
 
 @foreach (var area in areas) {
     <div id="@(area.Area)_view" style="clear:both;margin-bottom:20px;float:left">
-        <h4 class="boxLeftMargin">@area.Area</h4>
+        <h4 class="boxLeftMargin">@area.Description</h4>
 
         <ul data-bind="foreach: contents, visible: true" class="tileList" style="display: none">            
             @MetroUI.ContentTile(true,                

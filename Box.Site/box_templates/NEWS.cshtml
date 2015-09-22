@@ -7,6 +7,8 @@
     // uncomment to track of Facebook comments and likes
     BoxLib.LogPageShare();
 
+    BoxSite.IMAGE_GALLERY_TEMPLATE = Site.ImageGalleryTemplate;
+    
 }
 
 @section head {
@@ -26,7 +28,8 @@
 
 @Facebook.LikeButton(CONTENT_URL, buttonLayout: "button_count")
 
-@Html.Raw(CONTENT.HTMLContent)
+
+@BoxSite.BoxHtmlContent(CONTENT, (string) CONTENT.HTMLContent)
 
 <div class="col-md-6">
     <h2>podcasts</h2>

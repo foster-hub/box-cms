@@ -25,6 +25,12 @@
 }
 
 
+@helper ImageGalleryTemplate(Newtonsoft.Json.Linq.JArray images) { 
+    foreach (var img in images) {
+        BoxSite.Image(file: img);
+    }
+}
+
 @functions  {
 
     public static IHtmlString OnErrorImg() {
@@ -76,4 +82,5 @@
         }
         return location;
     }
+        
 }

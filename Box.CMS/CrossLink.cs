@@ -22,6 +22,7 @@ namespace Box.CMS {
 
     public class CrossLinkArea {
         public string Area { get; set; }
+        public string Description { get; set; }
         public int MaxLinks { get; set; }
     }
 
