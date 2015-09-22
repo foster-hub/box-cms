@@ -428,6 +428,9 @@ namespace Box.CMS.Services {
             
             var contentKind = kindsCache.SingleOrDefault(k => k.Kind == kind);
 
+            if (contentKind == null)
+                return null;
+
             // adds old locations
             string[] plocations = GetPublishedLocations(kind);
             contentKind.Locations = contentKind.Locations.Union(plocations).ToArray();
@@ -468,7 +471,7 @@ namespace Box.CMS.Services {
 
         public bool CanEditContent(ContentKind kind) {
             if (kind == null)
-                return false;
+                return true;
 
             // if CMS ADM, can edit anything, get out of here
             if (System.Threading.Thread.CurrentPrincipal.IsInRole(ADM_CMS_GROUP.UserGroupUId))
