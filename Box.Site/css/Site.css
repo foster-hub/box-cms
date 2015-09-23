@@ -53,11 +53,16 @@ body {
 
 .carousel-control-container {
     position: relative;
-    width: 100%; height: 100%;
+    width: 100%; height:100%;     
     max-width: 1360px;  
-    margin: 0 auto;     
+    margin: 0 auto;    
+    background-color: transparent;
+    pointer-events: none;  /* need this to banner link work in Chorme */
 }
 
+.carousel-control {
+    pointer-events: all; /* need this to banner link work in Chorme */
+}
 
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
