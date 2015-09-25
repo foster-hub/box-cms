@@ -16,6 +16,17 @@ namespace Box.CMS.Services {
             cms = new CMSService();
         }
 
+        public bool DebugCMS {
+            get {
+                string debugStr = System.Configuration.ConfigurationManager.AppSettings["DEBUG_CMS"] as String;
+                if (debugStr == null)
+                    return false;
+                bool debug = false;
+                bool.TryParse(debugStr, out debug);
+                return debug;
+            }
+        }
+
         public bool IgnoreVirtualAppPath {
             get {
                 string ignoreStr = System.Configuration.ConfigurationManager.AppSettings["IGNORE_VIRTUAL_APP_PATH"] as String;
@@ -78,9 +89,24 @@ namespace Box.CMS.Services {
 
             string url = serverHost + content.Location + content.CanonicalName;
 
+            string appDataPath = System.Web.HttpContext.Current.Server.MapPath("~/App_Data");
+
             System.Net.Http.HttpClient wc = new System.Net.Http.HttpClient();
             wc.GetAsync("https://graph.facebook.com/?id=" + url)
                 .ContinueWith(task => {
+
+                    if (task.IsFaulted && DebugCMS) {
+                        string filePath = appDataPath + "\\logShareError" + DateTime.Now.ToString().Replace("/", ".").Replace(":", ".") + ".txt";
+                        using (StreamWriter sw = System.IO.File.CreateText(filePath)) {
+                            sw.WriteLine("https://graph.facebook.com/?id=" + url);
+                            sw.WriteLine("Exception: " + task.Exception.Message);
+                            if(task.Exception.InnerException!=null)
+                                sw.WriteLine("InnerException: " + task.Exception.InnerException.Message);
+                            if (task.Exception.InnerException.InnerException != null)
+                                sw.WriteLine("InnerException 2: " + task.Exception.InnerException.InnerException.Message);
+                        }
+                    }
+
                     if (task.IsFaulted || task.IsCanceled)
                         return;
                     var msg = task.Result;
@@ -88,7 +114,7 @@ namespace Box.CMS.Services {
 
                     if (msg.StatusCode != System.Net.HttpStatusCode.OK)
                         return;
-                            
+
                     string json = msg.Content.ReadAsStringAsync().Result;
                     data = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(json);
 
@@ -105,18 +131,8 @@ namespace Box.CMS.Services {
                         else
                             UpdateCommentCount(content.ContentUId, (int)data.comments);
                     }
-                    
-                })  
-                .ContinueWith(task => {
-                    //if (task.IsFaulted) {
-                    //    string filePath = System.Web.HttpContext.Current.Request.PhysicalApplicationPath + DateTime.Now.ToString().Replace("/", ".").Replace(":", ".") + ".txt";
-                    //    using (StreamWriter sw = System.IO.File.CreateText(filePath)) {
-                    //        sw.WriteLine("Expcetion: " + task.Exception.Message);
-                    //        sw.WriteLine("InnerException: " + task.Exception.InnerException);
-                    //    }
-                    //}
-                }); 
 
+                });               
         }
 
         private void UpdateShareCount(string id, long count) {
