@@ -17,7 +17,7 @@ namespace Box.CMS.Controllers {
         [Import]
         protected CMS.Services.CMSService cms { get; set; }
 
-        [OutputCache(VaryByParam = "*", Duration = 2678400)]       
+        [OutputCache(VaryByParam = "*", Duration = 2678400, Location=System.Web.UI.OutputCacheLocation.ServerAndClient)]       
         public FileResult Index(string folder, string id, bool? asThumb, int width = 0, int height = 0, int maxWidth = 0, int maxHeight = 0, double scale = 1.0, string vAlign = "center", string hAlign = "center") {
 
             if (folder=="box" && id == "loading")
