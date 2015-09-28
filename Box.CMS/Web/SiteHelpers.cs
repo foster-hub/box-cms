@@ -193,8 +193,13 @@ namespace Box.CMS.Web
 
             var heads = BoxLib.GetCrossLinksFrom(pageArea, order, top, kinds, parseContent);
             string str = "";
+            int i = 0;
             foreach (ContentHead head in heads)
+            {
+                head.OrderIndex = i;
                 str = str + itemTemplate(head);
+                i++;
+            }
 
             if (heads.Count() == 0)
             {
