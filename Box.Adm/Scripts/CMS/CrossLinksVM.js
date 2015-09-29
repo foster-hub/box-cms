@@ -31,11 +31,11 @@
     }
 
     this.moveLeft = function (content) {
-        me._putData(content.ContentUId, function () { me.loadData(); }, -1);
+        me._putData(content.ContentUId, function () { me.loadData(); }, 1);
     }
 
     this.moveRight = function (content) {
-        me._putData(content.ContentUId, function () { me.loadData(); }, 1);
+        me._putData(content.ContentUId, function () { me.loadData(); }, -1);
     }
 
     this._deleteData = function (id) {

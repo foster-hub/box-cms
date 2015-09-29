@@ -102,7 +102,7 @@ namespace Box.CMS.Services {
             }
 
             if (order == "CrossLinkDisplayOrder" && pageArea!=null)
-                return contents.OrderBy(c => c.CrossLinks.Where(x => x.PageArea == pageArea).FirstOrDefault().DisplayOrder).ThenByDescending(c => c.ContentDate);
+                return contents.OrderByDescending(c => c.CrossLinks.Where(x => x.PageArea == pageArea).FirstOrDefault().DisplayOrder).ThenByDescending(c => c.ContentDate);
 
             if (order == "RandomOnDay") {
                 
@@ -332,7 +332,8 @@ namespace Box.CMS.Services {
                         context.Entry<ContentCustomInfo>(oldContent.CustomInfo).CurrentValues.SetValues(content.CustomInfo);
                 }
 
-                context.ApplyCollectionValues<CrossLink>(oldContent != null ? oldContent.CrossLinks : null, content.CrossLinks, (t1, t2) => { return t1.PageArea == t2.PageArea; });
+                //context.ApplyCollectionValues<CrossLink>(oldContent != null ? oldContent.CrossLinks : null, content.CrossLinks, (t1, t2) => { return t1.PageArea == t2.PageArea; });
+                ApplyCollectionValuesCrossLinks(oldContent != null ? oldContent.CrossLinks : null, content.CrossLinks);
 
                 context.ApplyCollectionValues<ContentTag>(oldContent != null ? oldContent.Tags : null, content.Tags, (t1, t2) => { return t1.Tag == t2.Tag; });
 

@@ -92,7 +92,9 @@ namespace Box.CMS.Services {
                 short order = (short)(link.DisplayOrder + changeDisplayOrderBy);
 
                 // if is a order chage and it its ut of bounds, get out of here
-                if (changeDisplayOrderBy != 0 && (order < 0 || order > maxOrder + 1))
+                if (changeDisplayOrderBy < 0 && oldOrder == 0)
+                    return;
+                if (changeDisplayOrderBy > 0 && oldOrder == maxOrder)
                     return;
 
                 // set the new order
@@ -109,6 +111,21 @@ namespace Box.CMS.Services {
             }
         }
 
+
+        internal void ApplyCollectionValuesCrossLinks(ICollection<CrossLink> oldCollection, ICollection<CrossLink> newCollection) {
+            if (oldCollection == null)
+                oldCollection = new List<CrossLink>();
+            if (newCollection == null)
+                newCollection = new List<CrossLink>();
+            var removed = oldCollection.Where(o => !newCollection.Any(n => n.PageArea == o.PageArea)).ToArray();
+            var added = newCollection.Where(n => !oldCollection.Any(o => n.PageArea == o.PageArea)).ToArray();
+
+            foreach (var r in removed)
+                RemoveCrossLink(r.ContentUId, r.PageArea);
+
+            foreach (var a in added)
+                AddCrossLink(a.ContentUId, a.PageArea);
+        }
     }
 
 }
