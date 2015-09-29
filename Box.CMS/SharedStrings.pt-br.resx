@@ -400,4 +400,10 @@ Tem certeza que deseja publicar?</value>
   <data name="Cancel" xml:space="preserve">
     <value>Cancelar</value>
   </data>
+  <data name="Move_left" xml:space="preserve">
+    <value>Mover para esquerda</value>
+  </data>
+  <data name="Move_right" xml:space="preserve">
+    <value>Mover para direita</value>
+  </data>
 </root>

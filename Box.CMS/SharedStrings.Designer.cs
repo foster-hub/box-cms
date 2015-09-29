@@ -511,6 +511,24 @@ namespace Box.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Move left.
+        /// </summary>
+        public static string Move_left {
+            get {
+                return ResourceManager.GetString("Move_left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move right.
+        /// </summary>
+        public static string Move_right {
+            get {
+                return ResourceManager.GetString("Move_right", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string Name {

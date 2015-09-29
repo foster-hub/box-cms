@@ -119,7 +119,7 @@
     </div>
 }
 
-@helper ContentTile(bool browsable, string onClick = "function(){}", string onRemove = null, string onMinus = null, string onPreview = null, string onBrowse = null, string size = "quadro", bool showTags = true, bool showCross = true, bool showSocial = true) {
+@helper ContentTile(bool browsable, string onClick = "function(){}", string onRemove = null, string onMinus = null, string onPreview = null, string onBrowse = null, string size = "quadro", bool showTags = true, bool showCross = true, bool showSocial = true, string onMove =  null) {
     <li onmouseover="showContextMenu(this)" onmouseout="hideContextMenu(this)">
         <div class="tile @size bg-cyan parts" data-bind="click: @(onClick)">
             <ul>
@@ -198,5 +198,17 @@
             
 
         </nav>
+        @if (onMove != null) {
+            <div class="contextMenu" style="left: 0px; bottom: 0px; top: auto; height:auto; width:100px;">
+                <button title="@Box.CMS.SharedStrings.Move_left"
+                        data-bind="click: @(onMove)Left, clickBubble: false" onmouseout="pageVM.stopPreview();">
+                    <i class="icon-arrow-left"></i>
+                </button>    
+                <button title="@Box.CMS.SharedStrings.Move_right"
+                        data-bind="click: @(onMove)Right, clickBubble: false" onmouseout="pageVM.stopPreview();">
+                    <i class="icon-arrow-right"></i>
+                </button>
+            </div>
+        }
     </li>
 }

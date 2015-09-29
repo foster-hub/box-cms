@@ -5,6 +5,7 @@
     var me = this;
 
     me.area = area;
+    me.order('CrossLinkDisplayOrder');
 
     this.getCustomFilter = function () {
         return '&area=' + me.area;
@@ -29,6 +30,14 @@
         me.removeItem();
     }
 
+    this.moveLeft = function (content) {
+        me._putData(content.ContentUId, function () { me.loadData(); }, -1);
+    }
+
+    this.moveRight = function (content) {
+        me._putData(content.ContentUId, function () { me.loadData(); }, 1);
+    }
+
     this._deleteData = function (id) {
         var verb = 'DELETE';
         var url = _webAppUrl + 'api/cms_crosslinks/' + id + '?area=' + me.area;
@@ -51,18 +60,20 @@
     }
 
     this.addContent = function (content) {
-        me._putData(content.ContentUId,
-            function () { me['contents'].splice(0, 0, content); });
+        me._putData(content.ContentUId, function () { me.loadData(); });
     }
 
-    this._putData = function (id, onSuccess) {
+    this._putData = function (id, onSuccess, changeDisplayOrder) {
+
+        if (!changeDisplayOrder)
+            changeDisplayOrder = 0;
 
         var verb = 'PUT';
-        var url = _webAppUrl + 'api/cms_crosslinks/' + id;
+        var url = _webAppUrl + 'api/cms_crosslinks/' + id + '/?changeDisplayOrder=' + changeDisplayOrder;
 
         if (!CrudOptions.AllowHttpPUT) {
             verb = 'POST';
-            url = _webAppUrl + 'api/cms_crosslinks/UPDATE/' + id;
+            url = _webAppUrl + 'api/cms_crosslinks/UPDATE/' + id + '/?changeDisplayOrder=' + changeDisplayOrder;
         }
 
         $.ajax({
@@ -70,9 +81,7 @@
             type: verb,
             data: JSON.stringify(me.area),
             headers: { 'RequestVerificationToken': _antiForgeryToken },
-            success: function(data) {
-                if (data == true) { onSuccess(); }
-            },
+            success: onSuccess,
             error: function (request) {
                 if (request.status == 409) {
                     dialogHelper.setOperationMessage(me.errorMsgItemAlreadyExists);

@@ -18,7 +18,8 @@
                 onMinus: "$parent.unLink",             
                 size: "double",
                 showCross: false,
-                showTags: false)
+                showTags: false,
+                onMove: "$parent.move")
         </ul>
         <span data-bind="visible: contents!=null && contents().length==0" style="display: none" class="boxLeftMargin">@Box.CMS.SharedStrings.No_contents_were_found_for_this_crosslink</span>
 

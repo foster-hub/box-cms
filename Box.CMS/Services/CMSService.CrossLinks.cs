@@ -47,19 +47,65 @@ namespace Box.CMS.Services {
                 CrossLink link = context.CrossLinks.SingleOrDefault(c => c.ContentUId == contentUId && c.PageArea == area);
                 if (link == null)
                     return;
+
+                int order = link.DisplayOrder;
+                
                 context.CrossLinks.Remove(link);
                 context.SaveChanges();
+
+                // update orders
+                context.Database.ExecuteSqlCommand(
+                    "UPDATE CrossLinks SET DisplayOrder = DisplayOrder - 1 WHERE PageArea = {0} AND DisplayOrder > {1}", area, order);
+                
+
             }
         }
-        public bool AddCrossLink(string contentUId, string area) {
+
+        /// <summary>
+        /// Adds a news crosslink for the contect at the given area.
+        /// </summary>
+        /// <param name="contentUId">The content Id</param>
+        /// <param name="area">The crosslink area</param>
+        /// <param name="changeDisplayOrderBy">Used to change the crosslink display order</param>
+        /// <returns></returns>
+        public void AddCrossLink(string contentUId, string area, short changeDisplayOrderBy = 0) {
+
+            short oldOrder = 0;
+                        
             using (var context = new Data.CMSContext()) {
+
+                // max crosslink order
+                short maxOrder = -1;
+                if (context.CrossLinks.Any(c => c.PageArea == area)) {
+                    maxOrder = context.CrossLinks.Where(c => c.PageArea == area).Select(c => c.DisplayOrder).DefaultIfEmpty().Max();
+                }
+
                 CrossLink link = context.CrossLinks.SingleOrDefault(c => c.ContentUId == contentUId && c.PageArea == area);
-                if (link != null)
-                    return false;
-                link = new CrossLink() { ContentUId = contentUId, PageArea = area, DisplayOrder = 0 };
-                context.CrossLinks.Add(link);
+
+                if (link==null) {
+                    link = new CrossLink() { ContentUId = contentUId, PageArea = area, DisplayOrder = (short)(maxOrder + 1) };
+                    context.CrossLinks.Add(link);
+                }
+
+                // calcs the new crosslink order
+                oldOrder = link.DisplayOrder;
+                short order = (short)(link.DisplayOrder + changeDisplayOrderBy);
+
+                // if is a order chage and it its ut of bounds, get out of here
+                if (changeDisplayOrderBy != 0 && (order < 0 || order > maxOrder + 1))
+                    return;
+
+                // set the new order
+                link.DisplayOrder = order;
+
+                // change the other link display order
+                CrossLink link2 = null;
+                link2 = context.CrossLinks.SingleOrDefault(c => c.ContentUId != contentUId && c.PageArea == area && c.DisplayOrder == order);
+                if (link2!=null)
+                    link2.DisplayOrder = oldOrder;
+                
                 context.SaveChanges();
-                return true;
+
             }
         }
 

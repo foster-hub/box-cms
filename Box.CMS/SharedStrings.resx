@@ -406,4 +406,10 @@ Are you sure you want to publish it now?</value>
   <data name="Top_banner" xml:space="preserve">
     <value>Top banner</value>
   </data>
+  <data name="Move_left" xml:space="preserve">
+    <value>Move left</value>
+  </data>
+  <data name="Move_right" xml:space="preserve">
+    <value>Move right</value>
+  </data>
 </root>

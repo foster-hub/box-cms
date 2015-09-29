@@ -50,7 +50,7 @@ namespace Box.CMS.Services {
             }
         }
 
-        public IEnumerable<ContentHead> GetCrossLinksFrom(string pageArea, string order = "DisplayOrder", int top = 0, string[] kinds = null, bool includeData = false) {
+        public IEnumerable<ContentHead> GetCrossLinksFrom(string pageArea, string order = "CrossLinkDisplayOrder", int top = 0, string[] kinds = null, bool includeData = false) {
             using (var context = new Data.CMSContext()) {
                 IQueryable<ContentHead> contents = null;
 
@@ -61,7 +61,7 @@ namespace Box.CMS.Services {
 
                 contents = contents.Where(c => c.CrossLinks.Any(x => x.PageArea == pageArea));
 
-                contents = OrderContents(contents, order);
+                contents = OrderContents(contents, order, pageArea);
 
                 if (kinds != null)
                     contents = contents.Where(c => kinds.Contains(c.Kind.ToLower()));
@@ -73,7 +73,7 @@ namespace Box.CMS.Services {
             }
         }
 
-        private IQueryable<ContentHead> OrderContents(IQueryable<ContentHead> contents, string order) {
+        private IQueryable<ContentHead> OrderContents(IQueryable<ContentHead> contents, string order, string pageArea = null) {
             if (order == "Name")
                 return contents.OrderBy(c => c.Name).ThenByDescending(c => c.ContentDate);
             if (order == "Date ASC")
@@ -98,9 +98,11 @@ namespace Box.CMS.Services {
                 int r = rand.Next();                
                 return contents.OrderByDescending(c =>
                     (~(((c.CreateDate.Second + c.CreateDate.Minute + c.CreateDate.Hour + c.CreateDate.Millisecond + c.ContentDate.Day) & r))
-                    & ((c.CreateDate.Second + c.CreateDate.Minute + c.CreateDate.Hour + c.CreateDate.Millisecond + c.ContentDate.Day) | r)));
-                    
+                    & ((c.CreateDate.Second + c.CreateDate.Minute + c.CreateDate.Hour + c.CreateDate.Millisecond + c.ContentDate.Day) | r)));                    
             }
+
+            if (order == "CrossLinkDisplayOrder" && pageArea!=null)
+                return contents.OrderBy(c => c.CrossLinks.Where(x => x.PageArea == pageArea).FirstOrDefault().DisplayOrder).ThenByDescending(c => c.ContentDate);
 
             if (order == "RandomOnDay") {
                 

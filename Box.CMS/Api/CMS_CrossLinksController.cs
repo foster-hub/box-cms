@@ -43,14 +43,12 @@ namespace Box.CMS.Api {
 
         [Box.Core.Web.WebApiAntiForgery]
         [Authorize(Roles = "ADM_CMS")]
-        public bool Put(string id, [FromBody] string area) {
+        public void Put(string id, [FromBody] string area, [FromUri] short changeDisplayOrder) {
 
             ContentHead head = cms.GetContentHead(id);
             cms.VerifyAuthorizationToEditContent(head.Kind);
             
-            cms.VerifyAuthorizationToEditContent(head.Kind);
-
-            return cms.AddCrossLink(id, area);
+            cms.AddCrossLink(id, area, changeDisplayOrderBy: changeDisplayOrder);
             
         }
 
@@ -58,8 +56,8 @@ namespace Box.CMS.Api {
         [Authorize(Roles = "ADM_CMS"), HttpPost]
         /* Some enviroments does not supports HTTP VERB PUT 
          * Use this workaround */
-        public bool UPDATE(string id, [FromBody] string area) {
-            return Put(id, area);
+        public void UPDATE(string id, [FromBody] string area, [FromUri] short changeDisplayOrder) {
+            Put(id, area, changeDisplayOrder);
         }
 
 
