@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Net;
 using System.Configuration;
+using System.IO;
 
 namespace Box.CMS.Services {
 
@@ -77,7 +78,7 @@ namespace Box.CMS.Services {
             }
         }
 
-        public byte[] GetScaledImageFile(byte[] bytes, double scale = 1, int xdes = 0, int ydes = 0, int finalW = 0, int finalH = 0) {
+        public byte[] GetScaledImageFile(byte[] bytes, double scale = 1, int xdes = 0, int ydes = 0, int finalW = 0, int finalH = 0, string mimeType = null) {
 
             if (scale == 1 && xdes==0 && ydes==0)
                 return bytes;
@@ -100,13 +101,15 @@ namespace Box.CMS.Services {
 
             g.Dispose();
 
-            System.Drawing.ImageConverter conv = new System.Drawing.ImageConverter();
-            return conv.ConvertTo(newImg, typeof(byte[])) as byte[];
+            return ImageToBytes(newImg, mimeType);
         }
 
-        public byte[] GetImageFileThumb(byte[] bytes, int width, int height, int maxWidth, int maxHeight, string vAlign = "center", string hAlign = "center") {
+        public byte[] GetImageFileThumb(byte[] bytes, int width, int height, int maxWidth, int maxHeight, string vAlign = "center", string hAlign = "center", string mimeType = null) {
+            
             System.IO.MemoryStream stream = new System.IO.MemoryStream(bytes);
             System.Drawing.Image image = System.Drawing.Image.FromStream(stream);
+            stream.Close();
+
             if (height == 0) {
                 float rt = width / (float)image.Width;
                 height = (int)(image.Height * rt);
@@ -143,13 +146,43 @@ namespace Box.CMS.Services {
             System.Drawing.Bitmap newImg = new System.Drawing.Bitmap(maxWidth, maxHeight);
             System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(newImg);
             g.DrawImage(image, new System.Drawing.Rectangle(left, top, width, height));
-
-
-
             g.Dispose();
 
-            System.Drawing.ImageConverter conv = new System.Drawing.ImageConverter();
-            return conv.ConvertTo(newImg, typeof(byte[])) as byte[];
+            return ImageToBytes(newImg, mimeType);
+
+        }
+
+        private byte[] ImageToBytes(System.Drawing.Image img, string mimeType) {
+
+            var imgType = System.Drawing.Imaging.ImageFormat.Jpeg;
+            switch (mimeType) {
+                case "image/png":
+                    imgType = System.Drawing.Imaging.ImageFormat.Png;
+                    break;
+                case "image/gif":
+                    imgType = System.Drawing.Imaging.ImageFormat.Gif;
+                    break;
+                case "image/tiff":
+                    imgType = System.Drawing.Imaging.ImageFormat.Tiff;
+                    break;
+                case "image/bmp":
+                    imgType = System.Drawing.Imaging.ImageFormat.Bmp;
+                    break;
+                case "image/icon":
+                    imgType = System.Drawing.Imaging.ImageFormat.Icon;
+                    break;
+                default:
+                    imgType = System.Drawing.Imaging.ImageFormat.Jpeg;
+                    break;
+            }
+
+            byte[] byteArray = new byte[0];
+            using (MemoryStream stream = new MemoryStream()) {
+                img.Save(stream, imgType);
+                stream.Close();
+                byteArray = stream.ToArray();
+            }
+            return byteArray;
         }
 
         public void RemoveFile(string fileUId) {
@@ -166,7 +199,7 @@ namespace Box.CMS.Services {
 
         public void SetFileThumb(File file) {
             if (file.Type.StartsWith("image"))
-                file.Data.StoredThumbData = GetImageFileThumb(file.Data.StoredData, CMSThumbWidth, CMSThumbHeight, 0, 0);
+                file.Data.StoredThumbData = GetImageFileThumb(file.Data.StoredData, CMSThumbWidth, CMSThumbHeight, 0, 0, "image/jpeg");
             else {
                 string path = System.Web.Hosting.HostingEnvironment.MapPath("~");
                 file.Data.StoredThumbData = GetDocumentThumb(path, file.FileName);

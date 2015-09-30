@@ -34,9 +34,9 @@ namespace Box.CMS.Controllers {
                 return new FileContentResult(file.Data.StoredThumbData, file.Type);
                         
             if (width == 0 && height == 0)
-                return new FileContentResult(cms.GetScaledImageFile(file.Data.StoredData, scale), file.Type);
+                return new FileContentResult(cms.GetScaledImageFile(file.Data.StoredData, scale, mimeType: file.Type), file.Type);
 
-            return new FileContentResult(cms.GetImageFileThumb(file.Data.StoredData, width, height, maxWidth, maxHeight, vAlign, hAlign), file.Type);
+            return new FileContentResult(cms.GetImageFileThumb(file.Data.StoredData, width, height, maxWidth, maxHeight, vAlign, hAlign, file.Type), file.Type);
         }
 
 

@@ -41,7 +41,7 @@ namespace Box.CMS.Api {
             int height = data.h;
             double scale = data.scale;
 
-            byte[] bytes = cms.GetScaledImageFile(file.Data.StoredData, scale, x, y, width, height);
+            byte[] bytes = cms.GetScaledImageFile(file.Data.StoredData, scale, x, y, width, height, file.Type);
             
             if (createCopy) {
                 file.FileUId = System.Guid.NewGuid().ToString();
