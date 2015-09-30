@@ -28,7 +28,7 @@ namespace Box.CMS.Api {
                 queryFilter = c => c.Tags.Any(t => tags.Contains(t.Tag));
 
             if (!string.IsNullOrEmpty(area))
-                contents = cms.GetCrossLinksFrom(area, top: top);
+                contents = cms.GetCrossLinksFrom(area, top: top, order: order);
             else
                 contents = cms.GetContents(filter, skip, top, location, kinds, order, createdFrom, createdTo, false, true, queryFilter);
 

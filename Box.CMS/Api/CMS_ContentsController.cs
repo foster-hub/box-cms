@@ -37,7 +37,7 @@ namespace Box.CMS.Api {
             IEnumerable<ContentHead> contents = null;
 
             if(!string.IsNullOrEmpty(area))
-                contents = cms.GetCrossLinksFrom(area, top: top);
+                contents = cms.GetCrossLinksFrom(area, top: top, order: order);
             else
                 contents = cms.GetContents(filter, skip, top, location, new string[] { kind }, order, createdFrom, createdTo, false, onlyPublished);
             

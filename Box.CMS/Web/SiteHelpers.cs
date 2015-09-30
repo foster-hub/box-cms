@@ -184,8 +184,8 @@ namespace Box.CMS.Web
         {
             return Contents(null, itemTemplate, order, Periods.AnyTime, null, null, parseContent, top, navigationId, url, null, noItemMessage, queryFilter);
         }
-                
-        public static IHtmlString CrossLinksFrom(string pageArea, Func<ContentHead, HelperResult> itemTemplate = null, string order = "DisplayOrder", int top = 0, string[] kinds = null, IHtmlString noItemMessage = null, bool parseContent = false, string navigationId = null)
+
+        public static IHtmlString CrossLinksFrom(string pageArea, Func<ContentHead, HelperResult> itemTemplate = null, string order = "CrossLinkDisplayOrder", int top = 0, string[] kinds = null, IHtmlString noItemMessage = null, bool parseContent = false, string navigationId = null)
         {
             if (itemTemplate == null)
                 itemTemplate = (head) => { return new HelperResult(w => w.Write("<div style=\"background-image: url(" + BoxLib.GetFileUrl(head.ThumbFilePath, asThumb: true) + ")\">" + ContentLink(head) + "</div>")); };
@@ -473,7 +473,7 @@ namespace Box.CMS.Web
         }
 
 
-        public static IEnumerable<ContentHead> GetCrossLinksFrom(string pageArea, string order = "DisplayOrder", int top = 0, string[] kinds = null, bool parseContent = false)
+        public static IEnumerable<ContentHead> GetCrossLinksFrom(string pageArea, string order = "CrossLinkDisplayOrder", int top = 0, string[] kinds = null, bool parseContent = false)
         {
             SiteService site = new SiteService();
             return site.GetCrossLinksFrom(pageArea, order, top, kinds, parseContent);
