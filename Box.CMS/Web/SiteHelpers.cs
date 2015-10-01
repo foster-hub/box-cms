@@ -185,13 +185,13 @@ namespace Box.CMS.Web
             return Contents(null, itemTemplate, order, Periods.AnyTime, null, null, parseContent, top, navigationId, url, null, noItemMessage, queryFilter);
         }
 
-        public static IHtmlString CrossLinksFrom(string pageArea, Func<ContentHead, HelperResult> itemTemplate = null, string order = "CrossLinkDisplayOrder", int top = 0, string[] kinds = null, IHtmlString noItemMessage = null, bool parseContent = false, string navigationId = null)
+        public static IHtmlString CrossLinksFrom(string pageArea, Func<ContentHead, HelperResult> itemTemplate = null, string order = "CrossLinkDisplayOrder", int top = 0, string[] kinds = null, IHtmlString noItemMessage = null, bool parseContent = false, string navigationId = null, string[] pageAreaFallBacks = null)
         {
             if (itemTemplate == null)
                 itemTemplate = (head) => { return new HelperResult(w => w.Write("<div style=\"background-image: url(" + BoxLib.GetFileUrl(head.ThumbFilePath, asThumb: true) + ")\">" + ContentLink(head) + "</div>")); };
 
 
-            var heads = BoxLib.GetCrossLinksFrom(pageArea, order, top, kinds, parseContent);
+            var heads = BoxLib.GetCrossLinksFrom(pageArea, order, top, kinds, parseContent, pageAreaFallBacks);
             string str = "";
             int i = 0;
             foreach (ContentHead head in heads)
@@ -473,10 +473,10 @@ namespace Box.CMS.Web
         }
 
 
-        public static IEnumerable<ContentHead> GetCrossLinksFrom(string pageArea, string order = "CrossLinkDisplayOrder", int top = 0, string[] kinds = null, bool parseContent = false)
+        public static IEnumerable<ContentHead> GetCrossLinksFrom(string pageArea, string order = "CrossLinkDisplayOrder", int top = 0, string[] kinds = null, bool parseContent = false, string[] pageAreaFallBacks = null)
         {
             SiteService site = new SiteService();
-            return site.GetCrossLinksFrom(pageArea, order, top, kinds, parseContent);
+            return site.GetCrossLinksFrom(pageArea, order, top, kinds, parseContent, pageAreaFallBacks);
         }
 
         internal static int GetPageSkipForList(string listId)

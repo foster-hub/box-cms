@@ -62,8 +62,8 @@ namespace Box.CMS.Services {
             return cms.GetLastPublishDate(location, kinds);
         }
 
-        public IEnumerable<ContentHead> GetCrossLinksFrom(string pageArea, string order = "CrossLinkDisplayOrder", int top = 0, string[] kinds = null, bool parseContent = false) {
-            IEnumerable<ContentHead> contents = cms.GetCrossLinksFrom(pageArea, order, top, kinds, parseContent);
+        public IEnumerable<ContentHead> GetCrossLinksFrom(string pageArea, string order = "CrossLinkDisplayOrder", int top = 0, string[] kinds = null, bool parseContent = false, string[] pageAreaFallBacks = null) {
+            IEnumerable<ContentHead> contents = cms.GetCrossLinksFrom(pageArea, order, top, kinds, parseContent, pageAreaFallBacks);
             
             if (parseContent)
                 foreach (ContentHead c in contents)
