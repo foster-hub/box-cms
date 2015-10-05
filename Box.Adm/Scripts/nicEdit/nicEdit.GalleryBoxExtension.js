@@ -12,7 +12,10 @@ nicEditorGalleryBox.addButton = function (htmlEditorId, galleryId) {
                     name: __('Add gallery'), type: 'nicEditorGalleryBoxButton',
                     externalCommand: function (ne) {
                         var nic = ne.selectedInstance;
-                        var html = '<img id="__boxImgGallery' + galleryId + '" class="__boxImgGallery"  src="' + _webAppUrl + 'Scripts/nicedit/galleryAnchor.png' +'"></img>';
+                        var host = 'http://' + _siteHost;
+                        if (_siteHost == location.host)
+                            host = '';
+                        var html = '<img id="__boxImgGallery' + galleryId + '" class="__boxImgGallery"  src="' + host + '/images/galleryAnchor.png"></img>';
                         nic.nicCommand('insertHTML', html);
                     }
                 }

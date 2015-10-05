@@ -9,7 +9,12 @@ Box.Gallery = function (galleryId, nThumbs, height, images, appUrl) {
     me.height = height;        
     me.nThumbs = nThumbs;
 
+    if ($('#' + me.galleryId).length == 0)
+        return;
+
     Box.Gallery.siteUrl = appUrl;
+
+    
     
     var parent = $('#' + me.galleryId).parent();
     var anchor = $('#' + me.galleryId);
@@ -56,8 +61,8 @@ Box.Gallery = function (galleryId, nThumbs, height, images, appUrl) {
 
         $('#' + me.galleryId).replaceWith(htmlGallery);
 
-        $('#' + me.galleryId + ' .carousel-control, #' + galleryId + ' .imageGallery .carousel-indicators').click(function () {
-            setInterval(function () { gallery.carouselMoving(this); }, 1000);
+        $('#' + me.galleryId + ' .carousel-control, #' + me.galleryId + ' .__boxImgGallery .carousel-indicators').click(function () {
+            setTimeout(function () { me.carouselMoving(this); }, 1000);
         });
 
         // thumb jump size
