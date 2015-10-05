@@ -337,26 +337,7 @@ namespace Box.CMS.Web
             string html = "<a " + (cssClass == null?"":"class=\"" + cssClass +"\"") + " src=\"#\" data-bind=\"click: function(d,e) { d._getData(); }, visible: nextContentButtonVisible()\" class=\"listNextButton\">" + text + "</a>";            
             return new HtmlString(html);
         }
-
-        public static IHtmlString BoxHtmlContent(dynamic content, string html) {
-            if (html != null && content != null && content.Images !=null) {
-                
-                var gallery = IMAGE_GALLERY_TEMPLATE((Newtonsoft.Json.Linq.JArray)content.Images).ToString();
-                html = html.Replace("#ImageGallery-Images#", gallery);
-            }
-            return new HtmlString(html);
-        }
-
-        public static string ImageGallery(Newtonsoft.Json.Linq.JArray images) {
-            string html = "";
-            foreach(var image in images) {
-                html = html + BoxSite.Image(file: image);
-            }
-            return html;
-        }
-
-
-        public static Func<Newtonsoft.Json.Linq.JArray, HelperResult> IMAGE_GALLERY_TEMPLATE;
+        
     }
 
 

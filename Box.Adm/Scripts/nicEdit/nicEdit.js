@@ -272,7 +272,7 @@ var nicEditorConfig = bkClass.extend({
 		'hr' : {name : __('Horizontal Rule'), command : 'insertHorizontalRule', noActive : true}
 	},
 	iconsPath : '../nicEditorIcons.gif',
-	buttonList : ['save','bold','italic','underline','fontSize','forecolor','bgcolor','boxImage','left','center','right','justify','ol','ul','fontFamily','fontFormat','indent','outdent','image','upload','link','unlink'],
+	buttonList : ['save','bold','italic','underline','fontSize','forecolor','bgcolor','boxImage','boxGallery','left','center','right','justify','ol','ul','fontFamily','fontFormat','indent','outdent','image','upload','link','unlink'],
 	iconList : {"xhtml":1,"bgcolor":2,"forecolor":3,"bold":4,"center":5,"hr":6,"indent":7,"italic":8,"justify":9,"left":10,"ol":11,"outdent":12,"removeformat":13,"right":14,"save":15,"strikethrough":16,"subscript":17,"superscript":18,"ul":19,"underline":20,"link":21,"unlink":22,"close":23,"arrow":24}
 	
 });
@@ -629,8 +629,8 @@ var nicEditorInstance = bkClass.extend({
     nicCommand: function (cmd, args) {
 
         if (cmd == 'insertHTML') {
-            this.elm.focus();
-            nicEditor.replaceSelection(args);
+            this.elm.focus();            
+            nicEditor.pasteHtmlAtCaret(args, this.frameDoc);
         }
         else
             document.execCommand(cmd, false, args);
@@ -742,12 +742,16 @@ var nicEditorIFrameInstance = nicEditorInstance.extend({
     },
 
     nicCommand: function (cmd, args) {
-        this.frameDoc.execCommand(cmd, false, args);
+
+        if (cmd == 'insertHTML')
+            nicEditor.pasteHtmlAtCaret(args, this.frameDoc);            
+        else
+            this.frameDoc.execCommand(cmd, false, args);
+
         setTimeout(this.heightUpdate.closure(this), 100);
         if (this.onChange != null)
             this.onChange();
-    }
-
+    },
 
 });
 var nicEditorPanel = bkClass.extend({
@@ -779,6 +783,20 @@ var nicEditorPanel = bkClass.extend({
             this.panelButtons.push(new type(this.panelElm, buttonName, options, this.ne));
             if (!hasButton) {
                 this.buttonList.push(buttonName);
+            }
+        }
+    },
+
+    addButtonExt: function (buttonName, options) {
+        var button = options.buttons[buttonName];
+        var type = (button['type']) ? eval('(typeof(' + button['type'] + ') == "undefined") ? null : ' + button['type'] + ';') : nicEditorButton;
+        var hasButton = bkLib.inArray(this.buttonList, buttonName);
+        if (type) {                        
+            if (type) {
+                this.panelButtons.push(new type(this.panelElm, buttonName, options, this.ne));
+                if (!hasButton) {
+                    this.buttonList.push(buttonName);
+                }
             }
         }
     },
@@ -926,8 +944,12 @@ var nicEditorButton = bkClass.extend({
 		this.ne.fireEvent("buttonOut",this);
 	},
 	
-	mouseClick : function() {
-		if(this.options.command) {
+	mouseClick: function () {
+
+	    // BOX CUSTOM
+	    if (this.options.externalCommand != null)
+	        this.options.externalCommand(this.ne, this);
+	    else if(this.options.command) {
 			this.ne.nicCommand(this.options.command,this.options.commandArgs);
 			if(!this.options.noActive) {
 				this.toggleActive();
@@ -1394,39 +1416,38 @@ var nicCodeButton = nicEditorAdvancedButton.extend({
 
 nicEditors.registerPlugin(nicPlugin,nicCodeOptions);
 
-
-nicEditor.replaceSelection = function(html) {
-    var sel, range, node;
-
-    if (typeof window.getSelection != "undefined") {
-        // IE 9 and other non-IE browsers
-        sel = window.getSelection();
-
-        // Test that the Selection object contains at least one Range
+nicEditor.pasteHtmlAtCaret = function (html, w) {
+    var sel, range;
+    if (w.getSelection) {
+        // IE9 and non-IE
+        sel = w.getSelection();
         if (sel.getRangeAt && sel.rangeCount) {
-            // Get the first Range (only Firefox supports more than one)
-            range = window.getSelection().getRangeAt(0);
+            range = sel.getRangeAt(0);
             range.deleteContents();
 
-            // Create a DocumentFragment to insert and populate it with HTML
-            // Need to test for the existence of range.createContextualFragment
-            // because it's non-standard and IE 9 does not support it
-            if (range.createContextualFragment) {
-                node = range.createContextualFragment(html);
-            } else {
-                // In IE 9 we need to use innerHTML of a temporary element
-                var div = document.createElement("div"), child;
-                div.innerHTML = html;
-                node = document.createDocumentFragment();
-                while ((child = div.firstChild)) {
-                    node.appendChild(child);
-                }
+            // Range.createContextualFragment() would be useful here but is
+            // only relatively recently standardized and is not supported in
+            // some browsers (IE9, for one)
+            var el = w.createElement("div");
+            el.innerHTML = html;
+            var frag = w.createDocumentFragment(), node, lastNode;
+            while ( (node = el.firstChild) ) {
+                lastNode = frag.appendChild(node);
             }
-            range.insertNode(node);
+            range.insertNode(frag);
+
+            // Preserve the selection
+            if (lastNode) {
+                range = range.cloneRange();
+                range.setStartAfter(lastNode);
+                range.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(range);
+            }
         }
-    } else if (document.selection && document.selection.type != "Control") {
-        // IE 8 and below
-        range = document.selection.createRange();
-        range.pasteHTML(html);
+    } else if (w.selection && w.selection.type != "Control") {
+        // IE < 9
+        w.selection.createRange().pasteHTML(html);
     }
 }
+

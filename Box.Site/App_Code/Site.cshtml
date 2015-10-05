@@ -24,12 +24,22 @@
     @MenuLink(@BoxLib.GetContentLink(head), head.Name)
 }
 
+@helper Gallery(string galleryId, object images, int height = 350, int nThumbs = 0) {
 
-@helper ImageGalleryTemplate(Newtonsoft.Json.Linq.JArray images) { 
-    foreach (var img in images) {
-        BoxSite.Image(file: img);
+    Box.CMS.File[] f = ((Newtonsoft.Json.Linq.JArray)images).ToObject<Box.CMS.File[]>();
+    string jsonString = Json.Encode(f);
+
+    if (nThumbs == 0 || nThumbs > f.Length) {
+        nThumbs = f.Length;
     }
+    
+    <script type="text/javascript">
+        var gallery = new Box.Gallery('@galleryId', @nThumbs, @height, JSON.parse('@Html.Raw(jsonString)'), '@Href("~")');
+    </script>
 }
+
+
+
 
 @functions  {
 

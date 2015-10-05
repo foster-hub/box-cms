@@ -7,12 +7,15 @@
     // uncomment to track of Facebook comments and likes
     BoxLib.LogPageShare();
 
-    BoxSite.IMAGE_GALLERY_TEMPLATE = Site.ImageGalleryTemplate;
-    
 }
 
 @section head {
     @RenderPage("~/parts/meta-head-content.cshtml", HEAD)
+}
+
+@section scripts {
+    <script src="~/Scripts/Box.Gallery.js"></script>
+    @Site.Gallery("Images", CONTENT.Images)
 }
 
 @section breadcrumbs {
@@ -28,8 +31,7 @@
 
 @Facebook.LikeButton(CONTENT_URL, buttonLayout: "button_count")
 
-
-@BoxSite.BoxHtmlContent(CONTENT, (string) CONTENT.HTMLContent)
+@Html.Raw(CONTENT.HTMLContent)
 
 <div class="col-md-6">
     <h2>podcasts</h2>
@@ -54,6 +56,11 @@
     @BoxSite.ContentsRelated(headerText: "<h2>releated content</h2>", itemTemplate: @<div>@BoxSite.ContentLink(item)</div>)
 </div>
 
+@section lightBoxContent {
+<div style="position:fixed; top:5%; width:100%;  text-align:center; z-index:2">
+    <img class="img-responsive" style="display:inline; opacity: 1; max-width:70%;" />
+</div>
+}
 
 @section rightColumn {
     <h2>cross links</h2>

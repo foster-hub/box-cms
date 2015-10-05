@@ -84,6 +84,13 @@
        
         @RenderPage("~/parts/footer.cshtml")
         
+
+        <div id="__boxLightBox" style="display:none;" onclick="$(this).hide()">
+            <div style="opacity: 0.8; background-color: #000; height: 100%; width: 100%; position: fixed; top:0; z-index:1;">
+            </div>
+            @RenderSection("lightBoxContent", false)            
+        </div>
+
       
         <!-- Bootstrap core JavaScript -->
         <!-- Placed at the end of the document so the pages load faster -->
@@ -92,5 +99,10 @@
 
         @RenderSection("scripts", false)
         
+
+        
+        
+        
+
     </body>
 </html>

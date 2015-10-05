@@ -95,3 +95,50 @@ body {
 footer .container .nav li a:hover {
     background-color: transparent;
 }
+
+/* BOX GALLERY */
+
+.__boxImgGallery {
+    overflow:hidden; 
+    padding-left: 60px;   
+    padding-right: 60px;   
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.__boxImgGallery .carousel {
+    height: auto;    
+}
+
+.__boxImgGallery .carousel-inner {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    left:auto;
+    margin-left:auto;        
+}
+.__boxImgGallery .carousel-indicators li{
+    width:auto;
+    height:auto;
+    margin:auto;
+    text-indent:inherit;
+    background-color:none;
+    border:none;
+    border-radius:inherit;    
+}
+.__boxImgGallery .carousel-indicators {
+    position:relative;
+    bottom:auto;
+    left:auto;
+    z-index:auto;
+    width:auto;
+    padding-left:0;
+    margin-left:0;
+    text-align:initial;
+    list-style:none;
+    display:flex;
+    transition-property: margin-left;
+    transition-duration: 1s;
+    transition-timing-function: linear;
+}
+
