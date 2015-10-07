@@ -7,6 +7,7 @@ Box.Gallery = function (galleryId, nThumbs, height, images, appUrl) {
     me.galleryId = '__boxImgGallery' + galleryId;
     me.height = height;        
     me.nThumbs = nThumbs;
+    Box.Gallery._images = images;
 
     if ($('#' + me.galleryId).length == 0)
         return;
@@ -26,11 +27,13 @@ Box.Gallery = function (galleryId, nThumbs, height, images, appUrl) {
         htmlGallery = '<div class="__boxImgGallery">';
         htmlGallery = htmlGallery + '<div id="imageGallerySlide_' + galleryId + '" class="carousel slide" data-ride="carousel" data-wrap="false">';
         htmlGallery = htmlGallery + '<div class="carousel-inner" role="listbox">';
-                for (var image in images) {
-                    htmlGallery = htmlGallery + '<div class="item ' + (images[image] == images[0] ? 'active' : '') + '" onclick="Box.Gallery.showFullImage(\'' + images[image].Folder + '\',\'' + images[image].FileUId + '\')\">';
-                    htmlGallery = htmlGallery + '<img src="' + Box.Gallery.siteUrl + 'files/' + images[image].Folder + '/' + images[image].FileUId + '/?height=0&maxHeight=' + me.height + '&asThumb=false&width=' + me.maxwidth + '&maxWidth=0" alt="' + images[image].FileName + '" title="' + images[image].FileName + '" class="featurette-image">';
-                    htmlGallery = htmlGallery + '</div>';
-                }
+        for (var image in images) {
+            
+            var allThumbsWidth = me.images.length * thumbWidth;
+            htmlGallery = htmlGallery + '<div class="item ' + (images[image] == images[0] ? 'active' : '') + '" onclick="Box.Gallery.showFullImage(\'' + images[image].Folder + '\',\'' + images[image].FileUId + '\',\'' + image + '\')\">';
+            htmlGallery = htmlGallery + '<img src="' + Box.Gallery.siteUrl + 'files/' + images[image].Folder + '/' + images[image].FileUId + '/?height=0&maxHeight=' + me.height + '&asThumb=false&width=' + me.maxwidth + '&maxWidth=0" alt="' + images[image].FileName + '" title="' + images[image].FileName + '" class="featurette-image">';
+            htmlGallery = htmlGallery + '</div>';
+        }
         htmlGallery = htmlGallery + '</div>';
 
         htmlGallery = htmlGallery + '<a class="left carousel-control" href="#imageGallerySlide_' + galleryId + '" role="button" data-slide="prev" onclick="javascript:setTimeout(function () { gallery.carouselMoving(this); }, 1000);">';
@@ -74,12 +77,33 @@ Box.Gallery = function (galleryId, nThumbs, height, images, appUrl) {
     me.create();    
 }
 
+$(".rightButton").click(function () {    
+    Box.Gallery.lightBoxNavigation(true);
+});
 
-Box.Gallery.showFullImage = function (imgFolder, imgId) {
+$(".leftButton").click(function () {
+    Box.Gallery.lightBoxNavigation(false);
+});
+
+Box.Gallery.showFullImage = function (imgFolder, imgId, navigation) {
     var lightBox = $('#__boxLightBox');
     if (!lightBox)
-        return;   
+        return;
     $('#__boxLightBox img').attr('src', Box.Gallery.siteUrl + 'files/' + imgFolder + '/' + imgId + '?asThumb=false');
     lightBox.show();
+};
+
+Box.Gallery.lightBoxNavigation = function (next) {
+    var navi = $('#__boxLightBox img').attr("navigation");
+    if (next)
+        navi++;
+    else
+        navi--;
+
+    if (navi < 0) navi = 0;
+    if (navi == Box.Gallery._images.length) navi--;
+
+    $('#__boxLightBox img').attr('src', Box.Gallery.siteUrl + 'files/' + Box.Gallery._images[navi].Folder + '/' + Box.Gallery._images[navi].FileUId + '?asThumb=false');
+    $('#__boxLightBox img').attr('navigation', navi);
 };
 
