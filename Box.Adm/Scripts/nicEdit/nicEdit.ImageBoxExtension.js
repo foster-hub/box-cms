@@ -33,8 +33,16 @@ var nicBoxOptions = {
                 if (_siteHost == location.host)
                     host = '';
                 showFileDatabase(function (file) {
-                    var img = '<img src="' + host + '/files/' + file.Folder + '/' + file.FileUId + widthAttr + '" />';
-                    nic.nicCommand('insertHTML', img);
+
+                    var html = '<img src="' + host + '/files/' + file.Folder + '/' + file.FileUId + widthAttr + '" />';
+
+                    if (FileUrl.isVideo(file.Type))
+                        html = '<video controls><source src="' + host + '/files/' + file.Folder + '/' + file.FileUId + '"></video>';
+
+                    if (FileUrl.isAudio(file.Type))
+                        html = '<audio controls><source src="' + host + '/files/' + file.Folder + '/' + file.FileUId + '"></audio>';
+                    
+                    nic.nicCommand('insertHTML', html);
                 },
             'IMG_ROOT');
             }
