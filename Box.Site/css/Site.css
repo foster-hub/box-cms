@@ -114,15 +114,14 @@ footer .container .nav li a:hover {
     left:auto;
     margin-left:auto;        
 }
-.__boxImgGallery .carousel-indicators li{
+.__boxImgGallery .carousel-indicators li {
     width:auto;
     height:auto;
     margin:auto;
-    text-indent:inherit;
-    background-color:none;
-    border:none;
-    border-radius:inherit;    
+    text-indent:inherit;    
+    border:none; border-radius: 0px;
 }
+
 .__boxImgGallery .carousel-indicators {
     position:relative;
     bottom:auto;
@@ -139,3 +138,15 @@ footer .container .nav li a:hover {
     transition-timing-function: linear;
 }
 
+/* BOX THUMB GALLERY */
+.__boxImgGallery .thumb {
+    margin-bottom: 30px;
+    max-height: 200px; overflow: hidden;
+}
+
+/* BS-BOX MODEL FOR IMAGE ZOOM */
+.image-zoom-modal .modal-content { margin-top: 60px; }
+.image-zoom-modal  .zoomedImg { width: 600px; }
+.image-zoom-modal  .modal-round { width: 100%; position: fixed; vertical-align: middle; top:50%; }
+.image-zoom-modal  .modal-round .nextImageButton { position: absolute; right:30px; height: 30px; top: 50%; margin-top: -15px; font-size: 30px; color: white; }
+.image-zoom-modal  .modal-round .previousImageButton { position: absolute; left:30px; height: 30px; top: 50%; margin-top: -15px;font-size: 30px; color: white; }

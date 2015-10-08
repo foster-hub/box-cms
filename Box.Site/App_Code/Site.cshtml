@@ -24,20 +24,34 @@
     @MenuLink(@BoxLib.GetContentLink(head), head.Name)
 }
 
-@helper Gallery(string galleryId, object images, int height = 350, int nThumbs = 0) {
+@helper CarouselGallery(string galleryId, object images, int height = 350, int nThumbs = 0) {
 
-    Box.CMS.File[] f = ((Newtonsoft.Json.Linq.JArray)images).ToObject<Box.CMS.File[]>();
-    string jsonString = Json.Encode(f);
-
-    if (nThumbs == 0 || nThumbs > f.Length) {
-        nThumbs = f.Length;
+    var imageArray = images as Newtonsoft.Json.Linq.JArray;
+    string jsonString = "[]";
+    if (imageArray != null) {
+        jsonString = ((Newtonsoft.Json.Linq.JArray)images).ToString(Newtonsoft.Json.Formatting.None);
+    }
+    if (nThumbs == 0 || nThumbs > imageArray.Count) {
+        nThumbs = imageArray.Count;
     }
     
     <script type="text/javascript">
-        var gallery = new Box.Gallery('@galleryId', @nThumbs, @height, JSON.parse('@Html.Raw(jsonString)'), '@Href("~")');
+        var gallery = new Box.CarouselGallery('@galleryId', @nThumbs, @height, JSON.parse('@Html.Raw(jsonString)'), '@Href("~")');
     </script>
 }
 
+@helper ThumbsGallery(string galleryId, object images, int thumbWidth = 350, int thumbHeight = 200) {    
+    
+    var imageArray = images as Newtonsoft.Json.Linq.JArray;
+    string jsonString = "[]";        
+    if (imageArray != null) { 
+        jsonString = ((Newtonsoft.Json.Linq.JArray)images).ToString(Newtonsoft.Json.Formatting.None);
+    }        
+    <script type="text/javascript">
+        var files = @Html.Raw(jsonString);        
+        var gallery = new Box.ThumbsGallery('@galleryId', files, @thumbWidth, @thumbHeight, '@Href("~")');
+</script>
+}
 
 
 

@@ -12,6 +12,11 @@
     @RenderPage("~/parts/meta-head-content.cshtml", HEAD)
 }
 
+@section scripts {
+    <script src="~/Scripts/Box.Gallery.js"></script>
+    @Site.ThumbsGallery("Images", CONTENT.Images)
+}
+
 @section breadcrumbs {    
     <li><a href="@Href("~/albums")">Albums</a></li>    
 }
@@ -19,10 +24,4 @@
 <h4>@HEAD.Abstract</h4>
 
 
-@foreach (var img in CONTENT.Images) {                
-    
-    <div class="col-md-4" style="min-height: 300px">
-        @BoxSite.Image(file: img, cssClass: "img-responsive")
-    </div>        
-}
-
+<div id="__boxImgGalleryImages"></div>

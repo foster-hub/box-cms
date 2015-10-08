@@ -15,7 +15,7 @@
 
 @section scripts {
     <script src="~/Scripts/Box.Gallery.js"></script>
-    @Site.Gallery("Images", CONTENT.Images, nThumbs: 3)
+    @Site.ThumbsGallery("Images", CONTENT.Images)
 }
 
 @section breadcrumbs {
@@ -56,7 +56,7 @@
     @BoxSite.ContentsRelated(headerText: "<h2>releated content</h2>", itemTemplate: @<div>@BoxSite.ContentLink(item)</div>)
 </div>
 
-@section lightBoxContent {
+@*@section lightBoxContent {
 <div style="position:fixed; top:5%; width:100%;  text-align:center; z-index:2" >
     <a class="leftButton left carousel-control" style="left:0;">
         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -68,7 +68,7 @@
         <span class="sr-only">Next</span>
     </a>    
 </div>
-}
+}*@
 
 @section rightColumn {
     <h2>cross links</h2>

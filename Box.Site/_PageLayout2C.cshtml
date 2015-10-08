@@ -83,15 +83,14 @@
         }
        
         @RenderPage("~/parts/footer.cshtml")
-        
 
-        <div id="__boxLightBox" style="display:none;" >
-            <div style="opacity: 0.8; background-color: #000; height: 100%; width: 100%; position: fixed; top:0; z-index:1;" onclick="$(this).parent().hide()">
+        <div class="modal image-zoom-modal" tabindex="-1" role="dialog">
+            <div class="modal-round"></div>
+            <div class="modal-dialog">
+                <div class="modal-content"></div>
             </div>
-            @RenderSection("lightBoxContent", false)            
         </div>
 
-      
         <!-- Bootstrap core JavaScript -->
         <!-- Placed at the end of the document so the pages load faster -->
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
