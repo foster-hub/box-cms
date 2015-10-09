@@ -6,8 +6,7 @@ nicEditorMediaBox.folders = [
     { icon: 'video.png', folder: 'videos', name: 'Videos' }
 ]
 
-var nicEditorMediaBoxButton = nicEditorSelect.extend({
-    //sel: { 1: 'Images', 2: 'Audio', 3: 'Video' },
+var nicEditorMediaBoxButton = nicEditorSelect.extend({    
     init: function () {
 
         var icon = this.ne.options.iconsPath.replace('nicEditorIcons.gif', '') + 'media.png';

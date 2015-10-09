@@ -24,6 +24,18 @@
     @MenuLink(@BoxLib.GetContentLink(head), head.Name)
 }
 
+@helper Gallery(string galleryId, object images) {
+
+    var imageArray = images as Newtonsoft.Json.Linq.JArray;
+    string jsonString = "[]";
+    if (imageArray != null) {
+        jsonString = ((Newtonsoft.Json.Linq.JArray)images).ToString(Newtonsoft.Json.Formatting.None);
+    }
+    <script type="text/javascript">
+        new Box.Gallery('@galleryId', @Html.Raw(jsonString), '@Href("~")');        
+    </script>
+}
+
 @helper CarouselGallery(string galleryId, object images, int height = 350, int nThumbs = 0) {
 
     var imageArray = images as Newtonsoft.Json.Linq.JArray;
@@ -31,12 +43,9 @@
     if (imageArray != null) {
         jsonString = ((Newtonsoft.Json.Linq.JArray)images).ToString(Newtonsoft.Json.Formatting.None);
     }
-    if (nThumbs == 0 || nThumbs > imageArray.Count) {
-        nThumbs = imageArray.Count;
-    }
     
     <script type="text/javascript">
-        var gallery = new Box.CarouselGallery('@galleryId', @nThumbs, @height, JSON.parse('@Html.Raw(jsonString)'), '@Href("~")');
+    new Box.Gallery('@galleryId', @Html.Raw(jsonString), '@Href("~")').createAsCarousel(@height, @nThumbs);
     </script>
 }
 
@@ -47,12 +56,16 @@
     if (imageArray != null) { 
         jsonString = ((Newtonsoft.Json.Linq.JArray)images).ToString(Newtonsoft.Json.Formatting.None);
     }        
-    <script type="text/javascript">
-        var files = @Html.Raw(jsonString);        
-        var gallery = new Box.ThumbsGallery('@galleryId', files, @thumbWidth, @thumbHeight, '@Href("~")');
-</script>
+    <script type="text/javascript">    
+    new Box.Gallery('@galleryId', @Html.Raw(jsonString), '@Href("~")').createAsThumb(@thumbWidth, @thumbHeight);
+    </script>
 }
 
+@helper GalleryCreateAll(int thumbWidth = 350, int thumbHeight = 200, int height = 350, int nThumbs = 0) {
+<script type="text/javascript">
+    $(function() { Box.Gallery.createAll(@thumbWidth, @thumbHeight, @height, @nThumbs); });
+</script>
+}
 
 
 @functions  {

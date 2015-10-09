@@ -1,117 +1,18 @@
 ﻿var Box = Box || {};
 
+Box.Gallery = function (galleryId, images, appUrl) {
 
-
-Box.CarouselGallery = function (galleryId, nThumbs, height, images, appUrl) {
-
-    Box.CarouselGallery.siteUrl = appUrl;
+    Box.Gallery.siteUrl = appUrl;
 
     var me = this;
     me.images = images;
     me.galleryId = '__boxImgGallery' + galleryId;
-    
-    if ($('#' + me.galleryId).length == 0)
+
+    var elm = $('#' + me.galleryId);
+    if (elm.length == 0)
         return;
 
-    this.create = function () {
-
-        var parent = $('#' + me.galleryId).parent();
-        var anchor = $('#' + me.galleryId);
-        maxwidth = parent.width() - anchor.css('padding-left').replace('px', '') - anchor.css('padding-right').replace('px', '');
-
-        var thumbWidth = Math.round(maxwidth / nThumbs);
-        var htmlGallery = "";
-
-        htmlGallery = '<div id="' + me.galleryId + '" class="__boxImgGallery">'
-        htmlGallery = htmlGallery + '<div id="imageGallerySlide_' + galleryId + '" class="carousel slide" data-ride="carousel" data-wrap="false">';
-        htmlGallery = htmlGallery + '<div class="carousel-inner" role="listbox">';
-        for (var idx in me.images) {                        
-            htmlGallery = htmlGallery + '<div class="item ' + (idx==0? 'active' : '') + '">';
-            htmlGallery = htmlGallery + '<img src="' + me.getImageUrl(idx) + '/?height=0&maxHeight=' + height + '&asThumb=false&width=' + maxwidth + '&maxWidth=0" alt="' + me.images[idx].FileName + '" title="' + me.images[idx].Caption + '" class="featurette-image">';
-            htmlGallery = htmlGallery + '</div>';
-        }
-        htmlGallery = htmlGallery + '</div>';
-
-        htmlGallery = htmlGallery + '<a class="left carousel-control" href="#imageGallerySlide_' + galleryId + '" role="button" data-slide="prev">';
-        htmlGallery = htmlGallery + '<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>';
-        htmlGallery = htmlGallery + '<span class="sr-only">Previous</span>';
-        htmlGallery = htmlGallery + '</a>';
-        htmlGallery = htmlGallery + '<a class="right carousel-control" href="#imageGallerySlide_' + galleryId + '" role="button" data-slide="next">';
-        htmlGallery = htmlGallery + '<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>';
-        htmlGallery = htmlGallery + '<span class="sr-only">Next</span>';
-        htmlGallery = htmlGallery + '</a>';
-        
-        htmlGallery = htmlGallery + '</div>';
-
-
-        htmlGallery = htmlGallery + '<div style="overflow:hidden;">';
-        htmlGallery = htmlGallery + '<ol id="imageGalleryIndicators_' + galleryId + '" class="carousel-indicators">';
-        for (var idx in me.images) {         
-            htmlGallery = htmlGallery + '<li data-target="#imageGallerySlide_' + galleryId + '" data-slide-to="' + idx + '" class="item ' + (idx==0 ? 'active' : '') + '">';
-            htmlGallery = htmlGallery + '<img src="' + me.getImageUrl(idx) + '/?maxHeight=100&height=0&asThumb=false&width=' + thumbWidth + '&maxWidth=0" alt="' + me.images[idx].FileName + '" title="' + me.images[idx].Caption + '">';
-            htmlGallery = htmlGallery + "</li>";
-        }                        
-        htmlGallery = htmlGallery + '</ol>';
-        htmlGallery = htmlGallery + '</div>';
-
-        htmlGallery = htmlGallery + '</div>';
-
-        $('#' + me.galleryId).replaceWith(htmlGallery);
-
-        // thumb jump size
-        var allThumbsWidth = me.images.length * thumbWidth;
-        if (me.images.length > 1)
-            me.thumbJump = Math.round((allThumbsWidth - maxwidth) / (me.images.length - 1));
-        else
-            me.thumbJump = 0;
-        
-        $('#' + me.galleryId).on('slide.bs.carousel', function (e) {
-            if (me.thumbJump == 0)
-                return;
-            var indexImg = $(e.relatedTarget).index();            
-            var jump = me.thumbJump * indexImg;            
-            $('#imageGalleryIndicators_' + galleryId + '.carousel-indicators').css('margin-left', jump * -1 + 'px');
-        });
-
-
-
-    }
-
-    me.getImageUrl = function (idx) {
-        return Box.CarouselGallery.siteUrl + 'files/' + me.images[idx].Folder + '/' + me.images[idx].FileUId
-    }
-
-    me.create();
-
-
-}
-
-Box.ThumbsGallery = function (galleryId, images, thumbWidth, thumbHeight, appUrl) {
-
-    Box.ThumbsGallery.siteUrl = appUrl;
-
-    var me = this;
-    me.images = images;
-    me.galleryId = '__boxImgGallery' + galleryId;
-    
-    if ($('#' + me.galleryId).length == 0)
-        return;
-
-    me.create = function () {
-
-        var htmlGallery = "";
-
-        htmlGallery = '<div id="' + me.galleryId + '" class="__boxImgGallery row">';   
-        for (var idx in me.images) {
-            htmlGallery = htmlGallery + '<div class="col-lg-3 col-sm-6 col-xs-12 thumb" imgidx="' + idx + '">';
-            htmlGallery = htmlGallery + '<a href="#" tilte="' + me.images[idx].Caption + '"><img src="' + me.getImageUrl(idx) + '/?height=0&maxHeight=' + thumbHeight + '&width=' + thumbWidth + '&maxWidth=0" alt="' + me.images[idx].Caption + '" title="' + me.images[idx].Caption + '" class="img-responsive"></a>';
-            htmlGallery = htmlGallery + '</div>';
-        }        
-        htmlGallery = htmlGallery + '</div>';
-
-        $('#' + me.galleryId).replaceWith(htmlGallery);
-
-    }
+    elm[0].__boxGallery = me;
 
     me.showFullImg = function () {
 
@@ -148,11 +49,115 @@ Box.ThumbsGallery = function (galleryId, images, thumbWidth, thumbHeight, appUrl
     }
 
     me.getImageUrl = function (idx) {
-        return Box.ThumbsGallery.siteUrl + 'files/' + me.images[idx].Folder + '/' + me.images[idx].FileUId
+        return Box.Gallery.siteUrl + 'files/' + me.images[idx].Folder + '/' + me.images[idx].FileUId
+    }
+  
+    me.createAsCarousel = function (height, nThumbs) {
+
+        if (!nThumbs || nThumbs==0) {
+            nThumbs = me.images.length;
+        }
+
+        if (nThumbs > images.length)
+            nThumbs = images.length;
+
+        var parent = $('#' + me.galleryId).parent();
+        var anchor = $('#' + me.galleryId);
+        maxwidth = parent.width() - anchor.css('padding-left').replace('px', '') - anchor.css('padding-right').replace('px', '');
+
+        var thumbWidth = Math.round(maxwidth / nThumbs);
+        var htmlGallery = "";
+
+        htmlGallery = '<div id="' + me.galleryId + '" class="__boxImgGallery">'
+        htmlGallery = htmlGallery + '<div id="imageGallerySlide_' + galleryId + '" class="carousel slide" data-ride="carousel" data-wrap="false">';
+        htmlGallery = htmlGallery + '<div class="carousel-inner" role="listbox">';
+        for (var idx in me.images) {
+            htmlGallery = htmlGallery + '<div class="item ' + (idx == 0 ? 'active' : '') + '">';
+            htmlGallery = htmlGallery + '<img src="' + me.getImageUrl(idx) + '/?height=0&maxHeight=' + height + '&asThumb=false&width=' + maxwidth + '&maxWidth=0" alt="' + me.images[idx].FileName + '" title="' + me.images[idx].Caption + '" class="featurette-image">';
+            htmlGallery = htmlGallery + '</div>';
+        }
+        htmlGallery = htmlGallery + '</div>';
+
+        if (me.images.length > 1) {
+            htmlGallery = htmlGallery + '<a class="left carousel-control" href="#imageGallerySlide_' + galleryId + '" role="button" data-slide="prev">';
+            htmlGallery = htmlGallery + '<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>';
+            htmlGallery = htmlGallery + '<span class="sr-only">Previous</span>';
+            htmlGallery = htmlGallery + '</a>';
+            htmlGallery = htmlGallery + '<a class="right carousel-control" href="#imageGallerySlide_' + galleryId + '" role="button" data-slide="next">';
+            htmlGallery = htmlGallery + '<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>';
+            htmlGallery = htmlGallery + '<span class="sr-only">Next</span>';
+            htmlGallery = htmlGallery + '</a>';
+        }
+
+        htmlGallery = htmlGallery + '</div>';
+
+        if (me.images.length > 1) {
+            htmlGallery = htmlGallery + '<div style="overflow:hidden;">';
+            htmlGallery = htmlGallery + '<ol id="imageGalleryIndicators_' + galleryId + '" class="carousel-indicators">';
+            for (var idx in me.images) {
+                htmlGallery = htmlGallery + '<li data-target="#imageGallerySlide_' + galleryId + '" data-slide-to="' + idx + '" class="item ' + (idx == 0 ? 'active' : '') + '">';
+                htmlGallery = htmlGallery + '<img src="' + me.getImageUrl(idx) + '/?maxHeight=100&height=0&asThumb=false&width=' + thumbWidth + '&maxWidth=0" alt="' + me.images[idx].FileName + '" title="' + me.images[idx].Caption + '">';
+                htmlGallery = htmlGallery + "</li>";
+            }
+            htmlGallery = htmlGallery + '</ol>';
+            htmlGallery = htmlGallery + '</div>';
+        }
+
+        htmlGallery = htmlGallery + '</div>';
+
+        $('#' + me.galleryId).replaceWith(htmlGallery);
+
+        // thumb jump size
+        var allThumbsWidth = me.images.length * thumbWidth;
+        if (me.images.length > 1)
+            me.thumbJump = Math.round((allThumbsWidth - maxwidth) / (me.images.length - 1));
+        else
+            me.thumbJump = 0;
+
+        $('#' + me.galleryId).on('slide.bs.carousel', function (e) {
+            if (me.thumbJump <5)
+                return;
+            var indexImg = $(e.relatedTarget).index();
+            var jump = me.thumbJump * indexImg;
+            $('#imageGalleryIndicators_' + galleryId + '.carousel-indicators').css('margin-left', jump * -1 + 'px');
+        });
+
+
+
     }
 
-    me.create();
+    me.createAsThumb = function (thumbWidth, thumbHeight) {
 
-    $('#' + me.galleryId + ' .thumb').click(me.showFullImg);    
+        var htmlGallery = "";
 
+        htmlGallery = '<div id="' + me.galleryId + '" class="__boxImgGallery row">';
+        for (var idx in me.images) {
+            htmlGallery = htmlGallery + '<div class="col-lg-3 col-sm-6 col-xs-12 thumb" imgidx="' + idx + '">';
+            htmlGallery = htmlGallery + '<a href="#" tilte="' + me.images[idx].Caption + '"><img src="' + me.getImageUrl(idx) + '/?height=0&maxHeight=' + thumbHeight + '&width=' + thumbWidth + '&maxWidth=0" alt="' + me.images[idx].Caption + '" title="' + me.images[idx].Caption + '" class="img-responsive"></a>';
+            htmlGallery = htmlGallery + '</div>';
+        }
+        htmlGallery = htmlGallery + '</div>';
+
+        $('#' + me.galleryId).replaceWith(htmlGallery);
+
+        $('#' + me.galleryId + ' .thumb').click(me.showFullImg);
+
+    }
+
+}
+
+Box.Gallery.createAll = function (thumbWidth, tumbHeight, height, nThumbs) {    
+    if (!height) height = 350;
+    if (!thumbWidth) thumbWidth = 350;
+    if (!tumbHeight) tumbHeight = 200;
+
+    $('.__boxImgGallery.asThumb').each(function () {
+        if (this.__boxGallery)
+            this.__boxGallery.createAsThumb(thumbWidth, tumbHeight);
+    });
+    $('.__boxImgGallery.asCarousel').each(function () {
+        if (this.__boxGallery)
+            this.__boxGallery.createAsCarousel(height, nThumbs);
+    });
+    
 }

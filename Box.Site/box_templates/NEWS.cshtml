@@ -15,7 +15,8 @@
 
 @section scripts {
     <script src="~/Scripts/Box.Gallery.js"></script>
-    @Site.ThumbsGallery("Images", CONTENT.Images)
+    @Site.Gallery("Images", CONTENT.Images)
+    @Site.GalleryCreateAll()
 }
 
 @section breadcrumbs {
