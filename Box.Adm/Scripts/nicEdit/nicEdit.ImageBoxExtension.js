@@ -32,6 +32,9 @@ var nicBoxOptions = {
                 var host = 'http://' + _siteHost;
                 if (_siteHost == location.host)
                     host = '';
+
+                filesVM.saveSelection(nic.frameDoc);
+
                 showFileDatabase(function (file) {
 
                     var html = '<img src="' + host + '/files/' + file.Folder + '/' + file.FileUId + widthAttr + '" />';
@@ -42,6 +45,8 @@ var nicBoxOptions = {
                     if (FileUrl.isAudio(file.Type))
                         html = '<audio controls><source src="' + host + '/files/' + file.Folder + '/' + file.FileUId + '"></audio>';
                     
+                    filesVM.restoreSelection(nic.frameDoc);
+
                     nic.nicCommand('insertHTML', html);
                 },
             'IMG_ROOT');

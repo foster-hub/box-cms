@@ -7,16 +7,39 @@
             top: 20px;">
             <button onclick="dialogHelper.closeDialog('fileDatabaseDialogContainer');">@Resources.SharedStrings.Close</button>
         </nav>
-        <fieldset id="searchFieldSet" class="searchFieldSet" style=" margin-bottom:30px; background-color: transparent; border-color: transparent;">
+        <fieldset id="searchFieldSet" class="searchFieldSet" style=" margin-bottom:30px; background-color: transparent; border-color: transparent; margin-bottom: 0px;">
             
-            <label style="color: white;">@Resources.SharedStrings.Search
+            <div style="width: 90%; float: left">
+                <label style="color: white;">
+                    @Resources.SharedStrings.Search
                 (@Box.CMS.SharedStrings.from <span data-bind="text: folder"></span>)
-            </label>
-            <div>   
-                @MetroUI.TextBox(placeholder:@Box.CMS.SharedStrings.File_or_image_name, databind: "value: searchFilter, valueUpdate:'afterkeydown'")
+                </label>
+                <div>
+                    @MetroUI.TextBox(placeholder: @Box.CMS.SharedStrings.File_or_image_name, databind: "value: searchFilter, valueUpdate:'afterkeydown'")
+                </div>
             </div>
-
+            <div style="width: 10%; float: right">
+                <button style="margin: 10px" class="fg-red" onclick="$('#fileBrowseUploadPanel').show()">
+                    <i class="icon-upload-2 large"></i>
+                    <div>@Box.CMS.SharedStrings.New_file</div>
+                </button>
+            </div>
+            
         </fieldset>
+        <div class="input-control text" style="display: none" id="fileBrowseUploadPanel">
+            <input class="ajaxUploadField" id="fileBrowseUploadField"
+                   onchange="filesVM.uploadFiles(this.files)"
+                   type="file" multiple
+                   tabindex="-1" />
+        </div>
+        
+
+
+
+
+
+
+        
 
         <ul data-bind="foreach: files" class="tileList">
             <li data-bind="click: window.selectFile" onmouseover="showContextMenu(this)" onmouseout="hideContextMenu(this)" >
@@ -73,9 +96,15 @@
 </div>
 @this.ScriptBlock(
 @<script type="text/javascript">
-     function showFileDatabase(onSelect, folder) {
+
+    function showFileDatabase(onSelect, folder) {
+        
          filesVM.folder(folder);
          filesVM.onSelect = onSelect;
+         filesVM.afterUpload = function () { $('#fileBrowseUploadPanel').hide(); };
+
+         $('#fileBrowseUploadPanel').hide();
+         $('#fileBrowseUploadField').val('');
 
          dialogHelper.showDialog('fileDatabaseDialogContainer');
 
@@ -91,7 +120,8 @@
          filesVM.loadData();
      }
 
-     function selectFile(file) {
+    function selectFile(file) {
+        
          if (filesVM.onSelect) {
              file.Caption = '';
              filesVM.onSelect(file);

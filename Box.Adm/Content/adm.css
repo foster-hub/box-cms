@@ -320,3 +320,7 @@ label { color: Gray; text-transform: uppercase; font-size: 75%; }
 .contextMenu button { background-color: #4e4e4e; border-color: #4e4e4e; }
 .contextMenu button i { color: #FFFFFF; }  
 .contextMenu button:hover i { color: #FFFFFF; }  
+
+.ajaxUploadField {
+    background-color: transparent;
+}

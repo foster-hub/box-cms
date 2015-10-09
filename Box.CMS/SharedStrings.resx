@@ -412,4 +412,7 @@ Are you sure you want to publish it now?</value>
   <data name="Move_right" xml:space="preserve">
     <value>Move right</value>
   </data>
+  <data name="New_file" xml:space="preserve">
+    <value>New file</value>
+  </data>
 </root>
