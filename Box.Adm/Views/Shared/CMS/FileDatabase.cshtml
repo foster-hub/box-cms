@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div style="width: 10%; float: right">
-                <button style="margin: 10px" class="fg-red" onclick="$('#fileBrowseUploadPanel').show()">
+                <button style="margin: 10px" class="fg-red" onclick="$('#fileBrowseUploadField').val(''); $('#fileBrowseUploadPanel').show()">
                     <i class="icon-upload-2 large"></i>
                     <div>@Box.CMS.SharedStrings.New_file</div>
                 </button>
@@ -103,8 +103,7 @@
          filesVM.onSelect = onSelect;
          filesVM.afterUpload = function () { $('#fileBrowseUploadPanel').hide(); };
 
-         $('#fileBrowseUploadPanel').hide();
-         $('#fileBrowseUploadField').val('');
+         $('#fileBrowseUploadPanel').hide();         
 
          dialogHelper.showDialog('fileDatabaseDialogContainer');
 
