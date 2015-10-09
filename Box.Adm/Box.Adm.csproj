@@ -217,8 +217,12 @@
     <Content Include="Scripts\CMS\ContentBrowseVM.js" />
     <Content Include="Scripts\CMS\CrossLinksVM.js" />
     <Content Include="Scripts\guillotine\jquery.guillotine.js" />
+    <Content Include="Scripts\nicEdit\audio.png" />
     <Content Include="Scripts\nicEdit\gallery.png" />
+    <Content Include="Scripts\nicEdit\media.png" />
     <Content Include="Scripts\nicEdit\nicEdit.GalleryBoxExtension.js" />
+    <Content Include="Scripts\nicEdit\nicEdit.MediaBoxExtension.js" />
+    <Content Include="Scripts\nicEdit\video.png" />
     <Content Include="where-is-my-db.htm" />
     <Content Include="AppError.htm" />
     <Content Include="App_Data\SampleData.sql" />

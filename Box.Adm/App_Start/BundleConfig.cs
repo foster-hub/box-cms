@@ -23,6 +23,7 @@ namespace Box.Adm {
                 .Include("~/Scripts/guillotine/jquery.guillotine.js")
                 .Include("~/Scripts/nicEdit/nicEdit.js")
                 .Include("~/Scripts/nicEdit/nicEdit.ImageBoxExtension.js")
+                .Include("~/Scripts/nicEdit/nicEdit.MediaBoxExtension.js")
                 .Include("~/Scripts/nicEdit/nicEdit.GalleryBoxExtension.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery")                

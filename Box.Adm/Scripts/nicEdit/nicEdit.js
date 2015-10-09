@@ -272,7 +272,7 @@ var nicEditorConfig = bkClass.extend({
 		'hr' : {name : __('Horizontal Rule'), command : 'insertHorizontalRule', noActive : true}
 	},
 	iconsPath : '../nicEditorIcons.gif',
-	buttonList : ['save','bold','italic','underline','fontSize','forecolor','bgcolor','boxImage','boxGallery','left','center','right','justify','ol','ul','fontFamily','fontFormat','indent','outdent','image','upload','link','unlink'],
+	buttonList : ['save','bold','italic','underline','fontSize','forecolor','bgcolor','boxImage','boxMedia','boxGallery', 'left','center','right','justify','ol','ul','fontFamily','fontFormat','indent','outdent','image','upload','link','unlink'],
 	iconList : {"xhtml":1,"bgcolor":2,"forecolor":3,"bold":4,"center":5,"hr":6,"indent":7,"italic":8,"justify":9,"left":10,"ol":11,"outdent":12,"removeformat":13,"right":14,"save":15,"strikethrough":16,"subscript":17,"superscript":18,"ul":19,"underline":20,"link":21,"unlink":22,"close":23,"arrow":24}
 	
 });
@@ -1200,7 +1200,7 @@ var nicEditorSelect = bkClass.extend({
         for (var i = 0; i < this.selOptions.length; i++) {
             var opt = this.selOptions[i];
             var itmContain = new bkElement('div').setStyle({ overflow: 'hidden', borderBottom: 'none',  textAlign: 'center', overflow: 'hidden', cursor: 'pointer' });
-            var itm = new bkElement('div').setStyle({ padding: '0px 4px' }).setContent(opt[1]).appendTo(itmContain).noSelect();
+            var itm = new bkElement('div').setStyle({ padding: '8px 4px' }).setContent(opt[1]).appendTo(itmContain).noSelect();
             itm.addEvent('click', this.update.closure(this, opt[0])).addEvent('mouseover', this.over.closure(this, itm)).addEvent('mouseout', this.out.closure(this, itm)).setAttributes('id', opt[0]);
             this.pane.append(itmContain);
             if (!window.opera) {

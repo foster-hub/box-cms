@@ -49,7 +49,7 @@ var nicBoxOptions = {
 
                     nic.nicCommand('insertHTML', html);
                 },
-            'IMG_ROOT');
+            'images');
             }
         }
     }
