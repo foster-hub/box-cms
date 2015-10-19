@@ -3,7 +3,7 @@
         var icon = this.ne.options.iconsPath.replace('nicEditorIcons.gif', '') + 'gallery.png';
         this.setDisplay('<img src="' + icon + '" width="18" height="18"/>');
         this.add('asThumb', 'As thumbs');
-        this.add('asCarousel', 'As a carousel');
+        this.add('asCarousel', 'As carousel');
     }
 });
 

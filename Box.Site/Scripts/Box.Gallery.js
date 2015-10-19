@@ -8,11 +8,13 @@ Box.Gallery = function (galleryId, images, appUrl) {
     me.images = images;
     me.galleryId = '__boxImgGallery' + galleryId;
 
-    var elm = $('#' + me.galleryId);
+    var elm = $('[id="' + me.galleryId + '"]');
     if (elm.length == 0)
         return;
 
-    elm[0].__boxGallery = me;
+    elm.each(function () {
+        this.__boxGallery = me;
+    });
 
     me.showFullImg = function () {
 
@@ -105,7 +107,10 @@ Box.Gallery = function (galleryId, images, appUrl) {
 
         htmlGallery = htmlGallery + '</div>';
 
-        $('#' + me.galleryId).replaceWith(htmlGallery);
+        if (elm == null)
+            elm = $('#' + me.galleryId);
+
+        $(elm).replaceWith(htmlGallery);
 
         // thumb jump size
         var allThumbsWidth = me.images.length * thumbWidth;
@@ -126,7 +131,7 @@ Box.Gallery = function (galleryId, images, appUrl) {
 
     }
 
-    me.createAsThumb = function (thumbWidth, thumbHeight) {
+    me.createAsThumb = function (thumbWidth, thumbHeight, elm) {
 
         var htmlGallery = "";
 
@@ -138,7 +143,10 @@ Box.Gallery = function (galleryId, images, appUrl) {
         }
         htmlGallery = htmlGallery + '</div>';
 
-        $('#' + me.galleryId).replaceWith(htmlGallery);
+        if (elm == null)
+            elm = $('#' + me.galleryId);
+
+        $(elm).replaceWith(htmlGallery);
 
         $('#' + me.galleryId + ' .thumb').click(me.showFullImg);
 
@@ -153,11 +161,11 @@ Box.Gallery.createAll = function (thumbWidth, tumbHeight, height, nThumbs) {
 
     $('.__boxImgGallery.asThumb').each(function () {
         if (this.__boxGallery)
-            this.__boxGallery.createAsThumb(thumbWidth, tumbHeight);
+            this.__boxGallery.createAsThumb(thumbWidth, tumbHeight, this);
     });
     $('.__boxImgGallery.asCarousel').each(function () {
         if (this.__boxGallery)
-            this.__boxGallery.createAsCarousel(height, nThumbs);
+            this.__boxGallery.createAsCarousel(height, nThumbs, this);
     });
     
 }

@@ -24,7 +24,7 @@
     @MenuLink(@BoxLib.GetContentLink(head), head.Name)
 }
 
-@helper Gallery(string galleryId, object images) {
+@helper GalleryFiles(string galleryId, object images) {
 
     var imageArray = images as Newtonsoft.Json.Linq.JArray;
     string jsonString = "[]";
@@ -35,8 +35,15 @@
         new Box.Gallery('@galleryId', @Html.Raw(jsonString), '@Href("~")');        
     </script>
 }
+@helper CreateGalleries(int thumbWidth = 350, int thumbHeight = 200, int height = 350, int nThumbs = 0)
+{
+    <script type="text/javascript">
+        $(function() { Box.Gallery.createAll(@thumbWidth, @thumbHeight, @height, @nThumbs); });
+    </script>
+}
 
-@helper CarouselGallery(string galleryId, object images, int height = 350, int nThumbs = 0) {
+@helper GalleryAsCarousel(string galleryId, object images, int height = 350, int nThumbs = 0)
+{
 
     var imageArray = images as Newtonsoft.Json.Linq.JArray;
     string jsonString = "[]";
@@ -49,8 +56,8 @@
     </script>
 }
 
-@helper ThumbsGallery(string galleryId, object images, int thumbWidth = 350, int thumbHeight = 200) {    
-    
+@helper GalleryAsThumbs(string galleryId, object images, int thumbWidth = 350, int thumbHeight = 200)
+{        
     var imageArray = images as Newtonsoft.Json.Linq.JArray;
     string jsonString = "[]";        
     if (imageArray != null) { 
@@ -61,11 +68,7 @@
     </script>
 }
 
-@helper GalleryCreateAll(int thumbWidth = 350, int thumbHeight = 200, int height = 350, int nThumbs = 0) {
-<script type="text/javascript">
-    $(function() { Box.Gallery.createAll(@thumbWidth, @thumbHeight, @height, @nThumbs); });
-</script>
-}
+
 
 
 @functions  {

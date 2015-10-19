@@ -218,6 +218,7 @@
     <Content Include="Scripts\CMS\CrossLinksVM.js" />
     <Content Include="Scripts\guillotine\jquery.guillotine.js" />
     <Content Include="Scripts\nicEdit\audio.png" />
+    <Content Include="Scripts\nicEdit\doc.png" />
     <Content Include="Scripts\nicEdit\gallery.png" />
     <Content Include="Scripts\nicEdit\media.png" />
     <Content Include="Scripts\nicEdit\nicEdit.GalleryBoxExtension.js" />
