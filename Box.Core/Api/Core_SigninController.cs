@@ -16,6 +16,8 @@ namespace Box.Core.Api {
         [Import]
         private SecurityService service { get; set; }
 
+        [System.Web.Http.AllowAnonymous]
+        
         [Box.Core.Web.WebApiAntiForgery]
         public int Post(User user) {
             if (user == null)

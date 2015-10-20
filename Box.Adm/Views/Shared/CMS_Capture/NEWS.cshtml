@@ -24,7 +24,8 @@
 
 
                 <label>@Box.CMS.SharedStrings.Content</label>
-                <textarea                                       
+                <textarea             
+                    id="htmlEditor"                                                    
                     @Capture.MapTo("HTMLContent", "nicEdit")
                     class="htmlEditor"
                     style="width: 100%; height: 300px;">
@@ -55,6 +56,7 @@
 
 @this.ScriptBlock(
 @<script type="text/javascript">
+
     // PAGE DETAIL SCRIPT BLOCK ----------------------
      function NEW_CONTENT(contentHead) {         
          contentHead.CONTENT.HTMLContent = '';
@@ -71,6 +73,10 @@
              contentHead.ThumbFilePath = contentHead.CONTENT.Images[0].Folder + '/' + contentHead.CONTENT.Images[0].FileUId;
          else
              contentHead.ThumbFilePath = null;
+     }
+
+     function INIT_TEMPLATE() {         
+         nicEditorGalleryBox.addButton('htmlEditor', 'Images');
      }
 
     function showAbstract(hide) {

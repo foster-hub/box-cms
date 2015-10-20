@@ -547,6 +547,15 @@ namespace Box.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New file.
+        /// </summary>
+        public static string New_file {
+            get {
+                return ResourceManager.GetString("New_file", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Newest.
         /// </summary>
         public static string Newest {

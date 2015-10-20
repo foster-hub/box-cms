@@ -185,13 +185,13 @@ namespace Box.CMS.Web
             return Contents(null, itemTemplate, order, Periods.AnyTime, null, null, parseContent, top, navigationId, url, null, noItemMessage, queryFilter);
         }
 
-        public static IHtmlString CrossLinksFrom(string pageArea, Func<ContentHead, HelperResult> itemTemplate = null, string order = "CrossLinkDisplayOrder", int top = 0, string[] kinds = null, IHtmlString noItemMessage = null, bool parseContent = false, string navigationId = null)
+        public static IHtmlString CrossLinksFrom(string pageArea, Func<ContentHead, HelperResult> itemTemplate = null, string order = "CrossLinkDisplayOrder", int top = 0, string[] kinds = null, IHtmlString noItemMessage = null, bool parseContent = false, string navigationId = null, string[] pageAreaFallBacks = null)
         {
             if (itemTemplate == null)
                 itemTemplate = (head) => { return new HelperResult(w => w.Write("<div style=\"background-image: url(" + BoxLib.GetFileUrl(head.ThumbFilePath, asThumb: true) + ")\">" + ContentLink(head) + "</div>")); };
 
 
-            var heads = BoxLib.GetCrossLinksFrom(pageArea, order, top, kinds, parseContent);
+            var heads = BoxLib.GetCrossLinksFrom(pageArea, order, top, kinds, parseContent, pageAreaFallBacks);
             string str = "";
             int i = 0;
             foreach (ContentHead head in heads)
@@ -337,26 +337,7 @@ namespace Box.CMS.Web
             string html = "<a " + (cssClass == null?"":"class=\"" + cssClass +"\"") + " src=\"#\" data-bind=\"click: function(d,e) { d._getData(); }, visible: nextContentButtonVisible()\" class=\"listNextButton\">" + text + "</a>";            
             return new HtmlString(html);
         }
-
-        public static IHtmlString BoxHtmlContent(dynamic content, string html) {
-            if (html != null && content != null && content.Images !=null) {
-                
-                var gallery = IMAGE_GALLERY_TEMPLATE((Newtonsoft.Json.Linq.JArray)content.Images).ToString();
-                html = html.Replace("#ImageGallery-Images#", gallery);
-            }
-            return new HtmlString(html);
-        }
-
-        public static string ImageGallery(Newtonsoft.Json.Linq.JArray images) {
-            string html = "";
-            foreach(var image in images) {
-                html = html + BoxSite.Image(file: image);
-            }
-            return html;
-        }
-
-
-        public static Func<Newtonsoft.Json.Linq.JArray, HelperResult> IMAGE_GALLERY_TEMPLATE;
+        
     }
 
 
@@ -473,10 +454,10 @@ namespace Box.CMS.Web
         }
 
 
-        public static IEnumerable<ContentHead> GetCrossLinksFrom(string pageArea, string order = "CrossLinkDisplayOrder", int top = 0, string[] kinds = null, bool parseContent = false)
+        public static IEnumerable<ContentHead> GetCrossLinksFrom(string pageArea, string order = "CrossLinkDisplayOrder", int top = 0, string[] kinds = null, bool parseContent = false, string[] pageAreaFallBacks = null)
         {
             SiteService site = new SiteService();
-            return site.GetCrossLinksFrom(pageArea, order, top, kinds, parseContent);
+            return site.GetCrossLinksFrom(pageArea, order, top, kinds, parseContent, pageAreaFallBacks);
         }
 
         internal static int GetPageSkipForList(string listId)

@@ -50,7 +50,7 @@ namespace Box.CMS.Services {
             }
         }
 
-        public IEnumerable<ContentHead> GetCrossLinksFrom(string pageArea, string order = "CrossLinkDisplayOrder", int top = 0, string[] kinds = null, bool includeData = false) {
+        public IEnumerable<ContentHead> GetCrossLinksFrom(string pageArea, string order = "CrossLinkDisplayOrder", int top = 0, string[] kinds = null, bool includeData = false, string[] pageAreaFallbacks = null) {
             using (var context = new Data.CMSContext()) {
                 IQueryable<ContentHead> contents = null;
 
@@ -68,6 +68,13 @@ namespace Box.CMS.Services {
 
                 if (top != 0)
                     contents = contents.Take(top);
+
+                // if ther is no content, and there is any fallback, try it
+                if (contents.Count() == 0 && pageAreaFallbacks != null && pageAreaFallbacks.Length>=1) {
+                    string fallBackArea = pageAreaFallbacks.First();
+                    string[] othersFall = pageAreaFallbacks.Where(a => a != fallBackArea).ToArray();
+                    return GetCrossLinksFrom(fallBackArea, order, top, kinds, includeData, othersFall);
+                }
 
                 return contents.ToArray();
             }

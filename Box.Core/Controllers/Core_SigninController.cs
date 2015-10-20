@@ -24,10 +24,11 @@ namespace Box.Core.Controllers {
         [Import]
         private Box.Core.Oauth.Google google { get; set; }
 
-
+        
+        [System.Web.Mvc.AllowAnonymous]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")] 
         public ActionResult Index() {
 
-            service.SignOutUser();
             ViewData["WINDOWS_LIVE_LOGIN_URL"] = windowLive.LOGIN_URL;
             ViewData["GOOGLE_LOGIN_URL"] = google.LOGIN_URL;
 
@@ -37,6 +38,15 @@ namespace Box.Core.Controllers {
             ViewData["WINDOWS_AUTH_URL"] = service.WindowsAuthUrl;
 
             return View();
+        }
+
+        [System.Web.Mvc.AllowAnonymous]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
+        public ActionResult Out()
+        {
+
+            service.SignOutUser();
+            return new RedirectResult("~/signin");
         }
 
         public ActionResult NTcallback(string token) {

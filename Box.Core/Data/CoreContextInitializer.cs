@@ -42,9 +42,13 @@ namespace Box.Core.Data {
 
             context.SaveChanges();
 
-            context.Database.ExecuteSqlCommand("SELECT * INTO __MigrationHistory_Core FROM __MigrationHistory");
-            context.Database.ExecuteSqlCommand("DROP TABLE __MigrationHistory");
+            // may fail at mssql
+            //try {
+            //    context.Database.ExecuteSqlCommand("SELECT * INTO __MigrationHistory_Core FROM __MigrationHistory");
+            //} catch (Exception) { }
 
+            //context.Database.ExecuteSqlCommand("DROP TABLE __MigrationHistory");
+            
         }
 
 

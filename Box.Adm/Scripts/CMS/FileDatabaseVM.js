@@ -4,6 +4,8 @@
     this.onSelect = null;
     this.folder = new ko.observable('ROOT');
 
+    this.selection = null;
+
     var me = this;
 
     this._getData = function (skip) {
@@ -58,6 +60,73 @@
             me.paging.itemsPerPage = 8;
     }
 
+    this.uploadFiles = function (files) {
+
+        if (files == null || files.length <= 0)
+            return;
+
+        if (window.FormData == null)
+            return;
+
+        var data = new FormData();
+        var waitFiles = new Array();
+
+        var len = files.length;
+        
+        for (i = 0; i < len; i++) {
+            data.append("file" + i, files[i]);
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: _webAppUrl + 'api/cms_files/' + me.folder() + '?' + '&storage=0',
+            contentType: false,
+            processData: false,
+            data: data,
+            success: function (resFiles) {
+
+                for (var r = 0; r < resFiles.length; r++) {
+                    var res = resFiles[r];
+                    var newFile = { FileUId: res.FileUId, FileName: res.FileName, Size: res.Size, Folder: me.folder(), Type: res.Type };                    
+                    me.files.unshift(newFile);
+                    if (me.files().length > me.paging.itemsPerPage)
+                        me.files.pop();
+                }
+
+                if (me.afterUpload)
+                    me.afterUpload();
+            }
+        });
+    }
+    
+    this.saveSelection = function (w) {
+        if (w == null)
+            return;
+        me.selection = null;
+
+        if (w.getSelection) {
+            sel = w.getSelection();
+            if (sel.getRangeAt && sel.rangeCount) {
+                me.selection = sel.getRangeAt(0);
+            }
+        } else if (document.selection && document.selection.createRange) {
+            me.selection = document.selection.createRange();
+        }
+        
+    }
+
+    this.restoreSelection = function(w) {
+        if (!me.selection || w==null)
+            return;
+
+        if (w.getSelection) {
+            sel = w.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(me.selection);
+        } else if (document.selection && me.selection.select) {
+            me.selection.select();
+        }        
+    }
     
 }
 

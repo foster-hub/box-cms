@@ -5,9 +5,10 @@ using System.Text;
 
 namespace Box.Core.Web {
 
-    public class WebApiAntiForgeryAttribute : System.Web.Http.AuthorizeAttribute {
+    public class WebApiAntiForgeryAttribute : System.Web.Http.Filters.ActionFilterAttribute {
 
-        public override void OnAuthorization(System.Web.Http.Controllers.HttpActionContext actionContext) {
+        public override void OnActionExecuting(System.Web.Http.Controllers.HttpActionContext actionContext)
+        {
             
             string cookieToken = "", formToken = "";
 
@@ -22,6 +23,8 @@ namespace Box.Core.Web {
             }
 
             System.Web.Helpers.AntiForgery.Validate(cookieToken, formToken);
+
+            base.OnActionExecuting(actionContext);
 
         }
 
