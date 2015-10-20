@@ -14,7 +14,7 @@ namespace Box.Core.Web {
             IEnumerable<string> headers;
             actionContext.Request.Headers.TryGetValues("RequestVerificationToken", out headers);
             if (headers!=null && headers.Count() >= 0) {
-                string[] tokens = headers.First().Split(Convert.ToChar(":"));
+                string[] tokens = headers.First().Split(':');
                 if (tokens.Length == 2) {
                     cookieToken = tokens[0].Trim();
                     formToken = tokens[1].Trim();
