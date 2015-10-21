@@ -463,9 +463,6 @@ namespace Box.Core.Services {
             }
 
             System.Web.Security.FormsAuthentication.SignOut();
-            System.Web.HttpContext.Current.Session.Abandon();
-            
-
         }
         public string GetSignedUserToken() {
             return System.Web.HttpContext.Current.User.Identity.Name;
