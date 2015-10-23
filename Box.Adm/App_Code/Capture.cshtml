@@ -71,7 +71,7 @@
   
 }
 
-@helper File(string id, string folder = "IMG_ROOT", bool singleFile = false, string style = null) {    
+@helper File(string id, string folder = "Images", bool singleFile = false, string style = null) {    
     string dropAreaId = "_uploadArea_" + id;
     string inputFileId = "_uploadAreaInput_" + id;
     string multipleTag = singleFile == false ? "multiple" : "";
@@ -173,11 +173,13 @@
             <img src="../Content/CMS_Images/FileIcons/loading.gif" />@Box.CMS.SharedStrings.Sending_files
         </div>
         
+        <div style="clear: both;"></div>
+
     </div>
 }
 }
 
-@helper CropImage(string id, int originalWidth, int originalHeight, double scale = 1, string folder = "IMG_ROOT", string style = null) {
+@helper CropImage(string id, int originalWidth, int originalHeight, double scale = 1, string folder = "Images", string style = null) {
     string dropAreaId = "_uploadArea_" + id;
     string inputFileId = "_uploadAreaInput_" + id;
     HtmlString dataBindItem = new HtmlString("editingItem().CONTENT." + id);
@@ -188,98 +190,99 @@
 
     string scaleStr = scale.ToString(System.Globalization.CultureInfo.InvariantCulture);
 
-    
-    <input class="ajaxUploadField"
-           id="@inputFileId"
-           type="file"
-           onchange="UploadArea.sendFiles(this.files, '@id', '@folder', true)"           
-           tabindex="-1" />
 
-    <a class="formUploadField"
-       href="javascript: UploadArea.showUploadForm('@folder')">@Box.CMS.SharedStrings.File_upload</a>
+        <input class="ajaxUploadField"
+               id="@inputFileId"
+               type="file"
+               onchange="UploadArea.sendFiles(this.files, '@id', '@folder', true)"
+               tabindex="-1" />
 
-    <div class="uploadDropArea"
-         style="@style width: @(width+15)px; min-height: @(height)px;"
-         ondrop="UploadArea.drop(this, event, '@id', '@folder', true)"
-         ondragover="UploadArea.dragover(this, event)"
-         ondragleave="UploadArea.dragout(this, event)">
+        <a class="formUploadField"
+           href="javascript: UploadArea.showUploadForm('@folder')">@Box.CMS.SharedStrings.File_upload</a>
 
-        <div style="margin-bottom: 4px;">
-            <span>
-                @Box.CMS.SharedStrings.drag_and_drop_files_here
-            </span>
-            <a tabindex="-1"
-               href="javascript: showFileDatabase(function(file) { UploadArea.addFile(file, '@id', true); }, '@folder')">@Box.CMS.SharedStrings.or_use_image_database</a>
-        </div>
+        
+        <div class="uploadDropArea"
+                style="@style width: @(width+15)px; min-height: @(height)px;"
+                ondrop="UploadArea.drop(this, event, '@id', '@folder', true)"
+                ondragover="UploadArea.dragover(this, event)"
+                ondragleave="UploadArea.dragout(this, event)">
 
-        <div id="@(dropAreaId)_cropControls" style="display: none; margin: 0px; width: @(width)px;" class="bg-grayDark">
-            <div>
-                <label style="padding: 4px;" class="fg-white">@Box.CMS.SharedStrings.Crop_tooltip</label>
+            <div style="margin-bottom: 4px;">
+                <span>
+                    @Box.CMS.SharedStrings.drag_and_drop_files_here
+                </span>
+                <a tabindex="-1"
+                    href="javascript: showFileDatabase(function(file) { UploadArea.addFile(file, '@id', true); }, '@folder')">@Box.CMS.SharedStrings.or_use_image_database</a>
             </div>
-            <button title="@Box.CMS.SharedStrings.Apply"
-                    class="bg-grayDark" onclick="javascript: UploadArea.commitCropImage('@id', @originalWidth, @originalHeight); return false;">
-                <i class="icon-checkmark fg-white"></i>
-            </button>
-            <button title="@Box.CMS.SharedStrings.Cancel"
-                    class="bg-grayDark" onclick="javascript: UploadArea.cancelCropImage('@id'); return false;">
-                <i class="icon-cancel fg-white"></i>
-            </button>
+
+            <div id="@(dropAreaId)_cropControls" style="display: none; margin: 0px; width: @(width)px;" class="bg-grayDark">
+                <div>
+                    <label style="padding: 4px;" class="fg-white">@Box.CMS.SharedStrings.Crop_tooltip</label>
+                </div>
+                <button title="@Box.CMS.SharedStrings.Apply"
+                        class="bg-grayDark" onclick="javascript: UploadArea.commitCropImage('@id', @originalWidth, @originalHeight); return false;">
+                    <i class="icon-checkmark fg-white"></i>
+                </button>
+                <button title="@Box.CMS.SharedStrings.Cancel"
+                        class="bg-grayDark" onclick="javascript: UploadArea.cancelCropImage('@id'); return false;">
+                    <i class="icon-cancel fg-white"></i>
+                </button>                    
+            </div>
+
+            <ul id="@dropAreaId" style="margin-top:0px;">
+
+                <!--ko if: pageVM.editingItem().CONTENT.@(id) != null -->
+                <li style="width: @(width)px; height: @(height)px;"
+                    onmouseover="showContextMenu(this);"
+                    onmouseout="hideContextMenu(this)">
+
+                    <div style="width: @(width)px; height: @(height)px; overflow: hidden;">
+                        <img id="@(dropAreaId)_cropImage"
+                                data-bind="attr: { fileUIdTag: @(dataBindItem).FileUId, scaleTag: @(scaleStr), src: FileUrl.toView(@dataBindItem, false, @scaleStr) }"
+                                style="max-width: none;" />
+                    </div>
+
+                    <input data-bind="value: @(dataBindItem).Caption"
+                            updatemodelevent="keyup"
+                            onkeypress="dialogHelper.blurOnEnter(this)"
+                            tabindex="-1"
+                            type="text" />
+
+                    <div id="@(dropAreaId)_cropZoom" class="zoomControls">
+                        <button class="bg-grayDark" onclick="javascript: UploadArea.zoomCropImage('@id', 'In'); return false;">
+                            <i class="icon-zoom-in fg-white"></i>
+                        </button>
+                        <button class="bg-grayDark" onclick="javascript: UploadArea.zoomCropImage('@id', 'Out'); return false;">
+                            <i class="icon-zoom-out fg-white"></i>
+                        </button>
+                    </div>
+
+                    <div class="contextMenu">
+                        <button title="@Box.CMS.SharedStrings.Remove" data-bind="click: function(data) { UploadArea.removeFile(data, '@id', true); }, clickBubble: false">
+                            <i class="icon-minus-2"></i>
+                        </button>
+
+                        <button title="@Box.CMS.SharedStrings.Preview" @dataBindBrowse>
+                            <i class="icon-eye"></i>
+                        </button>
+
+                        <button title="@Box.CMS.SharedStrings.Crop_image" data-bind="click: function(data) { UploadArea.cropImage(data, '@id', @width, @height); }, clickBubble: false">
+                            <i class="icon-resize"></i>
+                        </button>
+
+                    </div>
+                </li>
+                <!--/ko-->
+
+            </ul>
+
+            <div id="_uploadAreaAlert_@id" class="loadingFileAlert">
+                <img src="../Content/CMS_Images/FileIcons/loading.gif" />@Box.CMS.SharedStrings.Sending_files
+            </div>
+
         </div>
 
-        <ul id="@dropAreaId" style="margin-top:0px;">
-
-            <!--ko if: pageVM.editingItem().CONTENT.@(id) != null -->
-            <li style="width: @(width)px; height: @(height)px;"
-                onmouseover="showContextMenu(this);"
-                onmouseout="hideContextMenu(this)">
-
-                <div style="width: @(width)px; height: @(height)px; overflow: hidden;">
-                    <img id="@(dropAreaId)_cropImage"
-                         data-bind="attr: { fileUIdTag: @(dataBindItem).FileUId, scaleTag: @(scaleStr), src: FileUrl.toView(@dataBindItem, false, @scaleStr) }"
-                         style="max-width: none;" />
-                </div>
-
-                <input data-bind="value: @(dataBindItem).Caption"
-                       updatemodelevent="keyup"
-                       onkeypress="dialogHelper.blurOnEnter(this)"
-                       tabindex="-1"
-                       type="text" />
-
-                <div id="@(dropAreaId)_cropZoom" class="zoomControls">
-                    <button class="bg-grayDark" onclick="javascript: UploadArea.zoomCropImage('@id', 'In'); return false;">
-                        <i class="icon-zoom-in fg-white"></i>
-                    </button>
-                    <button class="bg-grayDark" onclick="javascript: UploadArea.zoomCropImage('@id', 'Out'); return false;">
-                        <i class="icon-zoom-out fg-white"></i>
-                    </button>
-                </div>
-
-                <div class="contextMenu">
-                    <button title="@Box.CMS.SharedStrings.Remove" data-bind="click: function(data) { UploadArea.removeFile(data, '@id', true); }, clickBubble: false">
-                        <i class="icon-minus-2"></i>
-                    </button>
-
-                    <button title="@Box.CMS.SharedStrings.Preview" @dataBindBrowse>
-                        <i class="icon-eye"></i>
-                    </button>
-
-                    <button title="@Box.CMS.SharedStrings.Crop_image" data-bind="click: function(data) { UploadArea.cropImage(data, '@id', @width, @height); }, clickBubble: false">
-                        <i class="icon-resize"></i>
-                    </button>
-
-                </div>
-            </li>
-            <!--/ko-->
-
-        </ul>
-
-        <div id="_uploadAreaAlert_@id" class="loadingFileAlert">
-            <img src="../Content/CMS_Images/FileIcons/loading.gif" />@Box.CMS.SharedStrings.Sending_files
-        </div>
-
-    </div>
+        <div style="clear: both;"></div>
 
 }
 
-
-}
