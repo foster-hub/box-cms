@@ -52,7 +52,7 @@ namespace Box.CMS.Controllers {
             file.FileUId = Guid.NewGuid().ToString();
             file.FileName = cms.CleanFileName(fileRequest.FileName);
             file.Type = fileRequest.ContentType;
-            file.Folder = (folder == null ? "IMG_ROOT" : folder);
+            file.Folder = (folder == null ? "Images" : folder);
             file.Size = fileRequest.ContentLength;
             file.Data = new FileData() { FileUId = file.FileUId, StoredData = bytes };
 

@@ -86,7 +86,7 @@ namespace Box.CMS.Api {
                     file.FileUId = Guid.NewGuid().ToString();
                     file.FileName = cms.CleanFileName(content.Headers.ContentDisposition.FileName);
                     file.Type = content.Headers.ContentType.MediaType;
-                    file.Folder = (folder == null ? "IMG_ROOT" : folder);
+                    file.Folder = (folder == null ? "Images" : folder);
                     file.Size = bytes.Length;
                     file.Data = new FileData() { FileUId = file.FileUId, StoredData = bytes };
 
