@@ -9,6 +9,12 @@
     @RenderPage("~/parts/meta-head-content.cshtml", HEAD)
 }
 
+@section scripts {
+    <script src="~/Scripts/Box.Gallery.js"></script>
+    @Site.GalleryFiles("Images", CONTENT.Images)
+    @Site.CreateGalleries()
+}
+
 @section breadcrumbs {
     <li><a href="@Href("~/" + HEAD.Location)">@Site.BreadcrumbNiceName(HEAD.Location)</a></li>
 }

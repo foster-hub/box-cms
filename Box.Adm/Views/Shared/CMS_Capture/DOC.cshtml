@@ -19,7 +19,7 @@
                 </div>
 
                 <label>@Box.CMS.SharedStrings.File</label>
-                @Capture.File("File", folder: "DOC_ROOT", singleFile: true, style: "width: 100%")
+                @Capture.File("File", folder: "Documents", singleFile: true, style: "width: 100%")
 
             </fieldset>
 
@@ -38,13 +38,14 @@
 @<script type="text/javascript">
 
 
-    UploadArea.afterSendCallBack = function (id, fileName) {
+    UploadArea.afterAddCallBack = function (id, fileName) {
         var idx = fileName.lastIndexOf(".");
         if (idx > 0) {
             fileName = fileName.substring(0, idx);
         }
         pageVM.editingItem().Name = fileName;        
     }
+    UploadArea.afterSendCallBack = UploadArea.afterAddCallBack;
 
 
     // PAGE DETAIL SCRIPT BLOCK ----------------------

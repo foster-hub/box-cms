@@ -482,7 +482,6 @@
     <Content Include="Views\CMS_CrossLinks\Index.cshtml" />
     <Content Include="Views\Shared\CMS_Capture\LINK.cshtml" />
     <Content Include="Views\Shared\CMS\ContentBrowse.cshtml" />
-    <Content Include="Views\Shared\CMS_Capture\EVENT.cshtml" />
     <Content Include="Views\CMS_Contents\EVENT-Index.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

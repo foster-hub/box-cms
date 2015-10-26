@@ -7,8 +7,11 @@
     
 <form id="editForm">    
     <div class="grid fluid" >  
+        
         <div class="row">
-                <fieldset class="span8">
+
+            <fieldset class="span8">
+
                 <div class="boxLeftMargin">
                     
                     <label>@Box.CMS.SharedStrings.Title</label>   
@@ -21,6 +24,9 @@
                     <a  id="changeAbstractLink"
                         href="javascript: showAbstract()" tabindex="-1"
                         style="display: block; margin: 3px 0px 10px 0px; clear:both; font-size: 12px;">@Box.CMS.SharedStrings.Change_Abstract</a>           
+
+                    <label>@Box.CMS.SharedStrings.Top_banner (crop sample)</label>
+                    @Capture.CropImage("TopBanner", 840, 300, 1)
 
 
                 <label>@Box.CMS.SharedStrings.Content</label>
@@ -39,16 +45,11 @@
                     <label>@Box.CMS.SharedStrings.Images</label>
                     @Capture.File("Images", singleFile: false, style: "width: 100%")
                 </div>
-
-                <div class="boxRightMargin" style="margin-top: 10px; float: left">
-                    <label>@Box.CMS.SharedStrings.Audios</label>
-                    @Capture.File("Audios", singleFile: false, style: "width: 100%", folder: "AUDIO_ROOT")
-                </div>
-
                 
             </fieldset>
 
             </div>
+    
     </div>
 
 </form>
@@ -69,12 +70,12 @@
      }
 
      function SET_THUMB(contentHead) {
-         if (contentHead.CONTENT.Images != null && contentHead.CONTENT.Images.length >= 1)
-             contentHead.ThumbFilePath = contentHead.CONTENT.Images[0].Folder + '/' + contentHead.CONTENT.Images[0].FileUId;
+         if (contentHead.CONTENT.TopBanner != null)
+             contentHead.ThumbFilePath = contentHead.CONTENT.TopBanner.Folder + '/' + contentHead.CONTENT.TopBanner.FileUId;
          else
              contentHead.ThumbFilePath = null;
      }
-
+     
      function INIT_TEMPLATE() {         
          nicEditorGalleryBox.addButton('htmlEditor', 'Images');
      }

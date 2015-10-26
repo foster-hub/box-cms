@@ -1,10 +1,9 @@
 ﻿
 var nicEditorMediaBox = {};
-nicEditorMediaBox.folders = [
-    { icon: 'image.gif', folder: 'images', name: 'Images', type: 'image' },
+nicEditorMediaBox.folders = [    
     { icon: 'audio.png', folder: 'audios', name: 'Audios', type: 'audio' },
     { icon: 'video.png', folder: 'videos', name: 'Videos', type: 'video' },
-    { icon: 'doc.png', folder: 'docs', name: 'Documents', type: 'doc' }
+    { icon: 'doc.png', folder: 'documents', name: 'Documents', type: 'doc' }
 ]
 
 var nicEditorMediaBoxButton = nicEditorSelect.extend({
@@ -35,8 +34,6 @@ var nicBoxOptions = {
                 var nic = ne.selectedInstance;
 
                 var options = nicEditorMediaBox._FOLDERS[folder];
-                
-                var widthAttr = '/?width=200';
 
                 var host = 'http://' + _siteHost;
                 if (_siteHost == location.host)
@@ -47,10 +44,7 @@ var nicBoxOptions = {
                 showFileDatabase(function (file) {
 
                     var html = '<a href="' + host + '/files/' + file.Folder + '/' + file.FileUId + '">' + file.FileName + '</a>';
-
-                    if (options.type == 'image')
-                         html = '<img src="' + host + '/files/' + file.Folder + '/' + file.FileUId + widthAttr + '" />';
-
+                    
                     if (options.type == 'video')
                         html = '<video controls><source src="' + host + '/files/' + file.Folder + '/' + file.FileUId + '"></video>';
 

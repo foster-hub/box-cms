@@ -27,6 +27,9 @@ UploadArea.addFile = function (newFile, id, singlefile) {
         bindFiles.push(newFile);
     }
 
+    if (UploadArea.afterAddCallBack != null)
+        UploadArea.afterAddCallBack(id, newFile.FileName);
+
     pageVM.editingItem.valueHasMutated();
 }
 

@@ -13,7 +13,7 @@
                 <div class="boxLeftMargin">
 
                     <label>@Box.CMS.SharedStrings.Link</label>
-                    @MetroUI.TextBox(placeholder: @Box.CMS.SharedStrings.Link_tooltip, classes: "required", onblur: "updateName()", others: Capture.MapToExternalLinkUrl().ToString())
+                    @MetroUI.TextBox(placeholder: @Box.CMS.SharedStrings.Link_tooltip, classes: "required url", onblur: "updateName()", others: Capture.MapToExternalLinkUrl().ToString())
                 
                     <label>@Box.CMS.SharedStrings.Title</label>                       
                     @MetroUI.TextBox(placeholder: @Box.CMS.SharedStrings.Title, others: Capture.MapToName().ToString())
@@ -66,6 +66,9 @@
    
      function updateName() {
          
+         if (!pageVM.editingItem().ExternalLinkUrl)
+             return;
+
          if (pageVM.editingItem().Name != '')
              return;
 
