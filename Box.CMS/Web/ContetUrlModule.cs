@@ -17,16 +17,15 @@ namespace Box.CMS.Web {
 
         void context_AuthorizeRequest(object sender, EventArgs e) {
 
-            // detect if DB was not configured
-            if (Box.Core.Services.SecurityService.DetectNotInstalled())
-                return;
-
             System.Web.HttpApplication app = sender as System.Web.HttpApplication;
             if (app == null)
                 return;
 
             string fullUrl = BoxLib.RemoveAppNameFromUrl(app.Context.Request.RawUrl);
             string redirectUrl = null;
+
+            if (fullUrl.StartsWith("/where-is-my-db.htm"))
+                return;
 
             // if true, can see not published contents
             bool canSeeOnlyPublished = GetShowOnlyPublished(app, fullUrl);
@@ -37,11 +36,24 @@ namespace Box.CMS.Web {
 
             if (redirectUrl == null) {
                 Services.CMSService cms = new Services.CMSService();
-                
-                ContentHead c = cms.GetContentHeadByUrlAndKind(url, null, canSeeOnlyPublished);
+
+                ContentHead c = null;
+                try
+                {
+                    c = cms.GetContentHeadByUrlAndKind(url, null, canSeeOnlyPublished);                    
+                }                
+                catch (Exception ex)
+                {
+                    var SQLexception = Box.Core.Services.SecurityService.GetSqlException(ex);
+                    if (SQLexception != null && !Box.Core.Services.SecurityService.IsDebug)
+                        app.Context.Response.Redirect("~/where-is-my-db.htm#" + SQLexception.Number);
+                    else
+                        throw ex;
+                }
+
                 if (c == null)
                     return;
-
+                
                 redirectUrl = "~/box_templates/" + c.Kind + "/" + c.ContentUId;
 
                 // only add at cache published urls

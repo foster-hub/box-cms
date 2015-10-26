@@ -38,11 +38,19 @@ namespace Box.Adm {
 
         }
 
-        protected void Application_BeginRequest(Object source, EventArgs e) {
+        protected void Application_Error(Object sender, EventArgs e)
+        {
+            Exception exception = Server.GetLastError();
+            Response.Clear();
 
-            // detect if DB was not configured
-            Box.Core.Services.SecurityService.DetectNotInstalled();
+            var SQLexception = Box.Core.Services.SecurityService.GetSqlException(exception);
 
+            if (SQLexception != null && !Box.Core.Services.SecurityService.IsDebug)
+            {
+                Response.Redirect("~/where-is-my-db.htm#" + SQLexception.Number);
+                Response.End();
+            }
+         
         }
 
 

@@ -12,6 +12,7 @@ using System.Web.Mvc;
 using System.Net;
 using System.Web;
 using System.Web.Security;
+using System.Web.Configuration;
 
 namespace Box.Core.Services {
 
@@ -24,7 +25,24 @@ namespace Box.Core.Services {
 
         public static string ADMIN_GROUP_ID = "ADMIN----167e-42a3-abb2-9e3f7ba2074d";
 
+        public static bool IsDebug
+        {
+            get
+            {
+                //CompilationSection compilationSection = System.Configuration.ConfigurationManager.GetSection(@"system.web/compilation") as CompilationSection;
+                //if (compilationSection == null)
+                //    return false;
+                //return compilationSection.Debug;
+                object isOn = ConfigurationManager.AppSettings["BOX_DEBUG_ON"];
+                if (isOn == null)
+                    return false;
 
+                bool isOnBool = false;
+                Boolean.TryParse(isOn.ToString(), out isOnBool);
+
+                return isOnBool;
+            }
+        }
 
         private bool IsRazorEngineOn {
             get {
@@ -713,21 +731,15 @@ namespace Box.Core.Services {
 
         }
 
-
-        public static bool DetectNotInstalled() {
-            try {
-                var context = System.Web.HttpContext.Current;
-                if (context == null || !context.Request.IsLocal)
-                    return false;
-
-                string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-                if (String.IsNullOrEmpty(connectionString) || connectionString.StartsWith("DEFINE")) {
-                    context.RewritePath("~/where-is-my-db.htm", false);
-                    return true;
-                }
-            } catch (Exception) { }
-
-            return false;
+        public static System.Data.SqlClient.SqlException GetSqlException(Exception ex)
+        {
+            var sql = ex as System.Data.SqlClient.SqlException;
+            if (sql != null)
+                return sql;
+            if (ex.InnerException == null)
+                return null;
+            return GetSqlException(ex.InnerException);
         }
+      
     }
 }
