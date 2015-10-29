@@ -11,7 +11,7 @@ namespace Box.CMS.Data {
 
         protected override void Seed(CMSContext context) {
            
-            context.Database.ExecuteSqlCommand("SELECT * INTO __MigrationHistory_CMS FROM __MigrationHistory");
+            //context.Database.ExecuteSqlCommand("SELECT * INTO __MigrationHistory_CMS FROM __MigrationHistory");
             context.Database.ExecuteSqlCommand("DROP TABLE __MigrationHistory");
 
             SeedSample(context);

@@ -7,10 +7,12 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using System.ComponentModel.Composition;
+using System.Data.Entity;
 using System.Threading;
 using System.Web.Security;
 using Box.Composition;
 using Box.Core;
+using Box.Core.Data;
 
 
 namespace Box.Adm {
