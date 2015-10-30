@@ -171,6 +171,7 @@
     <Compile Include="Groups\ADM_CMS.cs" />
     <Compile Include="Groups\ADM_CMSFILE.cs" />
     <Compile Include="Menus\CrossLinksLink.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Services\CaptchaService.cs" />
     <Compile Include="Services\CMSService.CrossLinks.cs" />
     <Compile Include="Services\CMSService.File.cs" />
