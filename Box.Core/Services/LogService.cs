@@ -82,7 +82,7 @@ namespace Box.Core.Services {
 
                     // delete old records
                     DateTime yearAgo = when.AddYears(-1);
-                    context.Database.ExecuteSqlCommand("DELETE Logs WHERE GETDATE() < '" + yearAgo.Year + "-" + yearAgo.Month + "-" + yearAgo.Day + "'");
+                    context.Database.ExecuteSqlCommand("DELETE FROM Logs WHERE Logs.When < '" + yearAgo.Year + "-" + yearAgo.Month + "-" + yearAgo.Day + " 00:00:00'");
                 }
             }
             catch (Exception) { }
