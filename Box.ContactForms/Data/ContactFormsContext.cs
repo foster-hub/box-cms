@@ -11,7 +11,7 @@ namespace Box.ContactForms.Data {
     public class ContactFormsContext : DbContext {
 
         public ContactFormsContext() : base("DefaultConnection") {
-            Database.SetInitializer<ContactFormsContext>(new ContactFormsContextInitializer());   
+            //Database.SetInitializer<ContactFormsContext>(new ContactFormsContextInitializer());   
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {
