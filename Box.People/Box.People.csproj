@@ -121,7 +121,6 @@
     <Compile Include="Controllers\People_GroupController.cs" />
     <Compile Include="Controllers\People_PersonController.cs" />
     <Compile Include="Data\PeopleContext.cs" />
-    <Compile Include="Data\PeopleContextInitializer.cs" />
     <Compile Include="Groups\ADM_PEOPLE.cs" />
     <Compile Include="Menus\PeopleLink.cs" />
     <Compile Include="Migrations\Configuration.cs" />

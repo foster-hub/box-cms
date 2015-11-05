@@ -118,7 +118,6 @@
     <Compile Include="Api\ContactForms_FormsController.cs" />
     <Compile Include="ContactForm.cs" />
     <Compile Include="Controllers\ContactForms_FormsController.cs" />
-    <Compile Include="Data\ContactFormsContextInitializer.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Services\ContactFormsService.cs" />
     <Compile Include="SharedStrings.pt-br.Designer.cs">

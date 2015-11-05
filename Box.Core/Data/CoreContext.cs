@@ -12,8 +12,7 @@ namespace Box.Core.Data {
     public class CoreContext : DbContext {
         
         public CoreContext() : base("DefaultConnection") {
-            //Database.SetInitializer<CoreContext>(null);
-            //Database.SetInitializer<CoreContext>(new CoreContextInitializer());
+            Database.SetInitializer<CoreContext>(new CoreContextInitializer());
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {
@@ -50,6 +49,7 @@ namespace Box.Core.Data {
         
         public DbSet<Log> Logs { get; set; }
     }
+
     public class MySqlConfiguration : DbConfiguration
     {
         public MySqlConfiguration()

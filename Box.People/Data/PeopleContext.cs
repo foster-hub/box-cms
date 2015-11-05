@@ -11,8 +11,7 @@ namespace Box.People.Data {
 
         public DbSet<Person> Person { get; set; }
 
-        public PeopleContext() : base("DefaultConnection") {
-            //Database.SetInitializer<PeopleContext>(new PeopleContextInitializer());   
+        public PeopleContext() : base("DefaultConnection") {            
         }
     }
 }
