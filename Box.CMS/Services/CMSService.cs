@@ -122,8 +122,84 @@ namespace Box.CMS.Services {
 
             }
 
+            // CUSTOM ORDERS
+            if (order == "CustomNumber1") {
+                return contents.OrderBy(c => c.CustomInfo.Number1).ThenBy(c => c.DisplayOrder);
+            }
+            if (order == "CustomNumber2") {
+                return contents.OrderBy(c => c.CustomInfo.Number2).ThenBy(c => c.DisplayOrder);
+            }
+            if (order == "CustomNumber3") {
+                return contents.OrderBy(c => c.CustomInfo.Number3).ThenBy(c => c.DisplayOrder);
+            }
+            if (order == "CustomNumber4") {
+                return contents.OrderBy(c => c.CustomInfo.Number4).ThenBy(c => c.DisplayOrder);
+            }
+            if (order == "CustomNumber1 DESC") {
+                return contents.OrderByDescending(c => c.CustomInfo.Number1).ThenBy(c => c.DisplayOrder);
+            }
+            if (order == "CustomNumber2 DESC") {
+                return contents.OrderByDescending(c => c.CustomInfo.Number2).ThenBy(c => c.DisplayOrder);
+            }
+            if (order == "CustomNumber3 DESC") {
+                return contents.OrderByDescending(c => c.CustomInfo.Number3).ThenBy(c => c.DisplayOrder);
+            }
+            if (order == "CustomNumber4 DESC") {
+                return contents.OrderByDescending(c => c.CustomInfo.Number4).ThenBy(c => c.DisplayOrder);
+            }
+            if (order == "CustomText1") {
+                return contents.OrderBy(c => c.CustomInfo.Text1).ThenBy(c => c.DisplayOrder);
+            }
+            if (order == "CustomText2") {
+                return contents.OrderBy(c => c.CustomInfo.Text2).ThenBy(c => c.DisplayOrder);
+            }
+            if (order == "CustomText3") {
+                return contents.OrderBy(c => c.CustomInfo.Text3).ThenBy(c => c.DisplayOrder);
+            }
+            if (order == "CustomText4") {
+                return contents.OrderBy(c => c.CustomInfo.Text4).ThenBy(c => c.DisplayOrder);
+            }
+            if (order == "CustomText1 DESC") {
+                return contents.OrderByDescending(c => c.CustomInfo.Text1).ThenBy(c => c.DisplayOrder);
+            }
+            if (order == "CustomText2 DESC") {
+                return contents.OrderByDescending(c => c.CustomInfo.Text2).ThenBy(c => c.DisplayOrder);
+            }
+            if (order == "CustomText3 DESC") {
+                return contents.OrderByDescending(c => c.CustomInfo.Text3).ThenBy(c => c.DisplayOrder);
+            }
+            if (order == "CustomText4 DESC") {
+                return contents.OrderByDescending(c => c.CustomInfo.Text4).ThenBy(c => c.DisplayOrder);
+            }
+            if (order == "CustomDate1") {
+                return contents.OrderBy(c => c.CustomInfo.Date1).ThenBy(c => c.DisplayOrder);
+            }
+            if (order == "CustomDate2") {
+                return contents.OrderBy(c => c.CustomInfo.Date2).ThenBy(c => c.DisplayOrder);
+            }
+            if (order == "CustomDate3") {
+                return contents.OrderBy(c => c.CustomInfo.Date3).ThenBy(c => c.DisplayOrder);
+            }
+            if (order == "CustomDate4") {
+                return contents.OrderBy(c => c.CustomInfo.Date4).ThenBy(c => c.DisplayOrder);
+            }
+            if (order == "CustomDate1 DESC") {
+                return contents.OrderByDescending(c => c.CustomInfo.Date1).ThenBy(c => c.DisplayOrder);
+            }
+            if (order == "CustomDate2 DESC") {
+                return contents.OrderByDescending(c => c.CustomInfo.Date2).ThenBy(c => c.DisplayOrder);
+            }
+            if (order == "CustomDate3 DESC") {
+                return contents.OrderByDescending(c => c.CustomInfo.Date3).ThenBy(c => c.DisplayOrder);
+            }
+            if (order == "CustomDate4 DESC") {
+                return contents.OrderByDescending(c => c.CustomInfo.Date4).ThenBy(c => c.DisplayOrder);
+            }
+
             return contents.OrderByDescending(c => c.ContentDate);
         }
+
+        
 
         private IQueryable<ContentHead> OnlyPublishedContents(IQueryable<ContentHead> contents) {
             DateTime now = DateTime.Now.ToUniversalTime();
