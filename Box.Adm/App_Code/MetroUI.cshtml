@@ -155,9 +155,9 @@
             </ul>
             <div class="brand">
                 @if (showSocial && browsable) {
-                    <span class="badge badge-pageCount" data-bind="text: PageViewCount==null?0:PageViewCount.Count"></span>                
-                    <span class="badge2 badge-commentCount" data-bind="text: CommentsCount==null?0:CommentsCount.Count, visible: CommentsCount!=null && CommentsCount.Count>0"></span>
-                    <span class="badge3 badge-shareCount" data-bind="text: ShareCount==null?0:ShareCount.Count, visible: ShareCount!=null && ShareCount.Count>0"></span>
+                    <span class="badge badge-pageCount" data-bind="text: PageViewCount==null?0:PageViewCount.Count"></span>
+                    <span class="badge2 badge-commentCount" data-bind="text: CommentsCount==null?0:CommentsCount.Count, visible: (CommentsCount != null) && (CommentsCount.Count!=0)"></span>
+                    <span class="badge3 badge-shareCount" data-bind="text: ShareCount==null?0:ShareCount.Count, visible: (ShareCount!=null) && (ShareCount.Count!=0)"></span>
                 }                
                 <div class="badge0 bg-red" data-bind="visible: pageVM.isContentNotPublished($data)" title="@Box.CMS.SharedStrings.CONTENT_NOT_PUBLISHED">
                     <i class="icon-blocked"></i>
