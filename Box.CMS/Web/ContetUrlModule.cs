@@ -73,9 +73,11 @@ namespace Box.CMS.Web {
             string token = app.Request.QueryString["previewToken"].ToString();
 
             Core.Services.SecurityService security = new Core.Services.SecurityService();
-            User u = security.GetUserByAuthToken(token);
-            return !u.Memberships.Any(m => m.UserGroupUId == ADM_CMS_group.UserGroupUId || m.UserGroupUId == AMD_SEC_group.UserGroupUId);
             
+            User u = security.GetUserByAuthToken(token);
+            
+            string[] roles = security.GetUserRoles(u);
+            return !roles.Contains(ADM_CMS_group.UserGroupUId) && !roles.Contains(AMD_SEC_group.UserGroupUId);            
         }
         
         public void Dispose() {            
