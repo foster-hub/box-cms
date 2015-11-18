@@ -2,8 +2,10 @@
     init: function () {
         var icon = this.ne.options.iconsPath.replace('nicEditorIcons.gif', '') + 'clean.png';
         this.setDisplay('<img src="' + icon + '" width="18" height="18"/>');
-        this.add('cleanAll', 'Clean all');
-        this.add('onlyStyle', 'Only style');
+        this.add('cleanAll', 'All');
+        this.add('breakLines', 'Break lines');
+        this.add('onlyStyle', 'Style');
+        
     }
 });
 
@@ -23,6 +25,10 @@ var nicCleanFormatOptions = {
                     text = text.replace(/<span>/g, '');
                     text = text.replace(/<\/span>/g, '');
                     text = text.replace(/<&nbsp;>/g, '');
+                }
+                else if (option == 'breakLines') {
+                    text = $(text).text();
+                    text = text.replace(/\n/g, '<br>');
                 }
                 else {
                     text = $(text).text();
