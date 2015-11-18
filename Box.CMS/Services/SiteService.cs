@@ -18,7 +18,9 @@ namespace Box.CMS.Services {
 
         public bool DebugCMS {
             get {
-                string debugStr = System.Configuration.ConfigurationManager.AppSettings["DEBUG_CMS"] as String;
+                string debugStr = System.Configuration.ConfigurationManager.AppSettings["DEBUG_CMS"] as String;                
+                if (debugStr == null)
+                    debugStr = System.Configuration.ConfigurationManager.AppSettings["BOX_DEBUG_ON"] as String;
                 if (debugStr == null)
                     return false;
                 bool debug = false;
@@ -92,6 +94,7 @@ namespace Box.CMS.Services {
             string appDataPath = System.Web.HttpContext.Current.Server.MapPath("~/App_Data");
 
             System.Net.Http.HttpClient wc = new System.Net.Http.HttpClient();
+
             wc.GetAsync("https://graph.facebook.com/?id=" + url)
                 .ContinueWith(task => {
 
