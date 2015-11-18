@@ -27,11 +27,11 @@ var nicCleanFormatOptions = {
                     text = text.replace(/<&nbsp;>/g, '');
                 }
                 else if (option == 'breakLines') {
-                    text = $(text).text();
+                    text = $('<div>' + text + '</div>').text();
                     text = text.replace(/\n/g, '<br>');
                 }
                 else {
-                    text = $(text).text();
+                    text = $('<div>' + text + '</div>').text();
                 }
                 
                 nic.frameDoc.body.innerHTML = text;
