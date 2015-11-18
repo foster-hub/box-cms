@@ -131,6 +131,12 @@ namespace Box.CMS.Services {
             if (width < maxWidth)
                 maxWidth = width;
 
+            if (String.IsNullOrEmpty(vAlign))
+                vAlign = "center";
+
+            if (String.IsNullOrEmpty(hAlign))
+                hAlign = "center";
+
             int top = 0;
             if (vAlign == "bottom")
                 top = (maxHeight - height);
