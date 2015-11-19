@@ -104,32 +104,46 @@ namespace Box.CMS.Services {
             return ImageToBytes(newImg, mimeType);
         }
 
-        public byte[] GetImageFileThumb(byte[] bytes, int width, int height, int maxWidth, int maxHeight, string vAlign = "center", string hAlign = "center", string mimeType = null) {
+        public byte[] GetImageFileThumb(byte[] bytes, int width, int height, int maxWidth, int maxHeight, string vAlign = "center", string hAlign = "center", string mimeType = null, string mode = null) {
             
             System.IO.MemoryStream stream = new System.IO.MemoryStream(bytes);
             System.Drawing.Image image = System.Drawing.Image.FromStream(stream);
             stream.Close();
 
-            if (height == 0) {
-                float rt = width / (float)image.Width;
-                height = (int)(image.Height * rt);
-            }
-            if (width == 0) {
-                float rt = height / (float)image.Height;
-                width = (int)(image.Width * rt);
+            float rtX = width / (float)image.Width;
+            float rtY = height / (float)image.Height;
+
+            if (String.IsNullOrEmpty(mode)) {
+                if (height == 0) {                    
+                    height = (int)(image.Height * rtX);
+                }
+                if (width == 0) {                    
+                    width = (int)(image.Width * rtY);
+                }
+
+                if (maxWidth == 0)
+                    maxWidth = width;
+
+                if (maxHeight == 0)
+                    maxHeight = height;
+
+                if (height < maxHeight)
+                    maxHeight = height;
+
+                if (width < maxWidth)
+                    maxWidth = width;
             }
 
-            if (maxWidth == 0)
+            if (mode=="f" || mode=="fill") {
                 maxWidth = width;
-
-            if (maxHeight == 0)
                 maxHeight = height;
 
-            if (height < maxHeight)
-                maxHeight = height;
-
-            if (width < maxWidth)
-                maxWidth = width;
+                if (rtY < rtX)
+                    height = (int)(image.Height * rtX);                
+                else
+                    width = (int)(image.Width * rtY);
+                    
+            }
 
             if (String.IsNullOrEmpty(vAlign))
                 vAlign = "center";

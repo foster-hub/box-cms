@@ -18,7 +18,7 @@ namespace Box.CMS.Controllers {
         protected CMS.Services.CMSService cms { get; set; }
 
         [OutputCache(VaryByParam = "*", Duration = 2678400, Location=System.Web.UI.OutputCacheLocation.ServerAndClient)]       
-        public FileResult Index(string folder, string id, bool? asThumb, int width = 0, int height = 0, int maxWidth = 0, int maxHeight = 0, double scale = 1.0, string vAlign = "center", string hAlign = "center") {
+        public FileResult Index(string folder, string id, bool? asThumb, int width = 0, int height = 0, int maxWidth = 0, int maxHeight = 0, double scale = 1.0, string vAlign = "center", string hAlign = "center", string mode = null) {
 
             if (folder=="box" && id == "loading")
                 return GetLoadingImage();
@@ -36,7 +36,7 @@ namespace Box.CMS.Controllers {
             if (width == 0 && height == 0)
                 return new FileContentResult(cms.GetScaledImageFile(file.Data.StoredData, scale, mimeType: file.Type), file.Type);
 
-            return new FileContentResult(cms.GetImageFileThumb(file.Data.StoredData, width, height, maxWidth, maxHeight, vAlign, hAlign, file.Type), file.Type);
+            return new FileContentResult(cms.GetImageFileThumb(file.Data.StoredData, width, height, maxWidth, maxHeight, vAlign, hAlign, file.Type, mode), file.Type);
         }
 
 
