@@ -769,8 +769,10 @@ var nicEditorIFrameInstance = nicEditorInstance.extend({
         
         var img = nodes[0];
 
-        // is is as IMG changs its align
-        img.align = cmd.replace('justify', '');
+        // is is as IMG changs its align        
+        var align = cmd.replace('justify', '');
+        $(img).attr('align', align);
+        img.align = align;
     }
 
 });
@@ -1494,7 +1496,8 @@ function NodeSelection() {
 
         // Special case for a range that is contained within a single node
         if (node == endNode) {
-            return [node];
+            if (type == null || type == node.tagName) return [node];
+            return [];
         }
 
         // Iterate nodes until we hit the end container
