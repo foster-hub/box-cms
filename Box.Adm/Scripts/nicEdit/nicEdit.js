@@ -743,7 +743,10 @@ var nicEditorIFrameInstance = nicEditorInstance.extend({
 
     nicCommand: function (cmd, args) {
 
-        if (cmd == 'insertHTML')
+        if (cmd == 'justifyleft' || cmd == 'justifyright' || cmd == 'justifycenter') {
+            this.nicCommandJustify(cmd, args);
+        }
+        else if (cmd == 'insertHTML')
             nicEditor.pasteHtmlAtCaret(args, this.frameDoc);            
         else
             this.frameDoc.execCommand(cmd, false, args);
@@ -752,6 +755,23 @@ var nicEditorIFrameInstance = nicEditorInstance.extend({
         if (this.onChange != null)
             this.onChange();
     },
+
+    // handle IMG align different way
+    nicCommandJustify: function (cmd, args) {
+
+        var sel = new NodeSelection();
+        var nodes = sel.getSelectedNodes(this.frameDoc, 'IMG');
+        
+        if (nodes == null || nodes.length == 0) {
+            this.frameDoc.execCommand(cmd, false, args);
+            return;
+        }
+        
+        var img = nodes[0];
+
+        // is is as IMG changs its align
+        img.align = cmd.replace('justify', '');
+    }
 
 });
 var nicEditorPanel = bkClass.extend({
@@ -1451,3 +1471,57 @@ nicEditor.pasteHtmlAtCaret = function (html, w) {
     }
 }
 
+function NodeSelection() {
+
+
+    function nextNode(node) {
+        if (node.hasChildNodes()) {
+            return node.firstChild;
+        } else {
+            while (node && !node.nextSibling) {
+                node = node.parentNode;
+            }
+            if (!node) {
+                return null;
+            }
+            return node.nextSibling;
+        }
+    }
+
+    function getRangeSelectedNodes(range, type) {
+        var node = range.startContainer;
+        var endNode = range.endContainer;
+
+        // Special case for a range that is contained within a single node
+        if (node == endNode) {
+            return [node];
+        }
+
+        // Iterate nodes until we hit the end container
+        var rangeNodes = [];
+        while (node && node != endNode) { 
+            if (type == null || type == node.tagName) rangeNodes.push(node);
+            node = nextNode(node);
+        }
+
+        // Add partially selected nodes at the start of the range
+        node = range.startContainer;
+        while (node && node != range.commonAncestorContainer) {
+            if (type == null || type == node.tagName) rangeNodes.unshift(node);
+            node = node.parentNode;
+        }
+
+        return rangeNodes;
+    }
+
+    this.getSelectedNodes = function(w, type) {
+        if (w.getSelection) {
+            var sel = w.getSelection();
+            if (!sel.isCollapsed) {
+                return getRangeSelectedNodes(sel.getRangeAt(0), type);
+            }
+        }
+        return [];
+    }
+
+}
