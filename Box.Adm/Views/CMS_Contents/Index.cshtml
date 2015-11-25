@@ -125,8 +125,8 @@
         @MetroUI.ContentTile(
         (bool)Model.ContentKind.Browsable,
         onClick: "window.editContent",
-        onBrowse: "function(data) { pageVM.browseContent(data);}",
-        onPreview: "function(data) { pageVM.setPreviewUrl(data);}",
+        onBrowse: ((bool)Model.ContentKind.Browsable) ? "function(data) { pageVM.browseContent(data);}" : null,
+        onPreview: ((bool)Model.ContentKind.Browsable) ? "function(data) { pageVM.setPreviewUrl(data);}" : null,
         onRemove: "function(data) { dialogHelper.endark(); pageVM.removingItem(data); }")
     </ul>
     @Html.Partial("ListNavigation", new PageNavigationModel() { ListName = "contents" })
