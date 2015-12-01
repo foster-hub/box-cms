@@ -307,13 +307,14 @@ namespace Box.CMS.Services {
             if (content == null)
                 return new List<ContentHead>();
             string[] tags = content.Tags.Select(t => t.Tag).ToArray();
-            var contents = GetRelatedContent(tags, top, location, kinds, includeData);
+            var contents = GetRelatedContent(tags, top + 1, location, kinds, includeData);
 
             // remove it selft from related contents
             if (contents != null)
                 contents = contents.Where(c => c.ContentUId != id);
 
-            return contents;
+
+            return contents.Take(top);
         }
 
         public IEnumerable<ContentHead> GetRelatedContent(string[] tags, int top, string location, string[] kinds, bool includeData = false) {
