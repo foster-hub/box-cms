@@ -50,7 +50,7 @@ namespace Box.CMS.Services {
             }
         }
 
-        public IEnumerable<ContentHead> GetCrossLinksFrom(string pageArea, string order = "CrossLinkDisplayOrder", int top = 0, string[] kinds = null, bool includeData = false, string[] pageAreaFallbacks = null) {
+        public IEnumerable<ContentHead> GetCrossLinksFrom(string pageArea, string order = "CrossLinkDisplayOrder", int top = 0, string[] kinds = null, bool includeData = false, string[] pageAreaFallbacks = null, bool onlyPublished = true) {
             using (var context = new Data.CMSContext()) {
                 IQueryable<ContentHead> contents = null;
 
@@ -60,6 +60,9 @@ namespace Box.CMS.Services {
                     contents = context.ContentHeads.Include("Data");
 
                 contents = contents.Where(c => c.CrossLinks.Any(x => x.PageArea == pageArea));
+
+                if (onlyPublished)
+                    contents = OnlyPublishedContents(contents);
 
                 contents = OrderContents(contents, order, pageArea);
 

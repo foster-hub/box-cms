@@ -75,6 +75,8 @@ namespace Box.CMS.Web {
             Core.Services.SecurityService security = new Core.Services.SecurityService();
             
             User u = security.GetUserByAuthToken(token);
+            if (u == null)
+                return true;
             
             string[] roles = security.GetUserRoles(u);
             return !roles.Contains(ADM_CMS_group.UserGroupUId) && !roles.Contains(AMD_SEC_group.UserGroupUId);            

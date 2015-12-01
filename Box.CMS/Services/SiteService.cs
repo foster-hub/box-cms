@@ -51,7 +51,8 @@ namespace Box.CMS.Services {
         }
 
         public IEnumerable<ContentHead> GetContents(string url, string order = "Date", string[] kinds = null, DateTime? createdFrom = null, DateTime? createdTo = null, bool parseContent = false, int skip = 0, int top = 0, string filter = null, System.Linq.Expressions.Expression<Func<ContentHead, bool>> queryFilter = null) {
-            IEnumerable<ContentHead> contents = cms.GetContents(filter, skip, top, url, kinds, order, createdFrom, createdTo, parseContent, true, queryFilter);
+            bool onlyPublished = !CanSeeUnpublishedContents();
+            IEnumerable<ContentHead> contents = cms.GetContents(filter, skip, top, url, kinds, order, createdFrom, createdTo, parseContent, onlyPublished, queryFilter);
             
             if (parseContent) 
                 foreach (ContentHead c in contents) 
@@ -60,12 +61,38 @@ namespace Box.CMS.Services {
             return contents;
         }
 
+        private bool CanSeeUnpublishedContents() {
+            
+            var context = System.Web.HttpContext.Current;
+            if (context == null)
+                return false;
+            
+            string token = context.Request.QueryString["previewToken"];
+            if (String.IsNullOrEmpty(token))
+                return false;
+
+            Core.Services.SecurityService security = new Core.Services.SecurityService();
+            var admCMS = new Groups.ADM_CMS();
+            var admSEC = new Core.Groups.ADM_SEC();
+
+            Core.User u = security.GetUserByAuthToken(token);
+            if (u == null)
+                return false;
+
+            string[] roles = security.GetUserRoles(u);
+            return roles.Contains(admCMS.UserGroupUId) || roles.Contains(admSEC.UserGroupUId);            
+
+        }
+
         public DateTime? GetLastPublishDate(string location, string[] kinds) {
             return cms.GetLastPublishDate(location, kinds);
         }
 
         public IEnumerable<ContentHead> GetCrossLinksFrom(string pageArea, string order = "CrossLinkDisplayOrder", int top = 0, string[] kinds = null, bool parseContent = false, string[] pageAreaFallBacks = null) {
-            IEnumerable<ContentHead> contents = cms.GetCrossLinksFrom(pageArea, order, top, kinds, parseContent, pageAreaFallBacks);
+
+            bool onlyPublished = !CanSeeUnpublishedContents();
+
+            IEnumerable<ContentHead> contents = cms.GetCrossLinksFrom(pageArea, order, top, kinds, parseContent, pageAreaFallBacks, onlyPublished);
             
             if (parseContent)
                 foreach (ContentHead c in contents)
