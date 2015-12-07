@@ -8,28 +8,35 @@
 
     <div class="grid fluid">
         <div class="row">
-            <div class="span5">        
-                <button  onclick="if (!$('#editForm').valid()) return; pageVM.applyContentChanges()" >
+            <div class="span5">                        
+                <button  onclick="if (!$('#editForm').valid()) return; pageVM.applyContentChanges(false, true)" >
                     <i class="icon-checkmark on-left fg-green"></i>
                         @Resources.SharedStrings.Apply                    
-                </button>
+                </button>                
                 <button onclick="if (!$('#editForm').valid()) return; pageVM.applyContentChanges(true)" >
                     <i class="icon-upload-2 on-left fg-blue"></i>
-                        @Box.CMS.SharedStrings.Apply_and_Publish
-                    
+                        @Box.CMS.SharedStrings.Apply_and_Publish                    
                 </button>
                 <button onclick="pageVM.cancelItemChanges()" >
                     <i class="icon-cancel on-left fg-red"></i>
                         @Resources.SharedStrings.Cancel                    
                 </button>
+                <div data-bind="visible: isSaved()==true" class="saveTooltip">(@Box.CMS.SharedStrings.saved)</div>
+                <div data-bind="visible: isSaved()==false" class="saveTooltip fg-orange">(@Box.CMS.SharedStrings.pending_changes)</div>
             </div>
 
-            <div class="span7">
-                <input type="button" value="@Box.CMS.SharedStrings.Publication" onclick="showPanel('publishPanel')"    class="secundary place-right"/> 
+            <div class="span7">                
+                <input type="button" value="@Box.CMS.SharedStrings.Publication" onclick="showPanel('publishPanel')"    class="secundary place-right" /> 
                 <input type="button" value="@Box.CMS.SharedStrings.Cross_Links" onclick="showPanel('crossLinksPanel')" class="secundary place-right" />        
                 <input type="button" value="@Box.CMS.SharedStrings.Tags"        onclick="showPanel('tagPanel')"        class="secundary place-right" />        
                 <input type="button" value="@Resources.SharedStrings.Order_by"  onclick="showPanel('orderPanel')"      class="secundary place-right"/> 
                 <input type="button" value="@Resources.SharedStrings.Move_to"   onclick="showPanel('movePanel')"       class="secundary place-right"/> 
+                @if (Model.ContentKind.Browsable) { 
+                <button onclick="pageVM.browseEditingContent();" style="float: right">
+                    <i class="icon-new-tab on-left fg-grayDark"></i>
+                    @Box.CMS.SharedStrings.Preview
+                </button>
+                }
             </div>
         </div>
         
@@ -121,44 +128,45 @@
 @this.ScriptBlock(
 @<script type="text/javascript" >
 
-     pageVM.publishAlert = '@{<text>@Html.Raw(Box.CMS.SharedStrings.Publish_alert.ToString().Replace("\r", "").Replace("\n", ""))</text>}';
+    pageVM.publishAlert = '@{<text>@Html.Raw(Box.CMS.SharedStrings.Publish_alert.ToString().Replace("\r", "").Replace("\n", ""))</text>}';
+    pageVM.contetNotSavedAlert = '@{<text>@Html.Raw(Box.CMS.SharedStrings.Content_not_saved_alert)</text>}';
 
-     // CONTENT HEAD SCRIPT BLOCK ----------------------
-     var _panelOpened = null;
-     function showPanel(id) {
-         var panel;
-         if (id == null)
-             panel = _panelOpened;
-         else
-             panel = document.getElementById(id);
+    // CONTENT HEAD SCRIPT BLOCK ----------------------
+    var _panelOpened = null;
+    function showPanel(id) {
+        var panel;
+        if (id == null)
+            panel = _panelOpened;
+        else
+            panel = document.getElementById(id);
 
-         if (panel == null)
-             return;
+        if (panel == null)
+            return;
 
-         if (panel == _panelOpened) {
-             panel.style.display = 'none';
-             _panelOpened = null;
-             return;
-         }
+        if (panel == _panelOpened) {
+            panel.style.display = 'none';
+            _panelOpened = null;
+            return;
+        }
 
-         if (_panelOpened != null)
-             _panelOpened.style.display = 'none';
-         panel.style.display = 'block';
-         _panelOpened = panel;
-     }
+        if (_panelOpened != null)
+            _panelOpened.style.display = 'none';
+        panel.style.display = 'block';
+        _panelOpened = panel;
+    }
 
-     function addTag(tagDiv) {
-         var tags = document.getElementById('tagsTextArea');
-         if (tags == null)
-             return;
+    function addTag(tagDiv) {
+        var tags = document.getElementById('tagsTextArea');
+        if (tags == null)
+            return;
 
         if (tags.value.length > 0)
             tags.value = tags.value + ', ';
         tags.value = tags.value + tagDiv.innerText;
-         
+
         $(tags).trigger("change");
-     }
-     
+    }
+
 </script>
 )
 

@@ -60,9 +60,12 @@ function CrudVM(moduleName, name, uIdField) {
 
     this.customPostParameters = '';
 
-    this.editingItemCopy = null;
+    this.editingItemCopy = null;    
 
     this.firstLoaded = new ko.observable(false);
+
+    this.isSaved = new ko.observable(true);
+
 
     var me = this;
 
@@ -113,15 +116,16 @@ function CrudVM(moduleName, name, uIdField) {
         me._deleteData(me.removingItem()[me._resourceUIdField]);                
     }
 
-    this.applyItemChanges = function () {
+    this.applyItemChanges = function (dontClose, afterSave) {
 
         if (me.newItem() == me.editingItem()) {
-            me._postData(me.newItem());
-            me.setAddingItem(null);            
+            me._postData(me.newItem(), afterSave);
+            if (!dontClose)
+                me.setAddingItem(null);            
             return;
         }
 
-        me._putData(me.editingItem()[me._resourceUIdField], me.editingItem());
+        me._putData(me.editingItem()[me._resourceUIdField], me.editingItem(), dontClose, afterSave);
 
         //me.setEditingItem(null);
     }
@@ -211,7 +215,7 @@ function CrudVM(moduleName, name, uIdField) {
     }
 
 
-    this._postData = function (data) {
+    this._postData = function (data, afterSave) {
 
         // Sent to server        
         $.ajax({
@@ -221,8 +225,13 @@ function CrudVM(moduleName, name, uIdField) {
             headers: { 'RequestVerificationToken': window._antiForgeryToken },
             success: function (data) {
 
+                me.isSaved(true);
+
                 if (me.afterPost)
                     me.afterPost(data);
+
+                if (afterSave)
+                    afterSave(data);
 
                 me[me._resourceName].splice(0, 0, data);
                 
@@ -237,7 +246,7 @@ function CrudVM(moduleName, name, uIdField) {
         });
     }
 
-    this._putData = function (id, data) {
+    this._putData = function (id, data, dontClose, afterSave) {
 
         var verb = 'PUT';
         var url = _webAppUrl + 'api/' + me._module + '_' + me._resourceName + '/' + id + me.customPostParameters;
@@ -253,10 +262,18 @@ function CrudVM(moduleName, name, uIdField) {
             data: JSON.stringify(me.beforePost(data)),
             headers: { 'RequestVerificationToken': _antiForgeryToken },
             success: function (data) {
+
+                me.isSaved(true);
+
                 if (me.afterPost)
                     me.afterPost(data);
 
-                me.setEditingItem(null);
+                if (afterSave)
+                    afterSave(data);
+
+
+                if(!dontClose)
+                    me.setEditingItem(null);
             },
             error: function (request) {
                 if (request.status == 409) {

@@ -415,4 +415,13 @@ Are you sure you want to publish it now?</value>
   <data name="New_file" xml:space="preserve">
     <value>New file</value>
   </data>
+  <data name="Content_not_saved_alert" xml:space="preserve">
+    <value>In order to preview the content make sure you have applied all your content changes.</value>
+  </data>
+  <data name="pending_changes" xml:space="preserve">
+    <value>pending changes...</value>
+  </data>
+  <data name="saved" xml:space="preserve">
+    <value>saved</value>
+  </data>
 </root>

@@ -19,7 +19,7 @@
         NameDefaultFilterSelected = "selected";
         NewestFilterSelected = "";
     }
-
+    
     bool ShowLocationsAsDropdown = Model.ContentKind.Locations.Sum(l=>l.Length) > 140;
     
     
@@ -230,11 +230,11 @@
             htmlEditor.removeAllIntances();
 
             pageVM.setAddingItem(NEW_CONTENT(contentHead));
+            pageVM.isSaved(false);
 
             showPanel();
        
-            $('.date', '#editPannel').removeClass('hasDatepicker').datepicker({ dateFormat: _dateFormat });
-            $('.number').spinner({ change: function (event, ui) { $(event.srcElement).trigger('change'); } });
+            _applyFieldEvents();
 
             UploadArea.init();
 
@@ -256,16 +256,29 @@
                 if (window.AFTER_GET)
                     window.AFTER_GET();                
             });
-            
-            $('.date', '#editPannel').removeClass('hasDatepicker').datepicker({ dateFormat: _dateFormat });
-            $('.number').spinner({ change: function (event, ui) { $(event.srcElement).trigger('change');}});
-            
+         
+            _applyFieldEvents();
+           
             UploadArea.init();
 
             if (window.INIT_TEMPLATE)
                 window.INIT_TEMPLATE();
 
-        }    
+        }
+
+        function _applyFieldEvents() {
+
+            $('.date', '#editPannel').removeClass('hasDatepicker').datepicker({ dateFormat: _dateFormat });
+            $('.number').spinner({ change: function (event, ui) { $(event.srcElement).trigger('change'); } });
+
+            $('#editPannel input[type=text], #editPannel textarea').change(function () {
+                pageVM.isSaved(false);
+            });
+
+            ko.bindingHandlers.nicEdit.onChange = function () {
+                pageVM.isSaved(false);
+            }
+        }
    
     </script>
 }

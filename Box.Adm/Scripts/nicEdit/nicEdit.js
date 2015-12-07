@@ -690,7 +690,7 @@ var nicEditorIFrameInstance = nicEditorInstance.extend({
     },
 
     setOnChange: function (onChangeFUNC) {
-        this.onChange = onChangeFUNC;        
+        this.onChange = onChangeFUNC;      
     },
 
     toggleHTML: function () {
