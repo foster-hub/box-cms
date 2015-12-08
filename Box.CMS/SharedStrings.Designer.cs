@@ -574,6 +574,33 @@ namespace Box.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clean all.
+        /// </summary>
+        public static string NICEDIT_cleanAll {
+            get {
+                return ResourceManager.GetString("NICEDIT_cleanAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clean font style only.
+        /// </summary>
+        public static string NICEDIT_cleanStyleOnly {
+            get {
+                return ResourceManager.GetString("NICEDIT_cleanStyleOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Keep breaklines.
+        /// </summary>
+        public static string NICEDIT_keepBreaklines {
+            get {
+                return ResourceManager.GetString("NICEDIT_keepBreaklines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No contents were found for this cross link.
         /// </summary>
         public static string No_contents_were_found_for_this_crosslink {

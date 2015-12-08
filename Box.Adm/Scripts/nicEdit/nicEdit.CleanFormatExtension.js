@@ -2,9 +2,9 @@
     init: function () {
         var icon = this.ne.options.iconsPath.replace('nicEditorIcons.gif', '') + 'clean.png';
         this.setDisplay('<img src="' + icon + '" width="18" height="18"/>');
-        this.add('cleanAll', 'All');
-        this.add('breakLines', 'Break lines');
-        this.add('onlyStyle', 'Style');
+        this.add('onlyStyle', nicEditorStrings.cleanOnlyStyle);
+        this.add('breakLines', nicEditorStrings.keepBreakLines);
+        this.add('cleanAll', nicEditorStrings.cleanAll);
         
     }
 });
@@ -33,7 +33,10 @@ var nicCleanFormatOptions = {
                 else {
                     text = $('<div>' + text + '</div>').text();
                 }
-                
+                                
+                // this replace all urls
+                text = text.split(window.location.href).join('');
+
                 nic.frameDoc.body.innerHTML = text;
             }
         },

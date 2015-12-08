@@ -424,4 +424,13 @@ Are you sure you want to publish it now?</value>
   <data name="saved" xml:space="preserve">
     <value>saved</value>
   </data>
+  <data name="NICEDIT_cleanAll" xml:space="preserve">
+    <value>Clean all</value>
+  </data>
+  <data name="NICEDIT_cleanStyleOnly" xml:space="preserve">
+    <value>Clean font style only</value>
+  </data>
+  <data name="NICEDIT_keepBreaklines" xml:space="preserve">
+    <value>Keep breaklines</value>
+  </data>
 </root>

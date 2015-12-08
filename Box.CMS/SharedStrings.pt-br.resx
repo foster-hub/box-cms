@@ -418,4 +418,13 @@ Tem certeza que deseja publicar?</value>
   <data name="saved" xml:space="preserve">
     <value>salvo</value>
   </data>
+  <data name="NICEDIT_cleanAll" xml:space="preserve">
+    <value>Limpar tudo</value>
+  </data>
+  <data name="NICEDIT_cleanStyleOnly" xml:space="preserve">
+    <value>Limpar estilo de fonte apenas</value>
+  </data>
+  <data name="NICEDIT_keepBreaklines" xml:space="preserve">
+    <value>Manter quebra de linhas</value>
+  </data>
 </root>
