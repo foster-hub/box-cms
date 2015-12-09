@@ -38,6 +38,11 @@ var nicCleanFormatOptions = {
                 text = text.split(window.location.href).join('');
 
                 nic.frameDoc.body.innerHTML = text;
+
+
+                if (nic.onChange != null)
+                    nic.onChange();
+
             }
         },
     }
