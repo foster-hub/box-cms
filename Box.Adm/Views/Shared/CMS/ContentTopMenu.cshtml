@@ -115,8 +115,8 @@
     <div class="boxLeftMargin" style="font-style: italic; font-weight: bold; font-size: 12px; clear: both">
         <span  >@Resources.SharedStrings.At <span data-bind="text: contentLocation" style="margin-right: 10px"></span></span>            
         <span 
-            class="publishLabel" style="position: relative; left: 0px; top: 0px;" 
-            data-bind="visible: pageVM.isContentNotPublished(editingItem())">@Box.CMS.SharedStrings.CONTENT_NOT_PUBLISHED</span>
+            class="publishLabel fg-red" style="position: relative; left: 0px; top: 0px;" 
+            data-bind="visible: pageVM.isContentNotPublished(editingItem())"><i class="icon-blocked"></i> @Box.CMS.SharedStrings.CONTENT_NOT_PUBLISHED</span>
         <span 
             class="publishLabel" style="position: relative; left: 0px; top: 0px;" 
             data-bind="visible: pageVM.isContentScheduled(editingItem())">@Box.CMS.SharedStrings.CONTENT_SCHEDULED</span>
