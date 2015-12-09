@@ -235,9 +235,11 @@ function CrudVM(moduleName, name, uIdField) {
 
                 me[me._resourceName].splice(0, 0, data);
                 
-                data.CONTENT = me.editingItem().CONTENT;
-                me.setEditingItem(data);
-                me.newItem(null);
+                if (me.editingItem() != null) {
+                    data.CONTENT = me.editingItem().CONTENT;
+                    me.setEditingItem(data);
+                    me.newItem(null);
+                }
 
                 
             },
