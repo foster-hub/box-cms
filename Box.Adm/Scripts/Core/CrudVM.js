@@ -121,7 +121,7 @@ function CrudVM(moduleName, name, uIdField) {
         if (me.newItem() == me.editingItem()) {
             me._postData(me.newItem(), afterSave);
             if (!dontClose)
-                me.setAddingItem(null);            
+                me.setAddingItem(null); // goes back to list            
             return;
         }
 
@@ -234,6 +234,11 @@ function CrudVM(moduleName, name, uIdField) {
                     afterSave(data);
 
                 me[me._resourceName].splice(0, 0, data);
+                
+                data.CONTENT = me.editingItem().CONTENT;
+                me.setEditingItem(data);
+                me.newItem(null);
+
                 
             },
             error: function (request) {

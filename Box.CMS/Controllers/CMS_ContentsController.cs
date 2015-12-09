@@ -47,7 +47,7 @@ namespace Box.CMS.Controllers {
             string token = security.GetSignedUserToken();
             ContentHead content = cms.GetContentHead(id);
             if (content == null)
-                throw new System.Exception("");
+                throw new System.Exception("Colud not preview content. Content '" + id + "' not found.");
 
             return new RedirectResult("http://"+siteHost + content.Location + content.CanonicalName + "?previewToken=" + token);
         }
