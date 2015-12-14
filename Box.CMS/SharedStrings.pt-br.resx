@@ -409,4 +409,22 @@ Tem certeza que deseja publicar?</value>
   <data name="New_file" xml:space="preserve">
     <value>Novo arquivo</value>
   </data>
+  <data name="Content_not_saved_alert" xml:space="preserve">
+    <value>Tenha certeza de ter salvado todas suas alterações antes de visualizá-las.</value>
+  </data>
+  <data name="pending_changes" xml:space="preserve">
+    <value>alterações pendentes...</value>
+  </data>
+  <data name="saved" xml:space="preserve">
+    <value>salvo</value>
+  </data>
+  <data name="NICEDIT_cleanAll" xml:space="preserve">
+    <value>Limpar tudo</value>
+  </data>
+  <data name="NICEDIT_cleanStyleOnly" xml:space="preserve">
+    <value>Limpar estilo de fonte apenas</value>
+  </data>
+  <data name="NICEDIT_keepBreaklines" xml:space="preserve">
+    <value>Manter quebra de linhas</value>
+  </data>
 </root>

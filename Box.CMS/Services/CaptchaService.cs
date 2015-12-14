@@ -176,7 +176,7 @@ namespace Box.CMS.Services {
                 return;
 
             if (HttpContext.Current.Request["__RequestVerificationToken"] == null)
-                return;
+                throw new Exception("AntiForgery token not found.");
 
             string[] tokens = HttpContext.Current.Request["__RequestVerificationToken"].Split(Convert.ToChar(":"));
 

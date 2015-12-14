@@ -269,10 +269,10 @@ var nicEditorConfig = bkClass.extend({
 		'removeformat' : {name : __('Remove Formatting'), command : 'removeformat', noActive : true},
 		'indent' : {name : __('Indent Text'), command : 'indent', noActive : true},
 		'outdent' : {name : __('Remove Indent'), command : 'outdent', noActive : true},
-		'hr' : {name : __('Horizontal Rule'), command : 'insertHorizontalRule', noActive : true}
+		'hr': { name: __('Horizontal Rule'), command: 'insertHorizontalRule', noActive: true }
 	},
 	iconsPath : '../nicEditorIcons.gif',
-	buttonList : ['save','bold','italic','underline','fontSize','forecolor','bgcolor','boxImage','boxMedia','boxGallery', 'left','center','right','justify','ol','ul','fontFamily','fontFormat','indent','outdent','image','upload','link','unlink'],
+	buttonList: ['save', 'bold', 'italic', 'underline', 'fontSize', 'forecolor', 'bgcolor', 'boxImage', 'boxMedia', 'boxGallery', 'left', 'center', 'right', 'justify', 'ol', 'ul', 'fontFamily', 'fontFormat', 'indent', 'outdent', 'image', 'upload', 'link', 'unlink', 'cleanFormat'],
 	iconList : {"xhtml":1,"bgcolor":2,"forecolor":3,"bold":4,"center":5,"hr":6,"indent":7,"italic":8,"justify":9,"left":10,"ol":11,"outdent":12,"removeformat":13,"right":14,"save":15,"strikethrough":16,"subscript":17,"superscript":18,"ul":19,"underline":20,"link":21,"unlink":22,"close":23,"arrow":24}
 	
 });
@@ -631,6 +631,7 @@ var nicEditorInstance = bkClass.extend({
         if (cmd == 'insertHTML') {
             this.elm.focus();            
             nicEditor.pasteHtmlAtCaret(args, this.frameDoc);
+            nicEditor.placeCaretAtEnd(this.frameDoc);
         }
         else
             document.execCommand(cmd, false, args);
@@ -652,6 +653,8 @@ var nicEditorIFrameInstance = nicEditorInstance.extend({
         this.elmFrame = new bkElement('iframe').setAttributes({ 'src': 'javascript:;', 'frameBorder': 0, 'allowTransparency': 'true', 'scrolling': 'no' }).setStyle({ height: '100px', width: '100%' }).addClass('frame').appendTo(this.elm);
 
         if (this.copyElm) { this.elmFrame.setStyle({ width: (this.elm.offsetWidth - 1) + 'px' }); }
+
+        this.elmFrame.setStyle({ 'min-height': '300px' });
 
         var styleList = ['font-size', 'font-family', 'font-weight', 'color'];
         for (itm in styleList) {
@@ -687,7 +690,7 @@ var nicEditorIFrameInstance = nicEditorInstance.extend({
     },
 
     setOnChange: function (onChangeFUNC) {
-        this.onChange = onChangeFUNC;        
+        this.onChange = onChangeFUNC;      
     },
 
     toggleHTML: function () {
@@ -743,8 +746,13 @@ var nicEditorIFrameInstance = nicEditorInstance.extend({
 
     nicCommand: function (cmd, args) {
 
-        if (cmd == 'insertHTML')
-            nicEditor.pasteHtmlAtCaret(args, this.frameDoc);            
+        if (cmd == 'justifyleft' || cmd == 'justifyright' || cmd == 'justifycenter') {
+            this.nicCommandJustify(cmd, args);
+        }
+        else if (cmd == 'insertHTML') {
+            nicEditor.pasteHtmlAtCaret(args, this.frameDoc);
+            nicEditor.placeCaretAtEnd(this.frameContent);
+        }
         else
             this.frameDoc.execCommand(cmd, false, args);
 
@@ -752,6 +760,26 @@ var nicEditorIFrameInstance = nicEditorInstance.extend({
         if (this.onChange != null)
             this.onChange();
     },
+
+    // handle IMG align different way
+    nicCommandJustify: function (cmd, args) {
+
+        var sel = new NodeSelection();
+        var nodes = sel.getSelectedNodes(this.frameDoc, null, '__boxImgHolder');
+        
+        if (nodes == null || nodes.length == 0) {
+            this.frameDoc.execCommand(cmd, false, args);
+            return;
+        }
+        
+        var img = nodes[0];
+
+        // is is as IMG changs its align        
+        var align = cmd.replace('justify', '');
+        //$(img).attr('align', align);
+        //img.align = align;
+        $(img).css('float', align);
+    }
 
 });
 var nicEditorPanel = bkClass.extend({
@@ -1451,3 +1479,76 @@ nicEditor.pasteHtmlAtCaret = function (html, w) {
     }
 }
 
+nicEditor.placeCaretAtEnd = function (el) {
+    window.setTimeout(function () { el.focus(); }, 0);
+    if (typeof window.getSelection != "undefined"
+            && typeof document.createRange != "undefined") {
+        var range = document.createRange();
+        range.selectNodeContents(el);
+        range.collapse(false);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+    } else if (typeof document.body.createTextRange != "undefined") {
+        var textRange = document.body.createTextRange();
+        textRange.moveToElementText(el);
+        textRange.collapse(false);
+        textRange.select();
+    }
+}
+
+function NodeSelection() {
+
+
+    function nextNode(node) {
+        if (node.hasChildNodes()) {
+            return node.firstChild;
+        } else {
+            while (node && !node.nextSibling) {
+                node = node.parentNode;
+            }
+            if (!node) {
+                return null;
+            }
+            return node.nextSibling;
+        }
+    }
+
+    function getRangeSelectedNodes(range, type, css) {
+        var node = range.startContainer;
+        var endNode = range.endContainer;
+
+        // Special case for a range that is contained within a single node
+        if (node == endNode) {
+            if ((type == null || type == node.tagName) && (css == null || $(node).hasClass(css))) return [node];
+            return [];
+        }
+
+        // Iterate nodes until we hit the end container
+        var rangeNodes = [];
+        while (node && node != endNode) { 
+            if ((type == null || type == node.tagName) && (css == null || $(node).hasClass(css))) rangeNodes.push(node);
+            node = nextNode(node);
+        }
+
+        // Add partially selected nodes at the start of the range
+        node = range.startContainer;
+        while (node && node != range.commonAncestorContainer) {
+            if ((type == null || type == node.tagName) && (css == null || $(node).hasClass(css))) rangeNodes.unshift(node);
+            node = node.parentNode;
+        }
+
+        return rangeNodes;
+    }
+
+    this.getSelectedNodes = function(w, type, css) {
+        if (w.getSelection) {
+            var sel = w.getSelection();
+            if (!sel.isCollapsed) {
+                return getRangeSelectedNodes(sel.getRangeAt(0), type, css);
+            }
+        }
+        return [];
+    }
+
+}

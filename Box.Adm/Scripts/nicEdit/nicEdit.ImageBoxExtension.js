@@ -36,8 +36,9 @@ var nicBoxOptions = {
                 filesVM.saveSelection(nic.frameDoc);
 
                 showFileDatabase(function (file) {
-
-                    var html = '<img src="' + host + '/files/' + file.Folder + '/' + file.FileUId + widthAttr + '" />';
+                    
+                    var html = '<div class="__boxImgHolder"><img class="img-responsive" src="' + host + '/files/' + file.Folder + '/' + file.FileUId + widthAttr + '" /><br/>CAPTION</div>&nbsp;';
+                    
 
                     if (FileUrl.isVideo(file.Type))
                         html = '<video controls><source src="' + host + '/files/' + file.Folder + '/' + file.FileUId + '"></video>';

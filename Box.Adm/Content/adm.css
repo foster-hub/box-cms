@@ -324,3 +324,10 @@ label { color: Gray; text-transform: uppercase; font-size: 75%; }
 .ajaxUploadField {
     background-color: transparent;
 }
+
+
+.metro .toolbar input[type=button] { line-height: normal; padding-top: 5px; padding-bottom: 5px;}
+
+.saveTooltip {
+    line-height: normal; color: gray; vertical-align: middle; font-size: 12px; margin-top: 9px;
+}

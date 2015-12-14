@@ -196,6 +196,10 @@ ko.bindingHandlers.nicEdit = {
                 modelValue(value);
             else
                 allBindingsAccessor()._ko_property_writers.nicEdit(value);
+
+            if(ko.bindingHandlers.nicEdit.onChange!=null)
+                ko.bindingHandlers.nicEdit.onChange();
+            
         });
 
         $(element).change(function () {

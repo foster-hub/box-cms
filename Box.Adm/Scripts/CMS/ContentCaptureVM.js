@@ -27,7 +27,7 @@
     }
 
 
-    this.applyContentChanges = function (publish) {
+    this.applyContentChanges = function (publish, dontClose, afterSave) {
         me.customPostParameters = '';
         if (publish) {
             if (!window.confirm(me.publishAlert))
@@ -36,7 +36,7 @@
             me.editingItem().PublishAfter.setMinutes(0, 0, 0);
             me.customPostParameters = '?publishNow=1';
         }
-        me.applyItemChanges();
+        me.applyItemChanges(dontClose, afterSave);
     }
 
     me.createdFromFilter.subscribe(function (newValue) {
@@ -172,12 +172,17 @@
             success: function (data) {
                 me.editingItem().CONTENT = JSON.parse(data.Data.JSON);
                 me.editingItem().TagsString = getTagsString(data.Tags);
+
+                me.contentCopyJson = JSON.stringify(me.editingItem().CONTENT);
+
                 me.editingItem.valueHasMutated();
                 if (after != null)
                     after();
 
             }
         });
+
+
     }
 
     getTagsString = function (tags) {
@@ -219,6 +224,18 @@
         }
 
         var w = window.open('Preview/' + content.ContentUId, content.ContentUId);
+    }
+
+    this.browseEditingContent = function () {
+
+        var item = me.editingItem();
+        if (item == null)
+            return;
+
+        if (!me.isSaved())
+            alert(me.contetNotSavedAlert);
+        
+        me.browseContent(item);
     }
 
     

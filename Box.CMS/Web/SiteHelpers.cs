@@ -17,12 +17,12 @@ namespace Box.CMS.Web
     public class BoxSite
     {
 
-        public static IHtmlString Image(dynamic file, int width = 0, int height = 0, int maxWidth = 0, int maxHeight = 0, string cssClass = "")
+        public static IHtmlString Image(dynamic file, int width = 0, int height = 0, int maxWidth = 0, int maxHeight = 0, string cssClass = "", string vAlign = "center", string hAlign = "center", string mode = "")
         {
-            return new HtmlString("<img src=\"" + BoxLib.GetFileUrl((string)file.Folder, (string)file.FileUId, width, height, maxWidth, maxHeight) + "\" alt=\"" + file.Caption + "\" title=\"" + file.Caption + "\" class=\"" + cssClass + "\" />");
+            return new HtmlString("<img src=\"" + BoxLib.GetFileUrl((string)file.Folder, (string)file.FileUId, width, height, maxWidth, maxHeight, false, vAlign, hAlign, mode) + "\" alt=\"" + file.Caption + "\" title=\"" + file.Caption + "\" class=\"" + cssClass + "\" />");
         }
 
-        public static IHtmlString Figure(dynamic file, int width = 0, int height = 0, int maxWidth = 0, int maxHeight = 0, string cssClass = "")
+        public static IHtmlString Figure(dynamic file, int width = 0, int height = 0, int maxWidth = 0, int maxHeight = 0, string cssClass = "", string vAlign = "center", string hAlign = "center", string mode = "")
         {
             string str = "<figure>{0}{1}</figure>";
             string caption = "";
@@ -30,7 +30,7 @@ namespace Box.CMS.Web
             {
                 caption = "<figcaption>" + file.Caption + "</figcaption>";
             }
-            return new HtmlString(String.Format(str, Image(file, width, height, maxWidth, maxHeight, cssClass), caption));
+            return new HtmlString(String.Format(str, Image(file, width, height, maxWidth, maxHeight, cssClass, vAlign, hAlign, mode), caption));
         }
 
         public static IHtmlString ContentLink(ContentHead content)
@@ -254,6 +254,7 @@ namespace Box.CMS.Web
             tag = tag.Replace("*", "-x-");
             tag = tag.Replace("+", "-plus-");
             tag = tag.Replace("$", "%24");
+            tag = tag.Replace("ç", "&#231;");
 
             return tag;
         }
@@ -271,6 +272,7 @@ namespace Box.CMS.Web
             tag = tag.Replace("-plus-", "+");
             tag = tag.Replace("%24", "$");
             tag = tag.Replace("%23", "#");
+            tag = tag.Replace("&#231;", "ç");
 
             return tag;
         }
@@ -363,23 +365,23 @@ namespace Box.CMS.Web
             return GetFileUrl((string)file["Folder"], (string)file["FileUId"]);
         }
 
-        public static string GetFileUrl(string folder, string fileUId, int width = 0, int height = 0, int maxWidth = 0, int maxHeight = 0, bool asThumb = false)
+        public static string GetFileUrl(string folder, string fileUId, int width = 0, int height = 0, int maxWidth = 0, int maxHeight = 0, bool asThumb = false, string vAlign = "center", string hAlign = "center", string mode = "")
         {
-            return GetFileUrl(folder + "/" + fileUId, width, height, maxWidth, maxHeight, asThumb);
+            return GetFileUrl(folder + "/" + fileUId, width, height, maxWidth, maxHeight, asThumb, vAlign, hAlign, mode);
         }
 
-        public static string GetFileUrl(string filePath, int width = 0, int height = 0, int maxWidth = 0, int maxHeight = 0, bool asThumb = false)
+        public static string GetFileUrl(string filePath, int width = 0, int height = 0, int maxWidth = 0, int maxHeight = 0, bool asThumb = false, string vAlign = "center", string hAlign = "center", string mode = "")
         {
             SiteService site = new SiteService();
+            string url = "/files/" + filePath + "/?height=" + height + "&maxHeight=" + maxHeight + "&asThumb=" + asThumb.ToString().ToLower() + "&width=" + width + "&maxWidth=" + maxWidth + "&vAlign=" + vAlign + "&hAlign=" + hAlign + "&mode=" + mode;
             if (site.IgnoreVirtualAppPath)
-                return AppName + "/files/" + filePath + "/?height=" + height + "&maxHeight=" + maxHeight + "&asThumb=" + asThumb.ToString().ToLower() + "&width=" + width + "&maxWidth=" + maxWidth;
-            else
-                return "/files/" + filePath + "/?height=" + height + "&maxHeight=" + maxHeight + "&asThumb=" + asThumb.ToString().ToLower() + "&width=" + width + "&maxWidth=" + maxWidth;
+                url = AppName + url;            
+            return url;
 
         }
 
-        public static string GetFileUrl(dynamic file, int width = 0, int height = 0, int maxWidth = 0, int maxHeight = 0, bool asThumb = false) {            
-            return GetFileUrl((string)file["Folder"] + "/" + (string)file["FileUId"], width, height, maxWidth, maxHeight, asThumb);
+        public static string GetFileUrl(dynamic file, int width = 0, int height = 0, int maxWidth = 0, int maxHeight = 0, bool asThumb = false, string vAlign = "center", string hAlign = "center") {
+            return GetFileUrl((string)file["Folder"] + "/" + (string)file["FileUId"], width, height, maxWidth, maxHeight, asThumb, vAlign, hAlign);
         }
 
         public static string GetContentLink(ContentHead head)
@@ -565,7 +567,7 @@ namespace Box.CMS.Web
             return count.Value;
         }
 
-        public static void LogPageShare()
+        public static void LogPageShare(bool logShare = true, bool logComments = true)
         {
 
             Box.CMS.Web.ContentRenderView renderView = WebPageContext.Current.Page as Box.CMS.Web.ContentRenderView;
@@ -575,7 +577,7 @@ namespace Box.CMS.Web
             string serverHost = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority;
 
             SiteService site = new SiteService();
-            site.LogPageShare(renderView.HEAD, serverHost);
+            site.LogPageShare(renderView.HEAD, serverHost, logShare, logComments);
         }
 
         public static int GetListPageSize(string listId)
