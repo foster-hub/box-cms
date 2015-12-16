@@ -73,6 +73,7 @@ namespace Box.CMS.Api {
         }
 
         private void FormatLocation(ContentHead content) {
+            content.Name = content.Name.Trim();
             content.CanonicalName = cms.CanonicalName(content.Name);
             if (!content.Location.EndsWith("/"))
                 content.Location = content.Location + "/";
