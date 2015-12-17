@@ -55,9 +55,9 @@ namespace Box.CMS.Services {
                 IQueryable<ContentHead> contents = null;
 
                 if (!includeData)
-                    contents = context.ContentHeads;
+                    contents = context.ContentHeads.Include("CommentsCount").Include("ShareCount").Include("PageViewCount").Include("Tags").Include("CustomInfo");
                 else
-                    contents = context.ContentHeads.Include("Data");
+                    contents = context.ContentHeads.Include("CommentsCount").Include("ShareCount").Include("PageViewCount").Include("Tags").Include("CustomInfo").Include("Data");
 
                 contents = contents.Where(c => c.CrossLinks.Any(x => x.PageArea == pageArea));
 
