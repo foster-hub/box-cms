@@ -481,7 +481,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <None Include="Properties\PublishProfiles\Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\deploy.pubxml" />
     <None Include="Properties\PublishProfiles\foster.pubxml" />
     <Content Include="Views\CMS_CrossLinks\Index.cshtml" />
     <Content Include="Views\Shared\CMS_Capture\LINK.cshtml" />

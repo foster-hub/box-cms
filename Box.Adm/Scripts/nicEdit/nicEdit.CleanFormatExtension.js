@@ -18,8 +18,8 @@ var nicCleanFormatOptions = {
                 var nic = ne.selectedInstance;
                 var text = nic.frameDoc.body.innerHTML;
 
-                if (option == 'onlyStyle') {
-                    text = text.replace(/<((?!a)\w+).*?>/g, '<$1>');
+                if (option == 'onlyStyle') {                    
+                    text = text.replace(/<((?!a)\w+)(.|\n|&quot;)*?>/g, '<$1>');
                     text = text.replace(/<font>/g, '');
                     text = text.replace(/<\/font>/g, '');
                     text = text.replace(/<span>/g, '');
@@ -36,6 +36,9 @@ var nicCleanFormatOptions = {
                                 
                 // this replace all urls
                 text = text.split(window.location.href).join('');
+
+                // this replace word references
+                text = text.replace(/href="(.*)#_ftn(.*)"/g, 'href="#_ftn$2"');
 
                 nic.frameDoc.body.innerHTML = text;
 
