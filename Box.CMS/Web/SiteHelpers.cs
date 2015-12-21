@@ -254,7 +254,7 @@ namespace Box.CMS.Web
             tag = tag.Replace("*", "-x-");
             tag = tag.Replace("+", "-plus-");
             tag = tag.Replace("$", "%24");
-            tag = tag.Replace("ç", "&#231;");
+            tag = tag.Replace("ç", "%E7");
 
             return tag;
         }
@@ -273,6 +273,7 @@ namespace Box.CMS.Web
             tag = tag.Replace("%24", "$");
             tag = tag.Replace("%23", "#");
             tag = tag.Replace("&#231;", "ç");
+            tag = tag.Replace("%E7", "ç");
 
             return tag;
         }
