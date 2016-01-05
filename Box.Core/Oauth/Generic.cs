@@ -85,7 +85,7 @@ namespace Box.Core.Oauth {
 
         protected abstract string _GetUserEmail(dynamic user);
 
-        protected string GetAccessToken(string authCode) {
+        protected virtual string GetAccessToken(string authCode) {
 
             System.Net.Http.HttpClient wc = new System.Net.Http.HttpClient();
 

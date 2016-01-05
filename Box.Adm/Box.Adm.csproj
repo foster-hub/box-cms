@@ -213,6 +213,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\Core_Images\Oauth\nt.png" />
     <Content Include="Content\emailDetail.html" />
     <Content Include="Content\jquery.guillotine.css" />
@@ -481,6 +482,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
     <None Include="Properties\PublishProfiles\deploy.pubxml" />
     <None Include="Properties\PublishProfiles\foster.pubxml" />
     <Content Include="Views\CMS_CrossLinks\Index.cshtml" />

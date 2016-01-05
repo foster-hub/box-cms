@@ -1,35 +1,35 @@
 ﻿@using Box.Core.Web
 @{
-    string siteHost =  System.Configuration.ConfigurationManager.AppSettings["SITE_HOST"] as String;    
+    string siteHost = System.Configuration.ConfigurationManager.AppSettings["SITE_HOST"] as String;
     string dateFormat = "mm/dd/yy";
-    
-    if (System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLower() == "pt-br") {        
+
+    if (System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLower() == "pt-br")
+    {
         dateFormat = "dd/mm/yy";
-    }    
-} 
+    }
+}
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="google" value="notranslate">
-    <meta http-equiv="Content-Language" content="en_US" /> 
+    <meta http-equiv="Content-Language" content="en_US" />
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    
+
     @Styles.Render("~/Content/css")
-    @RenderSection("css", false)   
+    @RenderSection("css", false)
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/metro")
-    
 
     <script type="text/javascript">
         window._webAppUrl = '@Url.Content("~/")';
-        window._siteHost = '@siteHost';        
+        window._siteHost = '@siteHost';
         window._antiForgeryToken = '@Util.TokenHeaderValue()';
     </script>
-    
+
 </head>
 
 <body class="metro">
@@ -51,22 +51,22 @@
     @RenderBody()
 
     @Html.Partial("PageDefaults")
-    
+
     <!-- DIALOGS -->
     <div id="darkScreen">@RenderSection("dialogs", false)</div>
 
-    
-    @Scripts.Render("~/bundles/box")    
+
+    @Scripts.Render("~/bundles/box")
     @Scripts.Render("~/Scripts/Core/Validator." + System.Threading.Thread.CurrentThread.CurrentUICulture.Name + ".js")
 
 
     <script type="text/javascript">
-    _dateFormat = '@dateFormat';
+        _dateFormat = '@dateFormat';
         $(function () {
             $('#hideMenuButton').click(function () {
                 $('#mainMenu').slideToggle();
             });
-        });        
+        });
     </script>
 
 

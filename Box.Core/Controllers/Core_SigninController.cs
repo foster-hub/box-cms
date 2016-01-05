@@ -7,6 +7,7 @@ using System.ComponentModel.Composition;
 using System.Security.Principal;
 using System.Net;
 using System.Web.Http;
+using Box.Core.Oauth;
 
 namespace Box.Core.Controllers {
 
@@ -24,6 +25,9 @@ namespace Box.Core.Controllers {
         [Import]
         private Box.Core.Oauth.Google google { get; set; }
 
+        [Import]
+        private Facebook Facebook { get; set; }
+
         
         [System.Web.Mvc.AllowAnonymous]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")] 
@@ -31,6 +35,7 @@ namespace Box.Core.Controllers {
 
             ViewData["WINDOWS_LIVE_LOGIN_URL"] = windowLive.LOGIN_URL;
             ViewData["GOOGLE_LOGIN_URL"] = google.LOGIN_URL;
+            ViewData["FACEBOOK_LOGIN_URL"] = Facebook.LOGIN_URL;
 
             ViewData["WINDOWS_AUTH_ENABLE"] = service.IsWindowsAuthEnable;
             ViewData["FORMS_AUTH_ENABLE"] = service.IsFormsAuthEnable;
@@ -66,6 +71,12 @@ namespace Box.Core.Controllers {
 
         public ActionResult Gcallback() {
             string email = google.GetUserEmail(Request.QueryString["code"]);
+            return CallBack(email);
+        }
+
+        public ActionResult FBcallback()
+        {
+            string email = Facebook.GetUserEmail(Request.QueryString["code"]);
             return CallBack(email);
         }
 

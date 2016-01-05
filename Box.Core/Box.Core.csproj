@@ -168,6 +168,7 @@
     <Compile Include="Menus\GroupsLink.cs" />
     <Compile Include="Menus\LogsLink.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Oauth\Facebook.cs" />
     <Compile Include="Services\AsyncTaskService.cs" />
     <Compile Include="Services\LogService.cs" />
     <Compile Include="SharedStringsLog.pt-br.Designer.cs">

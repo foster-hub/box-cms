@@ -5,8 +5,8 @@
 
     Box.Core.Services.SecurityService securityService = new Box.Core.Services.SecurityService();
 
-    bool windowsAuth = (bool) ViewData["WINDOWS_AUTH_ENABLE"];
-    bool formsAuth = (bool) ViewData["FORMS_AUTH_ENABLE"];
+    bool windowsAuth = (bool)ViewData["WINDOWS_AUTH_ENABLE"];
+    bool formsAuth = (bool)ViewData["FORMS_AUTH_ENABLE"];
 
 }
 <!DOCTYPE html>
@@ -20,6 +20,23 @@
 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/jquery")
+
+    <link rel="stylesheet" href="~/Content/bootstrap-social.css">
+    <style type="text/css">
+        .btn-social {
+            padding-bottom: 10px;
+            padding-top: 10px;
+            font-size: 13pt;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .btn-live {
+            color: #fff;
+            background-color: #52B043;
+            border-color: rgba(0, 0, 0, 0.2);
+        }
+    </style>
 </head>
 
 <body class="metro">
@@ -40,58 +57,69 @@
         </nav>
     </nav>
 
-    
+
     <div class="grid mainGrid">
 
         <h1>@Resources.SharedStrings.Sign_in</h1>
 
-    <div class="row">
-    @if (formsAuth) {
+        <div class="row">
+            @if (formsAuth)
+            {
 
-        <fieldset class="span6">
+                <fieldset class="span6">
 
-            <legend>@Resources.SharedStrings.Your_crendetials</legend>
+                    <legend>@Resources.SharedStrings.Your_crendetials</legend>
 
-            <label>@Resources.SharedStrings.Your_email</label>
-            @MetroUI.TextBox(id: "emailTextBox", databind: "value: signedUser().Email", maxLength: 50, decoration: @<span data-bind="visible: loginResult()=='BLOCKED'" class="field-validation-error">@Resources.SharedStrings.User_blocked</span>)
+                    <label>@Resources.SharedStrings.Your_email</label>
+                    @MetroUI.TextBox(id: "emailTextBox", databind: "value: signedUser().Email", maxLength: 50, decoration: @<span data-bind="visible: loginResult()=='BLOCKED'" class="field-validation-error">@Resources.SharedStrings.User_blocked</span>)
 
-            <label>@Resources.SharedStrings.Your_password</label>
-            @MetroUI.Password(databind: "value: signedUser().Password.Password, valueUpdate: 'afterkeydown'", maxLength: 10, onkeypress: "dialogHelper.ifEnter(pageVM.signin)", decoration: @<span data-bind="visible: loginResult()=='INVALID'" class="field-validation-error" style="position: absolute; right: 0px;top: 0px;">@Resources.SharedStrings.Invalid_user_or_password</span>)
+                    <label>@Resources.SharedStrings.Your_password</label>
+                    @MetroUI.Password(databind: "value: signedUser().Password.Password, valueUpdate: 'afterkeydown'", maxLength: 10, onkeypress: "dialogHelper.ifEnter(pageVM.signin)", decoration: @<span data-bind="visible: loginResult()=='INVALID'" class="field-validation-error" style="position: absolute; right: 0px;top: 0px;">@Resources.SharedStrings.Invalid_user_or_password</span>)
 
-            <small style="float: right">@Html.ActionLink(Resources.SharedStrings.Forgot_your_password, "ResetPassword", "core_signin")</small>
+                    <small style="float: right">@Html.ActionLink(Resources.SharedStrings.Forgot_your_password, "ResetPassword", "core_signin")</small>
 
-            <button onclick="pageVM.signin()" class="large">@Resources.SharedStrings.Sign_in</button>
-        </fieldset>
-    
-        <div class="span1">&nbsp;</div>
+                    <button onclick="pageVM.signin()" class="large">@Resources.SharedStrings.Sign_in</button>
+                </fieldset>
 
-        }
-        @if (!String.IsNullOrEmpty(@ViewData["GOOGLE_LOGIN_URL"] as String) || !String.IsNullOrEmpty(@ViewData["WINDOWS_LIVE_LOGIN_URL"] as String) || windowsAuth) {
-        <fieldset class="span5">
+                <div class="span1">&nbsp;</div>
 
-           
-           <legend style="margin-bottom: 10px">@Resources.SharedStrings.Or_using</legend>
-            
-
-            @if (!String.IsNullOrEmpty(@ViewData["GOOGLE_LOGIN_URL"] as String)) {
-                <a class="oauthSigin"
-                   href="@ViewData["GOOGLE_LOGIN_URL"]" style="background-image: url(@Url.Content("~/Content/Core_Images/Oauth/google.png"))">
-                </a>
             }
-            @if (!String.IsNullOrEmpty(@ViewData["WINDOWS_LIVE_LOGIN_URL"] as String)) {
-                <a class="oauthSigin"
-                   href="@ViewData["WINDOWS_LIVE_LOGIN_URL"]" style="background-image: url(@Url.Content("~/Content/Core_Images/Oauth/wl.png"))">
-                </a>
-            }
-            @if (windowsAuth) {
-                <a class="oauthSigin"
-                   href="@ViewData["WINDOWS_AUTH_URL"]" style="background-image: url(@Url.Content("~/Content/Core_Images/Oauth/nt.png"))">                    
-                </a>
-            }           
-        </fieldset>
-        }
+            @if (!String.IsNullOrEmpty(@ViewData["GOOGLE_LOGIN_URL"] as String) || !String.IsNullOrEmpty(@ViewData["WINDOWS_LIVE_LOGIN_URL"] as String) || windowsAuth)
+            {
+                <fieldset class="span4">
 
-    </div>
+
+                    <legend style="margin-bottom: 10px">@Resources.SharedStrings.Or_using</legend>
+
+
+                    @if (!String.IsNullOrEmpty(@ViewData["GOOGLE_LOGIN_URL"] as String))
+                    {
+                        <div class="btn btn-block btn-social btn-lg btn-google" onclick="location.href = '@ViewData["GOOGLE_LOGIN_URL"]';">
+                            <i class="fa fa-google"></i> Google+
+                        </div>
+                    }
+                    @if (!String.IsNullOrEmpty(@ViewData["WINDOWS_LIVE_LOGIN_URL"] as String))
+                    {
+                        <div class="btn btn-block btn-social btn-lg btn-live" onclick="location.href = '@ViewData["WINDOWS_LIVE_LOGIN_URL"]';">
+                            <i class="fa fa-windows"></i> Microsoft Account
+                        </div>
+                    }
+                    @if (!String.IsNullOrEmpty(@ViewData["FACEBOOK_LOGIN_URL"] as String))
+                    {
+                        <div class="btn btn-block btn-social btn-lg btn-facebook" onclick="location.href = '@ViewData["FACEBOOK_LOGIN_URL"]';">
+                            <i class="fa fa-facebook"></i> Facebook
+                        </div>
+                    }
+                    @if (windowsAuth)
+                    {
+                        <div class="btn btn-block btn-social btn-lg btn-microsoft" onclick="location.href = '@ViewData["WINDOWS_AUTH_URL"]';">
+                            <i class="fa fa-windows"></i> Domain Account
+                        </div>
+                    }
+                </fieldset>
+            }
+
+        </div>
 
         <div class="row">
             <small class="span6">
@@ -101,8 +129,8 @@
         </div>
 
     </div>
- 
-    
+
+
     @Html.Partial("PageDefaults")
 
 
