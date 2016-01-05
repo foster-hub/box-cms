@@ -98,8 +98,7 @@
         @multipleTag 
         tabindex="-1" />                                    
        
-    <a 
-        class="formUploadField"
+    <a class="formUploadField"
         href="javascript: UploadArea.showUploadForm('@folder')">@Box.CMS.SharedStrings.File_upload</a>
     
     <div 
@@ -118,55 +117,60 @@
         </div>
 
         <ul id="@dropAreaId"
-            onmousemove="UploadArea.movingMouse(this, event, '@id')"
-            @(dataBindList)>
+            onmousemove="UploadArea.movingMouse(this, event, '@id')">
 
             <!--ko if: pageVM.editingItem().CONTENT.@(id) != null -->
-            <li @dataBindMove
-                onmouseover="if(UploadArea.movingFile==null) showContextMenu(this);"
-                onmouseout="hideContextMenu(this)">
+                <!--ko foreach: pageVM.editingItem().CONTENT.@(id) -->
+                    <li @dataBindMove
+                    onmouseover="if (UploadArea.movingFile == null) showContextMenu(this);"
+                    onmouseout="hideContextMenu(this)">
 
-                <!--ko if: FileUrl.isImage(@(dataBindItem).Type)  -->
-                <div class="imageFile">
-                    <img data-bind="attr: { src: FileUrl.toView(@dataBindItem, true) }" />
-                </div>
-                
+                    <!--ko if: FileUrl.isImage(@(dataBindItem).Type) -->
+                    <div class="imageFile">
+                        <img data-bind="attr: { src: FileUrl.toView(@dataBindItem, true) }"/>
+                    </div>
+                    <!--/ko-->
+
+                    <!--ko if: FileUrl.isAudio(@(dataBindItem).Type) -->
+                    <audio controls>
+                        <source data-bind="attr: { src: FileUrl.toView(@dataBindItem, false) }">
+                    </audio>
+                    <!--/ko-->
+                    <!--ko if: FileUrl.isVideo(@(dataBindItem).Type) -->
+                    <video controls="controls">
+                        <source data-bind="attr: { src: FileUrl.toView(@dataBindItem, false) }">
+                    </video>
+                    <!--/ko-->
+
+                    <input data-bind="value: @(dataBindItem).Caption"
+                           updatemodelevent="keyup"
+                           onkeypress="dialogHelper.blurOnEnter(this)"
+                           tabindex="-1"
+                           type="text"/>
+
+                    <div class="contextMenu">
+                        <button title="@Box.CMS.SharedStrings.Remove" data-bind="click: function(data) { UploadArea.removeFile(data, '@id', @singleFile.ToString().ToLowerInvariant()); }, clickBubble: false">
+                            <i class="icon-minus-2"></i>
+                        </button>
+
+                        <button title="@Box.CMS.SharedStrings.Preview" @dataBindBrowse>
+                            <i class="icon-eye"></i>
+                        </button>
+                        @if (!singleFile)
+                        {
+                            <button data-bind="click: function(data, event) { UploadArea.startMoveFile(data, '@id', event.target.parentNode.parentNode); }, clickBubble: false">
+                                <i class="icon-move-horizontal"></i>
+                            </button>
+                        }
+                    </div>
+                </li>
                 <!--/ko-->
-
-                <!--ko if: FileUrl.isAudio(@(dataBindItem).Type) -->                
-                <audio controls>
-                    <source data-bind="attr: { src: FileUrl.toView(@dataBindItem, false) }">
-                </audio>
-                <!--/ko-->
-                <!--ko if: FileUrl.isVideo(@(dataBindItem).Type) -->
-                <video controls="controls">
-                    <source data-bind="attr: { src: FileUrl.toView(@dataBindItem, false) }">
-                </video>
-                <!--/ko-->
-
-                <input data-bind="value: @(dataBindItem).Caption"
-                       updatemodelevent="keyup"
-                       onkeypress="dialogHelper.blurOnEnter(this)"
-                       tabindex="-1"
-                       type="text" />
-
-                <div class="contextMenu">
-                    <button title="@Box.CMS.SharedStrings.Remove" data-bind="click: function(data) { UploadArea.removeFile(data, '@id', @singleFile.ToString().ToLowerInvariant()); }, clickBubble: false">
-                        <i class="icon-minus-2"></i>
-                    </button>
-
-                    <button title="@Box.CMS.SharedStrings.Preview" @dataBindBrowse>
-                        <i class="icon-eye"></i>
-                    </button>
-                    @if (!singleFile) {
-                    <button data-bind="click: function(data, event) { UploadArea.startMoveFile(data, '@id', event.target.parentNode.parentNode); }, clickBubble: false">
-                        <i class="icon-move-horizontal"></i>
-                    </button>
-                    }
-                </div>
-            </li>
             <!--/ko-->
-
+            <!--ko foreach: pageVM.editingItem().CONTENT.@(id)_WAITING -->
+                <li class="loading-li">
+                    <div class="imageFile" style="width: 120px; height: 120px; background-image: url(@Href("~/Content/CMS_Images/FileIcons/loading.gif")); background-position: center; background-repeat: no-repeat;"></div>
+                </li>
+            <!--/ko-->
         </ul>
         
         <div id="_uploadAreaAlert_@id" class="loadingFileAlert">

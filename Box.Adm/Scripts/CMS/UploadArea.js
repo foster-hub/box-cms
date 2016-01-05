@@ -1,5 +1,5 @@
 ﻿
-function UploadArea() {}
+function UploadArea() { }
 
 
 UploadArea.findFile = function (file, bindFiles) {
@@ -23,7 +23,7 @@ UploadArea.addFile = function (newFile, id, singlefile) {
         if (pageVM.editingItem().CONTENT[id] == null) {
             pageVM.editingItem().CONTENT[id] = new Array();
         }
-        var bindFiles = pageVM.editingItem().CONTENT[id];        
+        var bindFiles = pageVM.editingItem().CONTENT[id];
         bindFiles.push(newFile);
     }
 
@@ -49,12 +49,12 @@ UploadArea.stopMoveFile = function (file, id, li) {
 
     if (UploadArea.movingFile != file)
         return;
-    
+
     UploadArea.movingFile = null;
     $('#_uploadArea_' + id + ' li').each(function () { this.style.opacity = 1; });
     li.style.cursor = 'default';
     return;
-    
+
 
 }
 
@@ -88,7 +88,7 @@ UploadArea.movingMouse = function (div, e, id) {
 
     // if position did not change, get out
     var bindFiles = pageVM.editingItem().CONTENT[id];
-    if (newIdx > bindFiles.length-1 || newIdx == UploadArea.movingFileInsertIdx)
+    if (newIdx > bindFiles.length - 1 || newIdx == UploadArea.movingFileInsertIdx)
         return;
 
     // remove from last position       
@@ -104,7 +104,7 @@ UploadArea.movingMouse = function (div, e, id) {
 
 
 UploadArea.calcMoveInsertIdx = function (div, event) {
-    
+
     var x = event.pageX - div.documentOffsetLeft;
     var y = event.pageY - div.documentOffsetTop;
 
@@ -127,7 +127,7 @@ UploadArea.init = function () {
 }
 
 UploadArea.showUploadForm = function (folder) {
-    var w = window.open(_webAppUrl + 'cms_files/upload/?upFolder='+folder, 'uploadFileWindow', 'menubar=0, resizable=0, width=400, height=250, location=0, toolbar=0, status=0');
+    var w = window.open(_webAppUrl + 'cms_files/upload/?upFolder=' + folder, 'uploadFileWindow', 'menubar=0, resizable=0, width=400, height=250, location=0, toolbar=0, status=0');
 }
 
 
@@ -141,55 +141,50 @@ UploadArea.sendFiles = function (files, id, folder, singleFile) {
 
     // marks as a upload
     $('#_uploadArea_' + id).attr('justUploaded', true);
-
     UploadArea.showSendAlert(id);
-
-    var data = new FormData();
-    var waitFiles = new Array();
-
+    
     var len = files.length;
-    if (singleFile)
-        len = 1;
+
+    pageVM.editingItem().CONTENT[id + '_WAITING'] = new ko.observableArray([]);
+    var waitingFiles = pageVM.editingItem().CONTENT[id + '_WAITING'];
+
 
     for (i = 0; i < len; i++) {
+        var data = new FormData();
         data.append("file" + i, files[i]);
-    }
+        waitingFiles.push({ isLoading: true, name: files[i].name });
+        pageVM.editingItem.valueHasMutated();
 
-    $.ajax({
-        type: 'POST',
-        url: _webAppUrl + 'api/cms_files/' + folder + '?' + '&storage=0',
-        contentType: false,
-        processData: false,
-        data: data,
-        success: function (resFiles) {
+        $.ajax({
+            type: 'POST',
+            url: _webAppUrl + 'api/cms_files/' + folder + '?' + '&storage=0',
+            contentType: false,
+            processData: false,
+            data: data,
+            success: function (resFiles) {
+                for (var r = 0; r < resFiles.length; r++) {
 
-            for (var r = 0; r < resFiles.length; r++) {
-                var res = resFiles[r];
 
-                var newFile = { FileUId: res.FileUId, FileName: res.FileName, Size: res.Size, Folder: folder, Caption: res.FileName, Type: res.Type };
-                if (singleFile) {
-                    pageVM.editingItem().CONTENT[id] = newFile;
-                }
-                else {
-                    if (pageVM.editingItem().CONTENT[id] == null) {
+                    var res = resFiles[r];
+
+                    var newFile = { FileUId: res.FileUId, FileName: res.FileName, Size: res.Size, Folder: folder, Caption: res.FileName, Type: res.Type };
+
+                    if (pageVM.editingItem().CONTENT[id] == null)
                         pageVM.editingItem().CONTENT[id] = new Array();
-                    }
+
                     var bindFiles = pageVM.editingItem().CONTENT[id];
                     bindFiles.push(newFile);
+                    waitingFiles.pop();
+                    pageVM.editingItem.valueHasMutated();
+
+                    if (UploadArea.afterSendCallBack != null)
+                        UploadArea.afterSendCallBack(id, res.FileName);
+
                 }
-                
-                if (UploadArea.afterSendCallBack != null)
-                    UploadArea.afterSendCallBack(id, res.FileName);
 
             }
-
-            UploadArea.hideSendAlert(id);
-
-            pageVM.editingItem.valueHasMutated();
-
-
-        }
-    });
+        });
+    }
 
 }
 
@@ -199,15 +194,15 @@ UploadArea.dragover = function (div, evt) {
     div.classList.add('over');
 };
 
-UploadArea.dragout = function (div, evt) {    
+UploadArea.dragout = function (div, evt) {
     evt.stopPropagation();
     evt.preventDefault();
     div.classList.remove('over');
 };
 
-UploadArea.drop = function(div, evt, id, folder, singleFile) {
+UploadArea.drop = function (div, evt, id, folder, singleFile) {
 
-    var bindFiles = pageVM.editingItem().CONTENT[id];    
+    var bindFiles = pageVM.editingItem().CONTENT[id];
 
     evt.stopPropagation();
     evt.preventDefault();
@@ -294,7 +289,7 @@ UploadArea.commitCropImage = function (id, width, height) {
     var scale = parseFloat(picture.attr('scaleTag'));
 
     data = picture.guillotine('getData');
-    
+
     data.x = data.x / scale;
     data.y = data.y / scale;
     data.w = width;
@@ -306,7 +301,7 @@ UploadArea.commitCropImage = function (id, width, height) {
         type: 'POST',
         data: JSON.stringify(data),
         headers: { 'RequestVerificationToken': window._antiForgeryToken },
-        success: function (data) {                        
+        success: function (data) {
 
             picture.guillotine('remove');
             picture[0].isCroping = false;
@@ -332,7 +327,7 @@ UploadArea.commitCropImage = function (id, width, height) {
         }
     });
 
-    
+
 }
 
 UploadArea.zoomCropImage = function (id, direction) {

@@ -313,6 +313,9 @@ FileUrlConverter = function () {
         if (typeof fileOrPath == 'string')
             return filePathToView(fileOrPath, thumb, scale);
 
+        if (fileOrPath.isLoading)
+            return '../Content/CMS_Images/FileIcons/loading.gif';
+
         return filePathToView(fileOrPath.Folder + '/' + fileOrPath.FileUId, thumb, scale);
     }
 }
