@@ -7,6 +7,9 @@
     
     me.loginResult = new ko.observable('');
 
+    me.loading = new ko.observable(false);
+    me.loadingTxt = new ko.observable('Entrar');
+
     setLoginResult = function (msg) {
         me.loginResult(msg);        
     }
@@ -15,6 +18,7 @@
 
         setLoginResult('');
         me.signedUser().Password.Email = me.signedUser().Email;
+
         $.ajax({
             url: _webAppUrl + 'api/core_signin',
             type: 'POST',
@@ -29,6 +33,8 @@
                     setLoginResult('BLOCKED');
                     return;
                 }
+                me.loading(true);
+                me.loadingTxt('Entrando...');
                 redirect();
             }
         });

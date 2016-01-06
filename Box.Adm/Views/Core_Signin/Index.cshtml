@@ -63,8 +63,7 @@
         <h1>@Resources.SharedStrings.Sign_in</h1>
 
         <div class="row">
-            @if (formsAuth)
-            {
+            @if (formsAuth) {
 
                 <fieldset class="span6">
 
@@ -78,40 +77,37 @@
 
                     <small style="float: right">@Html.ActionLink(Resources.SharedStrings.Forgot_your_password, "ResetPassword", "core_signin")</small>
 
-                    <button onclick="pageVM.signin()" class="large">@Resources.SharedStrings.Sign_in</button>
+                    <button onclick="pageVM.signin()" class="large" data-bind="enable: !loading()">
+                        <i data-bind="visible: pageVM.loading()" class="fa fa-spinner fa-pulse"></i><span data-bind="text: pageVM.loadingTxt()"></span>
+                    </button>
                 </fieldset>
 
                 <div class="span1">&nbsp;</div>
 
             }
-            @if (!String.IsNullOrEmpty(@ViewData["GOOGLE_LOGIN_URL"] as String) || !String.IsNullOrEmpty(@ViewData["WINDOWS_LIVE_LOGIN_URL"] as String) || windowsAuth)
-            {
+            @if (!String.IsNullOrEmpty(@ViewData["GOOGLE_LOGIN_URL"] as String) || !String.IsNullOrEmpty(@ViewData["WINDOWS_LIVE_LOGIN_URL"] as String) || windowsAuth) {
                 <fieldset class="span4">
 
 
                     <legend style="margin-bottom: 10px">@Resources.SharedStrings.Or_using</legend>
 
 
-                    @if (!String.IsNullOrEmpty(@ViewData["GOOGLE_LOGIN_URL"] as String))
-                    {
+                    @if (!String.IsNullOrEmpty(@ViewData["GOOGLE_LOGIN_URL"] as String)) {
                         <div class="btn btn-block btn-social btn-lg btn-google" onclick="location.href = '@ViewData["GOOGLE_LOGIN_URL"]';">
                             <i class="fa fa-google"></i> Google+
                         </div>
                     }
-                    @if (!String.IsNullOrEmpty(@ViewData["WINDOWS_LIVE_LOGIN_URL"] as String))
-                    {
+                    @if (!String.IsNullOrEmpty(@ViewData["WINDOWS_LIVE_LOGIN_URL"] as String)) {
                         <div class="btn btn-block btn-social btn-lg btn-live" onclick="location.href = '@ViewData["WINDOWS_LIVE_LOGIN_URL"]';">
                             <i class="fa fa-windows"></i> Microsoft Account
                         </div>
                     }
-                    @if (!String.IsNullOrEmpty(@ViewData["FACEBOOK_LOGIN_URL"] as String))
-                    {
+                    @if (!String.IsNullOrEmpty(@ViewData["FACEBOOK_LOGIN_URL"] as String)) {
                         <div class="btn btn-block btn-social btn-lg btn-facebook" onclick="location.href = '@ViewData["FACEBOOK_LOGIN_URL"]';">
                             <i class="fa fa-facebook"></i> Facebook
                         </div>
                     }
-                    @if (windowsAuth)
-                    {
+                    @if (windowsAuth) {
                         <div class="btn btn-block btn-social btn-lg btn-microsoft" onclick="location.href = '@ViewData["WINDOWS_AUTH_URL"]';">
                             <i class="fa fa-windows"></i> Domain Account
                         </div>
