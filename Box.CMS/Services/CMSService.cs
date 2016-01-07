@@ -72,14 +72,16 @@ namespace Box.CMS.Services {
                 if (top != 0)
                     contents = contents.Take(top);
 
+                var array = contents.ToArray();
+
                 // if ther is no content, and there is any fallback, try it
-                if (contents.Count() == 0 && pageAreaFallbacks != null && pageAreaFallbacks.Length>=1) {
+                if (!array.Any() && pageAreaFallbacks != null && pageAreaFallbacks.Length>=1) {
                     string fallBackArea = pageAreaFallbacks.First();
                     string[] othersFall = pageAreaFallbacks.Where(a => a != fallBackArea).ToArray();
                     return GetCrossLinksFrom(fallBackArea, order, top, kinds, includeData, othersFall);
                 }
 
-                return contents.ToArray();
+                return array;
             }
         }
 
