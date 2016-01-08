@@ -217,6 +217,7 @@
     <Content Include="Content\Core_Images\Oauth\nt.png" />
     <Content Include="Content\emailDetail.html" />
     <Content Include="Content\jquery.guillotine.css" />
+    <Content Include="fonts\metro.svg" />
     <Content Include="Scripts\CMS\ContentBrowseVM.js" />
     <Content Include="Scripts\CMS\CrossLinksVM.js" />
     <Content Include="Scripts\guillotine\jquery.guillotine.js" />
@@ -483,6 +484,10 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\metro.eot" />
+    <Content Include="fonts\metro.ttf" />
+    <Content Include="fonts\metro.woff" />
+    <Content Include="fonts\selection.json" />
     <None Include="Properties\PublishProfiles\deploy.pubxml" />
     <None Include="Properties\PublishProfiles\foster.pubxml" />
     <Content Include="Views\CMS_CrossLinks\Index.cshtml" />

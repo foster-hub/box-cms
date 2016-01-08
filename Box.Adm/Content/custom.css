@@ -32,3 +32,7 @@
 .answer-chart {
     margin-top: 100px;
 }
+
+.SimpleQuiz label {
+    padding-left: 10px;
+}

@@ -48,23 +48,38 @@
 
                         <legend>@Box.CMS.SharedStrings.Quiz_Alternatives</legend>
 
-                        <label>@Box.CMS.SharedStrings.Quiz_Alternative 1</label>
-                        <input type="text" @Capture.MapTo("Answer1") updatemodelevent="keyup" class="required" maxlength="100" required />
+                        <label>
+                            <i style="color: #F7464A;" class="fa fa-square"></i> @Box.CMS.SharedStrings.Quiz_Alternative 1 -
+                            <i class="icon-thumbs-up on-left"></i> <span data-bind="text: editingItem().CONTENT.TotalVotes1"></span>
+                        </label>
+                        <input type="text" @Capture.MapTo("Answer1") updatemodelevent="keyup" class="required size2" maxlength="100" required />
 
-                        <label>@Box.CMS.SharedStrings.Quiz_Alternative 2</label>
+                        <label>
+                            <i style="color: #46BFBD;" class="fa fa-square"></i> @Box.CMS.SharedStrings.Quiz_Alternative 2 -
+                            <i class="icon-thumbs-up on-left"></i> <span data-bind="text: editingItem().CONTENT.TotalVotes2"></span>
+                        </label>
                         <input type="text" @Capture.MapTo("Answer2") updatemodelevent="keyup" class="required" maxlength="100" required />
 
-                        <label>@Box.CMS.SharedStrings.Quiz_Alternative 3</label>
+                        <label>
+                            <i style="color: #FDB45C;" class="fa fa-square"></i> @Box.CMS.SharedStrings.Quiz_Alternative 3 -
+                            <i class="icon-thumbs-up on-left"></i> <span data-bind="text: editingItem().CONTENT.TotalVotes3"></span>
+                        </label>
                         <input type="text" @Capture.MapTo("Answer3") updatemodelevent="keyup" class="required" maxlength="100" required />
 
-                        <label>@Box.CMS.SharedStrings.Quiz_Alternative 4</label>
+                        <label>
+                            <i style="color: #949FB1;" class="fa fa-square"></i> @Box.CMS.SharedStrings.Quiz_Alternative 4 -
+                            <i class="icon-thumbs-up on-left"></i> <span data-bind="text: editingItem().CONTENT.TotalVotes4"></span>
+                        </label>
                         <input type="text" @Capture.MapTo("Answer4") updatemodelevent="keyup" class="required" maxlength="100" required />
 
-                        <label>@Box.CMS.SharedStrings.Quiz_Alternative 5</label>
+                        <label>
+                            <i style="color: #4D5360;" class="fa fa-square"></i> @Box.CMS.SharedStrings.Quiz_Alternative 5 -
+                            <i class="icon-thumbs-up on-left"></i> <span data-bind="text: editingItem().CONTENT.TotalVotes5"></span>
+                        </label>
                         <input type="text" @Capture.MapTo("Answer5") updatemodelevent="keyup" class="required" maxlength="100" required />
 
                     </fieldset>
-                    <input type="button" value="@Box.CMS.SharedStrings.Quiz_Clear_Votes" data-bind="click: function() { totalVotesToZero(editingItem());  }" />
+
                 </div>
                 <div class="span6">
                     <div class="answer-chart">
@@ -82,6 +97,9 @@
                                     <li><i style="color: #949FB1;" class="fa fa-square"></i> <strong data-bind="text: editingItem().CONTENT.Answer4"></strong> - <span data-bind="text: pageVM.editingItem().CONTENT.Percent4 > 0 ? pageVM.editingItem().CONTENT.Percent4.toFixed(2) + '%' : 'Sem votos.'"></span></li>
                                     <li><i style="color: #4D5360;" class="fa fa-square"></i> <strong data-bind="text: editingItem().CONTENT.Answer5"></strong> - <span data-bind="text: pageVM.editingItem().CONTENT.Percent5 > 0 ? pageVM.editingItem().CONTENT.Percent5.toFixed(2) + '%' : 'Sem votos.'"></span></li>
                                 </ul>
+                                <div style="margin-left: 20px;">
+                                    <button type="button" data-bind="click: function() { totalVotesToZero(editingItem());  }"><i class="icon-switch"></i> @Box.CMS.SharedStrings.Quiz_Clear_Votes</button>
+                                </div>
                             </div>
                         </div>
                     </div>
