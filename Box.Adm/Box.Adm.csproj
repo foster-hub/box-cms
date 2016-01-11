@@ -493,6 +493,7 @@
     <Content Include="Views\CMS_CrossLinks\Index.cshtml" />
     <Content Include="Views\Shared\CMS_Capture\LINK.cshtml" />
     <Content Include="Views\Shared\CMS\ContentBrowse.cshtml" />
+    <Content Include="Views\Shared\CMS_Capture\SCHEDULE.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
