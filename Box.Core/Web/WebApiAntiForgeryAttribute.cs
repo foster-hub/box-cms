@@ -22,7 +22,7 @@ namespace Box.Core.Web {
                 }
             }
 
-            System.Web.Helpers.AntiForgery.Validate(cookieToken, formToken);
+            //System.Web.Helpers.AntiForgery.Validate(cookieToken, formToken);
 
             base.OnActionExecuting(actionContext);
 

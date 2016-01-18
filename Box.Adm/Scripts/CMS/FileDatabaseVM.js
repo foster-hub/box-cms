@@ -3,15 +3,17 @@
 
     this.onSelect = null;
     this.folder = new ko.observable('ROOT');
-
+    this.unUsed = new ko.observable(false);
+    this.removingUnUsedItem = new ko.observable(false);
+    this.notRemovingUnUsedItem = new ko.observable(false);
     this.selection = null;
 
     var me = this;
-
+    
     this._getData = function (skip) {
-
+        
         $.ajax({
-            url: _webAppUrl + 'api/' + me._module + '_' + me._resourceName + '/' + me.folder() + '/?filter=' + encodeURIComponent(me.searchFilter()) + '&skip=' + skip + '&top=' + me.paging.itemsPerPage,
+            url: _webAppUrl + 'api/' + me._module + '_' + me._resourceName + '/' + me.folder() + '/?filter=' + encodeURIComponent(me.searchFilter()) + '&skip=' + skip + '&top=' + me.paging.itemsPerPage + '&unUsed=' + me.unUsed(),
             type: 'GET',
             headers: { 'RequestVerificationToken': _antiForgeryToken },
             success: function (data) {
@@ -27,7 +29,9 @@
         });
     }
 
-    this._deleteData = function (id) {
+    this._deleteData = function (id, unUsed) {
+        if (!unUsed)
+            unUsed = false;
 
         var verb = 'DELETE';
         var url = _webAppUrl + 'api/' + me._module + '_' + me._resourceName + '/' + me.folder() + '/' + id;
@@ -38,7 +42,7 @@
         }
 
         $.ajax({
-            url: url,
+            url: url + '?unused=' + unUsed,
             type: verb,
             headers: { 'RequestVerificationToken': _antiForgeryToken },
             success: function () {

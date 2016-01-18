@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Net;
 using System.Configuration;
 using System.IO;
+using Box.CMS.Data;
 
 namespace Box.CMS.Services {
 
@@ -29,9 +30,12 @@ namespace Box.CMS.Services {
             throw new System.Security.SecurityException("Not autorized to edit content");
         }
 
-        public IEnumerable<File> GetFiles(string filter, int skip, int top, string folder) {
+        public IEnumerable<File> GetFiles(string filter, int skip, int top, string folder, bool unUsed) {
             using (var context = new Data.CMSContext()) {
                 IQueryable<File> files = context.Files;
+
+                if (unUsed)
+                    files = files.Where(x => !context.ContentDatas.Where(c => c.JSON.Contains(x.FileUId)).Any() && !context.ContentHeads.Where(w => w.ThumbFilePath.Contains(x.FileUId)).Any());
 
                 if (!String.IsNullOrEmpty(filter)) {
                     filter = filter.ToLower();
@@ -57,10 +61,10 @@ namespace Box.CMS.Services {
         public File GetFile(string fileUId, bool includeData = true) {
             using (var context = new Data.CMSContext()) {
                 IQueryable<File> file = context.Files;
-                
-                if(includeData)
+
+                if (includeData)
                     file = context.Files.Include("Data");
-                
+
                 return file.SingleOrDefault(f => f.FileUId == fileUId);
             }
         }
@@ -80,7 +84,7 @@ namespace Box.CMS.Services {
 
         public byte[] GetScaledImageFile(byte[] bytes, double scale = 1, int xdes = 0, int ydes = 0, int finalW = 0, int finalH = 0, string mimeType = null) {
 
-            if (scale == 1 && xdes==0 && ydes==0)
+            if (scale == 1 && xdes == 0 && ydes == 0)
                 return bytes;
 
             System.IO.MemoryStream stream = new System.IO.MemoryStream(bytes);
@@ -94,7 +98,7 @@ namespace Box.CMS.Services {
 
             if (finalH == 0)
                 finalH = height;
-        
+
             System.Drawing.Bitmap newImg = new System.Drawing.Bitmap(finalW, finalH);
             System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(newImg);
             g.DrawImage(image, new System.Drawing.Rectangle(-xdes, -ydes, width, height));
@@ -105,7 +109,7 @@ namespace Box.CMS.Services {
         }
 
         public byte[] GetImageFileThumb(byte[] bytes, int width, int height, int maxWidth, int maxHeight, string vAlign = "center", string hAlign = "center", string mimeType = null, string mode = null) {
-            
+
             System.IO.MemoryStream stream = new System.IO.MemoryStream(bytes);
             System.Drawing.Image image = System.Drawing.Image.FromStream(stream);
             stream.Close();
@@ -114,10 +118,10 @@ namespace Box.CMS.Services {
             float rtY = height / (float)image.Height;
 
             if (String.IsNullOrEmpty(mode)) {
-                if (height == 0) {                    
+                if (height == 0) {
                     height = (int)(image.Height * rtX);
                 }
-                if (width == 0) {                    
+                if (width == 0) {
                     width = (int)(image.Width * rtY);
                 }
 
@@ -134,15 +138,15 @@ namespace Box.CMS.Services {
                     maxWidth = width;
             }
 
-            if (mode=="f" || mode=="fill") {
+            if (mode == "f" || mode == "fill") {
                 maxWidth = width;
                 maxHeight = height;
 
                 if (rtY < rtX)
-                    height = (int)(image.Height * rtX);                
+                    height = (int)(image.Height * rtX);
                 else
                     width = (int)(image.Width * rtY);
-                    
+
             }
 
             if (String.IsNullOrEmpty(vAlign))
@@ -215,7 +219,14 @@ namespace Box.CMS.Services {
             }
         }
 
-    
+        public void RemoveUnusedFiles() {
+            using (var ctx = new CMSContext()) {
+                IQueryable<File> files = ctx.Files.Where(x => !ctx.ContentDatas.Where(c => c.JSON.Contains(x.FileUId)).Any() && !ctx.ContentHeads.Where(w => w.ThumbFilePath.Contains(x.FileUId)).Any());
+                ctx.Files.RemoveRange(files);
+                ctx.SaveChanges();
+            }
+
+        }
 
         public void SetFileThumb(File file) {
             if (file.Type.StartsWith("image"))
@@ -225,8 +236,6 @@ namespace Box.CMS.Services {
                 file.Data.StoredThumbData = GetDocumentThumb(path, file.FileName);
             }
         }
-
-
 
         public byte[] GetDocumentThumb(string path, string fileName) {
             string iconFile = "document";
@@ -239,25 +248,26 @@ namespace Box.CMS.Services {
                     case ".xlsx":
                     case ".csv":
                         iconFile = "xls";
-                    break;
-                    case ".doc": case ".docx":
+                        break;
+                    case ".doc":
+                    case ".docx":
                         iconFile = "doc";
-                    break;
-                    case ".ppt": case ".pptx":
+                        break;
+                    case ".ppt":
+                    case ".pptx":
                         iconFile = "doc";
-                    break;
+                        break;
                     case ".mp3":
                         iconFile = "mp3";
-                    break;
+                        break;
                     case ".pdf":
                         iconFile = "pdf";
-                    break;
+                        break;
                 }
             }
 
             return System.IO.File.ReadAllBytes(path + "\\Content\\CMS_Images\\FileIcons\\" + iconFile + ".png");
         }
-
 
         public string CleanFileName(string name) {
             string cleanName = name.Replace("\"", string.Empty);
@@ -292,7 +302,6 @@ namespace Box.CMS.Services {
                 return value;
             }
         }
-
     }
 
 }

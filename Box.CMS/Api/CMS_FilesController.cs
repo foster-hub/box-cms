@@ -26,22 +26,29 @@ namespace Box.CMS.Api {
 
         [Box.Core.Web.WebApiAntiForgery]
         [Authorize]
-        public IEnumerable<File> Get(string folder, string filter = null, int skip = 0, int top = 0) {
+        public IEnumerable<File> Get(string folder, string filter = null, int skip = 0, int top = 0, bool unUsed = false) {
             cms.VerifyAuthorizationToEditFiles();
-            return cms.GetFiles(filter, skip, top, folder);
+            return cms.GetFiles(filter, skip, top, folder, unUsed);
         }
 
         [Box.Core.Web.WebApiAntiForgery]
         [Authorize]
-        public void Delete(string folder, string id) {
+        public void Delete(string folder, string id, bool unUsed = false) {
             cms.VerifyAuthorizationToEditFiles();
-            File file = cms.GetFile(id);
-            if (folder.ToLower() != file.Folder.ToLower())
-                throw new System.Security.SecurityException("Could not delete file - wrong folder");
+            File file;
+            var nameLog = "";
+            if (unUsed) {
+                cms.RemoveUnusedFiles();
+                nameLog = "Limpeza de imagens não usadas executada com sucesso.";
+            } else {
+                file = cms.GetFile(id);
+                if (folder.ToLower() != file.Folder.ToLower())
+                    throw new System.Security.SecurityException("Could not delete file - wrong folder");
+                nameLog = file.FileName;
+                cms.RemoveFile(id);
+            }
 
-            cms.RemoveFile(id);
-
-            log.Log(String.Format(SharedStringsLog.FILE_REMOVE_0_1, file.FileName, folder));
+            log.Log(String.Format(SharedStringsLog.FILE_REMOVE_0_1, nameLog, folder));
         }
 
         [Box.Core.Web.WebApiAntiForgery]
@@ -49,8 +56,8 @@ namespace Box.CMS.Api {
         [Authorize]
         /* Some enviroments does not supports HTTP VERB DELETE 
          * Use this workaround */
-        public void Remove(string folder, string id) {
-            Delete(folder, id);
+        public void Remove(string folder, string id, bool unUsed = false) {
+            Delete(folder, id, unUsed);
         }
 
         [Box.Core.Web.WebApiAntiForgery]
@@ -106,7 +113,7 @@ namespace Box.CMS.Api {
             return task;
         }
 
-     
+
 
 
     }
