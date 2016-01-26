@@ -221,11 +221,12 @@ namespace Box.CMS.Services {
 
         public void RemoveUnusedFiles() {
             using (var ctx = new CMSContext()) {
-                IQueryable<File> files = ctx.Files.Where(x => !ctx.ContentDatas.Where(c => c.JSON.Contains(x.FileUId)).Any() && !ctx.ContentHeads.Where(w => w.ThumbFilePath.Contains(x.FileUId)).Any());
+                IQueryable<File> files = ctx.Files.Where(x => !ctx.ContentDatas.Where(c => c.JSON.Contains(x.FileUId)).Any() 
+                && !ctx.ContentHeads.Where(w => w.ThumbFilePath.Contains(x.FileUId)).Any());
                 ctx.Files.RemoveRange(files);
                 ctx.SaveChanges();
             }
-
+            
         }
 
         public void SetFileThumb(File file) {
