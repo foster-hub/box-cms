@@ -9,9 +9,9 @@
     this.selection = null;
 
     var me = this;
-    
+
     this._getData = function (skip) {
-        
+
         $.ajax({
             url: _webAppUrl + 'api/' + me._module + '_' + me._resourceName + '/' + me.folder() + '/?filter=' + encodeURIComponent(me.searchFilter()) + '&skip=' + skip + '&top=' + me.paging.itemsPerPage + '&unUsed=' + me.unUsed(),
             type: 'GET',
@@ -46,7 +46,14 @@
             type: verb,
             headers: { 'RequestVerificationToken': _antiForgeryToken },
             success: function () {
-                me[me._resourceName].remove(me.removingItem());
+                if (unUsed) {
+                    var range = me.removingItem().files().length;
+                    for (var i = range; i > -1; i--) {
+                        me[me._resourceName].remove(me.removingItem().files()[i]);
+                    }
+                } else {
+                    me[me._resourceName].remove(me.removingItem());
+                }
                 me.removingItem(null);
             }
         });
@@ -76,7 +83,7 @@
         var waitFiles = new Array();
 
         var len = files.length;
-        
+
         for (i = 0; i < len; i++) {
             data.append("file" + i, files[i]);
         }
@@ -91,7 +98,7 @@
 
                 for (var r = 0; r < resFiles.length; r++) {
                     var res = resFiles[r];
-                    var newFile = { FileUId: res.FileUId, FileName: res.FileName, Size: res.Size, Folder: me.folder(), Type: res.Type };                    
+                    var newFile = { FileUId: res.FileUId, FileName: res.FileName, Size: res.Size, Folder: me.folder(), Type: res.Type };
                     me.files.unshift(newFile);
                     if (me.files().length > me.paging.itemsPerPage)
                         me.files.pop();
@@ -102,7 +109,7 @@
             }
         });
     }
-    
+
     this.saveSelection = function (w) {
         if (w == null)
             return;
@@ -116,11 +123,11 @@
         } else if (document.selection && document.selection.createRange) {
             me.selection = document.selection.createRange();
         }
-        
+
     }
 
-    this.restoreSelection = function(w) {
-        if (!me.selection || w==null)
+    this.restoreSelection = function (w) {
+        if (!me.selection || w == null)
             return;
 
         if (w.getSelection) {
@@ -129,9 +136,9 @@
             sel.addRange(me.selection);
         } else if (document.selection && me.selection.select) {
             me.selection.select();
-        }        
+        }
     }
-    
+
 }
 
 FileDatabaseVM.prototype = new CrudVM();
