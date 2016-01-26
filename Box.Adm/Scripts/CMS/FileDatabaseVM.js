@@ -46,14 +46,12 @@
             type: verb,
             headers: { 'RequestVerificationToken': _antiForgeryToken },
             success: function () {
-                if (unUsed) {
-                    var range = me.removingItem().files().length;
-                    for (var i = range; i > -1; i--) {
-                        me[me._resourceName].remove(me.removingItem().files()[i]);
-                    }
-                } else {
+
+                if (unUsed)
+                    filesVM._getData(0);
+                else
                     me[me._resourceName].remove(me.removingItem());
-                }
+
                 me.removingItem(null);
             }
         });
