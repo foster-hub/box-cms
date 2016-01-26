@@ -138,4 +138,7 @@
   <data name="IMAGE_0_CROP" xml:space="preserve">
     <value>Image '{0}' was croped</value>
   </data>
+  <data name="UNUSED_FILES_REMOVED" xml:space="preserve">
+    <value>All unused files were removed</value>
+  </data>
 </root>

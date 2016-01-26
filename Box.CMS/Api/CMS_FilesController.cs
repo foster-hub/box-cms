@@ -36,19 +36,19 @@ namespace Box.CMS.Api {
         public void Delete(string folder, string id, bool unUsed = false) {
             cms.VerifyAuthorizationToEditFiles();
             File file;
-            var nameLog = "";
+            
             if (unUsed) {
                 cms.RemoveUnusedFiles();
-                nameLog = "Limpeza de imagens não usadas executada com sucesso.";
+                log.Log(SharedStringsLog.UNUSED_FILES_REMOVED);                 
             } else {
                 file = cms.GetFile(id);
                 if (folder.ToLower() != file.Folder.ToLower())
-                    throw new System.Security.SecurityException("Could not delete file - wrong folder");
-                nameLog = file.FileName;
+                    throw new System.Security.SecurityException("Could not delete file - wrong folder");                
                 cms.RemoveFile(id);
+                log.Log(String.Format(SharedStringsLog.FILE_REMOVE_0_1, file.FileName, folder));
             }
 
-            log.Log(String.Format(SharedStringsLog.FILE_REMOVE_0_1, nameLog, folder));
+            
         }
 
         [Box.Core.Web.WebApiAntiForgery]
