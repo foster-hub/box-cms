@@ -273,13 +273,12 @@
                     </div>
                 </li>
                 <!--/ko-->
-
+                <!--ko foreach: pageVM.editingItem().CONTENT.@(id)_WAITING -->
+                <li class="loading-li">
+                    <div class="imageFile" style="width: 120px; height: 120px; background-image: url(@Href("~/Content/CMS_Images/FileIcons/loading.gif")); background-position: center; background-repeat: no-repeat;"></div>
+                </li>
+                <!--/ko-->
             </ul>
-
-            <div id="_uploadAreaAlert_@id" class="loadingFileAlert">
-                <img src="../Content/CMS_Images/FileIcons/loading.gif" />@Box.CMS.SharedStrings.Sending_files
-            </div>
-
         </div>
 
         <div style="clear: both;"></div>

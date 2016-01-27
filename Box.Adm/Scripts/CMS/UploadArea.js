@@ -142,12 +142,11 @@ UploadArea.sendFiles = function (files, id, folder, singleFile) {
     // marks as a upload
     $('#_uploadArea_' + id).attr('justUploaded', true);
     UploadArea.showSendAlert(id);
-    
+
     var len = files.length;
 
     pageVM.editingItem().CONTENT[id + '_WAITING'] = new ko.observableArray([]);
     var waitingFiles = pageVM.editingItem().CONTENT[id + '_WAITING'];
-
 
     for (i = 0; i < len; i++) {
         var data = new FormData();
@@ -169,11 +168,16 @@ UploadArea.sendFiles = function (files, id, folder, singleFile) {
 
                     var newFile = { FileUId: res.FileUId, FileName: res.FileName, Size: res.Size, Folder: folder, Caption: res.FileName, Type: res.Type };
 
+                    if (singleFile)
+                        pageVM.editingItem().CONTENT[id] = newFile;
+
                     if (pageVM.editingItem().CONTENT[id] == null)
                         pageVM.editingItem().CONTENT[id] = new Array();
 
-                    var bindFiles = pageVM.editingItem().CONTENT[id];
-                    bindFiles.push(newFile);
+                    if (!singleFile) {
+                        var bindFiles = pageVM.editingItem().CONTENT[id];
+                        bindFiles.push(newFile);
+                    }
                     waitingFiles.pop();
                     pageVM.editingItem.valueHasMutated();
 
