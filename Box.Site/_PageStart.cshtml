@@ -1,4 +1,13 @@
 ﻿@{
+    /*Redireciona adicionando o WWW à url, isso evita que comentários do facebook não sejam exibidos caso o usuário
+      utilize uma url sem o WWW*/
+    if (!Request.IsLocal && !Request.Url.Host.ToLower().StartsWith("www")) {
+        string url = Request.Url.Scheme + "://www." + Request.Url.Host + Request.RawUrl;
+        Response.Redirect(url, false);
+        Response.StatusCode = (int)System.Net.HttpStatusCode.MovedPermanently;
+        Response.End();
+    }
+    
     Layout = "~/_PageLayout2C.cshtml";
 
     Page.GOOGLE_AN = "";  // provide the GA identifier. ex: UA-57678674-1
