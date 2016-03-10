@@ -32,9 +32,11 @@ namespace Box.Core.Services {
                     security = new SecurityService();
 
                 User user = security.GetSignedUser();
+                
                 if (user != null)
                     login = user.Email;
-                if (user.LoginNT != null)
+
+                if (user != null && user.LoginNT != null)
                     login = login + " (" + user.LoginNT + ")";
 
                 if (saveParameters) {
