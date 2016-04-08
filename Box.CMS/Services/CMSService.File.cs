@@ -11,6 +11,7 @@ using System.Net;
 using System.Configuration;
 using System.IO;
 using Box.CMS.Data;
+using Box.Composition;
 
 namespace Box.CMS.Services {
 
@@ -65,12 +66,24 @@ namespace Box.CMS.Services {
                 if (includeData)
                     file = context.Files.Include("Data");
 
-                return file.SingleOrDefault(f => f.FileUId == fileUId);
+                var f = file.SingleOrDefault(x => x.FileUId == fileUId);
+
+                if (EncryptFiles)
+                {
+                    f.Data.StoredData = SecurityFiles.DecryptBytes(f.Data.StoredData);
+                    f.Data.StoredThumbData = SecurityFiles.DecryptBytes(f.Data.StoredThumbData);
+                }
+
+                return f;
             }
         }
 
         public void SaveFile(File file, FileStorages storage) {
             using (var context = new Data.CMSContext()) {
+
+                file.Data.StoredData = EncryptFiles ? SecurityFiles.EncryptBytes(file.Data.StoredData) : file.Data.StoredData;
+                file.Data.StoredThumbData = EncryptFiles ? SecurityFiles.EncryptBytes(file.Data.StoredThumbData) : file.Data.StoredThumbData;
+
                 var oldfile = context.Files.SingleOrDefault(f => f.FileUId == file.FileUId);
                 if (oldfile == null) {
                     context.Files.Add(file);
@@ -299,6 +312,21 @@ namespace Box.CMS.Services {
 
                 int value = 0;
                 Int32.TryParse(i.ToString(), out value);
+
+                return value;
+            }
+        }
+
+        private bool EncryptFiles
+        {
+            get
+            {
+                object i = ConfigurationManager.AppSettings["ENCRYPT_FILES"];
+                if (i == null)
+                    return false;
+
+                bool value = true;
+                Boolean.TryParse(i.ToString(), out value);
 
                 return value;
             }

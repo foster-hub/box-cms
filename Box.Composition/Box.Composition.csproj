@@ -142,6 +142,7 @@
     <Compile Include="IAppStart.cs" />
     <Compile Include="IMenuActionLink.cs" />
     <Compile Include="ParameterNotAllowedForMethod.cs" />
+    <Compile Include="SecurityFiles.cs" />
     <Compile Include="Web\IPageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IAuthorizationService.cs" />
