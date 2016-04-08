@@ -70,8 +70,8 @@ namespace Box.CMS.Services {
 
                 if (EncryptFiles)
                 {
-                    f.Data.StoredData = SecurityFiles.DecryptBytes(f.Data.StoredData);
-                    f.Data.StoredThumbData = SecurityFiles.DecryptBytes(f.Data.StoredThumbData);
+                    f.Data.StoredData = CryptUtil.DecryptBytes(f.Data.StoredData);
+                    f.Data.StoredThumbData = CryptUtil.DecryptBytes(f.Data.StoredThumbData);
                 }
 
                 return f;
@@ -81,8 +81,8 @@ namespace Box.CMS.Services {
         public void SaveFile(File file, FileStorages storage) {
             using (var context = new Data.CMSContext()) {
 
-                file.Data.StoredData = EncryptFiles ? SecurityFiles.EncryptBytes(file.Data.StoredData) : file.Data.StoredData;
-                file.Data.StoredThumbData = EncryptFiles ? SecurityFiles.EncryptBytes(file.Data.StoredThumbData) : file.Data.StoredThumbData;
+                file.Data.StoredData = EncryptFiles ? CryptUtil.EncryptBytes(file.Data.StoredData) : file.Data.StoredData;
+                file.Data.StoredThumbData = EncryptFiles ? CryptUtil.EncryptBytes(file.Data.StoredThumbData) : file.Data.StoredThumbData;
 
                 var oldfile = context.Files.SingleOrDefault(f => f.FileUId == file.FileUId);
                 if (oldfile == null) {

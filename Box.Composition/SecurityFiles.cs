@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Box.Composition
 {
-    public static class SecurityFiles
+    public static class CryptUtil
     {
         private static string key = "shseI5yhXQ8AN/8CK30zYskNK4KyGNyX5O2iw0YZulM=";
         private static string iv = "B0yLtX93vGsHwYiu0/MbuA==";
