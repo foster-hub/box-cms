@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -9,8 +10,8 @@ namespace Box.Composition
 {
     public static class CryptUtil
     {
-        private static string key = "shseI5yhXQ8AN/8CK30zYskNK4KyGNyX5O2iw0YZulM=";
-        private static string iv = "B0yLtX93vGsHwYiu0/MbuA==";
+        private static string key = ConfigurationSettings.AppSettings["ENCRYPT_KEY"] as string;
+        private static string iv = ConfigurationSettings.AppSettings["ENCRYPT_IV"] as string;
 
         private static SymmetricAlgorithm GetAlgorithm()
         {
