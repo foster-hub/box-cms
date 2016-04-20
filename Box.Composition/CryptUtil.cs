@@ -15,11 +15,15 @@ namespace Box.Composition
 
         private static SymmetricAlgorithm GetAlgorithm()
         {
-            SymmetricAlgorithm alg = new RijndaelManaged();
-            alg.Key = Convert.FromBase64String(key);
-            alg.IV = Convert.FromBase64String(iv);
+            SymmetricAlgorithm myRijndael = new RijndaelManaged();
+            //myRijndael.Padding = PaddingMode.PKCS7;
+            //myRijndael.Mode = CipherMode.CBC;
+            //myRijndael.KeySize = 256;
+            //myRijndael.BlockSize = 256;
+            myRijndael.Key = Convert.FromBase64String(key);
+            myRijndael.IV = Convert.FromBase64String(iv);
 
-            return alg;
+            return myRijndael;
         }
 
         public static byte[] EncryptBytes(byte[] file)
@@ -28,7 +32,7 @@ namespace Box.Composition
             byte[] encrypted;
 
             using (var stream = new MemoryStream())
-            using (var encrypt = new CryptoStream(stream, alg.CreateEncryptor(), CryptoStreamMode.Write))
+            using (var encrypt = new CryptoStream(stream, alg.CreateEncryptor(alg.Key, alg.IV), CryptoStreamMode.Write))
             {
                 encrypt.Write(file, 0, file.Length);
                 encrypt.FlushFinalBlock();
@@ -44,8 +48,8 @@ namespace Box.Composition
             SymmetricAlgorithm alg = GetAlgorithm();
             byte[] decrypted;
 
-            using (var stream = new MemoryStream(file))
-            using (var encrypt = new CryptoStream(stream, alg.CreateDecryptor(), CryptoStreamMode.Write))
+            using (var stream = new MemoryStream())
+            using (var encrypt = new CryptoStream(stream, alg.CreateDecryptor(alg.Key, alg.IV), CryptoStreamMode.Write))
             {
                 encrypt.Write(file, 0, file.Length);
                 encrypt.FlushFinalBlock();
@@ -53,6 +57,6 @@ namespace Box.Composition
             }
             alg.Clear();
             return decrypted;
-        }   
+        }
     }
 }
