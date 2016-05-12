@@ -58,7 +58,6 @@ UploadArea.stopMoveFile = function (file, id, li) {
 
 }
 
-
 UploadArea.startMoveFile = function (file, id, li) {
 
     var ul = document.getElementById('_uploadArea_' + id);
@@ -100,8 +99,6 @@ UploadArea.movingMouse = function (div, e, id) {
     pageVM.editingItem.valueHasMutated();
 
 }
-
-
 
 UploadArea.calcMoveInsertIdx = function (div, event) {
 
@@ -151,6 +148,7 @@ UploadArea.sendFiles = function (files, id, folder, singleFile) {
     for (i = 0; i < len; i++) {
         var data = new FormData();
         data.append("file" + i, files[i]);
+
         waitingFiles.push({ isLoading: true, name: files[i].name });
         pageVM.editingItem.valueHasMutated();
 
@@ -178,6 +176,7 @@ UploadArea.sendFiles = function (files, id, folder, singleFile) {
                         var bindFiles = pageVM.editingItem().CONTENT[id];
                         bindFiles.push(newFile);
                     }
+                    
                     waitingFiles.pop();
                     pageVM.editingItem.valueHasMutated();
 

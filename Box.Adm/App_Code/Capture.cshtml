@@ -166,16 +166,14 @@
                 </div>
             </li>
             <!--/ko-->
+        </ul>
 
-            <!--ko foreach: pageVM.editingItem().CONTENT.@(id)_WAITING -->
+        <ul data-bind="foreach: pageVM.editingItem().CONTENT.@(id)_WAITING" class="pull-right">
             <li class="loading-li">
                 <div class="imageFile" style="width: 120px; height: 120px; background-image: url(@Href("~/Content/CMS_Images/FileIcons/loading.gif")); background-position: center; background-repeat: no-repeat;"></div>
             </li>
-            <!--/ko-->
-
         </ul>
-        
-        
+
         <div style="clear: both;"></div>
 
     </div>
