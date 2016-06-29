@@ -592,6 +592,8 @@ namespace Box.Core.Services {
 
             System.Net.Mail.MailMessage msg = new System.Net.Mail.MailMessage(AdminEmailAccount, email);
             msg.Subject = SystemName + " - " + SharedStrings.Change_password;
+            msg.SubjectEncoding = System.Text.UnicodeEncoding.Unicode;
+            msg.BodyEncoding = System.Text.UnicodeEncoding.Unicode;
             msg.IsBodyHtml = true;
 
             string template = System.IO.File.ReadAllText(templatePath, Encoding.Default);
