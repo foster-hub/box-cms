@@ -50,26 +50,26 @@ namespace Box.Core.Data {
         public DbSet<Log> Logs { get; set; }
     }
 
-    public class MySqlConfiguration : DbConfiguration
-    {
-        public MySqlConfiguration()
-        {
-            SetHistoryContext("MySql.Data.MySqlClient", (conn, schema) => new MySqlHistoryContext(conn, schema));
-        }
+    // Essas linha estavam gerando erro quando o projeto rodava em MS SQL
+    //public class MySqlConfiguration : DbConfiguration
+    //{
+    //    public MySqlConfiguration()
+    //    {
+    //        SetHistoryContext("MySql.Data.MySqlClient", (conn, schema) => new MySqlHistoryContext(conn, schema));
+    //    }
 
-    }
+    //}
+    //public class MySqlHistoryContext : HistoryContext
+    //{
+    //    public MySqlHistoryContext(DbConnection connection, string defaultSchema)
+    //       : base(connection, defaultSchema)
+    //    { }
 
-    public class MySqlHistoryContext : HistoryContext
-    {
-        public MySqlHistoryContext(DbConnection connection, string defaultSchema)
-           : base(connection, defaultSchema)
-        { }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<HistoryRow>().Property(h => h.MigrationId).HasMaxLength(100).IsRequired();
-            modelBuilder.Entity<HistoryRow>().Property(h => h.ContextKey).HasMaxLength(200).IsRequired();
-        }
-    }
+    //    protected override void OnModelCreating(DbModelBuilder modelBuilder)
+    //    {
+    //        base.OnModelCreating(modelBuilder);
+    //        modelBuilder.Entity<HistoryRow>().Property(h => h.MigrationId).HasMaxLength(100).IsRequired();
+    //        modelBuilder.Entity<HistoryRow>().Property(h => h.ContextKey).HasMaxLength(200).IsRequired();
+    //    }
+    //}
 }
