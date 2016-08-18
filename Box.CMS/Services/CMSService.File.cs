@@ -277,6 +277,9 @@ namespace Box.CMS.Services {
                     case ".pdf":
                         iconFile = "pdf";
                         break;
+                    case ".zip":
+                        iconFile = "zip";
+                        break;
                 }
             }
 
