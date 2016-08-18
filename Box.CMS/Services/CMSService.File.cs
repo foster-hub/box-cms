@@ -84,9 +84,10 @@ namespace Box.CMS.Services {
         public File GetFileThumb(string fileUId) {
             using (var context = new Data.CMSContext()) {
 
-                var f = context.Files.SingleOrDefault(x => x.FileUId == fileUId);
-                var thumbData = context.FileData.Where(x => x.FileUId == fileUId).Select(x => x.StoredThumbData).SingleOrDefault();
-                f.Data = new FileData() { FileUId = f.FileUId, StoredThumbData = thumbData };
+                var f = context.Files.Where(x => x.FileUId == fileUId).SingleOrDefault();
+                var thumbData = context.FileData.Where(x => x.FileUId == fileUId).Select(x => new { bytes = x.StoredThumbData }).SingleOrDefault();
+                
+                f.Data = new FileData() { FileUId = f.FileUId, StoredThumbData = thumbData.bytes };
 
                 if (EncryptFiles && f.Data != null && f.Data.StoredThumbData != null) {                    
                     f.Data.StoredThumbData = CryptUtil.DecryptBytes(f.Data.StoredThumbData);
