@@ -23,7 +23,13 @@ namespace Box.CMS.Controllers {
             if (folder=="box" && id == "loading")
                 return GetLoadingImage();
 
-            File file = cms.GetFile(id);
+            File file = null;
+
+            if (asThumb==true)
+                file = cms.GetFileThumb(id);
+            else
+                file = cms.GetFile(id);
+
             if (file == null)
                 return null;
 

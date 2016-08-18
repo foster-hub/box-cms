@@ -68,9 +68,27 @@ namespace Box.CMS.Services {
 
                 var f = file.SingleOrDefault(x => x.FileUId == fileUId);
 
-                if (EncryptFiles)
+                if (EncryptFiles && f.Data!=null)
                 {
-                    f.Data.StoredData = CryptUtil.DecryptBytes(f.Data.StoredData);
+                    if(f.Data.StoredData!=null)
+                        f.Data.StoredData = CryptUtil.DecryptBytes(f.Data.StoredData);
+
+                    if (f.Data.StoredThumbData != null)
+                        f.Data.StoredThumbData = CryptUtil.DecryptBytes(f.Data.StoredThumbData);
+                }
+
+                return f;
+            }
+        }
+
+        public File GetFileThumb(string fileUId) {
+            using (var context = new Data.CMSContext()) {
+
+                var f = context.Files.SingleOrDefault(x => x.FileUId == fileUId);
+                var thumbData = context.FileData.Where(x => x.FileUId == fileUId).Select(x => x.StoredThumbData).SingleOrDefault();
+                f.Data = new FileData() { FileUId = f.FileUId, StoredThumbData = thumbData };
+
+                if (EncryptFiles && f.Data != null && f.Data.StoredThumbData != null) {                    
                     f.Data.StoredThumbData = CryptUtil.DecryptBytes(f.Data.StoredThumbData);
                 }
 

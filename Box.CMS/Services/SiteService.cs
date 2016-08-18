@@ -191,7 +191,7 @@ namespace Box.CMS.Services {
         }
 
         public string GetFileName(string fileUId) {
-            return cms.GetFile(fileUId, false).FileName ;
+            return cms.GetFile(fileUId, false).FileName;
         }
 
 
