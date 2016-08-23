@@ -39,6 +39,12 @@ namespace Box.People.Services {
             }
         }
 
+        public Person GetPersonByEmail(string email) {
+            using (var context = new Data.PeopleContext()) {
+                return context.Person.Where(p => p.Email == email).SingleOrDefault();
+            }
+        }
+
         public IEnumerable<string> GetGroups(int skip, int top) {
 
             using (var context = new Data.PeopleContext()) {
