@@ -95,6 +95,9 @@
 
         function loadExport(filter) {
             window.location.href = '../people_export/?filter=' + filter.searchFilter() + '&optin=' + filter.optin() + '&group=' + PersonVM.group;
-        } 
+        }
+        $(document).ready(function () {
+            pageVM.showDetailByUrl();
+        });
     </script>
 }

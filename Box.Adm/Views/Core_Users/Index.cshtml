@@ -91,5 +91,9 @@
         pageVM.errorMsgItemAlreadyExists = '@Resources.SharedStrings.User_already_exists';
         $.validator.setValidator('editForm');        
         pageVM.loadAllGroups();
+
+        $(document).ready(function () {
+            pageVM.showDetailByUrl();
+        });
     </script>
 }
