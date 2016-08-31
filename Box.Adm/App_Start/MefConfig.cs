@@ -6,6 +6,7 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Reflection;
 using System.Web.Mvc;
+using System.Configuration;
 
 namespace Box.Adm {
 
@@ -15,7 +16,7 @@ namespace Box.Adm {
 
         public static CompositionContainer Container { get; private set; }
 
-        public static void RegisterMef(string pluginPath) {
+        public static void RegisterMef(string pluginPath = "bin-plugins") {
 
             ConfigureContainer(pluginPath);
 
@@ -29,8 +30,34 @@ namespace Box.Adm {
         }
 
         private static void ConfigureContainer(string pluginPath) {
-            var pluginsCatalog = new DirectoryCatalog(pluginPath, "*.dll");            
-            Container = new CompositionContainer(pluginsCatalog, true);
+
+            // plugins at different folder (medium trust IIs)
+            if (PluginFolder) {
+                var pluginsCatalog = new DirectoryCatalog(pluginPath, "*.dll");
+                var boxCatalog = new DirectoryCatalog("bin", "Box*.dll");                
+                var catalog = new AggregateCatalog(boxCatalog, pluginsCatalog);
+                Container = new CompositionContainer(catalog, true);
+            }
+
+            // plugins at bin folder (may have some problems at medium trust IIs)
+            else {
+                var pluginsCatalog = new DirectoryCatalog("bin", "*.dll");
+                Container = new CompositionContainer(pluginsCatalog, true);
+            }
+        }
+
+
+        public static bool PluginFolder {
+            get {
+                object isOn = ConfigurationManager.AppSettings["PLUGIN_FOLDER"];
+                if (isOn == null)
+                    return false;
+
+                bool isOnBool = false;
+                Boolean.TryParse(isOn.ToString(), out isOnBool);
+
+                return isOnBool;
+            }
         }
     }
 }

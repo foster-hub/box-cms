@@ -31,7 +31,7 @@ namespace Box.Adm {
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            MefConfig.RegisterMef("bin");
+            MefConfig.RegisterMef();
 
             // puts all roles at the admin group
             var security = MefConfig.Container.GetExportedValue<Box.Core.Services.SecurityService>();

@@ -213,6 +213,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin-plugins\readme.txt" />
     <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\Core_Images\Oauth\nt.png" />
     <Content Include="Content\emailDetail.html" />
