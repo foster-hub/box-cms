@@ -34,6 +34,7 @@ namespace Box.Adm {
                 .Include("~/Scripts/jquery.parsejson.extension.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/metro")
+                .Include("~/Scripts/metro/metro-global.js")
                 .Include("~/Scripts/metro/*.js"));
 
 

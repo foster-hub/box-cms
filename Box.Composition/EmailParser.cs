@@ -28,6 +28,8 @@ namespace Box.Composition {
             foreach (PropertyInfo prop in props) {
                 object propValue = prop.GetValue(model, null);
                 string propValueStr = propValue == null ? "" : propValue.ToString();
+                template = template.Replace(pattern + prop.Name + "/", propValueStr + "/");
+                template = template.Replace(pattern + prop.Name + ".", propValueStr + ".");
                 template = template.Replace(pattern + prop.Name + " ", propValueStr);
                 template = template.Replace(pattern + prop.Name + "\n", propValueStr + "\n");
                 template = template.Replace(pattern + prop.Name + "\r", propValueStr + "\r");
