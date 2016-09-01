@@ -36,7 +36,7 @@
                     <input type="text"
                            id="userEmail"
                            data-bind="value: editingItem().Email"
-                           maxlength="255" class="required email"
+                           maxlength="255" class="required email" autocomplete="off"
                            onblur="pageVM.suggestUserName(this.value)" />
                 </div>
 
@@ -45,7 +45,7 @@
 
                 <label>@Resources.SharedStrings.Name</label>
                 <div class="input-control text">
-                    <input type="text" data-bind="value: editingItem().Name, valueUpdate:'afterkeydown'" onkeyup="pageVM.editingItem.valueHasMutated();" class="required" />
+                    <input type="text" data-bind="value: editingItem().Name, valueUpdate:'afterkeydown'" onkeyup="pageVM.editingItem.valueHasMutated();" class="required" autocomplete="off" />
                 </div>
 
                 @if (IsWindowsAuthEnable) {
@@ -53,7 +53,7 @@
                         <label>@Resources.SharedStrings.Network_Login</label>
                         <div class="input-control text">
                             <input id="loginNTTxt" type="text"
-                                   data-bind="value: editingItem().LoginNT"
+                                   data-bind="value: editingItem().LoginNT" autocomplete="off"
                                    maxlength="255" />
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                     <label>@Resources.SharedStrings.Password</label>
 
                     <div class="input-control password">
-                        <input type="password" data-bind="value: newPassword" maxlength="10" minlength="6" style="max-width: 200px" />
+                        <input type="password" data-bind="value: newPassword" maxlength="10" minlength="6" style="max-width: 200px" autocomplete="off" />
                     </div>
                     <span class="text-muted">@Resources.SharedStrings.Password_tooltip</span>
                 </div>
