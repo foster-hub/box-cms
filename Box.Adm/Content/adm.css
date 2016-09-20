@@ -333,5 +333,5 @@ label { color: Gray; text-transform: uppercase; font-size: 75%; }
 }
 
 .icon-fa.fa {  
-  font: normal normal normal 14px/1 FontAwesome;  
+  font-family: FontAwesome !important;  
 }
