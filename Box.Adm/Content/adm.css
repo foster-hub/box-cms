@@ -331,3 +331,7 @@ label { color: Gray; text-transform: uppercase; font-size: 75%; }
 .saveTooltip {
     line-height: normal; color: gray; vertical-align: middle; font-size: 12px; margin-top: 9px;
 }
+
+.icon-fa.fa {  
+  font: normal normal normal 14px/1 FontAwesome;  
+}
