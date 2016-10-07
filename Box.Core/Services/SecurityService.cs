@@ -94,6 +94,21 @@ namespace Box.Core.Services {
             }
         }
 
+        public int MaxErrorCount {
+            get {
+                object maxError = ConfigurationManager.AppSettings["MAX_ERROR_COUNT"];
+
+                int maxErrorCount = 0;
+
+                if (maxError == null)
+                    return maxErrorCount;
+
+                int.TryParse(maxError.ToString(), out maxErrorCount);
+
+                return maxErrorCount;
+            }
+        }
+
         public IEnumerable<User> GetUsers(string filter = null, int skip = 0, int top = 0) {
 
             using (var context = new Data.CoreContext()) {
@@ -413,7 +428,7 @@ namespace Box.Core.Services {
                 if (user == null)
                     return;
                 user.LoginErrorsCount++;
-                if (user.LoginErrorsCount > 3)
+                if (user.LoginErrorsCount > MaxErrorCount && MaxErrorCount > 0 && MaxErrorCount != null)
                     user.Blocked = true;
 
                 context.SaveChanges();
@@ -630,9 +645,11 @@ namespace Box.Core.Services {
 
                 context.Users.Attach(user);
 
-                if (user.Password != null)
+                if (user.Password != null) {
                     user.Password.Password = reset.NewPassword;
-                else
+                    user.Blocked = false;
+                    user.LoginErrorsCount = 0;
+                } else
                     user.Password = new UserPassword() { Email = user.Email, Password = reset.NewPassword };
 
                 context.PasswordResets.Remove(reset);

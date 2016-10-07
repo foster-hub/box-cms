@@ -433,4 +433,7 @@ Try to change your filter.</value>
   <data name="Or_Login_with_windows_account" xml:space="preserve">
     <value>Or login with windows account.</value>
   </data>
+  <data name="Warning_block_user" xml:space="preserve">
+    <value>After try {0} times your user will be blocked.</value>
+  </data>
 </root>

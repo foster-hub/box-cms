@@ -935,6 +935,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to After try {0} times your user will be blocked..
+        /// </summary>
+        public static string Warning_block_user {
+            get {
+                return ResourceManager.GetString("Warning_block_user", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot; will be removed..
         /// </summary>
         public static string will_be_removed {

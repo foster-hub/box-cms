@@ -68,14 +68,16 @@
                 <fieldset class="span6">
 
                     <legend>@Resources.SharedStrings.Your_crendetials</legend>
-
+                    @if (securityService.MaxErrorCount > 0 && securityService.MaxErrorCount != null){
+                        <span data-bind="style: { visibility: loginResult()=='INVALID' ? 'visible' : 'hidden' }" style="color: #e51400; float: right;">@String.Format(Resources.SharedStrings.Warning_block_user, securityService.MaxErrorCount)</span>
+                    }
                     <label>@Resources.SharedStrings.Your_email</label>
                     @MetroUI.TextBox(id: "emailTextBox", databind: "value: signedUser().Email", maxLength: 50, decoration: @<span data-bind="visible: loginResult()=='BLOCKED'" class="field-validation-error">@Resources.SharedStrings.User_blocked</span>)
 
                     <label>@Resources.SharedStrings.Your_password</label>
                     @MetroUI.Password(databind: "value: signedUser().Password.Password, valueUpdate: 'afterkeydown'", maxLength: 10, onkeypress: "dialogHelper.ifEnter(pageVM.signin)", decoration: @<span data-bind="visible: loginResult()=='INVALID'" class="field-validation-error" style="position: absolute; right: 0px;top: 0px;">@Resources.SharedStrings.Invalid_user_or_password</span>)
 
-                    <small style="float: right">@Html.ActionLink(Resources.SharedStrings.Forgot_your_password, "ResetPassword", "core_signin")</small>
+                    <small style="float: right;">@Html.ActionLink(Resources.SharedStrings.Forgot_your_password, "ResetPassword", "core_signin")</small>
 
                     <button onclick="pageVM.signin()" class="large" data-bind="enable: !loading()">
                         <i data-bind="visible: pageVM.loading()" class="fa fa-spinner fa-pulse"></i><span data-bind="text: pageVM.loadingTxt()"></span>

@@ -250,6 +250,9 @@ Tente alterar seu critério de filtro.</value>
   <data name="Invalid_user_or_password" xml:space="preserve">
     <value>Usuário ou senha inválidos.</value>
   </data>
+  <data name="Warning_block_user" xml:space="preserve">
+    <value>Após tentar {0} vezes seu usuário será bloqueado.</value>
+  </data>
   <data name="Are_you_sure" xml:space="preserve">
     <value>Tem certeza?</value>
   </data>
