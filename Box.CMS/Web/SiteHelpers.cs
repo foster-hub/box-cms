@@ -155,18 +155,25 @@ namespace Box.CMS.Web
             }
 
 
-            var contents = BoxLib.GetContents(location, order, kinds, startDate, createdTo, parseContent, skip, top, filter, queryFilter);
-            int i = 0;
-            foreach (ContentHead head in contents)
-            {
-                head.OrderIndex = i;
-                str = str + itemTemplate(head).ToString();
-                i++;
+            var contents = BoxLib.GetContents(location, order, kinds, startDate, createdTo, parseContent, skip, top + 1, filter, queryFilter);
+            int i = 0;            
+            foreach (ContentHead head in contents) {
+                if (i < top) {
+                    head.OrderIndex = i;
+                    str = str + itemTemplate(head).ToString();
+                    i++;
+                }
             }
 
             if (navigationId != null) {
-                BoxLib.SetListIsOver(navigationId, contents.Count() < top);
-                BoxLib.SetListCount(navigationId, contents.Count());
+
+                bool hasMorePage = contents.Count() == top + 1;
+                int realCount = contents.Count();
+                if (realCount > top)
+                    realCount = top;
+
+                BoxLib.SetListIsOver(navigationId, !hasMorePage);
+                BoxLib.SetListCount(navigationId, realCount);
             }
 
             if (contents.Count() == 0)
@@ -336,7 +343,11 @@ namespace Box.CMS.Web
             return new HtmlString(html);
         }
 
-        public static IHtmlString PageMoreContentButton(string text = "More content...", string cssClass = null) {
+        public static IHtmlString PageMoreContentButton(string text = "More content...", string cssClass = null, string listId = null) {
+
+            if (listId!=null && BoxLib.GetListIsOver(listId))
+                return new HtmlString("");
+
             string html = "<a " + (cssClass == null?"":"class=\"" + cssClass +"\"") + " src=\"#\" data-bind=\"click: function(d,e) { d._getData(); }, visible: nextContentButtonVisible()\" class=\"listNextButton\">" + text + "</a>";            
             return new HtmlString(html);
         }

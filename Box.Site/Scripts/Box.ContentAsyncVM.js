@@ -33,15 +33,16 @@ Box.ContentAsyncVM = function (id, skip, top, kind, location, order, createdFrom
             return;
         
         $.ajax({
-            url: Box.webAppUrl + 'api/cms_publishedContents/?filter=' + '&skip=' + me._skip + '&top=' + me._top + '&kind=' + me._kind + '&location=' + me._location + '&order=' + me._order + '&createdFrom=' + me._createdFrom + "&createdTo=" + me._createdTo + "&area=" + me._area + me._tagsGetFormat(),
+            url: Box.webAppUrl + 'api/cms_publishedContents/?filter=' + '&skip=' + me._skip + '&top=' + (me._top + 1) + '&kind=' + me._kind + '&location=' + me._location + '&order=' + me._order + '&createdFrom=' + me._createdFrom + "&createdTo=" + me._createdTo + "&area=" + me._area + me._tagsGetFormat(),
             type: 'GET',
             headers: { 'RequestVerificationToken': Box.antiForgeryToken },
             success: function (data) {
                 for (var i = 0; i < data.length; i++) {
-                    me.contents.push(data[i]);
+                    if(i < top)
+                        me.contents.push(data[i]);
                 }                
                 me._skip = me._skip + top;
-                if (data.length < me._top)
+                if (data.length <= me._top)
                     me.nextContentButtonVisible(false);
             }
         });

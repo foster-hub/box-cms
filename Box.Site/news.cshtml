@@ -1,8 +1,9 @@
 ﻿@using Box.CMS.Web;
 @{
+    var PAGE_SIZE = 3;
     Page.Title = "News";
     Layout = "~/_PageLayout1C.cshtml";
-    BoxLib.SetListPageSize("list", 5);
+    BoxLib.SetListPageSize("list", PAGE_SIZE);
     var captcha = new Box.CMS.Services.CaptchaService();
     var antiToken = captcha.AntiForgeryToken();
 }
@@ -12,14 +13,24 @@
 }
 
 @BoxSite.ContentsAtUrl(navigationId: "list", itemTemplate: NewsItemTemplate)
+
+@* TRADITIONAL PAGING USING POSTS *@
+@*<ul class="pager">
+    <li>@BoxSite.PageFirstButton("list")</li>
+    <li>@BoxSite.PagePreviousButton("list")</li>
+    <li>@BoxSite.PageNextButton("list")</li>
+</ul>*@
+
+@* MODERN PAGING USING AJAX REQUESTS *@
 <div id="listAsync">
     <div data-bind="foreach: contents">
         @NewsItemTemplateAsync()
     </div>    
-    @BoxSite.PageMoreContentButton()
+    @BoxSite.PageMoreContentButton(listId:"list")
 </div>
 
 
+@* USE THIS FOR AJAX PAGING *@
 @helper NewsItemTemplateAsync()
 {
 <div class="row" style="margin-bottom: 10px;">
@@ -35,6 +46,7 @@
 </div>
 }
 
+@* USE THIS FOR TRADITIONAL (POST) PAGING *@
 @helper NewsItemTemplate(Box.CMS.ContentHead item)
 {
 <div class="row" style="margin-bottom: 10px;">
@@ -50,13 +62,14 @@
 </div>
 }
 
-    @section scripts {
-        <script type="text/javascript" src="@Href("~/Scripts/Box.ContentAsyncVM.js")"></script>
-        <script>
-            $().ready(function () {
-                Box.webAppUrl = '@Href("~")';
-                Box.antiForgeryToken = '@antiToken';
-                new Box.ContentAsyncVM('listAsync', 5, 5, '', '', '', '', '', '', '');
-            });
-        </script>
-    }
+@* USE THIS FOR AJAX PAGING *@
+@section scripts {
+    <script type="text/javascript" src="@Href("~/Scripts/Box.ContentAsyncVM.js")"></script>
+    <script>
+        $().ready(function () {
+            Box.webAppUrl = '@Href("~")';
+            Box.antiForgeryToken = '@antiToken';
+            new Box.ContentAsyncVM('listAsync', @PAGE_SIZE, @PAGE_SIZE, '', '', '', '', '', '', '');
+        });
+    </script>
+}
