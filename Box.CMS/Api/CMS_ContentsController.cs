@@ -20,7 +20,18 @@ namespace Box.CMS.Api {
         [Import]
         private LogService log { get; set; }
 
-        
+
+        [Box.Core.Web.WebApiAntiForgery]
+        [Authorize, HttpGet]
+        public List<string> SuggestedTags(string kind)
+        {
+            List<string> tags = cms.GetTagCloud(kind);
+            
+            cms.VerifyAuthorizationToEditContent(kind);
+
+            return tags;
+        }
+
 
         [Box.Core.Web.WebApiAntiForgery]
         [Authorize, HttpGet]        
