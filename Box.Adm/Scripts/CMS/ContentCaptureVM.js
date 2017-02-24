@@ -6,7 +6,8 @@
     this.oldCreatedFromFilter = null;
     this.contentLocation = new ko.observable();
     this.kind = null;
- 
+    this.SuggestedTags = new ko.observableArray([]);
+
     this.previewUrl = new ko.observable();
     this.customDataBeforePost = null;
 
@@ -26,6 +27,17 @@
         return !me.isContentExpired(item) && item.PublishAfter == null;
     }
 
+    this.getTags = function () {        
+        $.ajax({
+            url: _webAppUrl + 'api/cms_contents/SuggestedTags/' + me.editingItem().Kind,
+            type: 'GET',
+            headers: { 'RequestVerificationToken': _antiForgeryToken },
+            success: function (data) {
+                me.SuggestedTags(data);
+            }
+        });
+    }
+
 
     this.applyContentChanges = function (publish, dontClose, afterSave) {
         me.customPostParameters = '';
@@ -40,27 +52,27 @@
     }
 
     me.createdFromFilter.subscribe(function (newValue) {
-        if (newValue != me.oldCreatedFromFilter && me.oldCreatedFromFilter!=null) me.loadData();
+        if (newValue != me.oldCreatedFromFilter && me.oldCreatedFromFilter != null) me.loadData();
         me.oldCreatedFromFilter = newValue;
     });
 
     me.filterOnlyPublished.subscribe(function (newValue) {
-        me.loadData();        
+        me.loadData();
     });
 
     this.afterGet = function (data) {
         if (!(data instanceof Array)) {
             me.formatContent(data);
             return;
-        }        
+        }
         for (var c in data)
             me.formatContent(data[c]);
     }
 
     this.afterPost = function (data) {
-        
+
         me.formatContent(data);
-        
+
         if (me.editingItem != null) {
             me.editingItem.contentUrl = data.contentUrl;
             if (me.editingItem() != null) {
@@ -72,7 +84,7 @@
         me[me._resourceName].remove(
             function (item) {
                 return item.Location.toLowerCase() != me.contentLocation().toLowerCase();
-        })  
+            })
 
     }
 
@@ -116,7 +128,7 @@
 
     this.beforePost = function (contentHead) {
 
-        if(contentHead.Location==null || contentHead.Location=='')
+        if (contentHead.Location == null || contentHead.Location == '')
             contentHead.Location = me.contentLocation();
         contentHead.Kind = me.kind;
 
@@ -136,7 +148,7 @@
     this.isCrossLinkAt = function (area) {
         if (me.editingItem() == null || me.editingItem().CrossLinks == null)
             return -1;
-        for (var li = me.editingItem().CrossLinks.length - 1, i=li; i >= 0; i--) {
+        for (var li = me.editingItem().CrossLinks.length - 1, i = li; i >= 0; i--) {
             if (me.editingItem().CrossLinks[i].PageArea == area)
                 return i;
         }
@@ -158,13 +170,17 @@
         me.editingItem.valueHasMutated();
     }
 
+
+
     this.loadContent = function (after) {
 
         if (me.editingItem() == null)
             return;
 
+        //me.getTags();
+
         me.editingItem().CONTENT = new Object();
-        
+
         $.ajax({
             url: _webAppUrl + 'api/cms_contents/WithData/' + me.editingItem().ContentUId,
             type: 'GET',
@@ -196,7 +212,7 @@
     }
 
     this.setContentLocation = function (loc, refresh) {
-        me.contentLocation(loc);        
+        me.contentLocation(loc);
         if (refresh)
             me.loadData();
     }
@@ -204,7 +220,7 @@
     this.stopPreview = function () {
         if (me.previewUrl() == null)
             return;
-        me.previewUrl(null);        
+        me.previewUrl(null);
     }
     this.setPreviewUrl = function (content) {
         me.previewUrl("Preview/" + content.ContentUId);
@@ -234,11 +250,11 @@
 
         if (!me.isSaved())
             alert(me.contetNotSavedAlert);
-        
+
         me.browseContent(item);
     }
 
-    
+
 
 }
 ContentCaptureVM.prototype = new CrudVM();
@@ -250,7 +266,7 @@ FileUrlConverter = function () {
     filePathToModel = function (url, thumb) {
         url = url.replace(_webAppUrl + 'files/', '');
         if (thumb)
-            url = url.replace('/?asThumb=true', '');        
+            url = url.replace('/?asThumb=true', '');
         return url;
     }
 
@@ -283,7 +299,7 @@ FileUrlConverter = function () {
     this.isAudio = function (type) {
         if (type == null)
             return false;
-                
+
         if (type.indexOf("audio") < 0)
             return false;
         return true;
@@ -297,7 +313,7 @@ FileUrlConverter = function () {
             return false;
         return true;
     }
-    
+
     this.getFileName = function (data) {
         if (data == null)
             return "";

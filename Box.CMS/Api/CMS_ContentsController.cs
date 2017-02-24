@@ -23,13 +23,13 @@ namespace Box.CMS.Api {
 
         [Box.Core.Web.WebApiAntiForgery]
         [Authorize, HttpGet]
-        public List<string> SuggestedTags(string kind)
-        {
-            List<string> tags = cms.GetTagCloud(kind);
-            
-            cms.VerifyAuthorizationToEditContent(kind);
+        public IEnumerable<string> SuggestedTags(string id) {
 
-            return tags;
+            cms.VerifyAuthorizationToEditContent(id);
+
+            List<string> tags = cms.GetTagCloud(id);
+
+            return tags.ToArray();
         }
 
 
