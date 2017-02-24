@@ -75,6 +75,9 @@
         @foreach (string tag in Model.ContentKind.Tags) {
             <div onclick="addTag(this)" class="@BoxSite.TagStyle(tag)">@tag</div>
         }
+            <!--ko foreach: pageVM.SuggestedTags -->
+            <div data-bind="text: $data"></div>
+            <!--/ko-->
         </div>        
     </fieldset>
 
