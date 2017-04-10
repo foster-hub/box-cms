@@ -48,8 +48,10 @@ namespace Box.Core.Oauth
 
             System.Net.Http.HttpResponseMessage msg = wc.PostAsync(GET_TOKEN_URL, new System.Net.Http.StringContent(postData, Encoding.Default, "application/x-www-form-urlencoded")).Result;
 
-            if (msg.StatusCode == System.Net.HttpStatusCode.OK)
-                return msg.Content.ReadAsStringAsync().Result.Replace("access_token=", "");
+            if (msg.StatusCode == System.Net.HttpStatusCode.OK) {
+                dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(msg.Content.ReadAsStringAsync().Result);
+                return data["access_token"];
+            }
 
             return null;
         }
