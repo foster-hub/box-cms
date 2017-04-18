@@ -45,13 +45,16 @@ namespace Box.Core.Oauth {
                 int port = System.Web.HttpContext.Current.Request.Url.Port;
                 
                 string defHost = System.Configuration.ConfigurationManager.AppSettings["BOX_DEFAULT_HOST_NAME"] as String;
+                string fullDefHost = System.Configuration.ConfigurationManager.AppSettings["BOX_FULL_DEFAULT_HOST_NAME"] as String;
+
                 var appPath = System.Web.HttpContext.Current.Request.ApplicationPath;
                 if (appPath == "/")
                     appPath = "";
 
-                return scheme + "://" + (String.IsNullOrEmpty(defHost) ? host : defHost) + (port == 80 ? "" : ":" + port) + appPath;
-
-
+                if(string.IsNullOrEmpty(fullDefHost))
+                    return scheme + "://" + (String.IsNullOrEmpty(defHost) ? host : defHost) + (port == 80 ? "" : ":" + port) + appPath;
+                else
+                    return fullDefHost + appPath;
             }
         }
 
