@@ -131,18 +131,19 @@ namespace Box.CMS.Web
             return new HtmlString(str);
         }
         
-        public static IHtmlString Contents(string[] kinds = null, Func<ContentHead, HelperResult> itemTemplate = null, string order = "Date", Periods period = Periods.AnyTime, DateTime? createdFrom = null, DateTime? createdTo = null, bool parseContent = false, int top = 0, string navigationId = null, string location = null, string filter = null, IHtmlString noItemMessage = null, System.Linq.Expressions.Expression<Func<ContentHead, bool>> queryFilter = null)
+        public static IHtmlString Contents(string[] kinds = null, Func<ContentHead, HelperResult> itemTemplate = null, string order = "Date", Periods period = Periods.AnyTime, DateTime? createdFrom = null, DateTime? createdTo = null, bool parseContent = false, int top = 0, string navigationId = null, string location = null, string filter = null, IHtmlString noItemMessage = null, System.Linq.Expressions.Expression<Func<ContentHead, bool>> queryFilter = null, int manualSkip = 0)
         {
             if (itemTemplate == null)
                 itemTemplate = (head) => { return new HelperResult(w => w.Write("<li>" + ContentLink(head) + "</li>")); };
             string str = "";
 
-            int skip = 0;
+            int skip = manualSkip;
             if (navigationId != null)
             {
                 top = BoxLib.GetListPageSize(navigationId);
                 skip = BoxLib.GetPageSkipForList(navigationId) * top;
             }
+            
 
             SiteService site = new SiteService();
 
@@ -187,9 +188,9 @@ namespace Box.CMS.Web
             return new HtmlString(str);
         }
         
-        public static IHtmlString ContentsAtUrl(string url = "$currentUrl", Func<ContentHead, HelperResult> itemTemplate = null, string order = "Date", bool parseContent = false, int top = 0, string navigationId = null, IHtmlString noItemMessage = null, System.Linq.Expressions.Expression<Func<ContentHead, bool>> queryFilter = null)
+        public static IHtmlString ContentsAtUrl(string url = "$currentUrl", Func<ContentHead, HelperResult> itemTemplate = null, string order = "Date", bool parseContent = false, int top = 0, string navigationId = null, IHtmlString noItemMessage = null, System.Linq.Expressions.Expression<Func<ContentHead, bool>> queryFilter = null, int manualSkip = 0)
         {
-            return Contents(null, itemTemplate, order, Periods.AnyTime, null, null, parseContent, top, navigationId, url, null, noItemMessage, queryFilter);
+            return Contents(null, itemTemplate, order, Periods.AnyTime, null, null, parseContent, top, navigationId, url, null, noItemMessage, queryFilter, manualSkip);
         }
 
         public static IHtmlString CrossLinksFrom(string pageArea, Func<ContentHead, HelperResult> itemTemplate = null, string order = "CrossLinkDisplayOrder", int top = 0, string[] kinds = null, IHtmlString noItemMessage = null, bool parseContent = false, string navigationId = null, string[] pageAreaFallBacks = null)
