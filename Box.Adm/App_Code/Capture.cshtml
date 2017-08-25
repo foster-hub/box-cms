@@ -72,40 +72,47 @@
 }
 
 @helper File(string id, string folder = "Images", bool singleFile = false, string style = null) {    
-    string dropAreaId = "_uploadArea_" + id;
-    string inputFileId = "_uploadAreaInput_" + id;
-    string multipleTag = singleFile == false ? "multiple" : "";
+string dropAreaId = "_uploadArea_" + id;
+string inputFileId = "_uploadAreaInput_" + id;
+string multipleTag = singleFile == false ? "multiple" : "";
 
-    HtmlString dataBindList = new HtmlString("");
-    HtmlString dataBindMove = new HtmlString(""); ;
-    HtmlString dataBindItem = new HtmlString("editingItem().CONTENT." + id);
-    HtmlString dataBindBrowse = new HtmlString("data-bind=\"click: function(data) { window.open(FileUrl.toView(editingItem().CONTENT." + id + "), '_blank'); }, clickBubble: false\"");
-    
-    
+if(folder=="@GUID") {
+    folder = "pageVM.editingItem().ContentUId";
+}
+else {
+    folder = "'" + folder + "'";
+}
 
-    if (!singleFile) {
-        dataBindList = new HtmlString("data-bind=\"foreach: editingItem().CONTENT." + id + "\"");
-        dataBindMove = new HtmlString("data-bind=\"click: function(data, event) { UploadArea.stopMoveFile(data, '" + id + "', event.target.parentNode.parentNode); }, clickBubble: false\"");
-        dataBindItem = new HtmlString("$data");
-        dataBindBrowse = new HtmlString("data-bind=\"click: function(data) { window.open(FileUrl.toView(data), '_blank'); }, clickBubble: false\"");
-    }
-    
+HtmlString dataBindList = new HtmlString("");
+HtmlString dataBindMove = new HtmlString(""); ;
+HtmlString dataBindItem = new HtmlString("editingItem().CONTENT." + id);
+HtmlString dataBindBrowse = new HtmlString("data-bind=\"click: function(data) { window.open(FileUrl.toView(editingItem().CONTENT." + id + "), '_blank'); }, clickBubble: false\"");
+
+
+
+if (!singleFile) {
+    dataBindList = new HtmlString("data-bind=\"foreach: editingItem().CONTENT." + id + "\"");
+    dataBindMove = new HtmlString("data-bind=\"click: function(data, event) { UploadArea.stopMoveFile(data, '" + id + "', event.target.parentNode.parentNode); }, clickBubble: false\"");
+    dataBindItem = new HtmlString("$data");
+    dataBindBrowse = new HtmlString("data-bind=\"click: function(data) { window.open(FileUrl.toView(data), '_blank'); }, clickBubble: false\"");
+}
+
     <input 
         class="ajaxUploadField"
         id="@inputFileId" 
         type="file" 
-        onchange="UploadArea.sendFiles(this.files, '@id', '@folder', @singleFile.ToString().ToLowerInvariant() )" 
+        onchange="UploadArea.sendFiles(this.files, '@id', @folder, @singleFile.ToString().ToLowerInvariant() )" 
         @multipleTag 
         tabindex="-1" />                                    
        
     <a 
         class="formUploadField"
-        href="javascript: UploadArea.showUploadForm('@folder')">@Box.CMS.SharedStrings.File_upload</a>
+        href="javascript: UploadArea.showUploadForm(@folder)">@Box.CMS.SharedStrings.File_upload</a>
     
     <div 
         class="uploadDropArea" 
         style="@style"
-        ondrop="UploadArea.drop(this, event, '@id', '@folder', @singleFile.ToString().ToLowerInvariant())"
+        ondrop="UploadArea.drop(this, event, '@id', @folder, @singleFile.ToString().ToLowerInvariant())"
         ondragover="UploadArea.dragover(this, event)"
         ondragleave="UploadArea.dragout(this, event)">
 
@@ -114,7 +121,7 @@
                 @Box.CMS.SharedStrings.drag_and_drop_files_here
             </span>
             <a tabindex="-1"
-               href="javascript: showFileDatabase(function(file) { UploadArea.addFile(file, '@id', @singleFile.ToString().ToLowerInvariant()); }, '@folder')">@Box.CMS.SharedStrings.or_use_image_database</a>
+               href="javascript: showFileDatabase(function(file) { UploadArea.addFile(file, '@id', @singleFile.ToString().ToLowerInvariant()); }, @folder)">@Box.CMS.SharedStrings.or_use_image_database</a>
         </div>
 
         <ul id="@dropAreaId"
