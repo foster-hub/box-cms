@@ -13,6 +13,7 @@ namespace Box.Core.Data {
         
         public CoreContext() : base("DefaultConnection") {
             Database.SetInitializer<CoreContext>(new CoreContextInitializer());
+            Database.CommandTimeout = 900;
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {

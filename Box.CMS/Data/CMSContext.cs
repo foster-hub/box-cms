@@ -12,7 +12,8 @@ namespace Box.CMS.Data {
     public class CMSContext : DbContext {
 
         public CMSContext() : base("DefaultConnection") {
-            Database.SetInitializer<CMSContext>(new CMSContextInitializer());                      
+            Database.SetInitializer<CMSContext>(new CMSContextInitializer());
+            Database.CommandTimeout = 900;
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {
