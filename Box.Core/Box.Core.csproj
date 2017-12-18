@@ -171,6 +171,11 @@
     <Compile Include="Oauth\Facebook.cs" />
     <Compile Include="Services\AsyncTaskService.cs" />
     <Compile Include="Services\LogService.cs" />
+    <Compile Include="SharedStrings.es-ar.Designer.cs">
+      <DependentUpon>SharedStrings.es-ar.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="SharedStringsLog.pt-br.Designer.cs">
       <DependentUpon>SharedStringsLog.pt-br.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -221,6 +226,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="SharedStrings.es-ar.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SharedStrings.es-ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="SharedStrings.pt-br.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SharedStrings.pt-br.Designer.cs</LastGenOutput>
