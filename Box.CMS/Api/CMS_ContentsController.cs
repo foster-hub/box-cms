@@ -101,7 +101,7 @@ namespace Box.CMS.Api {
         }
 
         private string MakeCanonicalNameUnique(ContentHead content) {
-            string currentcanonicalname = content.CanonicalName += "/" + content.ContentDate.ToString("dd/MMM/yyyy");
+            string currentcanonicalname = content.CanonicalName += "-" + content.ContentDate.ToString("dd-MMM-yyyy-HH-mm-ss");
 
             ContentHead contentWithSameUrl = cms.GetContentHeadByUrlAndKind(content.Location + content.CanonicalName, null, false);
             if (contentWithSameUrl == null || contentWithSameUrl.ContentUId == content.ContentUId)

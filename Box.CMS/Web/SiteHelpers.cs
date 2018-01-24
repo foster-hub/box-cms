@@ -155,11 +155,14 @@ namespace Box.CMS.Web
                 startDate = period.StartDate(lastPublished);
             }
 
+            int vTop = top;
+            if (vTop > 0)
+                vTop = top + 1;
 
-            var contents = BoxLib.GetContents(location, order, kinds, startDate, createdTo, parseContent, skip, top + 1, filter, queryFilter);
+            var contents = BoxLib.GetContents(location, order, kinds, startDate, createdTo, parseContent, skip, vTop, filter, queryFilter);
             int i = 0;            
             foreach (ContentHead head in contents) {
-                if (i < top) {
+                if (top==0 || i < top) {
                     head.OrderIndex = i;
                     str = str + itemTemplate(head).ToString();
                     i++;
