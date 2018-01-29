@@ -43,5 +43,10 @@
         SiteApplication.SetUserCulture();
     }
 
+     protected void Application_BeginRequest(object sender, EventArgs e) {
+        HttpContext.Current.Response.AddHeader("x-frame-options", "SAMEORIGIN");
+    }
+
+
     
 </script>
