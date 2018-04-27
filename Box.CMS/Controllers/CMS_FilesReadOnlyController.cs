@@ -37,12 +37,12 @@ namespace Box.CMS.Controllers {
                 throw new System.Security.SecurityException("File folder does not match");
 
             if (asThumb.HasValue && asThumb.Value)
-                return new FileContentResult(file.Data.StoredThumbData, file.Type);
+                return new FileContentResult(file.Data.StoredThumbData, file.Type) { FileDownloadName = file.FileName };
                         
             if (width == 0 && height == 0)
-                return new FileContentResult(cms.GetScaledImageFile(file.Data.StoredData, scale, mimeType: file.Type), file.Type);
+                return new FileContentResult(cms.GetScaledImageFile(file.Data.StoredData, scale, mimeType: file.Type), file.Type) { FileDownloadName = file.FileName };
 
-            return new FileContentResult(cms.GetImageFileThumb(file.Data.StoredData, width, height, maxWidth, maxHeight, vAlign, hAlign, file.Type, mode), file.Type);
+            return new FileContentResult(cms.GetImageFileThumb(file.Data.StoredData, width, height, maxWidth, maxHeight, vAlign, hAlign, file.Type, mode), file.Type) { FileDownloadName = file.FileName };
         }
 
 

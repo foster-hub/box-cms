@@ -109,6 +109,31 @@ namespace Box.Core.Services {
             }
         }
 
+
+        /// <summary>
+        /// Returns all users the have a give role.
+        /// </summary>
+        /// <param name="role">Role</param>
+        /// <returns>Users that have a given role</returns>
+        public IEnumerable<User> GetUsersWithRole(string role)
+        {
+            return GetUsersWithRoles(new string[] { role });
+        }
+
+        /// <summary>
+        /// Returns all users the have at least one of the given roles.
+        /// </summary>
+        /// <param name="roles">Roles</param>
+        /// <returns>Users that have at least one of the given roles</returns>
+        public IEnumerable<User> GetUsersWithRoles(string[] roles)
+        {
+            using (var context = new Data.CoreContext())
+            {
+                return context.Users.Where(u => u.Memberships.Any(m => roles.Contains(m.UserGroupUId))
+                || u.GroupCollectionMemberships.Any(g => g.Collection.CollectionGroups.Any(g2 => roles.Contains(g2.UserGroupUId))));
+            }
+        }
+        
         public IEnumerable<User> GetUsers(string filter = null, int skip = 0, int top = 0) {
 
             using (var context = new Data.CoreContext()) {
