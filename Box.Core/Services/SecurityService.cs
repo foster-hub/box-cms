@@ -130,7 +130,7 @@ namespace Box.Core.Services {
             using (var context = new Data.CoreContext())
             {
                 return context.Users.Where(u => u.Memberships.Any(m => roles.Contains(m.UserGroupUId))
-                || u.GroupCollectionMemberships.Any(g => g.Collection.CollectionGroups.Any(g2 => roles.Contains(g2.UserGroupUId))));
+                || u.GroupCollectionMemberships.Any(g => g.Collection.CollectionGroups.Any(g2 => roles.Contains(g2.UserGroupUId)))).ToArray();
             }
         }
         
