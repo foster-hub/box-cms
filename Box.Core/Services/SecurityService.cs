@@ -25,6 +25,9 @@ namespace Box.Core.Services {
 
         public static string ADMIN_GROUP_ID = "ADMIN----167e-42a3-abb2-9e3f7ba2074d";
 
+        [Import]
+        private LogService log { get; set; }
+
         public static bool IsDebug
         {
             get
@@ -433,6 +436,12 @@ namespace Box.Core.Services {
 
             CreateBoxToken(user.Email);
 
+            if(log==null)
+            {
+                log = new LogService();
+            }
+            log.Log(loginNt + " verified");
+            
             return 1;
         }
 
@@ -563,11 +572,14 @@ namespace Box.Core.Services {
                 
 
         public void AuthenticateRequestPrincipal() {
+
             
             HttpContext context = HttpContext.Current;
 
             if (context == null)
+            {                                
                 return;
+            }
 
             // skip those types
             string requestType = context.Request.CurrentExecutionFilePathExtension.ToLower();
@@ -579,15 +591,16 @@ namespace Box.Core.Services {
 
             User user = GetUserByAuthToken(token);
 
-            if (user == null) {
+            if (user == null) {            
                 SignOutUser();
                 return;
             }
 
             string[] rolesList = GetUserRoles(user);
-
+            
             Thread.CurrentPrincipal = new BoxPrincipal(Thread.CurrentPrincipal.Identity, rolesList, user.Name, user.Email);
             context.User = Thread.CurrentPrincipal;
+            
         }
 
 

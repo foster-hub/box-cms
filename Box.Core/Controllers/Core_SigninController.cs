@@ -28,6 +28,8 @@ namespace Box.Core.Controllers {
         [Import]
         private Facebook Facebook { get; set; }
 
+        [Import]
+        private Services.LogService log { get; set; }
         
         [System.Web.Mvc.AllowAnonymous]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")] 
@@ -57,6 +59,8 @@ namespace Box.Core.Controllers {
         public ActionResult NTcallback(string token) {
             User user = service.GetUserByAuthToken(token);
 
+            log.Log("Valid token for user " + user.LoginNT + " (" + user.Email + ") signing via network.");
+
             if (user == null || String.IsNullOrEmpty(user.Email))
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden, SharedStrings.Unauthorized_UserNT);
 
@@ -85,14 +89,18 @@ namespace Box.Core.Controllers {
 
             if (email == null)
                 callBackMessage = SharedStrings.Error_sigin;
-
+            
             int signedin = service.SignInUser(email);
+            
             if (signedin != 1)
                 callBackMessage = SharedStrings.You_do_not_have_an_active_account_at_this_system;
 
             ViewData["callBackMessage"] = callBackMessage;
 
             if (signedin == 1) {
+
+                log.Log("User " + email + " signed via callback.");
+
                 string url = Request["ReturnUrl"];
                 if (!String.IsNullOrEmpty(url))
                     Response.Redirect(url);

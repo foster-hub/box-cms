@@ -18,10 +18,9 @@ namespace Box.Core.Web {
 
         public string UserDisplayName { get; private set; }
         public string UserEmail { get; private set; }
-
-
+        
         [ImportingConstructor]
-        public PageModel([Import]Box.Composition.Services.IMenuService menus) {
+        public PageModel([Import]Box.Composition.Services.IMenuService menus, [Import] Services.LogService log) {
             TopMenuItems = menus.TopMenuItems;
             SettingsMenuItems = menus.SettingsMenuItems;
 
@@ -31,6 +30,7 @@ namespace Box.Core.Web {
             } else {
                 UserDisplayName = "";
                 UserEmail = "";
+                log.Log("Make sure /ADM application Windows Authetication is OFF.\n Only /ADM_NT folder should have Windows Authetication ON.", "Invalid Current Principal: " + System.Threading.Thread.CurrentPrincipal.ToString());
             }
         }
     }
