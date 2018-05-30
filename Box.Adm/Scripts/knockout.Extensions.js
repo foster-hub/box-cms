@@ -4,6 +4,7 @@
     }
 };
 
+ko.expressionRewriting._twoWayBindings.date = true;
 ko.bindingHandlers.date = {
     init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
         try {
@@ -93,7 +94,7 @@ ko.bindingHandlers.date.parseJsonDateString = function (value) {
     return value;
 };
 
-
+ko.expressionRewriting._twoWayBindings.timeHour = true;
 ko.bindingHandlers.timeHour = {
     init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
         try {
@@ -137,6 +138,8 @@ ko.bindingHandlers.timeHour = {
     }
 };
 
+
+ko.expressionRewriting._twoWayBindings.timeMinutes = true;
 ko.bindingHandlers.timeMinutes = {
     init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
         try {
@@ -179,6 +182,7 @@ ko.bindingHandlers.timeMinutes = {
     }
 };
 
+ko.expressionRewriting._twoWayBindings.nicEdit = true;
 ko.bindingHandlers.nicEdit = {
 
     init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
@@ -236,6 +240,7 @@ ko.extenders.withPrevious = function (target) {
     return target;
 }
 
+ko.expressionRewriting._twoWayBindings.booleanValue = true;
 ko.bindingHandlers.booleanValue = {
     init: function (element, valueAccessor, allBindingsAccessor) {
         var observable = valueAccessor(),
@@ -252,5 +257,107 @@ ko.bindingHandlers.booleanValue = {
             });
 
         ko.applyBindingsToNode(element, { value: interceptor });
+    }
+};
+
+
+ko.expressionRewriting._twoWayBindings.decimal = true;
+ko.bindingHandlers.decimal = {
+    init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+        
+        $(element).change(function () {
+
+            var decimal = ko.bindingHandlers.decimal.strToDecimal(element.value);
+
+            if (ko.isWriteableObservable(valueAccessor())) {
+                var value = valueAccessor();
+                value(decimal);
+            }
+            else {
+                allBindingsAccessor()._ko_property_writers.decimal(decimal);
+            }
+        });
+
+    },
+    update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+
+        var decimal = ko.utils.unwrapObservable(valueAccessor());
+        var str = ko.bindingHandlers.decimal.decimalToStr(decimal);
+
+        if ($(element).is('input'))
+            $(element).val(str);
+        else
+            $(element).text(str);
+    }
+};
+ko.bindingHandlers.decimal.displayLocale = 'EN-US';
+ko.bindingHandlers.decimal.strToDecimal = function (str, money) {
+
+    var str = str.replace(money, '');
+
+    if (ko.bindingHandlers.decimal.displayLocale == 'EN-US')
+        return parseFloat(str);
+
+    var str = str.replace(/\./g, '');
+    str = str.replace(/\,/g, '.');    
+    return parseFloat(str);
+}
+ko.bindingHandlers.decimal.decimalToStr = function (decimal, money) {
+
+    var strMoney = '';
+    if (money) {
+        strMoney = money + ' ';
+    }
+
+    if (ko.bindingHandlers.decimal.displayLocale == 'EN-US')
+        return strMoney + decimal.toString();
+    var str = decimal.toString();
+    var str = str.replace(/\./g, 'd');
+    str = str.replace(/\,/g, 'c');
+    str = str.replace(/d/g, ',');
+    str = str.replace(/c/g, '.');
+    return strMoney + str;
+}
+
+ko.expressionRewriting._twoWayBindings.money = true;
+ko.bindingHandlers.money = {
+    init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+
+        $(element).change(function () {
+
+            var decimal = ko.bindingHandlers.decimal.strToDecimal(element.value, ko.bindingHandlers.money.symbol);
+
+            if (ko.isWriteableObservable(valueAccessor())) {
+                var value = valueAccessor();
+                value(decimal);
+            }
+            else {
+                allBindingsAccessor()._ko_property_writers.money(decimal);
+            }
+        });
+
+    },
+    update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+
+        var decimal = ko.utils.unwrapObservable(valueAccessor());
+        var str = ko.bindingHandlers.decimal.decimalToStr(decimal, ko.bindingHandlers.money.symbol);
+
+        if ($(element).is('input'))
+            $(element).val(str);
+        else
+            $(element).text(str);
+    }
+};
+ko.bindingHandlers.money.symbol = '$';
+
+//Returns selected text (caption) from a SelectBox
+ko.bindingHandlers.selectedText = {
+    init: function (element, valueAccessor) {
+        var value = valueAccessor();
+        $(element).change(function () {
+            value($("option:selected", this).text());
+        });
+    },
+    update: function (element, valueAccessor) {
     }
 };

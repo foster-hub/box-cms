@@ -9,7 +9,7 @@ namespace Box.Adm {
 
             
             bundles.Add(new ScriptBundle("~/bundles/box")
-                .Include("~/Scripts/knockout-2.2.0.js")
+                .Include("~/Scripts/knockout-3.4.2.js")
                 .Include("~/Scripts/knockout.Extensions.js")                
                 .Include("~/Scripts/Core/CrudVM.js")                
                 .Include("~/Scripts/Utils/AjaxSetup.js")
