@@ -304,19 +304,18 @@ ko.bindingHandlers.decimal.strToDecimal = function (str, money) {
 }
 ko.bindingHandlers.decimal.decimalToStr = function (decimal, money) {
 
+    if (decimal == null)
+        decimal = '';
+
     var strMoney = '';
     if (money) {
         strMoney = money + ' ';
     }
 
     if (ko.bindingHandlers.decimal.displayLocale == 'EN-US')
-        return strMoney + decimal.toString();
-    var str = decimal.toString();
-    var str = str.replace(/\./g, 'd');
-    str = str.replace(/\,/g, 'c');
-    str = str.replace(/d/g, ',');
-    str = str.replace(/c/g, '.');
-    return strMoney + str;
+        return strMoney + ko.bindingHandlers.decimal.humanizeNumberENUS(decimal);
+    
+    return strMoney + ko.bindingHandlers.decimal.humanizeNumberPTBR(decimal);
 }
 
 ko.expressionRewriting._twoWayBindings.money = true;
@@ -326,7 +325,7 @@ ko.bindingHandlers.money = {
         $(element).change(function () {
 
             var decimal = ko.bindingHandlers.decimal.strToDecimal(element.value, ko.bindingHandlers.money.symbol);
-
+            
             if (ko.isWriteableObservable(valueAccessor())) {
                 var value = valueAccessor();
                 value(decimal);
@@ -361,3 +360,25 @@ ko.bindingHandlers.selectedText = {
     update: function (element, valueAccessor) {
     }
 };
+
+ko.bindingHandlers.decimal.humanizeNumberENUS = function(n) {
+    n = n.toString()
+    while (true) {
+        var n2 = n.replace(/(\d)(\d{3})($|,|\.)/g, '$1,$2$3')
+        if (n == n2) break
+        n = n2
+    }
+    return n
+}
+
+ko.bindingHandlers.decimal.humanizeNumberPTBR = function (n) {
+    n = n.toString()
+    n = n.replace('.', 'D');
+    while (true) {
+        var n2 = n.replace(/(\d)(\d{3})($|D|,)/g, '$1.$2$3')
+        if (n == n2) break
+        n = n2
+    }
+    n = n.replace('D', ',');
+    return n;
+}
