@@ -430,4 +430,10 @@ Tente alterar seu critério de filtro.</value>
   <data name="Or_Login_with_windows_account" xml:space="preserve">
     <value>Ou logar com conta windows.</value>
   </data>
+  <data name="FirstPage" xml:space="preserve">
+    <value>Primeira</value>
+  </data>
+  <data name="LastPage" xml:space="preserve">
+    <value>Última</value>
+  </data>
 </root>

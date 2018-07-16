@@ -24,7 +24,20 @@ function PagingHelper() {
         skip = newSkip;
     }
 
+    //paginação
+    this.currentPage = new ko.observable(1);
+    this.totalPages = new ko.observable(0);
+    this.totalRecords = 0;
 
+    this.getLastSkip = function () {
+        var isInt = me.totalRecords / me.itemsPerPage;
+
+        if (isInt === parseInt(isInt))
+            return newSkip = me.totalRecords - me.itemsPerPage;
+        else
+            return newSkip = (Math.floor(me.totalRecords / me.itemsPerPage) * me.itemsPerPage);
+    }
+    //paginação
 }
 
 var CrudOptions = {};
@@ -152,6 +165,16 @@ function CrudVM(moduleName, name, uIdField) {
         me._getData(me.paging.getPreviousSkip());
     }
 
+    //paginação
+    this.loadLastData = function () {
+        me._getData(me.paging.getLastSkip());
+    }
+
+    this.loadFirstData = function () {
+        me._getData(me.paging.resetSkip());
+    }
+    //paginação
+
     this.beforePost = function (data) {
         return data;
     }
@@ -195,7 +218,7 @@ function CrudVM(moduleName, name, uIdField) {
             url: _webAppUrl + 'api/' + me._module + '_' + me._resourceName + me._actionData + '/?filter=' + encodeURIComponent(me.searchFilter()) + '&skip=' + skip + '&top=' + me.paging.itemsPerPage + '&order=' + me.order() + me.getCustomFilter(),
             type: 'GET',
             headers: { 'RequestVerificationToken': _antiForgeryToken },
-            success: function (data) {
+            success: function (data, textStatus, request) {
 
                 if (me.afterGet != null)
                     me.afterGet(data);
@@ -205,7 +228,18 @@ function CrudVM(moduleName, name, uIdField) {
                 // set paging
                 me.paging.applySkip();
                 me.hasPreviousPage(skip > 0);
-                me.hasNextPage(!(data.length < me.paging.itemsPerPage));
+                //me.hasNextPage(!(data.length < me.paging.itemsPerPage));
+
+                //paginação
+                if (request.getResponseHeader('TotalRecords') != null) {
+                    var totalReg = request.getResponseHeader('TotalRecords');
+                    me.paging.currentPage(Math.ceil((skip / me.paging.itemsPerPage) + 1));
+                    me.paging.totalRecords = totalReg;
+                    me.paging.totalPages(Math.ceil(totalReg / me.paging.itemsPerPage));
+                    me.hasNextPage(me.paging.currentPage() < me.paging.totalPages());
+                } else {
+                    me.hasNextPage(!(data.length < me.paging.itemsPerPage));
+                }
 
                 me.firstLoaded(true);
 

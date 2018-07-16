@@ -436,4 +436,10 @@ Try to change your filter.</value>
   <data name="Warning_block_user" xml:space="preserve">
     <value>After try {0} times your user will be blocked.</value>
   </data>
+  <data name="FirstPage" xml:space="preserve">
+    <value>First</value>
+  </data>
+  <data name="LastPage" xml:space="preserve">
+    <value>Last</value>
+  </data>
 </root>
