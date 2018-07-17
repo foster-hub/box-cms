@@ -23,8 +23,13 @@ namespace Box.Core.Api {
 
         [Box.Core.Web.WebApiAntiForgery]
         [Authorize(Roles = "LOG_VIEWER")]
-        public IEnumerable<Log> Get(string filter = null, int skip = 0, int top = 0, DateTime? dataDe = null, DateTime? dataAte = null) {
-            return log.GetLogs(filter, skip, top, dataDe, dataAte);
+        [PaginationFilter]
+        public IEnumerable<Log> Get(string filter = null, int skip = 0, int top = 0, DateTime? dataDe = null, DateTime? dataAte = null)
+        {
+            int totalRecords = 0;
+            IEnumerable<Log> return_ = log.GetLogs(ref totalRecords, filter, skip, top, dataDe, dataAte);
+            Request.Properties["count"] = totalRecords.ToString();
+            return return_;
         }
     }
 }

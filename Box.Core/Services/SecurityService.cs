@@ -136,7 +136,38 @@ namespace Box.Core.Services {
                 || u.GroupCollectionMemberships.Any(g => g.Collection.CollectionGroups.Any(g2 => roles.Contains(g2.UserGroupUId)))).ToArray();
             }
         }
-        
+
+        public IEnumerable<User> GetUsers(ref int totalRecords, string filter = null, int skip = 0, int top = 0)
+        {
+
+            using (var context = new Data.CoreContext())
+            {
+                IQueryable<User> users = context.Users;
+                if (!String.IsNullOrEmpty(filter))
+                {
+                    string[] tags = filter.ToLower().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] groupIds = GetMatchedUserGroupIds(tags);
+
+                    users = users.Where(u => tags.All(t => u.Email.ToLower().Contains(t) || u.Name.ToLower().Contains(t) || u.Memberships.Any(m => groupIds.Contains(m.UserGroupUId))));
+
+                }
+
+
+                users = users.OrderBy(u => u.Name);
+
+                // total records for pagination
+                totalRecords = users.Count();
+
+                if (skip != 0)
+                    users = users.Skip(skip);
+
+                if (top != 0)
+                    users = users.Take(top);
+
+                return users.ToArray();
+            }
+        }
+
         public IEnumerable<User> GetUsers(string filter = null, int skip = 0, int top = 0) {
 
             using (var context = new Data.CoreContext()) {
@@ -314,6 +345,27 @@ namespace Box.Core.Services {
 
         public IEnumerable<IUserGroup> GetAllGroups() {
             return allGroups;
+        }
+
+        public IEnumerable<GroupCollection> GetAllGroupCollection(ref int totalRecords, string filter)
+        {
+            using (var context = new Data.CoreContext())
+            {
+
+                IQueryable<GroupCollection> groupCollection = context.GroupCollections.Include("CollectionGroups");
+
+                if (!String.IsNullOrEmpty(filter))
+                {
+                    string[] tags = filter.ToLower().Split(new char[] { ' ' });
+                    string[] groupIds = GetMatchedUserGroupIds(tags);
+                    groupCollection = groupCollection.Where(g => tags.All(t => g.Name.ToLower().Contains(t) || g.CollectionGroups.Any(m => groupIds.Contains(m.UserGroupUId))));
+                }
+
+                // total records for pagination
+                totalRecords = groupCollection.Count();
+
+                return groupCollection.ToArray();
+            }
         }
 
         public IEnumerable<GroupCollection> GetAllGroupCollection(string filter) {

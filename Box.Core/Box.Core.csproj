@@ -169,6 +169,7 @@
     <Compile Include="Menus\LogsLink.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Oauth\Facebook.cs" />
+    <Compile Include="PaginationFilter.cs" />
     <Compile Include="Services\AsyncTaskService.cs" />
     <Compile Include="Services\LogService.cs" />
     <Compile Include="SharedStrings.es-ar.Designer.cs">

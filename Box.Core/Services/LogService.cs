@@ -100,6 +100,64 @@ namespace Box.Core.Services {
                 return context.Logs.Where(l => l.LogUId == id).SingleOrDefault();
         }
 
+        public IEnumerable<Log> GetLogs(ref int totalRecords, string filter = null, int skip = 0, int top = 0, DateTime? dataDe = null, DateTime? dataAte = null)
+        {
+
+            using (var context = new Data.CoreContext())
+            {
+                IQueryable<Log> logs = context.Logs;
+
+                if (!String.IsNullOrEmpty(filter))
+                {
+
+                    string[] tags = filter.ToLower().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    logs = logs.Where(l => tags.All(t =>
+                        l.SignedUser.ToLower() == t ||
+                        l.Url.ToLower().Contains(t) ||
+                        l.ActionDescription.ToLower().Contains(t) ||
+                        l.UserIp.ToLower() == t));
+                }
+
+                if (dataDe != null)
+                {
+                    dataDe = dataDe.Value.Date;
+                    logs = logs.Where(l => l.When >= dataDe.Value);
+                }
+
+                if (dataAte != null)
+                {
+                    DateTime dataAteDiaSeguinte = dataAte.Value.AddDays(1).Date;
+                    logs = logs.Where(l => l.When < dataAteDiaSeguinte);
+                }
+
+                logs = logs.OrderByDescending(l => l.When);
+
+                // total records for pagination
+                totalRecords = logs.Count();
+
+                if (skip != 0)
+                    logs = logs.Skip(skip);
+
+                if (top != 0)
+                    logs = logs.Take(top);
+
+                return logs.ToList().Select(l => new Log
+                {
+                    ActionDescription = l.ActionDescription,
+                    ErrorDescription = l.ErrorDescription,
+                    LogType = l.LogType,
+                    LogUId = l.LogUId,
+                    SignedUser = l.SignedUser,
+                    Url = l.Url,
+                    UserIp = l.UserIp,
+                    When = l.When
+                }).ToArray();
+
+
+            }
+        }
+
         public IEnumerable<Log> GetLogs(string filter = null, int skip = 0, int top = 0, DateTime? dataDe = null, DateTime? dataAte = null) {
 
             using (var context = new Data.CoreContext()) {

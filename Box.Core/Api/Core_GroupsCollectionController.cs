@@ -21,8 +21,13 @@ namespace Box.Core.Api {
 
         [Box.Core.Web.WebApiAntiForgery]
         [Authorize(Roles = "ADM_SEC")]
-        public IEnumerable<GroupCollection> Get(string filter = null, int skip = 0, int top = 0, string order = "") {
-            return securityService.GetAllGroupCollection(filter);
+        [PaginationFilter]
+        public IEnumerable<GroupCollection> Get(string filter = null, int skip = 0, int top = 0, string order = "")
+        {
+            int totalRecords = 0;
+            IEnumerable<GroupCollection> return_ = securityService.GetAllGroupCollection(ref totalRecords, filter);
+            Request.Properties["count"] = totalRecords.ToString();
+            return return_;
         }
 
         [Box.Core.Web.WebApiAntiForgery]
