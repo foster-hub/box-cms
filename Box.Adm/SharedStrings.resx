@@ -145,7 +145,7 @@
     <value>New user</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>Não</value>
+    <value>No</value>
   </data>
   <data name="No_items_were_found" xml:space="preserve">
     <value>No items were found.
@@ -377,7 +377,7 @@ Try to change your filter.</value>
     <value>Remove</value>
   </data>
   <data name="Next_navigation" xml:space="preserve">
-    <value>Próximo</value>
+    <value>Next</value>
   </data>
   <data name="from" xml:space="preserve">
     <value>from</value>

@@ -529,7 +529,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Próximo.
+        ///   Looks up a localized string similar to Next.
         /// </summary>
         public static string Next_navigation {
             get {
@@ -538,7 +538,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Não.
+        ///   Looks up a localized string similar to No.
         /// </summary>
         public static string No {
             get {
