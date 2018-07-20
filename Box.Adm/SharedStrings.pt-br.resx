@@ -436,4 +436,7 @@ Tente alterar seu critério de filtro.</value>
   <data name="LastPage" xml:space="preserve">
     <value>Última</value>
   </data>
+  <data name="Page" xml:space="preserve">
+    <value>Página</value>
+  </data>
 </root>

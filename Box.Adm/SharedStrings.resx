@@ -442,4 +442,7 @@ Try to change your filter.</value>
   <data name="LastPage" xml:space="preserve">
     <value>Last</value>
   </data>
+  <data name="Page" xml:space="preserve">
+    <value>Page</value>
+  </data>
 </root>

@@ -13,7 +13,7 @@
 </div>
 
 <nav class="listNavigation" data-bind="visible: pageVM.paging.totalPages() > 1">
-    <label style="font-size:14px;" data-bind="text: 'Página ' + pageVM.paging.currentPage() + ' de ' + pageVM.paging.totalPages(), visible: pageVM.paging.totalPages() > 1"></label>
+    <label style="font-size:14px;" data-bind="text: '@Resources.SharedStrings.Page ' + pageVM.paging.currentPage() + ' @Resources.SharedStrings.from ' + pageVM.paging.totalPages(), visible: pageVM.paging.totalPages() > 1"></label>
 </nav>
 
 <nav class="listNavigation">
