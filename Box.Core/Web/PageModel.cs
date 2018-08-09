@@ -30,7 +30,7 @@ namespace Box.Core.Web {
             } else {
                 UserDisplayName = "";
                 UserEmail = "";
-                log.Log("Make sure /ADM application Windows Authetication is OFF.\n Only /ADM_NT folder should have Windows Authetication ON.", "Invalid Current Principal: " + System.Threading.Thread.CurrentPrincipal.ToString());
+                log.Log("The user session expired.\nIf you are using Windows Aut, make sure /ADM application Windows Authetication is OFF.\n Only /ADM_NT folder should have Windows Authetication ON.", "Invalid Current Principal: " + System.Threading.Thread.CurrentPrincipal.ToString());
             }
         }
     }
