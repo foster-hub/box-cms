@@ -27,13 +27,23 @@ Box.ContentAsyncVM = function (id, skip, top, kind, location, order, createdFrom
         return parametersGet;
     }
 
+    this.getKindsArray = function () {
+        var kinds = me._kind.split(',');
+        if (kinds.length === 0)
+            return '&kinds=' + kinds;
+        var kindStr = '';
+        for (var i = 0; i < kinds.length; i++)
+            kindStr = kindStr + '&kinds=' + kinds[i];
+        return kindStr;
+    }
+
     this._getData = function () {
 
         if (!Box.antiForgeryToken)
             return;
         
         $.ajax({
-            url: Box.webAppUrl + 'api/cms_publishedContents/?filter=' + '&skip=' + me._skip + '&top=' + (me._top + 1) + '&kind=' + me._kind + '&location=' + me._location + '&order=' + me._order + '&createdFrom=' + me._createdFrom + "&createdTo=" + me._createdTo + "&area=" + me._area + me._tagsGetFormat(),
+            url: Box.webAppUrl + 'api/cms_publishedContents/?filter=' + '&skip=' + me._skip + '&top=' + (me._top + 1) + me.getKindsArray() + '&location=' + me._location + '&order=' + me._order + '&createdFrom=' + me._createdFrom + "&createdTo=" + me._createdTo + "&area=" + me._area + me._tagsGetFormat(),
             type: 'GET',
             headers: { 'RequestVerificationToken': Box.antiForgeryToken },
             success: function (data) {
