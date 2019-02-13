@@ -34,5 +34,11 @@ namespace Box.CMS.Api {
 
             return contents;
         }
+
+        [Box.Core.Web.WebApiAntiForgery]
+        public ContentHead Get(string id)
+        {
+            return cms.GetContent(id, true);            
+        }
     }
 }
