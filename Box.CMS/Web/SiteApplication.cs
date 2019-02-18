@@ -36,6 +36,12 @@ namespace Box.CMS.Web {
                 );
 
             RouteTable.Routes.MapRoute(
+                    name: "FileCache",
+                    url: "files-c/{folder}/{id}",
+                    defaults: new { controller = "cms_filesReadOnly", action = "Cache" }
+                );
+
+            RouteTable.Routes.MapRoute(
                     name: "Captcha",
                     url: "captcha",
                     defaults: new { controller = "cms_Captcha", action = "Index" }
