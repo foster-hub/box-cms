@@ -19,12 +19,21 @@ namespace Box.CMS.Api {
         private CMSService cms { get; set; }
         
         [Box.Core.Web.WebApiAntiForgery]        
-        public IEnumerable<ContentHead> Get(string filter = null, int skip = 0, int top = 0, string location = null, [FromUri] string[] kinds = null, string order = "Date", DateTime? createdFrom = null, DateTime? createdTo = null, string area = null, [FromUri] string[] tags = null, bool includeData = false) {
+        public IEnumerable<ContentHead> Get(string filter = null, int skip = 0, int top = 0, string location = null, [FromUri] string[] kinds = null, string order = "Date", DateTime? createdFrom = null, DateTime? createdTo = null, string area = null, [FromUri] string[] tags = null, bool includeData = false, string fromUrl = null) {
 
             IEnumerable<ContentHead> contents = null;
             Expression<Func<ContentHead, bool>> queryFilter = null;
-          
-            if(tags[0] != null && tags.Length > 0)
+
+            if (!String.IsNullOrEmpty(fromUrl))
+            {
+                var content = FromUrl(fromUrl, kinds!=null ? kinds.FirstOrDefault() : null);
+                if (content != null)                
+                    return new ContentHead[1] { content };                
+                else
+                    return new ContentHead[0];
+            }
+
+            if (tags[0] != null && tags.Length > 0)
                 queryFilter = c => c.Tags.Any(t => tags.Contains(t.Tag));
 
             if (!string.IsNullOrEmpty(area))
@@ -37,8 +46,18 @@ namespace Box.CMS.Api {
 
         [Box.Core.Web.WebApiAntiForgery]
         public ContentHead Get(string id)
-        {
+        {            
             return cms.GetContent(id, true);            
+        }
+
+
+        private ContentHead FromUrl(string url, string kind)
+        {
+            if (String.IsNullOrEmpty(url))
+                return null;
+            if (!url.StartsWith("/"))
+                url = "/" + url;
+            return cms.GetContentHeadByUrlAndKind(url, kind, true);
         }
     }
 }
