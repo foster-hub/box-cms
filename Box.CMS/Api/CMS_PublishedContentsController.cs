@@ -57,7 +57,7 @@ namespace Box.CMS.Api {
                 return null;
             if (!url.StartsWith("/"))
                 url = "/" + url;
-            return cms.GetContentHeadByUrlAndKind(url, kind, true);
+            return cms.GetContentByUrlAndKind(url, kind, true);
         }
     }
 }

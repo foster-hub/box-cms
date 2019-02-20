@@ -561,8 +561,24 @@ namespace Box.CMS.Services
                     content = content.Where(c => c.Kind == kind);
                 if (onlyPublished)
                     content = OnlyPublishedContents(content);
-                return content.SingleOrDefault();
+                return content.FirstOrDefault();
 
+            }
+        }
+
+        public ContentHead GetContentByUrlAndKind(string url, string kind, bool onlyPublished = false)
+        {
+            using (var context = new Data.CMSContext())
+            {
+                IQueryable<ContentHead> content = context.ContentHeads.Include("Data").Include("CrossLinks").Include("Tags").Include("CommentsCount").Include("CustomInfo").Where(c => c.Location + c.CanonicalName == url);
+
+                if (kind != null)
+                    content = content.Where(c => c.Kind == kind);
+
+                if (onlyPublished)
+                    content = OnlyPublishedContents(content);
+
+                return content.FirstOrDefault();
             }
         }
 

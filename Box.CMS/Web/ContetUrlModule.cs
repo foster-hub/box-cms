@@ -27,6 +27,9 @@ namespace Box.CMS.Web {
             if (fullUrl.StartsWith("/where-is-my-db.htm"))
                 return;
 
+            if (fullUrl.StartsWith("/__"))
+                return;
+
             // if true, can see not published contents
             bool canSeeOnlyPublished = GetShowOnlyPublished(app, fullUrl);
 
