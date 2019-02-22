@@ -139,15 +139,14 @@ if (!singleFile) {
                 </div>
                 
                 <!--/ko-->
-
                 <!--ko if: FileUrl.isAudio(@(dataBindItem).Type) -->                
                 <audio controls>
                     <source data-bind="attr: { src: FileUrl.toView(@dataBindItem, false) }">
                 </audio>
                 <!--/ko-->
                 <!--ko if: FileUrl.isVideo(@(dataBindItem).Type) -->
-                <video controls="controls">
-                    <source data-bind="attr: { src: FileUrl.toView(@dataBindItem, false) }">
+                <video preload="metadata" poster="~/Content/Core_Images/video-play-icon.png" data-bind="click: function(data) { window.open(FileUrl.toView(data), '_blank'); }, clickBubble: false">
+                    <source src="">
                 </video>
                 <!--/ko-->
 

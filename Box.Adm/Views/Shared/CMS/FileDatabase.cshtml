@@ -57,8 +57,8 @@
                         </audio>
                         <!--/ko-->
                         <!--ko if: FileUrl.isVideo(Type) -->
-                        <video controls>
-                            <source data-bind="attr: { src: FileUrl.toView($data, false) }">
+                        <video preload="metadata" poster="~/Content/Core_Images/video-play-icon.png" data-bind="click: function(data) { window.open(FileUrl.toView(data), '_blank'); }, clickBubble: false">
+                            <source src="">
                         </video>
                         <!--/ko-->
                     </div>
