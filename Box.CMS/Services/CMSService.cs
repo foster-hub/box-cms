@@ -273,7 +273,8 @@ namespace Box.CMS.Services
         private IQueryable<ContentHead> OnlyPublishedContents(IQueryable<ContentHead> contents)
         {
             DateTime now = DateTime.Now.ToUniversalTime();
-            return contents.Where(c => (c.PublishAfter.HasValue && c.PublishAfter <= now)
+            return contents.Where(c => 
+                (c.PublishAfter.HasValue && c.PublishAfter <= now)
                 && (!c.PublishUntil.HasValue || c.PublishUntil >= now));
         }
 
@@ -302,7 +303,7 @@ namespace Box.CMS.Services
             }
         }
 
-        public IEnumerable<ContentHead> GetContents(string filter, int skip, int top, string location, string[] kinds, string order = "Date", DateTime? createdFrom = null, DateTime? createdTo = null, bool includeData = false, bool onlyPublished = false, System.Linq.Expressions.Expression<Func<ContentHead, bool>> queryFilter = null)
+        public IEnumerable<ContentHead> GetContents(string filter, int skip, int top, string location, string[] kinds, string order = "Date", DateTime? createdFrom = null, DateTime? createdTo = null, bool includeData = false, bool onlyPublished = false, System.Linq.Expressions.Expression<Func<ContentHead, bool>> queryFilter = null, bool showHiddenContents = false)
         {
             using (var context = new Data.CMSContext())
             {
@@ -321,6 +322,9 @@ namespace Box.CMS.Services
 
                 if (onlyPublished)
                     contents = OnlyPublishedContents(contents);
+
+                if (showHiddenContents==false)
+                    contents = contents.Where(c => !c.Location.StartsWith("/__"));
 
                 if (queryFilter != null)
                 {

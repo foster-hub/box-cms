@@ -19,7 +19,7 @@ namespace Box.CMS.Api {
         private CMSService cms { get; set; }
         
         [Box.Core.Web.WebApiAntiForgery]        
-        public IEnumerable<ContentHead> Get(string filter = null, int skip = 0, int top = 0, string location = null, [FromUri] string[] kinds = null, string order = "Date", DateTime? createdFrom = null, DateTime? createdTo = null, string area = null, [FromUri] string[] tags = null, bool includeData = false, string fromUrl = null) {
+        public IEnumerable<ContentHead> Get(string filter = null, int skip = 0, int top = 0, string location = null, [FromUri] string[] kinds = null, string order = "Date", DateTime? createdFrom = null, DateTime? createdTo = null, string area = null, [FromUri] string[] tags = null, bool includeData = false, string fromUrl = null, bool showHiddenContents = false) {
 
             IEnumerable<ContentHead> contents = null;
             Expression<Func<ContentHead, bool>> queryFilter = null;
@@ -39,7 +39,7 @@ namespace Box.CMS.Api {
             if (!string.IsNullOrEmpty(area))
                 contents = cms.GetCrossLinksFrom(area, top: top, order: order, includeData: includeData);
             else
-                contents = cms.GetContents(filter, skip, top, location, kinds, order, createdFrom, createdTo, includeData, true, queryFilter);
+                contents = cms.GetContents(filter, skip, top, location, kinds, order, createdFrom, createdTo, includeData, true, queryFilter, showHiddenContents);
 
             return contents;
         }
