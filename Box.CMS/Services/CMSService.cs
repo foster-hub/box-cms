@@ -323,7 +323,8 @@ namespace Box.CMS.Services
                 if (onlyPublished)
                     contents = OnlyPublishedContents(contents);
 
-                if (showHiddenContents==false)
+                //  if no location was passed and it is not supposed to show hidden contents, hide them
+                if (showHiddenContents==false && String.IsNullOrEmpty(location))
                     contents = contents.Where(c => !c.Location.StartsWith("/__"));
 
                 if (queryFilter != null)
