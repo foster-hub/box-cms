@@ -118,7 +118,7 @@ namespace Box.CMS.Api {
         private void FormatContentTags(ContentHead content) {
             foreach (ContentTag t in content.Tags) {
                 t.ContentUId = content.ContentUId;
-                t.Tag = t.Tag.ToLower().Trim();
+                t.Tag = t.Tag.Trim();
             }
             content.Tags =  content.Tags.Distinct().ToArray();
         }
