@@ -473,10 +473,13 @@ namespace Box.CMS.Services
             string s1 = sbReturn.ToString();
 
             //apenas letras, números, espaços e hífen
+
+            s1 = s1.Replace("/", "-");
+
             Regex rgx = new Regex("[^a-zA-Z0-9 -]");
             s1 = rgx.Replace(s1, "");
 
-            return s1.ToLower().Replace(" ", "-")
+            s1 = s1.ToLower().Replace(" ", "-")
                 .Replace(".", "")
                 .Replace("?", "")
                 .Replace("'", "")
@@ -487,6 +490,14 @@ namespace Box.CMS.Services
                 .Replace("%", "")
                 .Replace(",", "-")
                 .Replace("ª", "");
+
+            while(s1.IndexOf("--")>0)
+            {
+                s1 = s1.Replace("--", "-");
+            }
+            
+
+            return s1;
         }
 
         public ContentHead SaveContent(ContentHead content)
