@@ -125,23 +125,23 @@ namespace Box.CMS.Services
         private IQueryable<ContentHead> OrderContents(IQueryable<ContentHead> contents, string order, string pageArea = null)
         {
             if (order == "Name")
-                return contents.OrderBy(c => c.Name).ThenByDescending(c => c.ContentDate);
+                return contents.OrderBy(c => c.Name).ThenByDescending(c => c.ContentDate).ThenBy(c => c.ContentUId);
             if (order == "Date ASC")
                 return contents.OrderBy(c => c.ContentDate);
             if (order == "DisplayOrder")
-                return contents.OrderBy(c => c.DisplayOrder).ThenByDescending(c => c.ContentDate);
+                return contents.OrderBy(c => c.DisplayOrder).ThenByDescending(c => c.ContentDate).ThenBy(c => c.ContentUId);
             if (order == "Comments")
-                return contents.OrderBy(c => c.CommentsCount.Count);
+                return contents.OrderBy(c => c.CommentsCount.Count).ThenBy(c => c.ContentUId);
             if (order == "Comments DESC")
-                return contents.OrderByDescending(c => c.CommentsCount.Count);
+                return contents.OrderByDescending(c => c.CommentsCount.Count).ThenBy(c => c.ContentUId);
             if (order == "Share")
-                return contents.OrderBy(c => c.ShareCount.Count);
+                return contents.OrderBy(c => c.ShareCount.Count).ThenBy(c => c.ContentUId);
             if (order == "Share DESC")
-                return contents.OrderByDescending(c => c.ShareCount.Count);
+                return contents.OrderByDescending(c => c.ShareCount.Count).ThenBy(c => c.ContentUId);
             if (order == "PageView")
-                return contents.OrderBy(c => c.PageViewCount.Count);
+                return contents.OrderBy(c => c.PageViewCount.Count).ThenBy(c => c.ContentUId);
             if (order == "PageView DESC")
-                return contents.OrderByDescending(c => c.PageViewCount.Count);
+                return contents.OrderByDescending(c => c.PageViewCount.Count).ThenBy(c => c.ContentUId);
 
             if (order == "Random")
             {
@@ -153,7 +153,7 @@ namespace Box.CMS.Services
             }
 
             if (order == "CrossLinkDisplayOrder" && pageArea != null)
-                return contents.OrderByDescending(c => c.CrossLinks.Where(x => x.PageArea == pageArea).FirstOrDefault().DisplayOrder).ThenByDescending(c => c.ContentDate);
+                return contents.OrderByDescending(c => c.CrossLinks.Where(x => x.PageArea == pageArea).FirstOrDefault().DisplayOrder).ThenByDescending(c => c.ContentDate).ThenBy(c => c.ContentUId);
 
             if (order == "RandomOnDay")
             {
@@ -170,102 +170,102 @@ namespace Box.CMS.Services
             // CUSTOM ORDERS
             if (order == "CustomNumber1")
             {
-                return contents.OrderBy(c => c.CustomInfo.Number1).ThenBy(c => c.DisplayOrder);
+                return contents.OrderBy(c => c.CustomInfo.Number1).ThenBy(c => c.DisplayOrder).ThenBy(c => c.ContentUId);
             }
             if (order == "CustomNumber2")
             {
-                return contents.OrderBy(c => c.CustomInfo.Number2).ThenBy(c => c.DisplayOrder);
+                return contents.OrderBy(c => c.CustomInfo.Number2).ThenBy(c => c.DisplayOrder).ThenBy(c => c.ContentUId);
             }
             if (order == "CustomNumber3")
             {
-                return contents.OrderBy(c => c.CustomInfo.Number3).ThenBy(c => c.DisplayOrder);
+                return contents.OrderBy(c => c.CustomInfo.Number3).ThenBy(c => c.DisplayOrder).ThenBy(c => c.ContentUId);
             }
             if (order == "CustomNumber4")
             {
-                return contents.OrderBy(c => c.CustomInfo.Number4).ThenBy(c => c.DisplayOrder);
+                return contents.OrderBy(c => c.CustomInfo.Number4).ThenBy(c => c.DisplayOrder).ThenBy(c => c.ContentUId);
             }
             if (order == "CustomNumber1 DESC")
             {
-                return contents.OrderByDescending(c => c.CustomInfo.Number1).ThenBy(c => c.DisplayOrder);
+                return contents.OrderByDescending(c => c.CustomInfo.Number1).ThenBy(c => c.DisplayOrder).ThenBy(c => c.ContentUId);
             }
             if (order == "CustomNumber2 DESC")
             {
-                return contents.OrderByDescending(c => c.CustomInfo.Number2).ThenBy(c => c.DisplayOrder);
+                return contents.OrderByDescending(c => c.CustomInfo.Number2).ThenBy(c => c.DisplayOrder).ThenBy(c => c.ContentUId);
             }
             if (order == "CustomNumber3 DESC")
             {
-                return contents.OrderByDescending(c => c.CustomInfo.Number3).ThenBy(c => c.DisplayOrder);
+                return contents.OrderByDescending(c => c.CustomInfo.Number3).ThenBy(c => c.DisplayOrder).ThenBy(c => c.ContentUId);
             }
             if (order == "CustomNumber4 DESC")
             {
-                return contents.OrderByDescending(c => c.CustomInfo.Number4).ThenBy(c => c.DisplayOrder);
+                return contents.OrderByDescending(c => c.CustomInfo.Number4).ThenBy(c => c.DisplayOrder).ThenBy(c => c.ContentUId);
             }
             if (order == "CustomText1")
             {
-                return contents.OrderBy(c => c.CustomInfo.Text1).ThenBy(c => c.DisplayOrder);
+                return contents.OrderBy(c => c.CustomInfo.Text1).ThenBy(c => c.DisplayOrder).ThenBy(c => c.ContentUId);
             }
             if (order == "CustomText2")
             {
-                return contents.OrderBy(c => c.CustomInfo.Text2).ThenBy(c => c.DisplayOrder);
+                return contents.OrderBy(c => c.CustomInfo.Text2).ThenBy(c => c.DisplayOrder).ThenBy(c => c.ContentUId);
             }
             if (order == "CustomText3")
             {
-                return contents.OrderBy(c => c.CustomInfo.Text3).ThenBy(c => c.DisplayOrder);
+                return contents.OrderBy(c => c.CustomInfo.Text3).ThenBy(c => c.DisplayOrder).ThenBy(c => c.ContentUId);
             }
             if (order == "CustomText4")
             {
-                return contents.OrderBy(c => c.CustomInfo.Text4).ThenBy(c => c.DisplayOrder);
+                return contents.OrderBy(c => c.CustomInfo.Text4).ThenBy(c => c.DisplayOrder).ThenBy(c => c.ContentUId);
             }
             if (order == "CustomText1 DESC")
             {
-                return contents.OrderByDescending(c => c.CustomInfo.Text1).ThenBy(c => c.DisplayOrder);
+                return contents.OrderByDescending(c => c.CustomInfo.Text1).ThenBy(c => c.DisplayOrder).ThenBy(c => c.ContentUId);
             }
             if (order == "CustomText2 DESC")
             {
-                return contents.OrderByDescending(c => c.CustomInfo.Text2).ThenBy(c => c.DisplayOrder);
+                return contents.OrderByDescending(c => c.CustomInfo.Text2).ThenBy(c => c.DisplayOrder).ThenBy(c => c.ContentUId);
             }
             if (order == "CustomText3 DESC")
             {
-                return contents.OrderByDescending(c => c.CustomInfo.Text3).ThenBy(c => c.DisplayOrder);
+                return contents.OrderByDescending(c => c.CustomInfo.Text3).ThenBy(c => c.DisplayOrder).ThenBy(c => c.ContentUId);
             }
             if (order == "CustomText4 DESC")
             {
-                return contents.OrderByDescending(c => c.CustomInfo.Text4).ThenBy(c => c.DisplayOrder);
+                return contents.OrderByDescending(c => c.CustomInfo.Text4).ThenBy(c => c.DisplayOrder).ThenBy(c => c.ContentUId);
             }
             if (order == "CustomDate1")
             {
-                return contents.OrderBy(c => c.CustomInfo.Date1).ThenBy(c => c.DisplayOrder);
+                return contents.OrderBy(c => c.CustomInfo.Date1).ThenBy(c => c.DisplayOrder).ThenBy(c => c.ContentUId);
             }
             if (order == "CustomDate2")
             {
-                return contents.OrderBy(c => c.CustomInfo.Date2).ThenBy(c => c.DisplayOrder);
+                return contents.OrderBy(c => c.CustomInfo.Date2).ThenBy(c => c.DisplayOrder).ThenBy(c => c.ContentUId);
             }
             if (order == "CustomDate3")
             {
-                return contents.OrderBy(c => c.CustomInfo.Date3).ThenBy(c => c.DisplayOrder);
+                return contents.OrderBy(c => c.CustomInfo.Date3).ThenBy(c => c.DisplayOrder).ThenBy(c => c.ContentUId);
             }
             if (order == "CustomDate4")
             {
-                return contents.OrderBy(c => c.CustomInfo.Date4).ThenBy(c => c.DisplayOrder);
+                return contents.OrderBy(c => c.CustomInfo.Date4).ThenBy(c => c.DisplayOrder).ThenBy(c => c.ContentUId);
             }
             if (order == "CustomDate1 DESC")
             {
-                return contents.OrderByDescending(c => c.CustomInfo.Date1).ThenBy(c => c.DisplayOrder);
+                return contents.OrderByDescending(c => c.CustomInfo.Date1).ThenBy(c => c.DisplayOrder).ThenBy(c => c.ContentUId);
             }
             if (order == "CustomDate2 DESC")
             {
-                return contents.OrderByDescending(c => c.CustomInfo.Date2).ThenBy(c => c.DisplayOrder);
+                return contents.OrderByDescending(c => c.CustomInfo.Date2).ThenBy(c => c.DisplayOrder).ThenBy(c => c.ContentUId);
             }
             if (order == "CustomDate3 DESC")
             {
-                return contents.OrderByDescending(c => c.CustomInfo.Date3).ThenBy(c => c.DisplayOrder);
+                return contents.OrderByDescending(c => c.CustomInfo.Date3).ThenBy(c => c.DisplayOrder).ThenBy(c => c.ContentUId);
             }
             if (order == "CustomDate4 DESC")
             {
-                return contents.OrderByDescending(c => c.CustomInfo.Date4).ThenBy(c => c.DisplayOrder);
+                return contents.OrderByDescending(c => c.CustomInfo.Date4).ThenBy(c => c.DisplayOrder).ThenBy(c => c.ContentUId);
             }
 
-            return contents.OrderByDescending(c => c.ContentDate);
+            return contents.OrderByDescending(c => c.ContentDate).ThenBy(c => c.ContentUId);
         }
 
 
