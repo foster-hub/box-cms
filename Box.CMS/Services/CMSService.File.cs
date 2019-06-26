@@ -86,6 +86,10 @@ namespace Box.CMS.Services {
 
                 var f = context.Files.Where(x => x.FileUId == fileUId).SingleOrDefault();
                 var thumbData = context.FileData.Where(x => x.FileUId == fileUId).Select(x => new { bytes = x.StoredThumbData }).SingleOrDefault();
+
+                if(thumbData==null) {
+                    return f;
+                }
                 
                 f.Data = new FileData() { FileUId = f.FileUId, StoredThumbData = thumbData.bytes };
 
@@ -263,8 +267,17 @@ namespace Box.CMS.Services {
 
         public void SetFileThumb(File file) {
             if (file.Type.StartsWith("image"))
-                file.Data.StoredThumbData = GetImageFileThumb(file.Data.StoredData, CMSThumbWidth, CMSThumbHeight, 0, 0, "image/jpeg");
-            else {
+            {
+                try
+                {
+                    file.Data.StoredThumbData = GetImageFileThumb(file.Data.StoredData, CMSThumbWidth, CMSThumbHeight, 0, 0, "image/jpeg");
+                } catch(Exception)
+                {
+                    file.Data.StoredThumbData = null;
+                }
+            }
+            else
+            {
                 string path = System.Web.Hosting.HostingEnvironment.MapPath("~");
                 file.Data.StoredThumbData = GetDocumentThumb(path, file.FileName);
             }

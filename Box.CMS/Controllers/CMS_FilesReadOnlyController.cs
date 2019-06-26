@@ -25,10 +25,19 @@ namespace Box.CMS.Controllers {
 
             File file = null;
 
-            if (asThumb==true)
+            if (asThumb == true)
+            {
                 file = cms.GetFileThumb(id);
+                if (file.Data == null || file.Data.StoredThumbData == null)
+                {
+                    file = cms.GetFile(id);
+                    asThumb = false;
+                }
+            }
             else
+            {
                 file = cms.GetFile(id);
+            }
 
             if (file == null)
                 return null;
