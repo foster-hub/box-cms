@@ -493,6 +493,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\a.pubxml" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\deploy.pubxml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

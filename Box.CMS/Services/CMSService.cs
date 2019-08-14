@@ -36,8 +36,14 @@ namespace Box.CMS.Services
 
         public CMSService()
         {
-            if(System.Web.HttpContext.Current!=null)
-                FILE_STORE_PATH = System.Web.HttpContext.Current.Server.MapPath("~/App_Data/_cms_files");
+            if (System.Web.HttpContext.Current != null)
+            {
+                var fixPath =  System.Configuration.ConfigurationManager.AppSettings["FILE_STORAGE_PATH"] as String;
+                if(string.IsNullOrEmpty(fixPath))
+                    FILE_STORE_PATH = System.Web.HttpContext.Current.Server.MapPath("~/App_Data/_cms_files");
+                else
+                    FILE_STORE_PATH = System.Web.HttpContext.Current.Server.MapPath("~/" + fixPath);
+            }
         }
 
 
