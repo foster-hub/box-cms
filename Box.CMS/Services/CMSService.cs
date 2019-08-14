@@ -32,6 +32,14 @@ namespace Box.CMS.Services
         [Import]
         private Groups.ADM_CMSFILE ADM_CMSFILE_GROUP { get; set; }
 
+        private string FILE_STORE_PATH = "";
+
+        public CMSService()
+        {
+            if(System.Web.HttpContext.Current!=null)
+                FILE_STORE_PATH = System.Web.HttpContext.Current.Server.MapPath("~/App_Data/_cms_files");
+        }
+
 
         public void ParseContentData(ContentHead content)
         {
@@ -753,6 +761,19 @@ namespace Box.CMS.Services
             }
 
             return false;
+        }
+
+        public FileStorages FileStorageMode {
+            get {
+                string str = System.Configuration.ConfigurationManager.AppSettings["FILE_STORAGE"] as String;
+                if (str == null)
+                    return FileStorages.Database;
+                if("FILE".Equals(str.ToUpper()))
+                {
+                    return FileStorages.FileSystem;
+                }
+                return FileStorages.Database;
+            }
         }
 
 

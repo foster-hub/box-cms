@@ -58,7 +58,7 @@ namespace Box.CMS.Controllers {
 
             cms.SetFileThumb(file);
 
-            cms.SaveFile(file, (Box.CMS.Services.FileStorages)storage);
+            cms.SaveFile(file);
 
             return file;
 

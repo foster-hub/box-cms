@@ -68,6 +68,12 @@ namespace Box.CMS.Services {
 
                 var f = file.SingleOrDefault(x => x.FileUId == fileUId);
 
+                if (FileStorageMode==FileStorages.FileSystem)
+                {
+                    ReadFileFromDisk(f);
+                }
+
+
                 if (EncryptFiles && f.Data!=null)
                 {
                     if(f.Data.StoredData!=null)
@@ -87,6 +93,13 @@ namespace Box.CMS.Services {
                 var f = context.Files.Where(x => x.FileUId == fileUId).SingleOrDefault();
                 var thumbData = context.FileData.Where(x => x.FileUId == fileUId).Select(x => new { bytes = x.StoredThumbData }).SingleOrDefault();
 
+                if(FileStorageMode==FileStorages.FileSystem)
+                {
+                    var diskThumb = ReadThumbFromDisk(f);
+                    if (diskThumb != null && diskThumb.Length > 0)
+                        thumbData = new { bytes = diskThumb };
+                }
+
                 if(thumbData==null) {
                     return f;
                 }
@@ -101,11 +114,22 @@ namespace Box.CMS.Services {
             }
         }
 
+        public void SaveFile(File file) {
+            SaveFile(file, FileStorageMode);
+        }
+
         public void SaveFile(File file, FileStorages storage) {
             using (var context = new Data.CMSContext()) {
 
                 file.Data.StoredData = EncryptFiles ? CryptUtil.EncryptBytes(file.Data.StoredData) : file.Data.StoredData;
                 file.Data.StoredThumbData = EncryptFiles ? CryptUtil.EncryptBytes(file.Data.StoredThumbData) : file.Data.StoredThumbData;
+
+                if(storage==FileStorages.FileSystem)
+                {
+                    SaveFileToDisk(file);
+                    file.Data.StoredData = null;
+                    file.Data.StoredThumbData = null;
+                }
 
                 var oldfile = context.Files.SingleOrDefault(f => f.FileUId == file.FileUId);
                 if (oldfile == null) {
@@ -116,6 +140,52 @@ namespace Box.CMS.Services {
                 }
                 context.SaveChanges();
             }
+        }
+
+        private void SaveFileToDisk(File file)
+        {
+            var ext = Path.GetExtension(file.FileName);            
+            System.IO.File.WriteAllBytes(FILE_STORE_PATH + "/" + file.FileUId + ext, file.Data.StoredData);
+            System.IO.File.WriteAllBytes(FILE_STORE_PATH + "/" + file.FileUId + "_thumb" + ext, file.Data.StoredThumbData);
+        }
+
+        private void ReadFileFromDisk(File file)
+        {         
+            var ext = Path.GetExtension(file.FileName);
+            var path = FILE_STORE_PATH + "/" + file.FileUId + ext;
+            try
+            {
+                
+                var data = System.IO.File.ReadAllBytes(FILE_STORE_PATH + "/" + file.FileUId + ext);
+                if (data != null && data.Length > 0)
+                    file.Data.StoredData = data;                
+
+                var thumbData = System.IO.File.ReadAllBytes(FILE_STORE_PATH + "/" + file.FileUId + "_thumb" + ext);
+                if (thumbData != null && thumbData.Length > 0)
+                    file.Data.StoredThumbData = thumbData;
+            }
+            catch(Exception){}            
+        }
+
+        private byte[] ReadThumbFromDisk(File file)
+        {
+            var ext = Path.GetExtension(file.FileName);
+            var path = FILE_STORE_PATH + "/" + file.FileUId + ext;
+            try
+            {
+
+                var thumbData = System.IO.File.ReadAllBytes(FILE_STORE_PATH + "/" + file.FileUId + "_thumb" + ext);
+                return thumbData;
+            }
+            catch (Exception) { }
+            return null;
+        }
+
+        private void RemoveFileFromDisk(File file)
+        {
+            var ext = Path.GetExtension(file.FileName);
+            System.IO.File.Delete(FILE_STORE_PATH + "/" + file.FileUId + ext);
+            System.IO.File.Delete(FILE_STORE_PATH + "/" + file.FileUId + "_thumb" + ext);
         }
 
         public byte[] GetScaledImageFile(byte[] bytes, double scale = 1, int xdes = 0, int ydes = 0, int finalW = 0, int finalH = 0, string mimeType = null) {
@@ -250,6 +320,10 @@ namespace Box.CMS.Services {
                 File file = context.Files.SingleOrDefault(f => f.FileUId == fileUId);
                 if (file == null)
                     return;
+
+                if (FileStorageMode == FileStorages.FileSystem)
+                    RemoveFileFromDisk(file);
+
                 context.Files.Remove(file);
                 context.SaveChanges();
             }
@@ -259,8 +333,16 @@ namespace Box.CMS.Services {
             using (var ctx = new CMSContext()) {
                 IQueryable<File> files = ctx.Files.Where(x => !ctx.ContentDatas.Where(c => c.JSON.Contains(x.FileUId)).Any() 
                 && !ctx.ContentHeads.Where(w => w.ThumbFilePath.Contains(x.FileUId)).Any());
-                ctx.Files.RemoveRange(files);
+                var fileArray = files.ToArray();
+                ctx.Files.RemoveRange(files);                
                 ctx.SaveChanges();
+
+                if (FileStorageMode == FileStorages.FileSystem)
+                {
+                    foreach (var file in fileArray)
+                        RemoveFileFromDisk(file);
+                }
+
             }
             
         }

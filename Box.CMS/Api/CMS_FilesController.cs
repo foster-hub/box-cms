@@ -99,7 +99,7 @@ namespace Box.CMS.Api {
 
                     cms.SetFileThumb(file);
 
-                    cms.SaveFile(file, (FileStorages)storage);
+                    cms.SaveFile(file);
 
                     file.Data = null;
 

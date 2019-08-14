@@ -55,7 +55,7 @@ namespace Box.CMS.Api {
 
             cms.SetFileThumb(file);
 
-            cms.SaveFile(file, FileStorages.Database);
+            cms.SaveFile(file);
 
             log.Log(String.Format(SharedStringsLog.IMAGE_0_CROP, file.FileUId));
 
