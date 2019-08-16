@@ -63,12 +63,14 @@
         <h1>@Resources.SharedStrings.Sign_in</h1>
 
         <div class="row">
-            @if (formsAuth) {
+            @if (formsAuth)
+            {
 
                 <fieldset class="span6">
 
                     <legend>@Resources.SharedStrings.Your_crendetials</legend>
-                    @if (securityService.MaxErrorCount > 0 && securityService.MaxErrorCount != null){
+                    @if (securityService.MaxErrorCount > 0 && securityService.MaxErrorCount != null)
+                    {
                         <span data-bind="style: { visibility: loginResult()=='INVALID' ? 'visible' : 'hidden' }" style="color: #e51400; float: right;">@String.Format(Resources.SharedStrings.Warning_block_user, securityService.MaxErrorCount)</span>
                     }
                     <label>@Resources.SharedStrings.Your_email</label>
@@ -87,7 +89,12 @@
                 <div class="span1">&nbsp;</div>
 
             }
-            @if (!String.IsNullOrEmpty(@ViewData["GOOGLE_LOGIN_URL"] as String) || !String.IsNullOrEmpty(@ViewData["WINDOWS_LIVE_LOGIN_URL"] as String) || windowsAuth) {
+            @if (!String.IsNullOrEmpty(@ViewData["GOOGLE_LOGIN_URL"] as String) ||
+                !String.IsNullOrEmpty(@ViewData["AZURE_LOGIN_URL"] as String) ||
+                !String.IsNullOrEmpty(@ViewData["WINDOWS_LIVE_LOGIN_URL"] as String) ||
+                !String.IsNullOrEmpty(@ViewData["FACEBOOK_LOGIN_URL"] as String) ||
+                windowsAuth)
+            {
                 <fieldset class="span4">
 
 

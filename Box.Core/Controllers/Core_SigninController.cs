@@ -79,6 +79,7 @@ namespace Box.Core.Controllers {
 
         public ActionResult AZUREcallback()
         {
+            log.Log("call back for Azure oauth");
             string email = azure.GetUserEmail(Request.QueryString["code"]);
             return CallBack(email);
         }
@@ -105,7 +106,7 @@ namespace Box.Core.Controllers {
             if (signedin != 1)
                 callBackMessage = SharedStrings.You_do_not_have_an_active_account_at_this_system;
 
-            ViewData["callBackMessage"] = callBackMessage;
+            ViewData["callBackMessage"] = callBackMessage + "(user '" + email + "')";
 
             if (signedin == 1) {
 

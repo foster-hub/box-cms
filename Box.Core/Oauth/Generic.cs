@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel.Composition;
 using System.Web;
+using Box.Core.Services;
 
 namespace Box.Core.Oauth {
 
 
     
     public abstract class Generic {
+
+        protected abstract LogService log { get; set; }
 
         protected abstract string ID { get; }
 
@@ -52,7 +55,7 @@ namespace Box.Core.Oauth {
                     appPath = "";
 
                 if(string.IsNullOrEmpty(fullDefHost))
-                    return scheme + "://" + (String.IsNullOrEmpty(defHost) ? host : defHost) + (port == 80 ? "" : ":" + port) + appPath;
+                    return scheme + "://" + (String.IsNullOrEmpty(defHost) ? host : defHost) + (port == 80 || port == 443 ? "" : ":" + port) + appPath;
                 else
                     return fullDefHost + appPath;
             }
@@ -100,7 +103,7 @@ namespace Box.Core.Oauth {
                 CLIENT_ID,
                 HttpUtility.UrlEncode(CALLBACK_URL),
                 "authorization_code",
-                SECRET);
+                HttpUtility.UrlEncode(SECRET));
 
             System.Net.Http.HttpResponseMessage msg = wc.PostAsync(GET_TOKEN_URL, new System.Net.Http.StringContent(postData, Encoding.Default, "application/x-www-form-urlencoded")).Result;
 
@@ -108,6 +111,11 @@ namespace Box.Core.Oauth {
                 string json = msg.Content.ReadAsStringAsync().Result;
                 dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(json);
                 return data["access_token"];
+            }
+            else
+            {
+                string error = msg.Content.ReadAsStringAsync().Result;
+                log.Log("Error getting access token", error);
             }
             return null;
         }

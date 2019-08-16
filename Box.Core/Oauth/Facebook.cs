@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel.Composition;
 using System.Web;
+using Box.Core.Services;
 
 namespace Box.Core.Oauth
 {
@@ -12,6 +13,8 @@ namespace Box.Core.Oauth
     [Export]
     public class Facebook : Generic
     {
+        [Import]
+        protected override LogService log { get; set; }
 
         protected override string ID
         {
