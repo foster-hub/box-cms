@@ -94,22 +94,32 @@
                     <legend style="margin-bottom: 10px">@Resources.SharedStrings.Or_using</legend>
 
 
-                    @if (!String.IsNullOrEmpty(@ViewData["GOOGLE_LOGIN_URL"] as String)) {
+                    @if (!String.IsNullOrEmpty(@ViewData["GOOGLE_LOGIN_URL"] as String))
+                    {
                         <div class="btn btn-block btn-social btn-lg btn-google" onclick="location.href = '@ViewData["GOOGLE_LOGIN_URL"]';">
                             <i class="fa fa-google"></i> Google+
                         </div>
                     }
-                    @if (!String.IsNullOrEmpty(@ViewData["WINDOWS_LIVE_LOGIN_URL"] as String)) {
+                    @if (!String.IsNullOrEmpty(@ViewData["WINDOWS_LIVE_LOGIN_URL"] as String))
+                    {
                         <div class="btn btn-block btn-social btn-lg btn-live" onclick="location.href = '@ViewData["WINDOWS_LIVE_LOGIN_URL"]';">
                             <i class="fa fa-windows"></i> Microsoft Account
                         </div>
                     }
-                    @if (!String.IsNullOrEmpty(@ViewData["FACEBOOK_LOGIN_URL"] as String)) {
+                    @if (!String.IsNullOrEmpty(@ViewData["AZURE_LOGIN_URL"] as String))
+                    {
+                        <div class="btn btn-block btn-social btn-lg btn-live" onclick="location.href = '@ViewData["AZURE_LOGIN_URL"]';">
+                            <i class="fa fa-windows"></i> Microsoft Account
+                        </div>
+                    }
+                    @if (!String.IsNullOrEmpty(@ViewData["FACEBOOK_LOGIN_URL"] as String))
+                    {
                         <div class="btn btn-block btn-social btn-lg btn-facebook" onclick="location.href = '@ViewData["FACEBOOK_LOGIN_URL"]';">
                             <i class="fa fa-facebook"></i> Facebook
                         </div>
                     }
-                    @if (windowsAuth) {
+                    @if (windowsAuth)
+                    {
                         <div class="btn btn-block btn-social btn-lg btn-microsoft" onclick="location.href = '@ViewData["WINDOWS_AUTH_URL"]';">
                             <i class="fa fa-windows"></i> Domain Account
                         </div>

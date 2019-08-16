@@ -72,7 +72,7 @@ namespace Box.Core.Oauth {
                 string returnUrl = "";
                 if (System.Web.HttpContext.Current != null)
                     returnUrl = System.Web.HttpContext.Current.Request["ReturnUrl"];
-                return HOST_NAME + "/core_signin/" +  ID + "callback?ReturnUrl=" + returnUrl;
+                return HOST_NAME + "/core_signin/" +  ID + "callback?ReturnUrl=" + returnUrl;                
             }
         }
 
@@ -112,9 +112,10 @@ namespace Box.Core.Oauth {
             return null;
         }
 
-        protected dynamic GetUserData(string token) {
+        protected virtual dynamic GetUserData(string token) {
             System.Net.Http.HttpClient wc = new System.Net.Http.HttpClient();
             System.Net.Http.HttpResponseMessage msg = wc.GetAsync(String.Format(GET_USER_URL, token)).Result;
+            var result = msg.Content.ReadAsStringAsync().Result;
 
             dynamic data = null;
 

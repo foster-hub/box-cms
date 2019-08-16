@@ -23,6 +23,9 @@ namespace Box.Core.Controllers {
         private Box.Core.Oauth.WindowsLive windowLive { get; set; }
 
         [Import]
+        private Box.Core.Oauth.Azure azure { get; set; }
+
+        [Import]
         private Box.Core.Oauth.Google google { get; set; }
 
         [Import]
@@ -36,6 +39,7 @@ namespace Box.Core.Controllers {
         public ActionResult Index() {
 
             ViewData["WINDOWS_LIVE_LOGIN_URL"] = windowLive.LOGIN_URL;
+            ViewData["AZURE_LOGIN_URL"] = azure.LOGIN_URL;
             ViewData["GOOGLE_LOGIN_URL"] = google.LOGIN_URL;
             ViewData["FACEBOOK_LOGIN_URL"] = Facebook.LOGIN_URL;
 
@@ -70,6 +74,12 @@ namespace Box.Core.Controllers {
 
         public ActionResult WLcallback() {
             string email = windowLive.GetUserEmail(Request.QueryString["code"]);
+            return CallBack(email);
+        }
+
+        public ActionResult AZUREcallback()
+        {
+            string email = azure.GetUserEmail(Request.QueryString["code"]);
             return CallBack(email);
         }
 
