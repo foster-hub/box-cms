@@ -6,6 +6,8 @@ using System.ComponentModel.Composition;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
 using System.Collections;
+using System.Configuration;
+using System.Data.Entity.Infrastructure;
 
 namespace Box.CMS.Services
 {
@@ -15,13 +17,23 @@ namespace Box.CMS.Services
         Database,
         FileSystem
     }
-
-
-
+    
     [Export]
     [Export(typeof(Box.Composition.IAppStart))]
     public partial class CMSService : Box.Composition.IAppStart
     {
+        public bool IsMySQL {
+            get {
+                object isOn = ConfigurationManager.AppSettings["IS_MYSQL"];
+                if (isOn == null)
+                    return false;
+
+                bool isOnBool = true;
+                Boolean.TryParse(isOn.ToString(), out isOnBool);
+
+                return isOnBool;
+            }
+        }
 
         private ContentKind[] kindsCache = null;
         private Box.Composition.IUserGroup[] groupsCache = null;
@@ -102,18 +114,24 @@ namespace Box.CMS.Services
         {
             using (var context = new Data.CMSContext())
             {
+                DbQuery<ContentHead> contentsInclude = null;
                 IQueryable<ContentHead> contents = null;
 
                 if (!includeData)
-                    contents = context.ContentHeads.Include("CommentsCount").Include("ShareCount").Include("PageViewCount").Include("Tags").Include("CustomInfo");
+                    contentsInclude = context.ContentHeads.Include("CommentsCount").Include("ShareCount").Include("PageViewCount").Include("Tags").Include("CustomInfo");
                 else
-                    contents = context.ContentHeads.Include("CommentsCount").Include("ShareCount").Include("PageViewCount").Include("Tags").Include("CustomInfo").Include("Data");
+                    contentsInclude = context.ContentHeads.Include("CommentsCount").Include("ShareCount").Include("PageViewCount").Include("Tags").Include("CustomInfo").Include("Data");
+
+                // if is using MySQL will include crosslinks for in memory ordering
+                if (IsMySQL) {
+                    contents = contentsInclude.Include("CrossLinks");
+                }
 
                 contents = contents.Where(c => c.CrossLinks.Any(x => x.PageArea == pageArea));
 
                 if (onlyPublished)
                     contents = OnlyPublishedContents(contents);
-
+                                
                 contents = OrderContents(contents, order, pageArea);
 
                 if (kinds != null)
@@ -122,7 +140,11 @@ namespace Box.CMS.Services
                 if (top != 0)
                     contents = contents.Take(top);
 
-                var array = contents.ToArray();
+                IEnumerable<ContentHead> array = contents.ToArray();
+
+                // if is using MySQL and order crosslinks in memory
+                if (IsMySQL && order == "CrossLinkDisplayOrder" && pageArea != null)
+                    array = array.OrderByDescending(c => c.CrossLinks.Where(x => x.PageArea == pageArea).FirstOrDefault().DisplayOrder).ThenByDescending(c => c.ContentDate).ThenBy(c => c.ContentUId).ToArray();
 
                 // if ther is no content, and there is any fallback, try it
                 if (!array.Any() && pageAreaFallbacks != null && pageAreaFallbacks.Length >= 1)
@@ -166,7 +188,8 @@ namespace Box.CMS.Services
                     & ((c.CreateDate.Second + c.CreateDate.Minute + c.CreateDate.Hour + c.CreateDate.Millisecond + c.ContentDate.Day) | r)));
             }
 
-            if (order == "CrossLinkDisplayOrder" && pageArea != null)
+            // MySQL does not supports this - so will do it later in memory
+            if (order == "CrossLinkDisplayOrder" && pageArea != null && !IsMySQL)
                 return contents.OrderByDescending(c => c.CrossLinks.Where(x => x.PageArea == pageArea).FirstOrDefault().DisplayOrder).ThenByDescending(c => c.ContentDate).ThenBy(c => c.ContentUId);
 
             if (order == "RandomOnDay")
