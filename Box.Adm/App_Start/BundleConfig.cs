@@ -30,7 +30,7 @@ namespace Box.Adm {
             bundles.Add(new ScriptBundle("~/bundles/jquery")                
                 .Include("~/Scripts/jquery-{version}.js")
                 .Include("~/Scripts/jquery.validate.js")                
-                .Include("~/Scripts/jquery-ui-1.9.2.js")                    
+                .Include("~/Scripts/jquery-ui.js")                    
                 .Include("~/Scripts/jquery.parsejson.extension.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/metro")
@@ -44,7 +44,7 @@ namespace Box.Adm {
                 .Include("~/content/iconFont.css")
                 .Include("~/content/font-awesome.css")
                 .Include("~/Content/adm.css")
-                .Include("~/Content/jquery-ui-1.9.2.css")
+                .Include("~/Content/jquery-ui.min.css")
                 .Include("~/Content/jquery.guillotine.css")
                 .Include("~/Content/custom.css"));
 

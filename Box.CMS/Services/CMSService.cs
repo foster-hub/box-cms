@@ -126,6 +126,9 @@ namespace Box.CMS.Services
                 if (IsMySQL) {
                     contents = contentsInclude.Include("CrossLinks");
                 }
+                else {
+                    contents = contentsInclude;
+                }
 
                 contents = contents.Where(c => c.CrossLinks.Any(x => x.PageArea == pageArea));
 
