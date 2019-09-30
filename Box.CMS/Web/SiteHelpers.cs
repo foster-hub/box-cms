@@ -528,10 +528,11 @@ namespace Box.CMS.Web
             {
                 if (key != "_pageSkip_" + listId)
                 {
-                    query = query + key + "=" + request.QueryString[key] + "&";
+                    query = query + key + "=" + HttpUtility.UrlEncode(request.QueryString[key]) + "&";
                 }
             }
             query = query + "_pageSkip_" + listId + "=" + skip;
+            
             if (request.Url.Query.Length > 0)
                 url = request.RawUrl.Replace(request.Url.Query, "") + query;
             else
