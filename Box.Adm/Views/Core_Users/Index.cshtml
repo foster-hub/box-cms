@@ -88,8 +88,8 @@
 @section scripts {    
     <script type="text/javascript" src="@Url.Content("~/Scripts/Core/UsersVM.js")"></script>
     <script type="text/javascript">
-        pageVM.errorMsgItemAlreadyExists = '@Resources.SharedStrings.User_already_exists';
-        pageVM.errorMsgItemPasswordFailed = '@Resources.SharedStrings.Your_validate_password_msg';
+        pageVM.errorMsgItemAlreadyExists = '@Resources.SharedStrings.Your_validate_password_msg_user_already_exists';
+        
         $.validator.setValidator('editForm');        
         pageVM.loadAllGroups();
 

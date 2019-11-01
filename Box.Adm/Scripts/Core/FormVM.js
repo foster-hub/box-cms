@@ -5,6 +5,7 @@
     me.data = new ko.observable(new Object());
     me.onSuccess = null;
     me.url = '';
+    me.failedMessage = 'request error';
 
     me.dataField = null;
 
@@ -31,6 +32,12 @@
             success: function (result) {
                 if (me.onSuccess != null)
                     me.onSuccess(result);
+            },
+            error: function (request) {
+                if (request.status == 409) {
+                    dialogHelper.setOperationMessage(me.failedMessage);
+                    return;
+                }
             }
         });
     }

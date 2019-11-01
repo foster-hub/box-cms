@@ -442,4 +442,7 @@ Tente alterar seu critério de filtro.</value>
   <data name="Your_validate_password_msg" xml:space="preserve">
     <value>A senha deve ter no mínimo 6 caracteres, não mais que 10 caracteres, deve incluir no mínimo uma letra maiúscula, uma mínuscula e um caractere numérico.</value>
   </data>
+  <data name="Your_validate_password_msg_user_already_exists" xml:space="preserve">
+    <value>Não foi possível criar ou alterar o usuário. Outro usuário com mesmo e-mail ou mesmo login de rede já existe. Ou a senha não atende todos os critérios de segurança, esta deve ter no mínimo 6 caracteres, não mais que 10 caracteres, deve incluir no mínimo uma letra maiúscula, uma mínuscula e um caractere numérico.</value>
+  </data>
 </root>

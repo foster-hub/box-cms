@@ -54,7 +54,7 @@ namespace Box.Core.Api {
                 throw new HttpResponseException(System.Net.HttpStatusCode.Conflict);
 
             if (user.Password != null && !service.ValidatePassword(user.Password.Password))
-                throw new HttpResponseException(System.Net.HttpStatusCode.PreconditionFailed);
+                throw new HttpResponseException(System.Net.HttpStatusCode.BadRequest);
 
             if (user.Memberships==null)
                 user.Memberships = new GroupMembership[0];
@@ -80,7 +80,7 @@ namespace Box.Core.Api {
                 throw new HttpResponseException(System.Net.HttpStatusCode.BadRequest);
                         
             if (user.Password != null && !service.ValidatePassword(user.Password.Password))
-                throw new HttpResponseException(System.Net.HttpStatusCode.PreconditionFailed);
+                throw new HttpResponseException(System.Net.HttpStatusCode.BadRequest);
 
             if (user.Memberships==null)
                 user.Memberships = new GroupMembership[0];
@@ -126,7 +126,10 @@ namespace Box.Core.Api {
             User user = service.GetSignedUser();
             if(user==null)
                 throw new HttpResponseException(System.Net.HttpStatusCode.BadRequest);
-                        
+
+            if(!service.ValidatePassword(newPassword))
+                throw new HttpResponseException(System.Net.HttpStatusCode.BadRequest);
+
             user.Password = new UserPassword() { Email = user.Email, Password = newPassword };
 
             log.Log(String.Format(SharedStringsLog.USER_PASSWORD_UPDATE_0, user.Email));
