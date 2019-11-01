@@ -439,4 +439,7 @@ Tente alterar seu critério de filtro.</value>
   <data name="Page" xml:space="preserve">
     <value>Página</value>
   </data>
+  <data name="Your_validate_password_msg" xml:space="preserve">
+    <value>A senha deve ter no mínimo 6 caracteres, não mais que 10 caracteres, deve incluir no mínimo uma letra maiúscula, uma mínuscula e um caractere numérico.</value>
+  </data>
 </root>

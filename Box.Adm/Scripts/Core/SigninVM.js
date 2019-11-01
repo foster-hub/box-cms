@@ -42,8 +42,13 @@
 
     redirect = function () {
         var url = getQueryParameterByName('ReturnUrl');
+
         if (url == '' || url == null)
             url = '.';
+
+        if (url.toLowerCase().indexOf('http') > -1)
+            url = '.';
+
         location.href = url;
 
     }

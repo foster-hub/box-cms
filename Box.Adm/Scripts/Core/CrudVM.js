@@ -66,6 +66,7 @@ function CrudVM(moduleName, name, uIdField) {
     this.oldOrder = null;
     
     this.errorMsgItemAlreadyExists = 'Error inserting item.<br/>Another item already exists.';
+    this.errorMsgItemPasswordFailed = 'Password must be at least 6 characters, no more than 10 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.';
 
     this.paging = new PagingHelper();
     this.hasPreviousPage = new ko.observable(false);
@@ -282,6 +283,10 @@ function CrudVM(moduleName, name, uIdField) {
                     dialogHelper.setOperationMessage(me.errorMsgItemAlreadyExists);
                     return;
                 }
+                if (request.status == 412) {
+                    dialogHelper.setOperationMessage(me.errorMsgItemPasswordFailed);
+                    return;
+                }
                 dialogHelper.setOperationMessage('Unknow error');
             }
         });
@@ -319,6 +324,10 @@ function CrudVM(moduleName, name, uIdField) {
             error: function (request) {
                 if (request.status == 409) {
                     dialogHelper.setOperationMessage(me.errorMsgItemAlreadyExists);
+                    return;
+                }
+                if (request.status == 412) {
+                    dialogHelper.setOperationMessage(me.errorMsgItemPasswordFailed);
                     return;
                 }
                 dialogHelper.setOperationMessage('Unknow error');

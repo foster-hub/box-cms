@@ -445,4 +445,7 @@ Try to change your filter.</value>
   <data name="Page" xml:space="preserve">
     <value>Page</value>
   </data>
+  <data name="Your_validate_password_msg" xml:space="preserve">
+    <value>Password must be at least 6 characters, no more than 10 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.</value>
+  </data>
 </root>

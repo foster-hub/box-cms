@@ -13,6 +13,7 @@ using System.Net;
 using System.Web;
 using System.Web.Security;
 using System.Web.Configuration;
+using System.Text.RegularExpressions;
 
 namespace Box.Core.Services {
 
@@ -589,6 +590,18 @@ namespace Box.Core.Services {
 
         public User GetSignedUser() {
             return GetUserByAuthToken(System.Web.HttpContext.Current.User.Identity.Name);
+        }
+        
+        public bool ValidatePassword(string password) {
+            // Password must be at least 6 characters, no more than 10 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit."
+            string patternPassword = @"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,10}$";
+            if (!string.IsNullOrEmpty(password)) {
+                if (!Regex.IsMatch(password, patternPassword)) {
+                    return false;
+                }
+
+            }
+            return true;
         }
 
         public User GetUserByAuthToken(string token) {

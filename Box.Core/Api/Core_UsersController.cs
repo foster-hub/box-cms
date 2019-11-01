@@ -53,7 +53,10 @@ namespace Box.Core.Api {
             if(oldUser!=null)
                 throw new HttpResponseException(System.Net.HttpStatusCode.Conflict);
 
-            if(user.Memberships==null)
+            if (user.Password != null && !service.ValidatePassword(user.Password.Password))
+                throw new HttpResponseException(System.Net.HttpStatusCode.PreconditionFailed);
+
+            if (user.Memberships==null)
                 user.Memberships = new GroupMembership[0];
 
             service.SaveUser(user);
@@ -75,8 +78,11 @@ namespace Box.Core.Api {
             // cant change e-mail
             if (oldUser.Email.ToLower() != user.Email.ToLower())
                 throw new HttpResponseException(System.Net.HttpStatusCode.BadRequest);
+                        
+            if (user.Password != null && !service.ValidatePassword(user.Password.Password))
+                throw new HttpResponseException(System.Net.HttpStatusCode.PreconditionFailed);
 
-            if(user.Memberships==null)
+            if (user.Memberships==null)
                 user.Memberships = new GroupMembership[0];
 
             if (user.GroupCollectionMemberships == null)
@@ -120,7 +126,7 @@ namespace Box.Core.Api {
             User user = service.GetSignedUser();
             if(user==null)
                 throw new HttpResponseException(System.Net.HttpStatusCode.BadRequest);
-            
+                        
             user.Password = new UserPassword() { Email = user.Email, Password = newPassword };
 
             log.Log(String.Format(SharedStringsLog.USER_PASSWORD_UPDATE_0, user.Email));

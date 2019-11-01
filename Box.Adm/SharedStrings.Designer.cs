@@ -1041,5 +1041,14 @@ namespace Resources {
                 return ResourceManager.GetString("Your_password", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password must be at least 6 characters, no more than 10 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit..
+        /// </summary>
+        public static string Your_validate_password_msg {
+            get {
+                return ResourceManager.GetString("Your_validate_password_msg", resourceCulture);
+            }
+        }
     }
 }
