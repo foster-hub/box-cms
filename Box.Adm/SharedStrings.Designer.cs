@@ -1043,7 +1043,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password must be at least 6 characters, no more than 10 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit..
+        ///   Looks up a localized string similar to Password must be equal or more than 8 characters and must include at least one upper case letter, one lower case letter, and one numeric digit..
         /// </summary>
         public static string Your_validate_password_msg {
             get {
@@ -1052,7 +1052,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unable to create or change user. Another user with same email or same network login already exists. Or the password does not meet all security criteria, it must be at least 6 characters, no longer than 10 characters, must include at least one uppercase letter, one lowercase letter, and one numeric character..
+        ///   Looks up a localized string similar to Unable to create or change user. Another user with same email or same network login already exists. Or the password does not meet all security criteria, it must be equal or more than 8 characters, must include at least one uppercase letter, one lowercase letter, and one numeric character..
         /// </summary>
         public static string Your_validate_password_msg_user_already_exists {
             get {

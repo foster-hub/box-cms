@@ -34,7 +34,7 @@
                     me.onSuccess(result);
             },
             error: function (request) {
-                if (request.status == 409) {
+                if (request.status == 409 || request.status == 400) {
                     dialogHelper.setOperationMessage(me.failedMessage);
                     return;
                 }

@@ -278,7 +278,7 @@ function CrudVM(moduleName, name, uIdField) {
                 
             },
             error: function (request) {
-                if (request.status == 409) {
+                if (request.status == 409 || request.status == 400) {
                     dialogHelper.setOperationMessage(me.errorMsgItemAlreadyExists);
                     return;
                 }
@@ -317,7 +317,7 @@ function CrudVM(moduleName, name, uIdField) {
                     me.setEditingItem(null);
             },
             error: function (request) {
-                if (request.status == 409) {
+                if (request.status == 409 || request.status == 400) {
                     dialogHelper.setOperationMessage(me.errorMsgItemAlreadyExists);
                     return;
                 }                

@@ -593,8 +593,8 @@ namespace Box.Core.Services {
         }
         
         public bool ValidatePassword(string password) {
-            // Password must be at least 6 characters, no more than 10 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit."
-            string patternPassword = @"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,10}$";
+            // Password must be equal or more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit."
+            string patternPassword = @"^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$";
             if (!string.IsNullOrEmpty(password)) {
                 if (!Regex.IsMatch(password, patternPassword)) {
                     return false;
