@@ -5,6 +5,7 @@ using System.Web.Routing;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using Box.Composition;
+using System;
 
 namespace Box.CMS.Web {
 
@@ -77,8 +78,10 @@ namespace Box.CMS.Web {
             if (lang==null || lang.Length == 0)
                 return;
 
-            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(lang[0]);
-            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(lang[0]);
+            try {
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(lang[0]);
+                System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(lang[0]);
+            } catch (Exception) { }
         }
 
     }
