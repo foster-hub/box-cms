@@ -44,7 +44,7 @@ namespace Box.Adm {
                 .Include("~/content/iconFont.css")
                 .Include("~/content/font-awesome.css")
                 .Include("~/Content/adm.css")
-                .Include("~/Content/jquery-ui.min.css")
+                .Include("~/Content/jquery-ui.css")
                 .Include("~/Content/jquery.guillotine.css")
                 .Include("~/Content/custom.css"));
 
