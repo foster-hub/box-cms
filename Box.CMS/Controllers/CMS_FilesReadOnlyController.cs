@@ -47,11 +47,23 @@ namespace Box.CMS.Controllers {
 
             if (asThumb.HasValue && asThumb.Value)
                 return new FileContentResult(file.Data.StoredThumbData, file.Type) { FileDownloadName = file.FileName };
-                        
-            if (width == 0 && height == 0)
-                return new FileContentResult(cms.GetScaledImageFile(file.Data.StoredData, scale, mimeType: file.Type), file.Type) { FileDownloadName = file.FileName };
 
-            return new FileContentResult(cms.GetImageFileThumb(file.Data.StoredData, width, height, maxWidth, maxHeight, vAlign, hAlign, file.Type, mode), file.Type) { FileDownloadName = file.FileName };
+            byte[] returnImg = null;
+
+            if (width == 0 && height == 0)
+            {
+                returnImg = cms.GetScaledImageFile(file.Data.StoredData, scale, mimeType: file.Type);                
+            }
+            else
+            {
+                returnImg = cms.GetImageFileThumb(file.Data.StoredData, width, height, maxWidth, maxHeight, vAlign, hAlign, file.Type, mode);
+            }
+
+            if (returnImg == null)
+            {
+                return null;
+            }
+            return new FileContentResult(returnImg, file.Type) { FileDownloadName = file.FileName };
         }
 
         

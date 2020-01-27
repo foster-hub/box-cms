@@ -273,13 +273,20 @@ namespace Box.CMS.Services {
             if (hAlign == "center")
                 left = (maxWidth - width) / 2;
 
-            System.Drawing.Bitmap newImg = new System.Drawing.Bitmap(maxWidth, maxHeight);
-            System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(newImg);
-            g.DrawImage(image, new System.Drawing.Rectangle(left, top, width, height));
-            g.Dispose();
+            try
+            {
+                System.Drawing.Bitmap newImg = new System.Drawing.Bitmap(maxWidth, maxHeight);
+                System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(newImg);
+                g.DrawImage(image, new System.Drawing.Rectangle(left, top, width, height));
+                g.Dispose();
 
-            return ImageToBytes(newImg, mimeType);
-
+                return ImageToBytes(newImg, mimeType);
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
+            
         }
 
         private byte[] ImageToBytes(System.Drawing.Image img, string mimeType) {
