@@ -563,14 +563,13 @@ namespace Box.CMS.Services
                     if (oldContent.CustomInfo != null)
                         context.Entry<ContentCustomInfo>(oldContent.CustomInfo).CurrentValues.SetValues(content.CustomInfo);
                 }
+                
+                context.ApplyCollectionValues<ContentTag>(oldContent != null ? oldContent.Tags : null, content.Tags, (t1, t2) => { return t1.Tag == t2.Tag; });
+                context.SaveChanges();
 
                 //context.ApplyCollectionValues<CrossLink>(oldContent != null ? oldContent.CrossLinks : null, content.CrossLinks, (t1, t2) => { return t1.PageArea == t2.PageArea; });
                 ApplyCollectionValuesCrossLinks(oldContent != null ? oldContent.CrossLinks : null, content.CrossLinks);
 
-                context.ApplyCollectionValues<ContentTag>(oldContent != null ? oldContent.Tags : null, content.Tags, (t1, t2) => { return t1.Tag == t2.Tag; });
-
-
-                context.SaveChanges();
             }
             return content;
         }
