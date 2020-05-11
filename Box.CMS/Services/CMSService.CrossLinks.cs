@@ -101,10 +101,13 @@ namespace Box.CMS.Services {
                 link.DisplayOrder = order;
 
                 // change the other link display order
-                CrossLink link2 = null;
-                link2 = context.CrossLinks.SingleOrDefault(c => c.ContentUId != contentUId && c.PageArea == area && c.DisplayOrder == order);
-                if (link2!=null)
-                    link2.DisplayOrder = oldOrder;
+                CrossLink[] links2 = null;
+                links2 = context.CrossLinks.Where(c => c.ContentUId != contentUId && c.PageArea == area && c.DisplayOrder == order).ToArray();
+                if (links2 != null && links2.Length > 0)
+                {
+                    foreach(var l in links2)
+                        l.DisplayOrder = oldOrder;
+                }
                 
                 context.SaveChanges();
 
