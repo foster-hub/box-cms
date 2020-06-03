@@ -61,7 +61,7 @@ namespace Box.Core.Api {
 
             service.SaveUser(user);
 
-            log.Log(String.Format(SharedStringsLog.USER_CREATION_0, user.Email));
+            log.Log(String.Format(SharedStringsLog.USER_CREATION_0, user.Email), null, false);
 
             return user;
         }
@@ -88,7 +88,7 @@ namespace Box.Core.Api {
             if (user.GroupCollectionMemberships == null)
                 user.GroupCollectionMemberships = new GroupCollectionMembership[0];
 
-            log.Log(String.Format(SharedStringsLog.USER_UPDATE_0, user.Email));
+            log.Log(String.Format(SharedStringsLog.USER_UPDATE_0, user.Email), null, false);
 
             service.SaveUser(user);
         }
@@ -132,7 +132,7 @@ namespace Box.Core.Api {
 
             user.Password = new UserPassword() { Email = user.Email, Password = newPassword };
 
-            log.Log(String.Format(SharedStringsLog.USER_PASSWORD_UPDATE_0, user.Email));
+            log.Log(String.Format(SharedStringsLog.USER_PASSWORD_UPDATE_0, user.Email), null, false);
 
             service.SaveUser(user);
         }
