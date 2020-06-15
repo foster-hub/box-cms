@@ -71,12 +71,13 @@
   
 }
 
-@helper File(string id, string folder = "Images", bool singleFile = false, string style = null) {    
+@helper File(string id, string folder = "Images", bool singleFile = false, string style = null, string accept = null) {
 string dropAreaId = "_uploadArea_" + id;
 string inputFileId = "_uploadAreaInput_" + id;
 string multipleTag = singleFile == false ? "multiple" : "";
+string acceptStr = accept != null ? accept : "";
 
-if(folder=="@GUID") {
+if (folder=="@GUID") {
     folder = "pageVM.editingItem().ContentUId";
 }
 else {
@@ -103,6 +104,7 @@ if (!singleFile) {
         type="file" 
         onchange="UploadArea.sendFiles(this.files, '@id', @folder, @singleFile.ToString().ToLowerInvariant() )" 
         @multipleTag 
+        @accept
         tabindex="-1" />                                    
        
     <a 
