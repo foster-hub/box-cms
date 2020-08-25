@@ -562,6 +562,8 @@ namespace Box.CMS.Services
                     context.Entry<ContentData>(oldContent.Data).CurrentValues.SetValues(content.Data);
                     if (oldContent.CustomInfo != null)
                         context.Entry<ContentCustomInfo>(oldContent.CustomInfo).CurrentValues.SetValues(content.CustomInfo);
+                    else
+                        oldContent.CustomInfo = content.CustomInfo;
                 }
                 
                 context.ApplyCollectionValues<ContentTag>(oldContent != null ? oldContent.Tags : null, content.Tags, (t1, t2) => { return t1.Tag == t2.Tag; });
